@@ -6,8 +6,7 @@
         {
             Console.WriteLine("Hello, World!");
 
-            bool result = Funciones.IsOdd(2);
-            Console.WriteLine(result);
+            
         }
     }
 }

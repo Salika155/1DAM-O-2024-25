@@ -27,14 +27,19 @@ namespace ConsoleApp1
         //Funcion que me de una de las dos soluciones de la ecuacion de segundo grado
         public static double SolveSecondGradeEquation(double a, double b, double c)
         {
-            double ac = 4 * a * c;
-            double b2 = b * b;
-            double sqrt = Math.Sqrt(b2 - ac);
-            double divisor = 2 * a;
-            double sqrtbody = sqrt / divisor;
-            double result1 = (-b + sqrtbody);
-            double result2 = (-b - sqrtbody);
+            double discriminante = (b * b) - 4 * (a * c);
+            double sqrt = Math.Sqrt(discriminante) / 2 * a;
+
+            double result1 = -b + sqrt;
+            double result2 = -b - sqrt;
+
+            if (sqrt == 0)
+            {
+                return double.NaN;
+            }
+            return result2;
             //a = 1, b = -4, c = 3;
+            // - b +- (raiz(b^2 - 4 + a + c)/ 2 * a)
 
         }
     }

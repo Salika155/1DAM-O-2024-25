@@ -21,7 +21,12 @@ namespace ConsoleApp1
             }
             return result;
         }
-
+        
+        //funcion que me diga si un numero es impar
+        public static bool IsOdd(int a)
+        {
+            return a % 2 != 0;
+        }
         
     }
 }

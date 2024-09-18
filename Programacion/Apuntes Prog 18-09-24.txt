@@ -1,0 +1,69 @@
+
+
+Tipos de datos:
+	-Literales
+	-Enteros:
+	-Reales:
+	-Booleanos:
+	-Cadenas:
+
+Tipos de operadores:
+	-Unarios: Un argumento
+	-Binarios (aritméticos) operan mas de uno
+
+		entero por entero = entero
+		entero por real = real
+		real por real = real
+
+	-Comparadores: >, <, =, >=, <= != -> booleano
+	-Logicos: AND && y OR ||
+		-AND siempre false salvo true = true, y OR siempre true excepto false = false
+			AND:
+			True && True = true
+			False && True = false
+			True && False = false
+			False && False = false
+			OR:
+			True && True = true
+			False && True = true
+			True && False = true
+			False && False = false
+
+		Trabaja con booleano -> resultado un booleano
+
+	-Asignaciones: =, !
+			(1 < 3) || (5 > 1) && (2 + 1) < 0))  -> !(5 < 3)
+			   T	      T		   F
+	-Asignaciones: =, +=, -=, *=
+			a = a + 7 -> a += 7;
+
+			int a = 2;
+			a++, //a = a + 1;
+			++a, //a = a + 1;
+
+			int b = a * 2.0 -> ec
+			doublé b = a * 2.0;
+			var c = a + b -> double 6.0
+			var d = 5 < a
+
+			int a = 2;
+			int b = (a++) + 1; -> a = 3, b = 3
+
+			b = (++a) + 1 
+			a = 4 -> b = 5
+
+
+		Instrucciones de control de flujo: IF, FOR, WHILE
+
+Funcion en las ultimas líneas si es un if se pone el return directamente
+
+			
+	
+
+
+
+
+
+
+
+		

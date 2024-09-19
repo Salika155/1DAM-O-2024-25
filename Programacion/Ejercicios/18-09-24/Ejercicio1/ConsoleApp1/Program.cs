@@ -14,6 +14,8 @@
 
             double ecua = Ejercicios.SolveSecondGradeEquation(1, -4, 3);
             Console.WriteLine(ecua);
+
+            Ejercicios.MovimientoSexy(5);
         }
     }
 }

@@ -43,7 +43,6 @@ namespace ConsoleApp1
             return result1;
             //a = 1, b = -4, c = 3;
             // - b +- (raiz(b^2 - 4 + a + c)/ 2 * a)
-
         }
 
         public static double SolveSecondGradeEquation1(double a, double b, double c)
@@ -63,6 +62,40 @@ namespace ConsoleApp1
             double paso7 = paso6 / paso1;
             return paso7;
 
+        }
+
+        //funcion movimiento sexy, que le vais a pasar un numero, va a devolver void
+        //tiene que imprimir en pantalla "..." hasta que el numero sea 0
+        public static void MovimientoSexy(int n)
+        {
+            //if (n == 0)
+            //    goto Movimiento;
+            //else
+            //    goto Fin;
+
+            Console.WriteLine("Inicio");
+        Inicio:
+            if (n > 0)
+                goto Movimiento;
+            else
+                goto Fin;
+
+        Movimiento:
+            Console.WriteLine("...");
+            n--;
+            goto Inicio;
+        Fin:
+            Console.WriteLine("Fin");
+
+            //goto Inicio;
+        }
+
+        //funcion que le paso dos numeros y me devuelva si el primero es divisible por el segundo
+        public static bool IsDivisible(int a, int b)
+        {
+            if (a % b == 0)
+                return true;
+            return false;
         }
     }
 }

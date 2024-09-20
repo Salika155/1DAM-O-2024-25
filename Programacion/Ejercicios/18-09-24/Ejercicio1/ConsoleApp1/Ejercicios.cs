@@ -86,8 +86,6 @@ namespace ConsoleApp1
             goto Inicio;
         Fin:
             Console.WriteLine("Fin");
-
-            //goto Inicio;
         }
 
         //funcion que le paso dos numeros y me devuelva si el primero es divisible por el segundo

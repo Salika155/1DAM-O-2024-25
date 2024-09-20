@@ -93,9 +93,9 @@ namespace ConsoleApp1
         //funcion que le paso dos numeros y me devuelva si el primero es divisible por el segundo
         public static bool IsDivisible(int a, int b)
         {
-            if (a % b == 0)
-                return true;
-            return false;
+            if (a == 0 || b == 0 || a % b != 0)
+                return false;        
+            return true;
         }
     }
 }

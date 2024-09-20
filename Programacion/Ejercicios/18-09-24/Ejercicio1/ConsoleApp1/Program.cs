@@ -20,10 +20,6 @@
             bool esdivisible = Ejercicios.IsDivisible(0, 5);
             Console.WriteLine(esdivisible);
 
-            int a = 25;
-            int b = 0;
-            int c = a / b;
-            Console.WriteLine(c);
         }
     }
 }

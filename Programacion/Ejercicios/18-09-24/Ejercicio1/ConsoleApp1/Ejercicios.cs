@@ -92,7 +92,82 @@ namespace ConsoleApp1
         public static bool IsDivisible(int a, int b)
         {
             return b != 0 && a % b == 0;
-               
+        }
+        //23/09/2024
+        /*while -> cuando llegamos al final si no se cumple la condicion se sale
+         *         * do while -> se ejecuta al menos una vez
+         *                 * for -> se ejecuta un numero determinado de veces
+         *                         * foreach -> se ejecuta un numero determinado de veces
+         *                                 * goto -> salta a una etiqueta
+         *                                         * break -> sale del bucle
+         *                                                 * continue -> salta a la siguiente iteracion
+         *                                                         * return -> sale de la funcion
+         /for -> for (int i = 0; i < 10; i++)
+    */
+        //funcion que escribe 10 veces hola
+        public static void WriteHello10Times()
+        {
+            int i = 0;
+
+            while (i < 10)
+            {
+                Console.WriteLine("hola");
+                i++;
+            }
+        }
+
+        public static void WriteHello10Times1()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine("hola");
+            }
+        }
+
+        public static void WriteHello10Times2()
+        {
+            int n = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine("hola" + n);
+                n++;
+            }
+        }
+
+        public static void WriteHello10Times3(double n)
+        {
+            //if (n <= 0.1)
+            //    return;
+
+            //for (int i = 0; i < n; i++)
+            //{
+            //    Console.WriteLine("Numero " + n);
+                
+            //}
+            while (n > 0.1)
+            {
+                Console.WriteLine("Numero " + n);
+                n *= 0.5;
+            }
+            /*
+             double aux = n;
+            while (aux > 0.1)
+            {
+                Console.WriteLine("Numero " + aux);
+                aux *= 0.5;
+             */
+        }
+
+        //funcion que me diga si un numero entero es primo o no
+        public static bool IsPrime(int n)
+        {
+            for (int i = 2; i < n; i++)
+            {
+                if (n % i == 0)
+                    return false;
+            }
+            return true;
         }
     }
 }

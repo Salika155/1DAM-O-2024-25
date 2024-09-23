@@ -20,6 +20,13 @@
             bool esdivisible = Ejercicios.IsDivisible(0, 5);
             Console.WriteLine(esdivisible);
 
+            Ejercicios.WriteHello10Times();
+            Ejercicios.WriteHello10Times1();
+            Ejercicios.WriteHello10Times2();
+            Ejercicios.WriteHello10Times3(8.0);
+            
+            bool esPrimo = Ejercicios.IsPrime(311);
+            Console.WriteLine(esPrimo);
         }
     }
 }

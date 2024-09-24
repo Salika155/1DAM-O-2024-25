@@ -160,14 +160,64 @@ namespace ConsoleApp1
         }
 
         //funcion que me diga si un numero entero es primo o no
-        public static bool IsPrime(int n)
+        public static bool IsEven2(int n)
         {
+            if (n <= 1)
+                return false;
+
             for (int i = 2; i < n; i++)
             {
-                if (n % i == 0)
+                if (IsDivisible(n, i)) 
                     return false;
             }
             return true;
+            //salida de bucle por poner return dentro de un if dos veces, es suspenso directo, y return al inicio de la funcion
         }
+
+        //serie 1 que devuelve un string que le paso un entero
+        public static string Serie1(int n)
+        {
+            int aux = n;
+            string result = "";
+
+            for (int i = 1; i <= n; i++)
+            {
+                if (aux > 1)
+                result += i + ", ";
+                aux--;
+                if (aux == 0)
+                    result += i;
+                
+        
+                //if (i != 1)
+                //result = result + aux.ToString() + ", ";
+                //else
+                //{
+                //    result += aux.ToString();
+                //}
+                //aux--;
+
+            }
+            return result;
+        }
+
+        //serie de numero, paso un numero y devuelvo multiplos de 2 las veces que el numero que me han pasado
+
+        public static string Serie2(int n)
+        {
+            string result2 = "";
+            int aux = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                result2 += aux + ", ";
+                aux += 2;
+                
+                
+            }
+            return result2;
+        }
+
+        //Serie3 multiplos de 2 por el numero que me han pasado = 0, 2, 4, 8, 16, 32
     }
 }

@@ -25,8 +25,13 @@
             Ejercicios.WriteHello10Times2();
             Ejercicios.WriteHello10Times3(8.0);
             
-            bool esPrimo = Ejercicios.IsPrime(311);
+            bool esPrimo = Ejercicios.IsEven(311);
             Console.WriteLine(esPrimo);
+
+            string result1 = Ejercicios.Serie1(6);
+            Console.WriteLine(result1);
+            string result2 = Ejercicios.Serie2(6);
+            Console.WriteLine(result2);
         }
     }
 }

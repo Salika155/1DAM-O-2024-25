@@ -231,11 +231,16 @@ namespace ConsoleApp1
                 aux += 2;
             }
             return result2;
+
+            /*for (int i = 1; i <= n; i++)
+             * if (i < n)
+             */
         }
 
         //Serie3 multiplos de 2 por el numero que me han pasado = 0, 2, 4, 8, 16, 32
         public static string Serie3(int n)
         {
+            //para empezar por 0 puedes poner el string directamente con el valor 0,
             if (n < 0)
                 return "";
 
@@ -251,9 +256,36 @@ namespace ConsoleApp1
                 if (i == 0)
                     aux = 2;
                 else
+                //aux <<= 1;
                 aux *= 2;
             }
             return result3;
         }
+
+        //Serie4 numero positivos y negativos le paso numero y saca los multiplos de tres alternando en positivo y negativo
+        public static string Serie4(int n) 
+        {
+            string result4 = "";
+            int aux = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                result4 += aux;
+
+                if (i < n)
+                    result4 += aux + ", ";
+                //if (i == 0)
+                //    aux+=1 * 3;
+                if (IsEven(i))
+                    result4 += aux;
+                else
+                    result4 += -aux;
+                
+            }
+
+            return result4;
+        }
+
+        //Serie5 devuelve un string -> le paso un 30 y te hace fibonacci hasta el 30 -> while
     }
 }

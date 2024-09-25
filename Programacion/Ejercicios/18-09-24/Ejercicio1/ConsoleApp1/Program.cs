@@ -34,6 +34,8 @@
             Console.WriteLine(result2);
             string result3 = Ejercicios.Serie3(16);
             Console.WriteLine(result3);
+            string result4 = Ejercicios.Serie4(6);
+            Console.WriteLine(result4);
         }
     }
 }

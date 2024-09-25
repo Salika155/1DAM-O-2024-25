@@ -30,7 +30,7 @@
 
             string result1 = Ejercicios.Serie1(6);
             Console.WriteLine(result1);
-            string result2 = Ejercicios.Serie2(-6);
+            string result2 = Ejercicios.Serie2(6);
             Console.WriteLine(result2);
             string result3 = Ejercicios.Serie3(16);
             Console.WriteLine(result3);

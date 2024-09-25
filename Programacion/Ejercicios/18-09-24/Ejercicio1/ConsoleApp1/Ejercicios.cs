@@ -174,50 +174,86 @@ namespace ConsoleApp1
             //salida de bucle por poner return dentro de un if dos veces, es suspenso directo, y return al inicio de la funcion
         }
 
-        //serie 1 que devuelve un string que le paso un entero
+        //serie 1 que devuelve un string que le paso por un entero, devuelve tantos numeros como el numero de n 
         public static string Serie1(int n)
         {
-            int aux = n;
+            if (n < 0)
+                return "";
+            //int aux = n;
             string result = "";
 
+            //for (int i = 1; i <= n; i++)
+            //{
+            //    if (aux > 0)
+            //    result += i + ", ";
+            //    aux--;
+            //    if (aux == 0)
+            //        result += i;
+            //}
+            //return result;
             for (int i = 1; i <= n; i++)
             {
-                if (aux > 1)
-                result += i + ", ";
-                aux--;
-                if (aux == 0)
-                    result += i;
-                
-        
-                //if (i != 1)
-                //result = result + aux.ToString() + ", ";
-                //else
-                //{
-                //    result += aux.ToString();
-                //}
-                //aux--;
-
+                result += i;
+                if (i < n)
+                    result += ", ";
             }
             return result;
         }
 
-        //serie de numero, paso un numero y devuelvo multiplos de 2 las veces que el numero que me han pasado
+        //serie de numero, paso un numero y devuelvo sumas de 2 las veces que el numero que me han pasado
 
         public static string Serie2(int n)
         {
+            if (n < 0)
+                return "";
+
             string result2 = "";
             int aux = 0;
 
+            #region pruebas
+            //for (int i = 0; i < n; i++)
+            //{
+            //    if (aux > 1)
+            //    result2 += aux + ", ";
+            //    aux += 2;
+            //    if (aux == 0)
+            //        result2 += aux;
+            //}
+            //return result2;
+            #endregion
+
             for (int i = 0; i < n; i++)
             {
-                result2 += aux + ", ";
+                result2 += aux;
+               
+                if (i < n - 1)
+                    result2 += ", ";
                 aux += 2;
-                
-                
             }
             return result2;
         }
 
         //Serie3 multiplos de 2 por el numero que me han pasado = 0, 2, 4, 8, 16, 32
+        public static string Serie3(int n)
+        {
+            if (n < 0)
+                return "";
+
+            string result3 = "";
+            int aux = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                result3 += aux;
+
+                if (i < n - 1)
+                    result3 += ", ";
+                if (i == 0)
+                    aux = 2;
+                else
+                aux *= 2;
+            }
+            return result3;
+        }
     }
 }

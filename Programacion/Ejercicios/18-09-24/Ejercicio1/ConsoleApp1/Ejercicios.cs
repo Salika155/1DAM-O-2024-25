@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -262,7 +263,7 @@ namespace ConsoleApp1
             return result3;
         }
 
-        //Serie4 numero positivos y negativos le paso numero y saca los multiplos de tres alternando en positivo y negativo
+        //Serie4 numero positivos y negativos le paso numero y saca los multiplos de tres alternando en positivo y negativo ej: 0, -3, 6, -9
         public static string Serie4(int n) 
         {
             string result4 = "";
@@ -270,22 +271,50 @@ namespace ConsoleApp1
 
             for (int i = 0; i < n; i++)
             {
-                result4 += aux;
-
-                if (i < n)
-                    result4 += aux + ", ";
-                //if (i == 0)
-                //    aux+=1 * 3;
-                if (IsEven(i))
-                    result4 += aux;
-                else
+                if (i % 2 == 1)
                     result4 += -aux;
-                
-            }
+                else
+                    result4 += aux;
 
+                if (i < n - 1)
+                    result4 += ", ";
+         
+                aux += 3;
+            }
             return result4;
         }
 
         //Serie5 devuelve un string -> le paso un 30 y te hace fibonacci hasta el 30 -> while
+        public static string Serie5(int n) 
+        {
+            string result5 = "";
+            int aux = 0;
+            int aux2 = 1;
+
+            while (aux <= n)
+            {
+                result5 += aux;
+                if (aux2 <= n)
+                    result5 += ", ";
+
+                int aux3 = aux;
+                aux = aux2;
+                aux2 = aux3 + aux;
+            }
+            return result5;
+        }
+
+        // while (aux <= n)
+        //    {
+        //        result5 += aux;
+        //        if (aux2 <= n)
+        //            result5 += ", ";
+
+        //        int aux3 = aux;
+        //aux = aux2;
+        //        aux2 = aux3 + aux;  
+        //    }
+        //    return result5;
+
     }
 }

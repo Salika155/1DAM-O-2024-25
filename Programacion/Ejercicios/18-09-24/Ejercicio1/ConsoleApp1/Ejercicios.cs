@@ -285,7 +285,7 @@ namespace ConsoleApp1
         }
 
         //Serie5 devuelve un string -> le paso un 30 y te hace fibonacci hasta el 30 -> while
-        public static string Serie5(int n) 
+        public static string Serie5(int n)
         {
             string result5 = "";
             int aux = 0;
@@ -333,14 +333,12 @@ namespace ConsoleApp1
         public static string Serie6(int n)
         {
             string result6 = "";
-            
-            
-            
+
             while (n != 1)
             {
                 if (n % 2 == 0)
                     n /= 2;
-                
+
                 else if (n % 2 == 1)
                 {
                     n = (n * 3) + 1;
@@ -350,10 +348,66 @@ namespace ConsoleApp1
                     result6 += n;
                 }
                 else if (n != 1)
-                result6 += n + ", ";
+                    result6 += n + ", ";
             }
-            
+
             return result6;
+        }
+
+        //factorial 5 = 5 + 4 + 3 + 2 + 1
+
+        public static int Serie7(int n)
+        {
+            int result7 = 0;
+            int aux = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                result7 += (n - 1);
+
+
+            }
+
+
+
+            return result7;
+        }
+
+        //productorio de 5 = 1 x 2 x 3 x 4 x 5
+
+        public static int Serie8(int n)
+        {
+            int result8 = 0;
+
+            for (int i = 0; i < n; i++)
+                result8 += n * (n - 1);
+
+            return result8;
+        }
+
+        //funcion que le paso un numero y me devuelve el sumatorio de todos los numeros pares
+
+        public static int Serie9(int n)
+        {
+            int result9 = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (IsEven(i))
+                    result9 += (n - 1);
+            }
+
+
+            return result9;
+        }
+
+        //funcion que le paso un numero y devuelve el sumatorio de todos los numeros primos que hay desde el 1 hasta al numero que le paso
+
+        public static int Serie10(int n)
+        {
+            int result10 = 0;
+
+            return result10;
         }
     }
 }

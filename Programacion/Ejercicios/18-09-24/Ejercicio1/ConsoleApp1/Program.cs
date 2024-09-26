@@ -38,6 +38,9 @@
             Console.WriteLine(result4);
             string result5 = Ejercicios.Serie5(1000);
             Console.WriteLine(result5);
+
+            string result6 = Ejercicios.Serie6(30);
+            Console.WriteLine(result6);
         }
     }
 }

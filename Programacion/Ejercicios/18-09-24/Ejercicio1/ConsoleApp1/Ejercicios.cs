@@ -304,17 +304,56 @@ namespace ConsoleApp1
             return result5;
         }
 
-        // while (aux <= n)
-        //    {
-        //        result5 += aux;
-        //        if (aux2 <= n)
-        //            result5 += ", ";
+        /*
+         string result = ""
+        int n0 = 0;
+        int n1 = 1;
+        int temp = 0;
 
-        //        int aux3 = aux;
-        //aux = aux2;
-        //        aux2 = aux3 + aux;  
-        //    }
-        //    return result5;
+        while (temp < n)
+        {
+        temp = n0 + n1;
+        n0 = n1;
+        n1 = temp;
+        --------------------
 
+        while (n1 <= n || n2 <= n)
+        {
+        if (n1 < n2)
+            n1 += n2;
+        result5 += n1;
+        else
+            n2 += n1;
+        result5 += n2;
+             
+         */
+
+        //si es impar numero x 3 + 1, si el numero es par dividirlo entre 2 -> conjetura collatz
+
+        public static string Serie6(int n)
+        {
+            string result6 = "";
+            
+            
+            
+            while (n != 1)
+            {
+                if (n % 2 == 0)
+                    n /= 2;
+                
+                else if (n % 2 == 1)
+                {
+                    n = (n * 3) + 1;
+                }
+                if (n == 1)
+                {
+                    result6 += n;
+                }
+                else if (n != 1)
+                result6 += n + ", ";
+            }
+            
+            return result6;
+        }
     }
 }

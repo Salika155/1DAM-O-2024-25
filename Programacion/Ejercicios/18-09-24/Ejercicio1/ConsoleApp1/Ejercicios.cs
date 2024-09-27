@@ -161,7 +161,7 @@ namespace ConsoleApp1
         }
 
         //funcion que me diga si un numero entero es primo o no
-        public static bool IsEven2(int n)
+        public static bool IsPrime(int n)
         {
             if (n <= 1)
                 return false;
@@ -359,29 +359,24 @@ namespace ConsoleApp1
         public static int Serie7(int n)
         {
             int result7 = 0;
-            int aux = 0;
 
-            for (int i = 0; i < n; i++)
+            for (int i = n; i > 0; i--)
             {
-                result7 += (n - 1);
-
-
+                result7 += i;
             }
-
-
-
             return result7;
         }
 
-        //productorio de 5 = 1 x 2 x 3 x 4 x 5
+        //productorio de 5 = 5 x 4 x 3 x 2 x 1 = 120
 
         public static int Serie8(int n)
         {
-            int result8 = 0;
+            int result8 = n;
 
-            for (int i = 0; i < n; i++)
-                result8 += n * (n - 1);
-
+            for (int i = n - 1; i > 0; i--)
+            {
+                result8 *= i;
+            }
             return result8;
         }
 
@@ -391,12 +386,11 @@ namespace ConsoleApp1
         {
             int result9 = 0;
 
-            for (int i = 0; i < n; i++)
+            for (int i = n; i >= 0; i--)
             {
-                if (IsEven(i))
-                    result9 += (n - 1);
+                if (IsEven(i) == true)
+                    result9 += i;
             }
-
 
             return result9;
         }
@@ -406,7 +400,12 @@ namespace ConsoleApp1
         public static int Serie10(int n)
         {
             int result10 = 0;
-
+            
+            for (int i = n; i > 0; i--)
+            {
+                if (IsPrime(i) == true)
+                    result10 += i;
+            }
             return result10;
         }
     }

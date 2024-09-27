@@ -41,6 +41,22 @@
 
             string result6 = Ejercicios.Serie6(30);
             Console.WriteLine(result6);
+
+            Console.WriteLine("Serie7: ");
+            int result7 = Ejercicios.Serie7(20);
+            Console.WriteLine(result7);
+
+            Console.WriteLine("Serie8: ");
+            int result8 = Ejercicios.Serie8(5);
+            Console.WriteLine(result8);
+
+            Console.WriteLine("Serie9: ");
+            int result9 = Ejercicios.Serie9(6);
+            Console.WriteLine(result9);
+
+            Console.WriteLine("Serie10: ");
+            int result10 = Ejercicios.Serie10(5);
+            Console.WriteLine(result10);
         }
     }
 }

@@ -57,6 +57,14 @@
             Console.WriteLine("Serie10: ");
             int result10 = Ejercicios.Serie10(5);
             Console.WriteLine(result10);
+
+            Console.WriteLine("MCM: ");
+            int result11 = Ejercicios.MCM(9, 6);
+            Console.WriteLine(result11);
+
+            Console.WriteLine("MCD: ");
+            int result12 = Ejercicios.MCD(9, 6);
+            Console.WriteLine(result12);
         }
     }
 }

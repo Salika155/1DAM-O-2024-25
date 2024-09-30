@@ -334,7 +334,7 @@ namespace ConsoleApp1
         {
             string result6 = "";
 
-            while (n != 1)
+            while (n != 1) //-> mayor proteccion si lo pones en while n > 
             {
                 if (n % 2 == 0)
                     n /= 2;
@@ -388,10 +388,9 @@ namespace ConsoleApp1
 
             for (int i = n; i >= 0; i--)
             {
-                if (IsEven(i) == true)
+                if (IsEven(i)) //si es false si se hace la comprobacion o se pone el signo !
                     result9 += i;
             }
-
             return result9;
         }
 
@@ -407,6 +406,57 @@ namespace ConsoleApp1
                     result10 += i;
             }
             return result10;
+        }
+
+        //funcion para hacer el minimo comun multiplo de dos numeros
+
+        public static int MCM(int a, int b)
+        {
+            int n= EsMayor(a, b);
+            
+            for (int i = n; i > 0; i++)
+            {
+                if (IsDivisible(i, a) && IsDivisible(i, b))
+                    return i;
+            }
+            return n;
+        }
+
+        public static int EsMayor(int a, int b)
+        {
+            if (a < b)
+            return a;
+            else
+                return b;
+        }
+
+        public static int EsMenor(int a, int b)
+        {
+            if (a > b)
+                return b;
+            else
+                return a;
+        }
+
+        //funcion para hacer el maximo comun divisor de dos numeros
+
+        public static int MCD(int a, int b)
+        {
+            int n = EsMenor(a, b);
+            int result = n;
+
+            //for (int i = 0; i <= n; i++)
+            //{
+            //    if (IsDivisible(a, i) && IsDivisible(b, i))
+            //        result = n -i;
+            //}
+
+            while (!IsDivisible(a, n) || !IsDivisible(b, n))
+            {
+                n--;
+            }
+            return result;
+
         }
     }
 }

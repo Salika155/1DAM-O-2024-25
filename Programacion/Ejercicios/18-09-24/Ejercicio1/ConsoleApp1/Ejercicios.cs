@@ -412,6 +412,9 @@ namespace ConsoleApp1
 
         public static int MCM(int a, int b)
         {
+            if (a <= 0 || b <= 0)
+                return 0;
+
             int n= EsMayor(a, b);
             
             for (int i = n; i > 0; i++)
@@ -419,6 +422,39 @@ namespace ConsoleApp1
                 if (IsDivisible(i, a) && IsDivisible(i, b))
                     return i;
             }
+
+            /*
+             * otro metodo
+             * 
+             * int max = Greater(n1, n2);
+             * int i = max;
+             * 
+             * while (!(n1 % i == 0 && n2 % i == 0))
+             * while (i % n1 != 0 || i % n2 != 0)
+             * while (!IsDivisible(m, n1) || !IsDivisible(m, n2))
+             * {
+             * i++;
+             * }
+             * 
+             * otro metodo
+             * for (int i = major; i++;
+             * {
+             * if (i % n1 == 0 && i % n2 == 0)
+             * return i;
+             * }
+             * return 0;
+             * 
+             * otro metodo
+             * while (true)
+             * {
+             * int a = result % num1;
+             * int b = result % num2;
+             * if (a == 0 && b == 0)
+             * return result
+             * result++;
+             * }
+             * 
+             * */
             return n;
         }
 
@@ -456,6 +492,18 @@ namespace ConsoleApp1
                 n--;
             }
             return result;
+
+            /*
+             * int max = Greater(n1, n2);
+             * 
+             * int i = max;
+             * 
+             * while ()
+             * {
+             * i++;
+             * }
+             * 
+             * */
 
         }
     }

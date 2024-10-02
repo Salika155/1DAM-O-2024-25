@@ -37,6 +37,26 @@ namespace EjerciciosPDF
         }
             
         //5. Haz una función que te diga si, dado dos números, uno es par y otro no.
+        public static string EsParOImpar(int n1, int n2)
+        {
+            string result = string.Empty;
+
+            if (IsPair(n1) && !IsPair(n2))
+            {
+                result = n1 + " Es par y " + n2 + "Es impar";
+            }
+            else if (IsPair(n2) && !IsPair(n1))
+            {
+                result += n2 + "Es par y " + n1 + "Es impar";
+            }
+            else if (SonParejos(n1, n2))
+            {
+                result = n1 + " y " + n2 + " son pares"; 
+            }
+            else
+                result = "son impares";
+            return result;
+        }
         //6. Haz una función que, dado dos enteros, te diga si los dos números son múltiplos de 3 o múltiplos de 2.
         //7. Crea un programa que dado un número del 1 al 10, devuelva un string con la palabra que representa ese valor.
         //8. Haz una función que, dado un carácter, te diga si es o no un número. No puedes utilizar ninguna función externa.

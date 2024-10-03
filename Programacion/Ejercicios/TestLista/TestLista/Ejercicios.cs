@@ -88,5 +88,16 @@ namespace test_list
         }
 
         //Hacer una funcion que le paso una lista de enteros (no devuelve nada) y los invierte
+        public static void InvertirLista(List<int> l) 
+        {  
+            int element = l.Count;
+
+            for (int i = 0; i < element / 2; i++)
+            { 
+                int temp = l[i];
+                l[i] = l[element - i - 1];
+                l[element - i - 1] = temp;
+            }
+        }
     }
 }

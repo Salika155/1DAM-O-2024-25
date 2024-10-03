@@ -152,6 +152,8 @@ namespace test_list
         //Hacer una funcion que le paso una lista de enteros y borra de esa lista todos los numeros negativos
         public static void RemoveNegativeFromList(List<int> l)
         {
+            if (l == null || l.Count == 0)
+                return;
             for (int i = l.Count - 1; i > 0; i--)
             {
                 if (l[i] < 0)

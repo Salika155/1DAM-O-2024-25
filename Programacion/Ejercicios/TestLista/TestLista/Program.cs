@@ -29,9 +29,10 @@
             Ejercicios.CopiarLista(list);
 
             Ejercicios.CopiarListaInversa(list);
+
+            Ejercicios.InvertirLista(list);
+
             //Remove en lista es suspenso, se usa RemoveAt
-
-
         }
     }
 }

@@ -32,6 +32,8 @@
 
             Ejercicios.InvertirLista(list);
 
+            Ejercicios.DevolverMayorValorEnLista(list);
+
             //Remove en lista es suspenso, se usa RemoveAt
         }
     }

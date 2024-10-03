@@ -89,15 +89,47 @@ namespace test_list
 
         //Hacer una funcion que le paso una lista de enteros (no devuelve nada) y los invierte
         public static void InvertirLista(List<int> l) 
-        {  
-            int element = l.Count;
+        {
+            if (l == null)
+                return;
+            int count = l.Count;
+            int n = l.Count >> 1; // / 2
 
-            for (int i = 0; i < element / 2; i++)
-            { 
+            for (int i = 0; i < n / 2; i++)
+            {
+                int otherIndex = count - 1 - i;
                 int temp = l[i];
-                l[i] = l[element - i - 1];
-                l[element - i - 1] = temp;
+                l[i] = l[otherIndex];
+                l[otherIndex] = temp;
+
+                //l.Insert(i, 1[l.Count - 1);
+                //l.RemoveAt(l.Count - 1);
+
+                //int element = l[i];
+                //l.RemoveAt(i);
+                //l.Add(element);
             }
         }
+
+        //Hacer una funcion que le paso una lista de enteros y me devuelve el numero mas grande que hay en la lista
+
+        public static int DevolverMayorValorEnLista(List<int> l)
+        {
+            if (l == null || l.Count == 0)
+                return int.MinValue;
+            
+            int result = l[0];
+            for (int i = 1; i < l.Count - 1; i++)
+            {
+                int element = l[i];
+                if (element > result)
+                    result = element;
+            }
+            return result;
+        }
+
+        //Hacer una funcion que le paso una lista de enteros y devuelvo la posicion donde se encuentra el menor
+
+        //Hacer una funcion que le paso una lista de enteros y borra de esa lista todos los numeros negativos
     }
 }

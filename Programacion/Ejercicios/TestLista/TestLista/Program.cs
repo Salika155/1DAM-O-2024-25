@@ -16,28 +16,29 @@
             list.Add(5);
             n = list.Count();
 
-            Ejercicios.PrintNumbers(list);
+            //Ejercicios.PrintNumbers(list);
 
-            int suma = Ejercicios.SumaElementosLista(list);
-            Console.WriteLine(suma);
+            //int suma = Ejercicios.SumaElementosLista(list);
+            //Console.WriteLine(suma);
 
-            int sumaPar = Ejercicios.SumaElementosParesLista(list);
-            Console.WriteLine(sumaPar);
+            //int sumaPar = Ejercicios.SumaElementosParesLista(list);
+            //Console.WriteLine(sumaPar);
 
-            List<int> l2 = Ejercicios.CopiarLista(list);
+            //List<int> l2 = Ejercicios.CopiarLista(list);
 
-            Ejercicios.CopiarLista(list);
+            //Ejercicios.CopiarLista(list);
 
-            Ejercicios.CopiarListaInversa(list);
+            //Ejercicios.CopiarListaInversa(list);
 
-            Ejercicios.InvertirLista(list);
+            //Ejercicios.InvertirLista(list);
 
-            Ejercicios.DevolverMayorValorEnLista(list);
+            //Ejercicios.DevolverMayorValorEnLista(list);
 
-            int menor = Ejercicios.IndexOfMenor(list);
-            Console.WriteLine(menor);
+            //int menor = Ejercicios.IndexOfMenor(list);
+            //Console.WriteLine(menor);
 
             Ejercicios.RemoveNegativeFromList(list);
+            Ejercicios.RemoveNegativeFromList1(list);
             //Remove en lista es suspenso, se usa RemoveAt
         }
     }

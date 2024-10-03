@@ -154,10 +154,27 @@ namespace test_list
         {
             if (l == null || l.Count == 0)
                 return;
-            for (int i = l.Count - 1; i > 0; i--)
+            for (int i = l.Count - 1; i >= 0; i--)
             {
                 if (l[i] < 0)
-                    l.RemoveAt(l[i]);
+                {
+                    l.RemoveAt(i);
+                }
+               
+            }
+        }
+
+        public static void RemoveNegativeFromList1(List<int> l)
+        {
+            if (l == null || l.Count == 0)
+                return;
+            for (int i = 0; i < l.Count; i++)
+            {
+                if (l[i] < 0)
+                {
+                    l.RemoveAt(i);
+                    i--;
+                } 
             }
         }
     }

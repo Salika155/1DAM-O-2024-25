@@ -119,7 +119,7 @@ namespace test_list
                 return int.MinValue;
             
             int result = l[0];
-            for (int i = 1; i < l.Count - 1; i++)
+            for (int i = 1; i < l.Count; i++)
             {
                 int element = l[i];
                 if (element > result)
@@ -129,7 +129,34 @@ namespace test_list
         }
 
         //Hacer una funcion que le paso una lista de enteros y devuelvo la posicion donde se encuentra el menor
+        public static int IndexOfMenor(List<int> l)
+        {
+            if (l == null || l.Count == 0)
+                return int.MinValue;
+
+            int menor = l[0];
+            int index = 0;
+
+            for(int i = 1; i < l.Count; i++)
+            {
+                int aux = l[i];
+                if (aux < menor)
+                {
+                    menor = aux;
+                    index = i;
+                }
+            }
+            return index;
+        }
 
         //Hacer una funcion que le paso una lista de enteros y borra de esa lista todos los numeros negativos
+        public static void RemoveNegativeFromList(List<int> l)
+        {
+            for (int i = l.Count - 1; i > 0; i--)
+            {
+                if (l[i] < 0)
+                    l.RemoveAt(l[i]);
+            }
+        }
     }
 }

@@ -34,6 +34,10 @@
 
             Ejercicios.DevolverMayorValorEnLista(list);
 
+            int menor = Ejercicios.IndexOfMenor(list);
+            Console.WriteLine(menor);
+
+            Ejercicios.RemoveNegativeFromList(list);
             //Remove en lista es suspenso, se usa RemoveAt
         }
     }

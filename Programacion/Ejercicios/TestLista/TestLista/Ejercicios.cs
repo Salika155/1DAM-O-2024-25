@@ -160,7 +160,6 @@ namespace test_list
                 {
                     l.RemoveAt(i);
                 }
-               
             }
         }
 

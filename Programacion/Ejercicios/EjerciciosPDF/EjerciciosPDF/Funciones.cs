@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 namespace EjerciciosPDF
 {
@@ -57,12 +58,120 @@ namespace EjerciciosPDF
                 result = "son impares";
             return result;
         }
+
         //6. Haz una función que, dado dos enteros, te diga si los dos números son múltiplos de 3 o múltiplos de 2.
+        public enum Multiplos
+        {
+            NO_ES_MULTIPLO,
+            MULTIPLO_DE_2,
+            MULTIPLO_DE_3
+        }
+        public static Multiplos EsMultiplode3o2(int n1, int n2)
+        {
+            if (n1 % 2 == 0 && n2 % 2 == 0)
+                return Multiplos.MULTIPLO_DE_2;
+            else if (n1 % 3 == 0 && n2 % 3 == 0)
+                return Multiplos.MULTIPLO_DE_3;
+            else
+                return Multiplos.NO_ES_MULTIPLO;
+        }
+
         //7. Crea un programa que dado un número del 1 al 10, devuelva un string con la palabra que representa ese valor.
+        public static string DevolverValorEnTexto(int n1)
+        {
+            switch(n1) 
+            {
+                case 1: 
+                    return "Uno";
+                case 2:
+                    return "Dos";
+                case 3:
+                    return "Tres";
+                case 4:
+                    return "Cuatro";
+                case 5:
+                    return "Cinco";
+                case 6:
+                    return "Seis";
+                case 7:
+                    return "Siete";
+                case 8:
+                    return "Ocho";
+                case 9:
+                    return "Nueve";
+                case 10:
+                    return "Diez";
+                default:
+                    return "El numero tiene que ser entre 1 y 10";
+            }
+        }
+
         //8. Haz una función que, dado un carácter, te diga si es o no un número. No puedes utilizar ninguna función externa.
-        //9. Haz una función que te devuelva el sumatorio de un número. Si el número es menor que cero, se devolverá el sumatorio negativo.
+        public static bool IsNumberOrNot(int n)
+        {
+            if (n > int.MinValue && n < int.MaxValue)
+                return true;
+            return false;
+        }
+
+        //9. Haz una función que te devuelva el sumatorio de un número. Si el número es menor que cero, se devolverá el
+        //sumatorio negativo.
+        public static int GetSumatorioOfNumber(int n)
+        {
+            int result = 0;
+
+            if (n > 0)
+            {
+               for(int i = 1; i < n; i++)
+                {
+                    result += i;
+                }
+            }
+            else if (n < 0)
+            {
+                for (int i = -1; i > n; i--)
+                {
+                    result += i;
+                }
+            }
+            return result;
+        }
+
         //10. Haz una función que te devuelva el productorio de un número tanto si es positivo como negativo. Si es negativo se debe empezar por -1.
+        public static int GetProductoryOfNumber(int n)
+        {
+            int result = 0;
+
+            if (n > 0) 
+            { 
+                for (int i = 1; i <= n; i++)
+                {
+                    result *= i;
+                }
+            }
+            else if (n < 0)
+            {
+                for (int i = -1; i >= n; i--)
+                {
+                    result *= i;
+                    if (i > 0)
+                    {
+                        i *= -1;
+                    }
+                }
+            }
+            return result;
+        }
         //11. Realiza una función que te diga si un número es primo o no.
+        public static bool IsPrime(int n)
+        {
+            if (n <= 1)
+                return false;
+
+            if (n % 1 == 0 && n % n == 0)
+                return true;
+            return false;
+        }
         //12. Haz una función que, dado un entero, devuelva una cadena que contenga todos los números primos desde el 1 hasta ese número, separado por comas.
         //13. Haz una función que, dado un entero, te devuelva un string con el contenido de la serie de fibonacci por ese número separados por un guión. Este string comienza por un guión y
         //termina con un guión.

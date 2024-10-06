@@ -19,6 +19,10 @@
             string esParOImpar = Funciones.EsParOImpar(25, 34);
             Console.WriteLine(esParOImpar);
 
+            string letra = "a";
+            int number = 865;
+            bool isNumber = Funciones.IsNumberOrNot(number);
+
 
         }
     }

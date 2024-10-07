@@ -132,12 +132,12 @@ namespace test_list
         public static int IndexOfMenor(List<int> l)
         {
             if (l == null || l.Count == 0)
-                return int.MinValue;
+                return -1;
 
             int menor = l[0];
-            int index = 0;
+            int index = -1;
 
-            for(int i = 1; i < l.Count; i++)
+            for(int i = 0; i < l.Count; i++)
             {
                 int aux = l[i];
                 if (aux < menor)
@@ -152,7 +152,7 @@ namespace test_list
         //Hacer una funcion que le paso una lista de enteros y borra de esa lista todos los numeros negativos
         public static void RemoveNegativeFromList(List<int> l)
         {
-            if (l == null || l.Count == 0)
+            if (l == null)
                 return;
             for (int i = l.Count - 1; i >= 0; i--)
             {
@@ -165,7 +165,7 @@ namespace test_list
 
         public static void RemoveNegativeFromList1(List<int> l)
         {
-            if (l == null || l.Count == 0)
+            if (l == null)
                 return;
             for (int i = 0; i < l.Count; i++)
             {
@@ -176,5 +176,61 @@ namespace test_list
                 } 
             }
         }
+
+        //Le paso una lista de enteros y me devuelve una lista con las posiciones donde se encuentra el numero menor
+
+        public static List<int> PosicionDelMenorValor(List<int> l)
+        {
+            List<int> listaresult = new List<int>();
+            if (l == null || l.Count == 0)
+                return listaresult;
+            
+            int menorpos = GetLowerValue(l);
+
+            for(int i = 0; i < l.Count; i++)
+            {
+                int element = l[i];
+                if (element == menorpos)
+                    listaresult.Add(i);
+            }
+            return listaresult;
+        }
+
+        public static int GetLowerValue(List<int> l)
+        {
+            if (l == null || l.Count == 0)
+                return -1;
+            List<int> listresult = new List<int>();
+            int aux = 0;
+
+            for(int i = 0; i < l.Count; i++)
+            {
+                if (aux > l[i])
+                    aux = l[i];
+            }
+            return aux;
+        }
+
+        //interpolacion = b * u + a (1 - u)
+        public static double GetInterpolacionLineal(double a, double b, double u)
+        {
+            double part2 = a * (1 - u);
+            double part1 = b * u;
+            double interpolation = part1 + part2;
+
+            return interpolation;
+        }
+
+        //calcula la saturacion con respecto a dos numeros
+        //si el valor es menor a los limites inferiores o superiores que lo ajuste al mas cercano
+        public static double GetSaturate(double limInf, double limSup, double value)
+        {
+            if (value < limInf)
+                value = limInf;
+            else if (value > limSup)
+                value = limSup;
+            return value;
+        }
+        //le paso una lista de strings y un string, borra de la lista todos los string que coincidan con el string
     }
 }

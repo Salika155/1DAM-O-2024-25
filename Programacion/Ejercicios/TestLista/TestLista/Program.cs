@@ -40,6 +40,24 @@
             Ejercicios.RemoveNegativeFromList(list);
             Ejercicios.RemoveNegativeFromList1(list);
             //Remove en lista es suspenso, se usa RemoveAt
+
+            List<int> listanueva = new List<int>();
+            listanueva.Add(8);
+            listanueva.Add(4);
+            listanueva.Add(3);
+            listanueva.Add(-1);
+            listanueva.Add(-5);
+            listanueva.Add(8);
+            listanueva.Add(-5);
+
+
+            List<int> lis = Ejercicios.PosicionDelMenorValor(listanueva);
+
+            double interpolation = Ejercicios.GetInterpolacionLineal(10, 100, 0.5);
+            Console.WriteLine(interpolation);
+
+
+
         }
     }
 }

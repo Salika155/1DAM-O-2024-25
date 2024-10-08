@@ -232,5 +232,39 @@ namespace test_list
             return value;
         }
         //le paso una lista de strings y un string, borra de la lista todos los string que coincidan con el string
+        public static void DeleteStringFromList(List<string> slist, string s)
+        {
+            for (int i = 0; i < slist.Count; i++)
+            {
+                if (slist[i] == s)
+                {
+                    slist.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+        public static void DeleteStringFromList1(List<string> slist, string s)
+        {
+            for (int i = 0; i < slist.Count; i++)
+            {
+                if (AreStringEquals(slist[i], s))
+                {
+                    slist.RemoveAt(i);
+                    i--;
+                }    
+            }
+        }
+
+        public static bool AreStringEquals(string s1, string s2)
+        {
+            if (s1.Length != s2.Length)
+                return false;
+            for (int i = 0; i < s1.Length; i++)
+            {
+                if (s1[i] != s2[i])
+                    return false;
+            }
+            return true;
+        }
     }
 }

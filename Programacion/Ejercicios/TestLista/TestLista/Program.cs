@@ -56,6 +56,14 @@
             double interpolation = Ejercicios.GetInterpolacionLineal(10, 100, 0.5);
             Console.WriteLine(interpolation);
 
+            List<string> strings = new List<string>();
+            string s = "0";
+            string t = "r52435";
+            strings.Add(s);
+            strings.Add(t);
+            Ejercicios.DeleteStringFromList(strings, s);
+
+
 
 
         }

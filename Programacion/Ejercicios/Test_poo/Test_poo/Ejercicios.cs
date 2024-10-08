@@ -57,6 +57,20 @@ namespace Test_poo
 
         //le paso dos vectores2d (tiene dos elementos double x e y) y me calcula la interpolacion lineal de esos dos vectores
         //
+        public static Vector Lerp(Vector c1, Vector c2, double u)
+        {
+            Vector vector = new();
+
+            if (c1 == null || c2 == null)
+                return vector;
+
+            vector.x = GetInterpolacionLineal(c1.x, c2.x, u);
+            vector.y = GetInterpolacionLineal(c1.x, c2.y, u);
+
+            return vector;
+
+        }
+
         //funcion que le paso un vector2d y me devuelve su modulo (lo que mide) -> hipotenusa = raizacuadrada cateto^2 + cateto^2
     }
 }

@@ -31,9 +31,12 @@ namespace Test_poo
         }
 
         //Lerp
-        public static Colour GetColour(Colour c1, Colour c2, double u)
+        public static Colour Lerp(Colour c1, Colour c2, double u)
         {
             Colour color = new();
+
+            if (c1 == null || c2 == null)
+                return color;
 
             color.r = GetInterpolacionLineal(c1.r, c2.r, u);
             color.g = GetInterpolacionLineal(c1.g, c2.g, u);
@@ -44,12 +47,16 @@ namespace Test_poo
 
         }
 
-        public void PrintColours(Colour colour)
+        public static void PrintColours(Colour colour)
         {
             Console.WriteLine(colour.r);
             Console.WriteLine(colour.g);
             Console.WriteLine(colour.b);
             Console.WriteLine(colour.a);
         }
+
+        //le paso dos vectores2d (tiene dos elementos double x e y) y me calcula la interpolacion lineal de esos dos vectores
+        //
+        //funcion que le paso un vector2d y me devuelve su modulo (lo que mide) -> hipotenusa = raizacuadrada cateto^2 + cateto^2
     }
 }

@@ -232,11 +232,16 @@ namespace test_list
             return value;
         }
         //le paso una lista de strings y un string, borra de la lista todos los string que coincidan con el string
+        //al pasarle string hay que comprobar si el mismo string es null
         public static void DeleteStringFromList(List<string> slist, string s)
         {
+            if (slist == null || s == null)
+                return;
+            
             for (int i = 0; i < slist.Count; i++)
             {
-                if (slist[i] == s)
+                string element = slist[i];
+                if (element != null && element == s)
                 {
                     slist.RemoveAt(i);
                     i--;
@@ -266,5 +271,8 @@ namespace test_list
             }
             return true;
         }
+        //funcion lerp interpolacion lineal
+
+
     }
 }

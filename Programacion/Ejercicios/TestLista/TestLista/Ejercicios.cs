@@ -294,17 +294,18 @@ namespace test_list
 
         public static bool Contains(List<string> ls, string s)
         {
-            if (ls == null || s == null)
-                return false;
+            //esto esta mal
+            //if (ls == null || s == null)
+            //    return false;
 
-            for(int i = 0; i < ls.Count; i++)
-            {
-                if (ls == null && ls[i] != s)
-                    return false;
-            }
-            return true;
+            //for(int i = 0; i < ls.Count; i++)
+            //{
+            //    if (ls == null && ls[i] != s)
+            //        return false;
+            //}
+            //return true;
 
-            //return IndexOf(ls, s) >= 0
+            return IndexOfList(ls, s) >= 0;
         }
         //binary search
 

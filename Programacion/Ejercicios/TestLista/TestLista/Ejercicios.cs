@@ -273,6 +273,38 @@ namespace test_list
         }
         //funcion lerp interpolacion lineal
 
+        //hacer una funcion que le paso una lista de string y un valor, y em devuelve la primera posicion donde se encuentra ese valor en la lista
 
+        public static int IndexOfList(List<string> l, string n)
+        {
+            if (l == null || n == null)
+                return -1;
+            string result = "";
+
+            for (int i = 0; i < l.Count; i++)
+            {
+                result = l[i];
+                if (result != null && result == n)
+                    return i;
+            }
+            return -1;
+        }
+
+        //hacer una funcion que me diga si un valor se encuentra en una lista de strings o no
+
+        public static bool Contains(List<string> ls, string s)
+        {
+            if (ls == null || s == null)
+                return false;
+
+            for(int i = 0; i < ls.Count; i++)
+            {
+                if (ls == null && ls[i] != s)
+                    return false;
+            }
+            return true;
+
+            //return IndexOf(ls, s) >= 0
+        }
     }
 }

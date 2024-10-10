@@ -57,22 +57,27 @@ namespace Test_poo
 
         //le paso dos vectores2d (tiene dos elementos double x e y) y me calcula la interpolacion lineal de esos dos vectores
         //
-        public static Vector Lerp(Vector c1, Vector c2, double u)
+        public static Vector2D Lerp(Vector2D c1, Vector2D c2, double u)
         {
-            Vector vector = new();
+            //if ()
+            Vector2D result = new();
 
             if (c1 == null || c2 == null)
-                return vector;
+                return result;
 
-            vector.x = GetInterpolacionLineal(c1.x, c2.x, u);
-            vector.y = GetInterpolacionLineal(c1.x, c2.y, u);
+            result.x = GetInterpolacionLineal(c1.x, c2.x, u);
+            result.y = GetInterpolacionLineal(c1.x, c2.y, u);
 
-            return vector;
+            return result;
         }
 
         //funcion que le paso un vector2d y me devuelve su modulo (lo que mide) -> hipotenusa = raizacuadrada cateto^2 + cateto^2
-        public static double GetModule(Vector v1)
+        public static double GetModule(Vector2D v1)
         {
+            //comprobar que no de null
+            if (v1 == null)
+                return 0.0;
+
             double modX = v1.x * v1.x;
             double modY = v1.y * v1.y;
             double modS = modX + modY;

@@ -66,7 +66,9 @@
 
 
 
-
+            List<double> numeros = new List<double> { 1, 3, 5, 7, 9, 11, 13, 15 };
+            int valorBuscado = 9;
+            int resultado = Ejercicios.BinarySearch(numeros, valorBuscado);
         }
     }
 }

@@ -320,15 +320,12 @@ namespace test_list
 
                 if (list[mid] == value)
                     return mid;
-                if ()
-
-
-
-
-
+                else if (list[mid] > value) 
+                    max = mid - 1;
+                else
+                    min = mid + 1;
             }
-            
+            return -1;
         }
-
     }
 }

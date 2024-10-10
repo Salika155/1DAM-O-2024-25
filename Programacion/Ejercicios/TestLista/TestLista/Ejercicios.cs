@@ -306,5 +306,29 @@ namespace test_list
 
             //return IndexOf(ls, s) >= 0
         }
+        //binary search
+
+        public static int BinarySearch(List<double> list, double value)
+        {
+            int min = 0;
+            int max = list.Count - 1;
+            //int position = 0;
+
+            while (min <= max)
+            {
+                int mid = (max + min) / 2;
+
+                if (list[mid] == value)
+                    return mid;
+                if ()
+
+
+
+
+
+            }
+            
+        }
+
     }
 }

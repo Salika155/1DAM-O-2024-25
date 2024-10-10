@@ -68,9 +68,19 @@ namespace Test_poo
             vector.y = GetInterpolacionLineal(c1.x, c2.y, u);
 
             return vector;
-
         }
 
         //funcion que le paso un vector2d y me devuelve su modulo (lo que mide) -> hipotenusa = raizacuadrada cateto^2 + cateto^2
+        public static double GetModule(Vector v1)
+        {
+            double modX = v1.x * v1.x;
+            double modY = v1.y * v1.y;
+            double modS = modX + modY;
+            double mod = Math.Sqrt(modS);
+
+            return mod;
+        }
+
+        
     }
 }

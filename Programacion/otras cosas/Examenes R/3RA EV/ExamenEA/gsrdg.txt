@@ -1,0 +1,13 @@
+
+
+1. Si hago un indexof para recorrer las posiciones del array, 
+no tengo por que ordenarlo, me pide en que posicion esta el minimo, maximo y el medio
+pero para la mediana si hace falta que este ordenado de menor a mayor
+
+- Tengo el algoritmo de ordenamiento
+- Tengo el indexof para recorrerlo
+
+2. Funcion que reciba una lista de numeros enteros
+devolvera pares, osea listas de 2 numeros y que sumen el numero que le pases
+
+tengo que comprobar que la suma de esos dos numeros sea el valor que me pasan como condicion

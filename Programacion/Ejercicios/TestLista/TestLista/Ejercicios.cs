@@ -384,5 +384,11 @@ namespace test_list
         }
 
         //hacer una funcion que le paso una lista de enteros y me devuelve la mediana (numero que esta en la propia lista, la mitad de los valores estan por debajo y la otra por encima
+        public static int GetMedianaFromList(List<int> l)
+        {
+            int result = 0;
+
+            return result;
+        }
     }
 }

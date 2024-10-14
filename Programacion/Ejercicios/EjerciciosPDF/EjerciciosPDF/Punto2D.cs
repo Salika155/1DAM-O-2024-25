@@ -8,5 +8,11 @@ namespace EjerciciosPDF
 {
     internal class Punto2D
     {
+        public int x;
+        public int y;
+
+        public Punto2D() 
+        {
+        }
     }
 }

@@ -69,6 +69,14 @@
             List<double> numeros = new List<double> { 1, 3, 5, 7, 9, 11, 13, 15 };
             int valorBuscado = 9;
             int resultado = Ejercicios.BinarySearch(numeros, valorBuscado);
+
+            List<int> numOrden = new List<int> { 4, 1, 6, 8, 0 };
+            Ejercicios.OrdenarLista(numOrden);
+            //Console.WriteLine(numOrden);
+
+            List<int> numOrden1 = new List<int> { 4, 1, 6, 8, 0 };
+            Ejercicios.OrdenarListaWithForDouble(numOrden1);
+            Console.WriteLine(numOrden1);
         }
     }
-}
+    }

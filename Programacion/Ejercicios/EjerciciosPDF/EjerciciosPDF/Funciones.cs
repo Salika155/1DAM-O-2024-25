@@ -168,14 +168,83 @@ namespace EjerciciosPDF
             if (n <= 1)
                 return false;
 
-            if (n % 1 == 0 && n % n == 0)
-                return true;
-            return false;
+            for(int i = 2; i <= n; i++)
+            {
+                if (IsDivisible(n, i))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool IsDivisible(int a, int b)
+        {
+            return b != 0 && a % b == 0;
         }
         //12. Haz una función que, dado un entero, devuelva una cadena que contenga todos los números primos desde el 1 hasta ese número, separado por comas.
+        public static string GetPrimos(int n)
+        {
+            string result = "";
+            
+            for(int i = 2; i <= n; i++)
+            {
+                if (IsPrime(i))
+                {
+                    if (result.Length > 0)
+                    {
+                        result += ", ";
+                    }
+                    result += i.ToString();
+                }
+            }
+            return result;
+        }
+
+        //private static bool EsPrimo(int n)
+        //{
+        //    if (n< 2) return false;
+
+        //    for (int i = 2; i <= n; i++)
+        //    {
+        //        if (n % i == 0)
+        //            return false;
+        //    }
+        //    return true;
+        //}
+
         //13. Haz una función que, dado un entero, te devuelva un string con el contenido de la serie de fibonacci por ese número separados por un guión. Este string comienza por un guión y
         //termina con un guión.
+        public static string SerieFibbonacci(int n)
+        {
+            int aux = 0;
+            int aux2 = 1;
+            string result = "";
+
+            while(aux <= n)
+            {
+                result += aux;
+                if (aux2 <= n)
+                    result += ", ";
+
+                int aux3 = aux;
+                aux = aux2;
+                aux2 = aux3 + aux;
+            }
+            return result;
+        }
+
+
         //14. Haz una función que, dado dos puntos 2D, te devuelva la distancia entre estos puntos.
+        public static double GetDistanceBetween2Punto2D(Punto2D a, Punto2D b)
+        {
+            double distanceY = (b.y - a.y) * (b.y - a.y);
+            double distanceX = (b.x - a.x) * (b.x - a.x);
+
+            double result = Math.Sqrt(distanceX) + Math.Sqrt(distanceY);
+
+            return result;
+        }
         //15. Haz una función que te devuelva el determinante de una matriz 3x3.
         //16. Haz una función que te devuelva el área de un círculo.
         //17. Haz una función que te devuelva el volumen de una esfera.
@@ -186,6 +255,6 @@ namespace EjerciciosPDF
         //22. Realiza una función que imprima la tabla de multiplicar de dos números. Es decir, dado un número n, imprimiría 1x1xn, 1x2xn, 1x3xn, .... 2x1xn, 2x2xn, ... hasta el 10x10.
         //23. Haz una función que devuelva, dado un string, ese mismo string pero escrito al revés. No se puede utilizar ninguna función dentro de esa función.
         //24. Haz una función que, dado un número, imprima por pantalla, el valor en binario de ese número.
-        
+
     }
 }

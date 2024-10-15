@@ -384,21 +384,22 @@ namespace test_list
         }
 
         //hacer una funcion que le paso una lista de enteros y me devuelve la mediana (numero que esta en la propia lista, la mitad de los valores estan por debajo y la otra por encima
-        public static double GetMedianaFromList(List<int> l)
+        public static int GetMedianaFromList(List<int> l)
         {
             if (l == null || l.Count == 0)
-                return 0;
+                return int.MinValue;
 
             OrdenarListaWithDoubleFor(l);
-            double result;
+            int result;
             int n = l.Count;
-            int ln = l[n / 2];
+            int ln = l[l.Count / 2];
 
             if (n % 2 == 0)
             {
                 int p1 =ln;
                 int p2 = l[(n / 2) - 1];
-                result = (p1 + p2) / 2.0;
+                result = (p1 + p2) / 2;
+                //result = l[(n / 2) - 1];
             }
             else 
                 result = ln;

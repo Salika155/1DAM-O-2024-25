@@ -364,7 +364,7 @@ namespace test_list
             #endregion
         }
 
-        public static void OrdenarListaWithForDouble(List<int> l)
+        public static void OrdenarListaWithDoubleFor(List<int> l)
         {
             if (l == null)
                 return;
@@ -384,9 +384,24 @@ namespace test_list
         }
 
         //hacer una funcion que le paso una lista de enteros y me devuelve la mediana (numero que esta en la propia lista, la mitad de los valores estan por debajo y la otra por encima
-        public static int GetMedianaFromList(List<int> l)
+        public static double GetMedianaFromList(List<int> l)
         {
-            int result = 0;
+            if (l == null || l.Count == 0)
+                return 0;
+
+            OrdenarListaWithDoubleFor(l);
+            double result;
+            int n = l.Count;
+            int ln = l[n / 2];
+
+            if (n % 2 == 0)
+            {
+                int p1 =ln;
+                int p2 = l[(n / 2) - 1];
+                result = (p1 + p2) / 2.0;
+            }
+            else 
+                result = ln;
 
             return result;
         }

@@ -75,7 +75,7 @@
             //Console.WriteLine(numOrden);
 
             List<int> numOrden1 = new List<int> { 4, 1, 6, 8, 0 };
-            Ejercicios.OrdenarListaWithForDouble(numOrden1);
+            Ejercicios.OrdenarListaWithDoubleFor(numOrden1);
             Console.WriteLine(numOrden1);
         }
     }

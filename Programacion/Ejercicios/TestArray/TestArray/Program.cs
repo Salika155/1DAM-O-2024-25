@@ -5,7 +5,6 @@
         static void Main(string[] args)
         {
             int[] array = new int[]{ 1, 2, 3, 4, 5 };
-
             int n = 6;
 
             int [] newarray = ExercisesArray.Append(array, n);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -118,5 +119,35 @@ namespace TestArray
         //me van a pasar dos arrays, la premisa es que estos arrays estan ordenados, MergeSort. Tenemos que generar un array ordenado con todos estos valores
         //de los dos arrays -> mirar cual es mas pequeño de los dos valores, e ir añadiendo al nuevo array
 
+        public static int[] MergeSortArray(int[] array1, int[] array2)
+        {
+            int i = 0;
+            int j = 0;
+            int k = 0;
+            int array1l = array1.Length;
+            int array2l = array2.Length;
+            int[] arraysmerge = new int[array1l + array2l];
+            
+
+            for (; i < array1l && j < array2l; k++)
+            {
+                if (array1[i] <= array2[j])
+                {
+                    arraysmerge[k] = array1[i];
+                    i++;
+                }
+                else
+                {
+                    arraysmerge[k] = array2[j];
+                    j++;
+                }  
+            }
+            for (; i < array1l; i++, k++)
+                arraysmerge[k] = array1[i];
+            for (; j < array2l; j++, k++)
+                arraysmerge[k] = array2[j];
+
+            return arraysmerge;
+        }
     }
 }

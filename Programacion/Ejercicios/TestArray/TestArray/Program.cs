@@ -11,8 +11,14 @@
             Console.WriteLine(newarray);
 
             int index = 5;
-            int[] newarray2 = ExercisesArray.Remove(array, index);
+            int[] newarray2 = ExercisesArray.RemoveAt(array, index);
             Console.WriteLine(newarray2);
+
+
+            int indexn = 3;
+            int indexvalor = 15;
+            int[] newarray3 = ExercisesArray.Insert(array, indexn, indexvalor);
+            Console.WriteLine(newarray3);
         }
     }
 }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TestArray
 {
     internal class ExercisesArray
@@ -126,8 +119,16 @@ namespace TestArray
             int array2l = array2.Length;
             int[] arraysmerge = new int[array1l + array2l];
 
-            if (array1 == null || array2 == null)
-            return arraysmerge;
+            if (array1 == null && array2 == null)
+            return []; //valido mejor que devolver [0] o null
+            //if (array1 == null || array1.Length == 0)
+            //    return Copy(array2);
+            //if (array2 == null || array2.Length == 0)
+            //    return Copy(array1);
+            //todo junto:
+            //if ((array1 == null || array1.Length == 0)
+            //    &&
+            //    (array2 == null || array2.Length == 0))
 
             for (; i < array1l && j < array2l; k++)
             {
@@ -148,6 +149,28 @@ namespace TestArray
                 arraysmerge[k] = array2[j];
 
             return arraysmerge;
+
+            /*ps int[] Merge(int[] a, int[]b)
+             * 
+             * int[] result [a.length + b.length]
+             * int i = 0; j = 0; k = 0;
+             * while(i < a.Length && j < b.Length)
+             * {
+             *  if( a[i] < b[j])
+             *  result[k++] = a[i++]
+             *  else
+             *  {
+             *  result[k++] = b[j++]
+             *  }
+             *  }
+             *  
+             *  while(i < a.Length)
+             *  result[k++] = a[i++]
+             *  while (j < b.Length)
+             *  result[k++] = b.[j++]
+             *  }
+             *  return result;
+             * */
         }
     }
 }

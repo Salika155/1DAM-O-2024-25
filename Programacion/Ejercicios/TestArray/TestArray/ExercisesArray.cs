@@ -121,13 +121,13 @@ namespace TestArray
 
         public static int[] MergeSortArray(int[] array1, int[] array2)
         {
-            int i = 0;
-            int j = 0;
-            int k = 0;
+            int i = 0; int j = 0; int k = 0;
             int array1l = array1.Length;
             int array2l = array2.Length;
             int[] arraysmerge = new int[array1l + array2l];
-            
+
+            if (array1 == null || array2 == null)
+            return arraysmerge;
 
             for (; i < array1l && j < array2l; k++)
             {

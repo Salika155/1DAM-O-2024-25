@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace PokerGame
 {
     internal class Card
     {
-        public int Number;
-        public CardType Kind;
-        public ColorType Color;
+        private int _number;
+        public CardType _kind;
+        public ColorType _color;
         
         public Card()
         {
@@ -19,14 +15,36 @@ namespace PokerGame
 
         public Card(int number, ColorType color , CardType kind)
         {
-            this.Number = number;
-            this.Color = color;
-            this.Kind = kind;
+            //this.Number = number;
+            //this.Color = color;
+            //this.Kind = kind;
+            _number = number;
+            _color = color;
+            _kind = kind;
+            //this. hace referencia al mas cercano, en este caso la variable number que esta en Card por parametro()
         }
 
-        public void SetNumber(int number)
+        public Card(ColorType color, CardType kind, int number)
         {
-            this.Number = number;
+
+        }
+
+        //setter siempre con value de nombre
+        public void SetNumber(int value)
+        {
+            if (value > 13 || value < 1)
+                return;
+            _number = value;
+        }
+
+        public int GetNumber()
+        {
+            return this._number;
+        }
+
+        public void SetColor(ColorType value)
+        {
+            _color = value;
         }
     }
 }

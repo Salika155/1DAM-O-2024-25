@@ -29,6 +29,25 @@ namespace PokerGame
 
         }
 
+        public int Number
+        {
+            get { return _number; }
+            set { SetNumber(value); } 
+        }
+
+        public ColorType Color
+        {
+            get { return _color; }
+            set { _color = value; } 
+        }
+
+        public CardType Kind
+        {
+            get { return _kind; }
+            set { _kind = value; } 
+        }
+
+
         //setter siempre con value de nombre
         public void SetNumber(int value)
         {

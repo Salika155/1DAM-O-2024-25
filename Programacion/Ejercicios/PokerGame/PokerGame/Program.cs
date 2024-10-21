@@ -12,7 +12,7 @@
             //este es uno de las mejores maneras para meterselo ya que no depende del orden de introducir elementos
             Card c2 = new Card()
             {
-                _number = 5,
+                Number = 5,
                 Color = ColorType.BLACK,
                 Kind = CardType.CLOVER
             };

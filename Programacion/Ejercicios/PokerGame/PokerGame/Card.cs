@@ -44,7 +44,54 @@ namespace PokerGame
 
         public void SetColor(ColorType value)
         {
-            _color = value;
+            if (ColorType.RED == value)
+                _color = ColorType.RED;
+            else
+                _color = ColorType.BLACK;
+            //_color = value;
+        }
+
+        public ColorType GetColor(Card card) 
+        {
+           if(ColorType.RED == card._color)
+                return ColorType.RED;
+           else
+                return ColorType.BLACK;
+           //return _color;
+        }
+        public ColorType GetColor()
+        {
+            return _color;
+        }
+
+        public void SetKind(CardType kind) 
+        {
+            if (CardType.HEARTS == kind)
+                _kind = CardType.HEARTS;
+            if (CardType.CLOVER == kind)
+                _kind = CardType.CLOVER;
+            if (CardType.DIAMOND == kind)
+                _kind = CardType.DIAMOND;
+            if (CardType.SPADES == kind)
+                _kind = CardType.SPADES;
+            //_kind = kind;
+        }
+
+        public CardType GetKind(Card card) 
+        {
+            if (CardType.HEARTS == card._kind)
+                return CardType.HEARTS;
+            else if (CardType.CLOVER == card._kind)
+                return CardType.CLOVER;
+            else if (CardType.DIAMOND == card._kind)
+                return CardType.DIAMOND;
+            else
+                return CardType.SPADES;
+            //return _kind
+        }
+        public CardType GetKind()
+        {
+            return _kind;
         }
     }
 }

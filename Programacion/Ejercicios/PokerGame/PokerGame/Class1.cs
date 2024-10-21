@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokerGame
 {
-    internal enum ColorType
+    public enum ColorType
     {
         BLACK,
         RED

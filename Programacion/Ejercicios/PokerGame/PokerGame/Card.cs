@@ -2,26 +2,48 @@
 
 namespace PokerGame
 {
-    internal class Card
+    public class Card
     {
         private int _number;
         public CardType _kind;
-        public ColorType _color;
+        //public ColorType _color;
         
-        public Card()
-        {
 
-        }
-
-        public Card(int number, ColorType color , CardType kind)
+        //politica 1. Corregir valores. -> condicion if 
+        //politica 2. Petar -> errores
+        //politica 3. Deja constructor pro defecto, poner constructor en private
+        private Card(int number, ColorType color , CardType kind)
         {
+            if (1 <= number && number <= 13)
+                _number = number;
+            else
+                //_number = 0;
+                throw new Exception("Te ha petao socio");
             //this.Number = number;
             //this.Color = color;
             //this.Kind = kind;
-            _number = number;
+            
             _color = color;
             _kind = kind;
             //this. hace referencia al mas cercano, en este caso la variable number que esta en Card por parametro()
+        }
+
+        //cuando el objeto pueda ser null, bien sea parametro de entrada o lo que devuelvas mejor poner "?"lñç
+
+        public static Card? Create(int number, ColorType color, CardType kind)
+        {
+            if (number < 1)
+                return null;
+            if (number > 10)
+                return null;
+            return new Card(number, color, kind);
+        }
+        public bool IsValid()
+        {
+            if (_number <= 0)
+                return false;
+            return true;
+            //return number > 0 
         }
 
         public Card(ColorType color, CardType kind, int number)
@@ -63,24 +85,22 @@ namespace PokerGame
 
         public void SetColor(ColorType value)
         {
-            if (ColorType.RED == value)
-                _color = ColorType.RED;
-            else
-                _color = ColorType.BLACK;
-            //_color = value;
+            
         }
 
-        public ColorType GetColor(Card card) 
-        {
-           if(ColorType.RED == card._color)
-                return ColorType.RED;
-           else
-                return ColorType.BLACK;
-           //return _color;
-        }
+        //public ColorType GetColor(Card card) 
+        //{
+        //   if(ColorType.RED == card._color)
+        //        return ColorType.RED;
+        //   else
+        //        return ColorType.BLACK;
+        //   //return _color;
+        //}
         public ColorType GetColor()
         {
-            return _color;
+            if (_kind == CardType.SPADES || _kind == CardType.CLOVER)
+                return ColorType.BLACK;
+            return ColorType.RED;
         }
 
         public void SetKind(CardType kind) 

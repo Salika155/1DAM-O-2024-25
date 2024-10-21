@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokerGame
 {
-    internal enum CardType
+    public enum CardType
     {
         DIAMOND,
         CLOVER,

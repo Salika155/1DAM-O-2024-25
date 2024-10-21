@@ -12,7 +12,7 @@ namespace PokerGame
         //politica 1. Corregir valores. -> condicion if 
         //politica 2. Petar -> errores
         //politica 3. Deja constructor pro defecto, poner constructor en private
-        private Card(int number, ColorType color , CardType kind)
+        private Card(int number, CardType kind)
         {
             if (1 <= number && number <= 13)
                 _number = number;
@@ -23,20 +23,20 @@ namespace PokerGame
             //this.Color = color;
             //this.Kind = kind;
             
-            _color = color;
+            //_color = color;
             _kind = kind;
             //this. hace referencia al mas cercano, en este caso la variable number que esta en Card por parametro()
         }
 
         //cuando el objeto pueda ser null, bien sea parametro de entrada o lo que devuelvas mejor poner "?"lñç
 
-        public static Card? Create(int number, ColorType color, CardType kind)
+        public static Card? Create(int number, CardType kind)
         {
             if (number < 1)
                 return null;
-            if (number > 10)
+            if (number > 13)
                 return null;
-            return new Card(number, color, kind);
+            return new Card(number, kind);
         }
         public bool IsValid()
         {
@@ -46,10 +46,10 @@ namespace PokerGame
             //return number > 0 
         }
 
-        public Card(ColorType color, CardType kind, int number)
-        {
+        //public Card(CardType kind, int number)
+        //{
 
-        }
+        //}
 
         public int Number
         {
@@ -57,11 +57,11 @@ namespace PokerGame
             set { SetNumber(value); } 
         }
 
-        public ColorType Color
-        {
-            get { return _color; }
-            set { _color = value; } 
-        }
+        //public ColorType Color
+        //{
+        //    get { return _color; }
+        //    set { _color = value; } 
+        //}
 
         public CardType Kind
         {
@@ -80,13 +80,13 @@ namespace PokerGame
 
         public int GetNumber()
         {
-            return this._number;
+            return _number;
         }
 
-        public void SetColor(ColorType value)
-        {
+        //public void SetColor()
+        //{
             
-        }
+        //}
 
         //public ColorType GetColor(Card card) 
         //{

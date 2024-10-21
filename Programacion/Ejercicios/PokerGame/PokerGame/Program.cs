@@ -34,6 +34,29 @@ namespace PokerGame
 
             Deck deck = new Deck();
             deck.Init();
+            deck.Add(1, CardType.HEARTS);
+            deck.Add(5, CardType.SPADES);
+            deck.Add(8, CardType.CLOVER);
+            deck.Add(10, CardType.DIAMOND);
+            deck.Add(12, CardType.CLOVER);
+            deck.Add(15, CardType.CLOVER);
+            deck.Add(75, CardType.CLOVER);
+
+            deck.Suffle();
+
+            deck.GetCardCount();
+
+            deck.Contains(1, CardType.HEARTS);
+
+            deck.RemoveAt(0);
+
+            deck.IndexOf(8, CardType.SPADES);
+            deck.IndexOf(10, CardType.DIAMOND);
+
+            deck.GetCardAt(3);
+
+
+
             //para quitar warning en init de constructor si devuelve null se pone ! al final
         }
     }

@@ -12,7 +12,7 @@ namespace PokerGame
             //c1.SetNumber(3);
             //int n = c1.GetNumber();
 
-            ////este es uno de las mejores maneras para meterselo ya que no depende del orden de introducir elementos
+            //este es uno de las mejores maneras para meterselo ya que no depende del orden de introducir elementos
             //Card c2 = new Card()
             //{
             //    Number = 5,

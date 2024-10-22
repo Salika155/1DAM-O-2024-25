@@ -30,14 +30,14 @@ namespace PokerGame
 
         public Card? DrawCard() //si le pongo el ? me ahorraria la comprobacion de si la lista esta vacia
         {
-            ////if (_cardList.Count == 0)
-            ////    throw new Exception("No hay cartas");
+            //if (_cardList.Count == 0)
+            //    throw new Exception("No hay cartas");
             //if (_cardList.Count == 0)
             //    return null;
             //int index = _cardList.Count - 1;
-            ////forma 1 java
-            ////var card = GetCardAt(GetCardCount() - 1);
-            ////RemoveAt(GetCardCount() - 1);
+            //forma 1 java
+            //var card = GetCardAt(GetCardCount() - 1);
+            //RemoveAt(GetCardCount() - 1);
             //var card = _cardList[index];
             //_cardList.RemoveAt(index);
             //return card;
@@ -93,7 +93,7 @@ namespace PokerGame
 
             for(int i = 0; i < _cardList.Count ; i++)
             {
-                int randomIndex = random.Next(i, _cardList.Count);
+                int randomIndex = random.Next(1, 100);
 
                 Card aux = _cardList[i];
                 _cardList[i] = _cardList[randomIndex];

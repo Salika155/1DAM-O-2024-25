@@ -132,5 +132,19 @@ namespace PokerGame
         {
             return _kind;
         }
+
+        public static bool AreEquals(Card a, Card b)
+        {
+            return a.GetNumber() == b.GetNumber() && a.GetKind() == b.GetKind();
+        }
+
+        //public static bool operator == (Card? a, Card? b)
+        //{
+        //    return a.GetNumber() == b.GetNumber() && a.GetKind() == b.GetKind();
+        //}
+        //public static bool operator != (Card? a, Card? b)
+        //{
+        //    return !(a == b);
+        //}
     }
 }

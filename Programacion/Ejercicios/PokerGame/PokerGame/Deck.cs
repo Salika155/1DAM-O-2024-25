@@ -8,7 +8,7 @@ namespace PokerGame
         //cardlist no va a apuntar a otra lista.
 
         //que cosas quiero hacer con una baraja
-        public void Add(Card card)
+        public void Add(Card? card) //si pongo aqui el interrogante, te puedes ahorrar la comprobacion en el otro metodo Add del null
         {
             if (card == null)
                 return;
@@ -23,36 +23,60 @@ namespace PokerGame
         {
             Card? newCard = Card.Create(number, kind);
 
-            if (newCard == null || Contains(newCard))
-                return;
-            _cardList.Add(newCard);
+            //if (newCard == null)
+            //    return;
+            Add(newCard);
         }
 
-        public Card DrawCard()
+        public Card? DrawCard() //si le pongo el ? me ahorraria la comprobacion de si la lista esta vacia
         {
-            if (_cardList.Count == 0)
-                throw new Exception("No hay cartas");
-            Card card = _cardList[_cardList.Count - 1];
-            _cardList.RemoveAt(_cardList.Count - 1);
-            return card;
+            ////if (_cardList.Count == 0)
+            ////    throw new Exception("No hay cartas");
+            //if (_cardList.Count == 0)
+            //    return null;
+            //int index = _cardList.Count - 1;
+            ////forma 1 java
+            ////var card = GetCardAt(GetCardCount() - 1);
+            ////RemoveAt(GetCardCount() - 1);
+            //var card = _cardList[index];
+            //_cardList.RemoveAt(index);
+            //return card;
+            return DrawCardAt(GetCardCount() - 1);
+        }
 
+        public Card? DrawCardAt(int index)
+        {
+            //if (_cardList.Count == 0)
+            //    throw new Exception("No hay cartas");
+            //if (_cardList.Count == 0)
+            //    return null;
+
+            //forma 1 java
+            var card = GetCardAt(index);
+            if (card != null)
+                RemoveAt(index);
+            return card;
         }
 
         public void RemoveAt(int index)
         {
-            if (index < 0 || index >= _cardList.Count)
+            if (index < 0 || index >= GetCardCount())
                 return;
             _cardList.RemoveAt(index);
         }
 
         public void Remove(Card card)
         {
-            if(!card.IsValid())
-                return;
-
-            for(int i = 0; i < _cardList.Count; i++)
-                if (_cardList[i].Number == card.Number && _cardList[i].Kind == card.Kind)
-                    _cardList.RemoveAt(i);
+            //if(!card.IsValid())
+            //    return;
+            //int index = IndexOf(card);
+            //if (index >= 0)
+            //    RemoveAt(index);
+            //for(int i = 0; i < _cardList.Count; i++)
+            //    if (_cardList[i].Number == card.Number && _cardList[i].Kind == card.Kind)
+            //        _cardList.RemoveAt(i);
+            //Forma correcta corta:
+            RemoveAt(IndexOf(card));
 
         }
 
@@ -79,33 +103,50 @@ namespace PokerGame
 
         public bool Contains(int number, CardType kind)
         {
-            foreach(Card card in _cardList)
-            {
-                if(card.GetNumber() == number && card.GetKind() == kind)
-                    return true;
-            }
-            return false;
+            //foreach(Card card in _cardList)
+            //{
+            //    if(card.GetNumber() == number && card.GetKind() == kind)
+            //        return true;
+            //}
+            //return false;
+            return IndexOf(number, kind) >= 0;
         }
 
         public bool Contains(Card card)
         {
-            foreach(Card c in _cardList)
-            {
-                if (c.GetNumber() ==  card.GetNumber() && c.GetKind() == card.Kind) 
-                    return true;
-            }
-            return false;
+            //foreach(Card c in _cardList)
+            //{
+            //    if (c.GetNumber() ==  card.GetNumber() && c.GetKind() == card.Kind) 
+            //        return true;
+            //}
+            //return false;
+            if (card == null)
+                return false;
+            return Contains(card.GetNumber(), card.GetKind());
         }
 
         public int IndexOf(int number, CardType kind)
         {
-            for(int i = 0; i < _cardList.Count; i++) 
+            int n = GetCardCount();
+            for (int i = 0; i < n; i++)
             {
                 Card card = _cardList[i];
                 if (card.GetNumber() == number && card.GetKind() == kind)
+                    //if (_cardList[i] == c)
+                    return i;
+                //posible solucion
+                if (Card.AreEquals(_cardList[i], card))
                     return i;
             }
+
             return -1;
+        }
+
+        public int IndexOf(Card? card)
+        {
+            if (card == null)
+                return -1;
+            return IndexOf(card.GetNumber(), card.GetKind());
         }
 
         public int GetCardCount()
@@ -126,7 +167,20 @@ namespace PokerGame
 
         public void Init()
         {
-            Add(Card.Create(1, CardType.HEARTS));
+            _cardList.Clear();
+            //Add(Card.Create(1, CardType.HEARTS));
+            InitFigure(CardType.CLOVER);
+            InitFigure(CardType.DIAMOND);
+            InitFigure(CardType.HEARTS);
+            InitFigure(CardType.SPADES);
+        }
+
+        private void InitFigure(CardType type)
+        {
+            for (int i = 1; i < 13; i++)
+            {
+                Add(Card.Create(i, type));
+            }
         }
     }
 }

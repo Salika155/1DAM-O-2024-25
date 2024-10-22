@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExamenNov2023
 {
-    internal class Qualification
+    public class Qualification
     {
     }
 }

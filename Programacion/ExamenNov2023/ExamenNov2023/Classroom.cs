@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ExamenNov2023
 {
-    internal class Classroom
+    public class Classroom
     {
+        private readonly List<Student> _students;
     }
 }

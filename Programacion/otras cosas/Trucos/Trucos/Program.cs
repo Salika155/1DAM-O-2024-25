@@ -75,7 +75,10 @@ namespace Trucos
             //{
             //    Console.WriteLine("Esta fuera");
             //}
-                
+
+            //        var result = new Maybe<int>(20)
+            //.Bind(x => MaybeDivide(x, 2))  // Dividir 20 entre 2
+            //.Bind(x => MaybeAddFive(x));    // Sumar 5 al resultado
         }
     }
 }

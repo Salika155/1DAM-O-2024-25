@@ -82,22 +82,25 @@ namespace PokerGame
 
         public void Remove(int number, CardType kind)
         {
-            for (int i = 0; i < _cardList.Count; i++)
-                if (_cardList[i].Number == number && _cardList[i].Kind == kind)
-                    _cardList.RemoveAt(i);
+            int index = IndexOf(number, kind);
+            RemoveAt(index);
+
+            //for (int i = 0; i < _cardList.Count; i++)
+            //    if (index >= 0)
+            //        _cardList.RemoveAt(i);
         }
 
         public void Suffle()
         {
-            Random random = new Random();
-
-            for(int i = 0; i < _cardList.Count ; i++)
+            int n = GetCardCount() - 1;
+            for(int i = 0; i < 1000; i++)
             {
-                int randomIndex = random.Next(1, 100);
+                int n1 = Utils.GetRandom(0, n);
+                int n2 = Utils.GetRandom(0, n);
 
-                Card aux = _cardList[i];
-                _cardList[i] = _cardList[randomIndex];
-                _cardList[randomIndex] = aux;
+                Card aux = _cardList[n1];
+                _cardList[n1] = _cardList[n2];
+                _cardList[n2] = aux;
             }
         }
 

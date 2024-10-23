@@ -51,11 +51,11 @@ namespace PokerGame
 
         //}
 
-        public int Number
-        {
-            get { return _number; }
-            set { SetNumber(value); } 
-        }
+        //public int Number
+        //{
+        //    get { return _number; }
+        //    set { SetNumber(value); } 
+        //}
 
         //public ColorType Color
         //{
@@ -71,12 +71,12 @@ namespace PokerGame
 
 
         //setter siempre con value de nombre
-        public void SetNumber(int value)
-        {
-            if (value > 13 || value < 1)
-                return;
-            _number = value;
-        }
+        //public void SetNumber(int value)
+        //{
+        //    if (value > 13 || value < 1)
+        //        return;
+        //    _number = value;
+        //}
 
         public int GetNumber()
         {
@@ -103,18 +103,18 @@ namespace PokerGame
             return ColorType.RED;
         }
 
-        public void SetKind(CardType kind) 
-        {
-            if (CardType.HEARTS == kind)
-                _kind = CardType.HEARTS;
-            if (CardType.CLOVER == kind)
-                _kind = CardType.CLOVER;
-            if (CardType.DIAMOND == kind)
-                _kind = CardType.DIAMOND;
-            if (CardType.SPADES == kind)
-                _kind = CardType.SPADES;
-            //_kind = kind;
-        }
+        //public void SetKind(CardType kind) 
+        //{
+        //    if (CardType.HEARTS == kind)
+        //        _kind = CardType.HEARTS;
+        //    if (CardType.CLOVER == kind)
+        //        _kind = CardType.CLOVER;
+        //    if (CardType.DIAMOND == kind)
+        //        _kind = CardType.DIAMOND;
+        //    if (CardType.SPADES == kind)
+        //        _kind = CardType.SPADES;
+        //    //_kind = kind;
+        //}
 
         public CardType GetKind(Card card) 
         {

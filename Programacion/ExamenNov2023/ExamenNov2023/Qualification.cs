@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace ExamenNov2023
 {
+    public enum SignatureType
+    {
+        MATH,
+        SCIENCE,
+        HISTORY,
+        LANGUAGE
+    }
+
     public class Qualification
     {
         private double _maths;
@@ -31,6 +39,17 @@ namespace ExamenNov2023
         public double GetQualification()
         {
             throw new NotImplementedException();
+        }
+
+        public double GetQualificationForSignature(SignatureType type)
+        {
+            if(type == SignatureType.MATH)
+                return _maths;
+            if (type == SignatureType.SCIENCE)
+                return _science;
+            if (type == SignatureType.HISTORY)
+                return _history;
+            return _language;
         }
 
         public double GetHistory() 

@@ -5,6 +5,9 @@
         static void Main(string[] args)
         {
             Classroom cl = new Classroom();
+            Notes n = new Notes();
+
+            
         }
     }
 }

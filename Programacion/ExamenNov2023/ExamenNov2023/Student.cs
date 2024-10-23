@@ -19,7 +19,7 @@ namespace ExamenNov2023
         private GenderType _gender;
         private double _width;
         private double _height;
-        Qualification qualification = new Qualification();
+        Qualification _qualification = new Qualification();
 
         public Student()
         {
@@ -42,6 +42,10 @@ namespace ExamenNov2023
             return st._name == other._name;
         }
 
+        public Qualification GetQualification()
+        {
+            return _qualification;
+        }
         public string? GetName()
         {
             return _name;
@@ -113,11 +117,33 @@ namespace ExamenNov2023
             return aux;
         }
 
-        public double GetIMC(Student student)
+        public double GetIMC(Student? student)
         {
             return GetIMC(student);
         }
 
+        public double GetAverageQualif() 
+        {
+            return _qualification.GetQualification();
+        }
 
+        public bool IsElder()
+        {
+            return _age >= 18;
+        }
+
+        public Student Clone()
+        {
+            Student s = new Student();
+
+            s._name = _name;
+            s._age = _age;
+            s._gender = _gender;
+            s._height = _height;
+            s._width = _width;
+            s._qualification = _qualification.Clone();
+
+            return s;
+        }
     }
 }

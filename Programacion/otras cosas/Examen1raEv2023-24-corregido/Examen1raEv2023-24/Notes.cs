@@ -20,11 +20,14 @@ namespace Examen1raEv2023_24
     public class Notes
     {
         //List<Student> students = new List<Student>();
+        private List<Notes> _n = new List<Notes>();
 
         private double _maths;
         private double _language;
         private double _history;
         private double _science;
+
+
         
         
 

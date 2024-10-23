@@ -19,7 +19,18 @@ namespace ExamenNov2023
 
         public Classroom(List<Student> students)
         {
-            _students = students;
+            if(students != null) 
+            {
+                for(int i = 0; i <  students.Count; i++) 
+                {
+                    Student s = students[i];
+                    if(s != null) 
+                    {
+                        _students.Add(s.Clone());
+                    }
+                }
+            }
+           
         }
 
         public string? Name
@@ -99,7 +110,10 @@ namespace ExamenNov2023
             for(int i = 0; i < _students.Count; i++)
             {
                 if (_students[i].GetName() == studentName)
-                    _students.RemoveAt(i); 
+                {
+                    _students.RemoveAt(i);
+                    i--;
+                }
             }
         }
 
@@ -113,6 +127,13 @@ namespace ExamenNov2023
         public bool ContainsStudentWithName(string? studentName) 
         {
             return IndexOf(studentName) >= 0;
+        }
+
+        public Student? GetStudentAt(int index)
+        {
+            if (index < 0 || index >= _students.Count)
+                return null;
+            return _students[index];
         }
     }
 }

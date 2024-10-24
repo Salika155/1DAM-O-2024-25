@@ -8,15 +8,17 @@ namespace PokerGame
         //cardlist no va a apuntar a otra lista.
 
         //que cosas quiero hacer con una baraja
+        //en depuracion esto repite palos
         public void Add(Card? card) //si pongo aqui el interrogante, te puedes ahorrar la comprobacion en el otro metodo Add del null
         {
             if (card == null)
                 return;
-            if (card.IsValid() == false)
+            if (!card.IsValid())
                 return;
             if (Contains(card))
                 return;
             _cardList.Add(card);
+            //Console.WriteLine($"Carta añadida: {card.GetNumber()} de {card.GetKind()}"); // Mensaje de depuración
         }
 
         public void Add(int number, CardType kind)
@@ -93,7 +95,7 @@ namespace PokerGame
         public void Suffle()
         {
             int n = GetCardCount() - 1;
-            for(int i = 0; i < 1000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 int n1 = Utils.GetRandom(0, n);
                 int n2 = Utils.GetRandom(0, n);
@@ -115,6 +117,7 @@ namespace PokerGame
             return IndexOf(number, kind) >= 0;
         }
 
+        //esto he tenido que cambiarlo
         public bool Contains(Card card)
         {
             //foreach(Card c in _cardList)
@@ -125,7 +128,13 @@ namespace PokerGame
             //return false;
             if (card == null)
                 return false;
-            return Contains(card.GetNumber(), card.GetKind());
+            foreach (var c in _cardList)
+            {
+                if (Card.AreEquals(c, card)) // Usar AreEquals para comparar cartas
+                    return true;
+            }
+            //return Contains(card.GetNumber(), card.GetKind());
+            return false;
         }
 
         public int IndexOf(int number, CardType kind)
@@ -160,7 +169,7 @@ namespace PokerGame
         //si quiero lanzar excepcion se pondria ?, si no, y solo es un null se deja igual y se retorna null
         public Card GetCardAt(int index)
         {
-            if(index < 0 || index >= GetCardCount())
+            if (index < 0 || index >= GetCardCount())
                 throw new IndexOutOfRangeException("Posicion invalida");
             //opcion 1 -> return excepcion;
             return _cardList[index];
@@ -178,12 +187,15 @@ namespace PokerGame
             InitFigure(CardType.SPADES);
         }
 
+
         private void InitFigure(CardType type)
         {
-            for (int i = 1; i < 13; i++)
+            for (int i = 1; i <= 13; i++)
             {
                 Add(Card.Create(i, type));
+                //Console.WriteLine($"Creando carta: {i} de {type}"); // En InitFigure
             }
         }
     }
+    
 }

@@ -14,7 +14,7 @@ namespace PokerGame
         //politica 3. Deja constructor pro defecto, poner constructor en private
         private Card(int number, CardType kind)
         {
-            if (1 <= number && number <= 13)
+            if (number >= 1 && number <= 13)
                 _number = number;
             else
                 //_number = 0;

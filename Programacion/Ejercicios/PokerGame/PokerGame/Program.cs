@@ -65,28 +65,43 @@ namespace PokerGame
             //deck.Add(c1);
             //deck.Add(c2);
 
-            ////inmutabilidad -> quitar acceso a los set
-            ////c2.SetNumber(1);
+            //inmutabilidad -> quitar acceso a los set
+            //c2.SetNumber(1);
 
-            Deck deck1 = new Deck();
-            deck1.Init();
+            //Deck deck1 = new Deck();
+            //deck1.Init();
 
-            for (int i = 1; i <= 13; i++)
-            {
-                deck1.Add(Card.Create(i, CardType.HEARTS));
-                deck1.Add(Card.Create(i, CardType.DIAMOND));
-                deck1.Add(Card.Create(i, CardType.CLOVER));
-                deck1.Add(Card.Create(i, CardType.SPADES));
-            }
-            deck1.Suffle();
-            Utils.PrintAllDeck(deck1);
+            //for (int i = 1; i <= 13; i++)
+            //{
+            //    deck1.Add(Card.Create(i, CardType.HEARTS));
+            //    deck1.Add(Card.Create(i, CardType.DIAMOND));
+            //    deck1.Add(Card.Create(i, CardType.CLOVER));
+            //    deck1.Add(Card.Create(i, CardType.SPADES));
+            //}
+            //deck1.Suffle();
+            //Utils.PrintAllDeck(deck1);
             //Console.WriteLine(deck1.ToString());
 
 
+            // Crear el mazo y llenarlo con todas las cartas
+            Deck deck1 = new Deck();
+            deck1.Init(); // Llenar el mazo con las cartas iniciales
 
-            
+            Console.WriteLine("Mazo antes de barajar:");
+            Utils.PrintAllDeck(deck1); // Imprimir el mazo en orden
 
-            //hacer el print del deck ->ToString
+            // Barajar el mazo
+            deck1.Suffle();
+
+            Console.WriteLine("\nMazo después de barajar:");
+            Utils.PrintAllDeck(deck1); // Imprimir el mazo barajado
+
+            Console.WriteLine("otro mazo");
+            Deck deck4 = Utils.CloneDeck(deck1);
+            Utils.PrintAllDeck(deck4);
+
+
+
             //Funcion (posible en utils) que le paso un deck y un numero de cartas y me devuelve un deck con las cartas extraidas de manera aleatoria ese numero
             //Deck que le paso un numero y devuelve otro deck, cogiendo las 6 primeras cartas (DrawCard ya esta implementado)
             //le paso dos deck y me devuelve un nuevo deck con todo lo que hay en los dos decks (Clone) crea una copia de todo lo que hay en los dos decks

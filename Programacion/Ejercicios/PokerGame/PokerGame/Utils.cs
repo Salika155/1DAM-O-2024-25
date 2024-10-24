@@ -36,16 +36,23 @@ namespace PokerGame
 
         public static void PrintFigure(CardType kind)
         {
-
             if (kind == CardType.DIAMOND)
                 Console.Write("♦");
             if (kind == CardType.CLOVER)
                 Console.Write("♣");
             if (kind == CardType.HEARTS) 
             Console.Write("♥");
-            else
+            if (kind == CardType.SPADES)
                 Console.Write("♠");
             //control + d para poner la misma linea 
+        }
+
+        public static void PrintAllDeck(Deck deck1)
+        {
+           for(int i = 1; i < deck1.GetCardCount(); i++)
+            {
+                Print(deck1.GetCardAt(i));
+            }
         }
     }
 }

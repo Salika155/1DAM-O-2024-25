@@ -56,17 +56,35 @@ namespace PokerGame
             //deck.GetCardAt(3);
             //para quitar warning en init de constructor si devuelve null se pone ! al final
 
-            Deck deck = new Deck();
-            deck.Init();
-            Utils.Print(Card.Create(1, CardType.DIAMOND)!);
+            //Deck deck = new Deck();
+            //deck.Init();
+            //Utils.Print(Card.Create(1, CardType.DIAMOND)!);
 
-            Card? c1 = Card.Create(3, CardType.HEARTS);
-            Card? c2 = Card.Create(1, CardType.HEARTS);
-            deck.Add(c1);
-            deck.Add(c2);
+            //Card? c1 = Card.Create(3, CardType.HEARTS);
+            //Card? c2 = Card.Create(1, CardType.HEARTS);
+            //deck.Add(c1);
+            //deck.Add(c2);
 
-            //inmutabilidad -> quitar acceso a los set
-            //c2.SetNumber(1);
+            ////inmutabilidad -> quitar acceso a los set
+            ////c2.SetNumber(1);
+
+            Deck deck1 = new Deck();
+            deck1.Init();
+
+            for (int i = 1; i <= 13; i++)
+            {
+                deck1.Add(Card.Create(i, CardType.HEARTS));
+                deck1.Add(Card.Create(i, CardType.DIAMOND));
+                deck1.Add(Card.Create(i, CardType.CLOVER));
+                deck1.Add(Card.Create(i, CardType.SPADES));
+            }
+            deck1.Suffle();
+            Utils.PrintAllDeck(deck1);
+            //Console.WriteLine(deck1.ToString());
+
+
+
+            
 
             //hacer el print del deck ->ToString
             //Funcion (posible en utils) que le paso un deck y un numero de cartas y me devuelve un deck con las cartas extraidas de manera aleatoria ese numero

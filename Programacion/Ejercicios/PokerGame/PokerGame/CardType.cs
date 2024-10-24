@@ -13,6 +13,4 @@ namespace PokerGame
         HEARTS,
         SPADES
     }
-
-
 }

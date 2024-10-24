@@ -146,5 +146,11 @@ namespace PokerGame
         //{
         //    return !(a == b);
         //}
+
+        public Card Clone()
+        {
+            Card c = new Card(_number, _kind);
+            return c;
+        }
     }
 }

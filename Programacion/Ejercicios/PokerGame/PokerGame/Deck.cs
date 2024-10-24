@@ -196,6 +196,18 @@ namespace PokerGame
                 //Console.WriteLine($"Creando carta: {i} de {type}"); // En InitFigure
             }
         }
+
+        public Deck Clone() //no tiene sentido la ? porque se va a clonar algo que existe ya
+        {
+            Deck result = new Deck();
+            for(int i = 0; i < GetCardCount(); i++)
+            {
+                //puede ser Add(c.Clone()); o como esta
+                Card c = GetCardAt(i);
+                result.Add(c);
+            }
+            return result;
+        }
     }
     
 }

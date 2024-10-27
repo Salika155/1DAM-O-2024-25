@@ -14,12 +14,12 @@ namespace ExamenNov2023
     }
     public class Student
     {
-        private string? _name;
+        private string? _name = "";
         private int _age;
-        private GenderType _gender;
+        private GenderType _gender = GenderType.OTHER;
         private double _width;
         private double _height;
-        Qualification _qualification = new Qualification();
+        private Qualification _qualification = new Qualification();
 
         public Student()
         {
@@ -109,10 +109,16 @@ namespace ExamenNov2023
             _height = height;
         }
 
-        public double GetIMC(double width, double height)
+        public double GetIMC()
         {
-            double height2 = (height * height);
-            double aux = width / height2;
+            //importante checkear que no divida por 0
+            if (_height > 0.000001)
+                return double.NaN;
+            if (_width > 0.000001)
+                return double.NaN;
+
+            double height2 = (_height * _height);
+            double aux = _width / height2;
 
             return aux;
         }
@@ -124,7 +130,7 @@ namespace ExamenNov2023
 
         public double GetAverageQualif() 
         {
-            return _qualification.GetQualification();
+            return _qualification.GetAverageNotes();
         }
 
         public bool IsElder()
@@ -144,6 +150,44 @@ namespace ExamenNov2023
             s._qualification = _qualification.Clone();
 
             return s;
+        }
+
+        public double GetBestQualification()
+        {
+            return _qualification.GetMajorQualification();
+        }
+
+        //public int GetYoung()
+        //{
+        //    return _age.GetYoungStudent();
+        //}
+
+        //esto devolveria la edad menor
+        public int GetYoungStudent(List<Student> st)
+        {
+            int result = 18;
+            for(int i = 0; i < st.Count; i++) 
+            { 
+                Student student = st[i];
+                if (result > student.GetAge())
+                    result= student.GetAge();
+            }
+            return result;
+        }
+
+        //public Student GetYoungestStudent(List<Student> st) 
+        //{
+        //   for(int i = 0; i < st.Count; i++)
+        //   {
+        //        Student student = st[i];
+        //        if (student.GetAge() = GetYoungestStudent(st))
+        //            return student;
+        //   }
+        //}
+
+        public GenderType GetGender()
+        {
+            return _gender;
         }
     }
 }

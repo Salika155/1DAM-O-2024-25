@@ -11,7 +11,8 @@ namespace ExamenNov2023
         MATH,
         SCIENCE,
         HISTORY,
-        LANGUAGE
+        LANGUAGE,
+        COUNT
     }
 
     public class Qualification
@@ -49,7 +50,21 @@ namespace ExamenNov2023
                 return _science;
             if (type == SignatureType.HISTORY)
                 return _history;
-            return _language;
+            if (type == SignatureType.LANGUAGE)
+                return _language;
+            return 0.0;
+        }
+
+        public void SetQualificationForSignature(SignatureType type, double value) 
+        {
+            if (type == SignatureType.MATH)
+                _maths = value;
+            if (type == SignatureType.SCIENCE)
+                _science = value;
+            if (type == SignatureType.HISTORY)
+                _history = value;
+            if (type == SignatureType.LANGUAGE)
+                _language = value;
         }
 
         public double GetHistory() 
@@ -90,6 +105,68 @@ namespace ExamenNov2023
         public void SetScience(double value)
         {
             _science = value;
+        }
+
+        public double GetAverageNotes()
+        {
+            return (_maths + _science + _history + _language) / GetSignatureCount();
+        }
+
+        public int GetSignatureCount()
+        {
+            return (int)SignatureType.COUNT;
+        }
+
+        public double GetMajorQualification()
+        {
+            double result = _maths;
+
+            if (_language >= result)
+                result = _language;
+            if (_history >= result)
+                result = _history;
+            if (_science >= result) 
+                result = _science;
+            return result;
+        }
+
+        public double GetMinorQualification()
+        {
+            double result = _maths;
+
+            if (_language < result)
+                result = _language;
+            if (_history < result)
+                result = _history;
+            if (_science < result)
+                result = _science;
+            return result;
+        }
+
+        public SignatureType GetMajorQualificationForSignature()
+        {
+            double major = GetMajorQualification();
+
+            if (_maths == major)
+                return SignatureType.MATH;
+            if (_history == major)
+                return SignatureType.HISTORY;
+            if (_science == major)
+                return SignatureType.SCIENCE;
+            return SignatureType.LANGUAGE;
+        }
+
+        public SignatureType GetMinorQualificationForSignature()
+        {
+            double minor = GetMinorQualification();
+
+            if (_maths == minor)
+                return SignatureType.MATH;
+            if (_history == minor)
+                return SignatureType.HISTORY;
+            if (_science == minor)
+                return SignatureType.SCIENCE;
+            return SignatureType.LANGUAGE;
         }
     }
 }

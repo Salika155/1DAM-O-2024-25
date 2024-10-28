@@ -24,6 +24,8 @@ namespace ClaseConJaviExamen
         //en un examen no hay constructor salvo que se diga que necesita un constructor
         //si un objeto tiene que ser inmutable solo tiene que tener getters, tienes que hacer un constructor dentro pasandole el _nia
 
+        //si dice que alguna propiedad no se puede modificar es porque no quiere setters
+
         public string? GetName()
         {
             return _name;
@@ -47,6 +49,21 @@ namespace ClaseConJaviExamen
         public long GetNia()
         {
             return _nia;
+        }
+
+        public void AddMark(Subject subject, double mark)
+        {
+
+        }
+        //funcion que devuelve la media de todas las notas
+        public double GetAverage()
+        {
+            return 0.0;
+        }
+
+        public double GetAverage(Subject s, double mark)
+        {
+            return 0.0;
         }
     }
 }

@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ClaseConJaviExamen
 {
-    internal class Mark
+    public enum Subject
     {
+
+    }
+    public class Mark
+    {
+
     }
 }

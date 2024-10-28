@@ -4,7 +4,10 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            //esto estaria muy mal
+            //Classroom cl = new Classroom();
+            //var list = cl.GetList();
+
         }
     }
 }

@@ -65,8 +65,6 @@ namespace ExamenNov2023
             List<Student> students = GetAllStudents(cl);
             SortStudentBySignature(students, signature);
 
-
-
             return students;
         }
 
@@ -149,8 +147,6 @@ namespace ExamenNov2023
             }
             return note;
         }
-
-
     }
 
     public class NotesStatistic

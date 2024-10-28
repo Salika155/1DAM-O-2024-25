@@ -10,7 +10,7 @@ namespace ExamenNov2023
     {
         private readonly List<Student> _students = new List<Student>();
 
-        private string? _classroomName = "";
+        private string? _classroomName = string.Empty;
 
         public Classroom()
         {
@@ -192,8 +192,6 @@ namespace ExamenNov2023
                     _students.RemoveAt(i);
                     i--;
                 }
-                    
-
             }
         }
 

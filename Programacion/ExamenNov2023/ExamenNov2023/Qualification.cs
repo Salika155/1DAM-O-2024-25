@@ -114,7 +114,8 @@ namespace ExamenNov2023
 
         public int GetSignatureCount()
         {
-            return (int)SignatureType.COUNT;
+            return 4;
+            //return SignatureType.COUNT;
         }
 
         public double GetMajorQualification()

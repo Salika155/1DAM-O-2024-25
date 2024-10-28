@@ -13,6 +13,10 @@
             Student? s1 = cl.GetStudentAt(0);
 
             s1?.SetName("Ana");
+
+            Qualification qualification = new Qualification();
+            qualification.GetSignatureCount();
+            Console.WriteLine(qualification);
         }
     }
 }

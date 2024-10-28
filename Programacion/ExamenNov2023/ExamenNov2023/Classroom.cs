@@ -25,21 +25,21 @@ namespace ExamenNov2023
         public Classroom(List<Student> students)
         {
             #region ocultar
-            if (students != null) 
-            {
-                for(int i = 0; i <  students.Count; i++) 
-                {
-                    Student s = students[i];
-                    if(s != null) 
-                    {
-                        _students.Add(s.Clone());
-                    }
-                }
-            }
+            //if (students != null) 
+            //{
+            //    for(int i = 0; i <  students.Count; i++) 
+            //    {
+            //        Student s = students[i];
+            //        if(s != null) 
+            //        {
+            //            _students.Add(s.Clone());
+            //        }
+            //    }
+            //}
             #endregion
             if (students != null)
             {
-                for (int i = 0; i < _students.Count; i++)
+                for (int i = 0; i < students.Count; i++)
                 {
                     Student s = new Student();
                     if (s != null)
@@ -48,16 +48,15 @@ namespace ExamenNov2023
                     }
                 }
             }
-            
         }
 
-        public string? Name
-        {
-            get { return _classroomName; }
-            set { _classroomName = value; }
-        }
+        //public string? Name
+        //{
+        //    get { return _classroomName; }
+        //    set { _classroomName = value; }
+        //}
 
-        public string? GetStudentName() 
+        public string? GetClassroomName() 
         {
             return _classroomName;
         }

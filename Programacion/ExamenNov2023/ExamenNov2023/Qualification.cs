@@ -37,10 +37,10 @@ namespace ExamenNov2023
             return q;
         }
 
-        public double GetQualification()
-        {
-            throw new NotImplementedException();
-        }
+        //public double GetQualification()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public double GetQualificationForSignature(SignatureType type)
         {

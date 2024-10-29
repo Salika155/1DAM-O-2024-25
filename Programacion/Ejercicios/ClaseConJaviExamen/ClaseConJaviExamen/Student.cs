@@ -18,6 +18,8 @@ namespace ClaseConJaviExamen
         private int _age;
         private long _nia;
         private Gender _gender;
+        //primera opcion
+        private readonly List<Mark> _marks = new();
         //tipo de datos : sbyte -> 0 - 255; numero con signo = desde -128 hasta 127, tambien estan ushort, uint, ulong
         //half, float, double, quad (tarjetas graficas)
 
@@ -53,17 +55,57 @@ namespace ClaseConJaviExamen
 
         public void AddMark(Subject subject, double mark)
         {
+            Mark s = new()
+            {
+                Name = subject,
+                Note = mark
+            };
 
         }
         //funcion que devuelve la media de todas las notas
         public double GetAverage()
         {
-            return 0.0;
+            double result = 0.0;
+            if (_marks.Count == 0)
+                return result;
+            for(int i = 0; i < _marks.Count; i++)
+            {
+                Mark m = _marks[i];
+                result += m.Note;
+            }
+            return result / _marks.Count;
         }
 
         public double GetAverage(Subject s, double mark)
         {
-            return 0.0;
+            double result = 0.0;
+            int notesCount = 0;
+            
+            for (int i = 0; i < _marks.Count; i++)
+            {
+                Mark m = _marks[i];
+                if(m.Name == s)
+                {
+                    result += m.Note;
+                    notesCount++;
+                }
+            }
+            if (notesCount == 0)
+                return 0.0;
+            return result / _marks.Count;
+        }
+
+        public double GetMaxMark(Subject s)
+        {
+            double result = 0.0;
+            
+            for (int i = 0; i < _marks.Count; i++)
+            {
+                Mark m = _marks[i];
+                if (m.Name == s && m.Note > result)
+                   result += m.Note;
+            }
+            return result / _marks.Count;
         }
     }
 }

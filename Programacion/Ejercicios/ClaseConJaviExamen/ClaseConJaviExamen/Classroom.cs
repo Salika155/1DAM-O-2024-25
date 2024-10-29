@@ -27,30 +27,82 @@ namespace ClaseConJaviExamen
             return _studentList[index];
         }
 
-        public void Add(Student st)
+        public void Add(Student? st)
         {
-
+            if (st == null)
+                return;
+            _studentList.Add(st);
         }
 
         public void RemoveStudentAt(int index)
         {
+            if (0 <= index && index > _studentList.Count)
+                _studentList.RemoveAt(index);
 
         }
 
         public void RemoveStudentWithName(string name)
         {
+            int index = IndexOfStudentWithName(name);
+            if (index >= 0)
+                _studentList.RemoveAt(index);
+            //esta es la buena
+            //RemoveStudentAt(IndexOfStudentWithName(name));
+        }
 
+        public void RemoveStudentsWithName(string name)
+        {
+            if (name == null)
+                return;
+
+            for(int i = _studentList.Count; i >= 0; i--)
+            {
+                if (_studentList[i].GetName() == name)
+                    _studentList.RemoveAt(i);
+            }
+
+            //otra manera pero peor
+            //while (true)
+            //{
+            //    int index = IndexOfStudentWithName(name);
+            //    if (index < 0)
+            //        break;
+            //    _studentList.RemoveAt(index);
+            //}
         }
 
         public int IndexOfStudentWithName(string name)
         {
-
+            //int result = -1;
+            if (name == null)
+                return -1;
+            for (int i = 0; i < _studentList.Count; i++)
+            {
+                if (_studentList[i].GetName() == name)
+                    //result = i -> esto es por si quiero recorrerlo para encontrar el ultimo
+                    return i;
+            }
             return -1;
         }
 
+        public List<Student> GetAllStudentsWithName(string name)
+        {
+            List<Student> result = new();
+            for (int i = 0; i < _studentList.Count; i++)
+            {
+                Student s = _studentList[i];
+                if (s.GetName() == name)
+                    //result = i -> esto es por si quiero recorrerlo para encontrar el ultimo
+                    result.Add(s);
+            }
+            return result;
+
+        }
+
+
         public bool ContainsStudentWithName(string name)
         {
-            return false;
+            return IndexOfStudentWithName(name) >= 0;
         }
 
         //bug aqui si la lista esta vacia, es importante

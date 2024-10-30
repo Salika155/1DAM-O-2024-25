@@ -28,6 +28,7 @@ namespace ClaseConJaviExamen
 
         //si dice que alguna propiedad no se puede modificar es porque no quiere setters
 
+        public readonly List<Mark> _marks2 = new();
         public string? GetName()
         {
             return _name;
@@ -53,15 +54,69 @@ namespace ClaseConJaviExamen
             return _nia;
         }
 
-        public void AddMark(Subject subject, double mark)
+        //funciones relacionada con marks2
+        public bool ContainsSubject(Subject subject)
         {
-            Mark s = new()
+            return IndexOfSubject(subject) >= 0;
+        }
+
+        public int IndexOfSubject(Subject subject)
+        {
+            for(int i = 0; i < _marks.Count; i++)
             {
-                Name = subject,
-                Note = mark
-            };
+                if (_marks[i].Name == subject)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        //esto iria con marks2 porque seria otro metodo de hacerlo pero no me deja implementarlo, asi que lo pongo con el mark normal
+        public Mark? GetMark(Subject subject)
+        {
+            //si devuelve un -1 vas a querer que devuelva fallo y no un -1;
+            int index = IndexOfSubject(subject);
+
+            return (index >= 0) ? _marks[index] : null;
 
         }
+
+        public void AddMark(Subject subject, double mark)
+        {
+            int index = IndexOfSubject(subject);
+            if(index >= 0)
+            {
+                _marks[index].AddMark(mark);
+            }
+            else
+            {
+                Mark s = new();
+                s.Name = subject;
+                s.AddMark(mark);
+                _marks.Add(s);
+            }
+        }
+
+        public void AddMark2(Subject subject, double mark)
+        {
+            Mark? marks = GetMark(subject);
+            if (marks == null)
+            {
+                marks = new Mark();
+                marks.Name = subject;
+                _marks.Add(marks);
+            }
+            _marks.Add(marks);
+        }
+
+        //esto iria con el marks2 para generar otra forma de hacerlo
+        private Mark? GetMarks(Subject subject)
+        {
+            int index = IndexOfSubject(subject);
+            return (index >= 0) ? _marks[index] : null;
+        }
+
         //funcion que devuelve la media de todas las notas
         public double GetAverage()
         {

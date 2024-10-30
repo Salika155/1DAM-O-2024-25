@@ -121,5 +121,31 @@ namespace ClaseConJaviExamen
             return result;
         }
         //posible pregunta sobre fibonacci en examen
+
+        public Student? GetStudent(string name)
+        {
+            int index = IndexOfStudentWithName(name);
+            return _studentList[index];
+        }
+
+        //public Marks2? GetMark(Subject subject)
+        //{
+        //    //si devuelve un -1 vas a querer que devuelva fallo y no un -1;
+        //    int index = IndexOfSubject(subject);
+
+        //    return (index >= 0) ? _marks[index] : null;
+
+        //}
+
+        public Student? GetStudentWithName(string name)
+        {
+            int index = IndexOfStudentWithName(name);
+            return (index < 0) ? null : _studentList[index];
+        }
+
+        int a = 0;
+        //int a = (z == 7)? 1 : (cosa > 0)? 2 : 3
     }
+
+
 }

@@ -16,6 +16,9 @@ namespace ClaseConJaviExamen
     {
         public double Note;
         public Subject Name;
+        //esto es para el otro metodo
+        //_marks es una lista de notas de cada cosa y generar una asignatura y meterle las notas.
+        public readonly List<double> _marks = new();
 
         public Mark()
         {
@@ -26,6 +29,11 @@ namespace ClaseConJaviExamen
         {
             Note = note;
             Name = name;
+        }
+
+        internal void AddMark(double mark)
+        {
+            throw new NotImplementedException();
         }
     }
 }

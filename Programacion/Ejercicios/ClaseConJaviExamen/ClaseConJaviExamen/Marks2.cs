@@ -18,6 +18,9 @@ namespace ClaseConJaviExamen
         {
             private readonly List<double> _notesprivates = new();
             public readonly Subject Name;
+            //esto es para el otro metodo
+            //_marks es una lista de notas de cada cosa y generar una asignatura y meterle las notas.
+            public readonly List<double> _marks = new();
 
             public Mark(Subject subject)
             {
@@ -28,10 +31,6 @@ namespace ClaseConJaviExamen
             {
 
             }
-
-            
         }
-
-
     }
 }

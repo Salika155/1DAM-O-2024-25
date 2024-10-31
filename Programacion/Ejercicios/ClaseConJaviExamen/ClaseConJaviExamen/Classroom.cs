@@ -120,7 +120,7 @@ namespace ClaseConJaviExamen
             }
             return result;
         }
-        //posible pregunta sobre fibonacci en examen
+       
 
         public Student? GetStudent(string name)
         {
@@ -145,6 +145,8 @@ namespace ClaseConJaviExamen
 
         int a = 0;
         //int a = (z == 7)? 1 : (cosa > 0)? 2 : 3
+
+        //posible pregunta sobre fibonacci en examen
     }
 
 

@@ -31,9 +31,9 @@ namespace ClaseConJaviExamen
             Name = name;
         }
 
-        internal void AddMark(double mark)
+        public void AddMark(double mark)
         {
-            throw new NotImplementedException();
+            _marks.Add(mark);
         }
     }
 }

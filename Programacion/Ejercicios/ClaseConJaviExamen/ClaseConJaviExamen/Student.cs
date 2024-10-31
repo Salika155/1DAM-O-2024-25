@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -68,7 +69,7 @@ namespace ClaseConJaviExamen
             #region oculto
             for (int i = 0; i < _marks.Count; i++)
             {
-                if (_marks[i].Name == subject)
+                if (_marks[i].NombreAsignatura == subject)
                 {
                     return i;
                 }
@@ -76,7 +77,7 @@ namespace ClaseConJaviExamen
             return -1;
             #endregion
             for (int i = 0; i < _marks.Count; i++)
-                if (_marks[i].Name == subject)
+                if (_marks[i].NombreAsignatura == subject)
                     return i;
             return -1;
         }
@@ -105,7 +106,7 @@ namespace ClaseConJaviExamen
             else
             {
                 Mark s = new();
-                s.Name = subject;
+                s.NombreAsignatura = subject;
                 s.AddMark(mark);
                 _marks.Add(s);
             }
@@ -116,24 +117,36 @@ namespace ClaseConJaviExamen
             else
             {
                 Mark m = new();
-                m.Name = subject;
+                m.NombreAsignatura = subject;
                 m.AddMark(mark);
                 _marks.Add(m);
             }    
         }
 
-        public void AddMark2(Subject subject/*, double mark*/)
+        public void AddMark2(Subject subject, double mark)
         {
             #region oculto
             Mark? marks = GetMark(subject);
             if (marks == null)
             {
                 marks = new Mark();
-                marks.Name = subject;
+                marks.NombreAsignatura = subject;
                 _marks.Add(marks);
             }
             _marks.Add(marks);
             #endregion
+            Mark? m = GetMark(subject);
+            if (m == null)
+            {
+                m = new();
+                m.NombreAsignatura = subject;
+                _marks.Add(m);
+            }
+            else
+            {
+                _marks.Add(m);
+            }
+
         }
 
         //esto iria con el marks2 para generar otra forma de hacerlo
@@ -143,6 +156,8 @@ namespace ClaseConJaviExamen
             int index = IndexOfSubject(subject);
             return (index >= 0) ? _marks[index] : null;
             #endregion
+            int index2 = IndexOfSubject(subject);
+            return (index2 >= 0) ? _marks[index] : null;
         }
 
         //funcion que devuelve la media de todas las notas
@@ -159,6 +174,21 @@ namespace ClaseConJaviExamen
             }
             return result / _marks.Count;
             #endregion
+
+            //metodo para el mark del nuevo enfoque
+            int notesCount = 0;
+            double result2 = 0.0;
+           
+            for(int i = 0; i > _marks.Count; i++)
+            {
+                Mark boletin = _marks[i];
+                result2 += boletin.GetAllNotesSumatory();
+                notesCount += boletin.GetNotesCount();
+            }
+            if (notesCount == 0)
+                return 0.0;
+            return result2 / notesCount;
+                
         }
 
         public double GetAverage(Subject s, double mark)
@@ -170,7 +200,7 @@ namespace ClaseConJaviExamen
             for (int i = 0; i < _marks.Count; i++)
             {
                 Mark m = _marks[i];
-                if(m.Name == s)
+                if(m.NombreAsignatura == s)
                 {
                     result += m.Note;
                     notesCount++;
@@ -180,6 +210,20 @@ namespace ClaseConJaviExamen
                 return 0.0;
             return result / _marks.Count;
             #endregion
+            double result1 = 0.0;
+            double scount = 0;
+            for(int i = 0; i > _marks.Count; i++)
+            {
+                Mark m1 = _marks[i];
+                if (m1.NombreAsignatura == s)
+                {
+                    result += m1.Note;
+                    scount++;
+                }
+            }
+            if (scount == 0)
+                return 0.0;
+            return result1 / _marks.Count;
         }
 
         public double GetMaxMark(Subject s)
@@ -190,11 +234,16 @@ namespace ClaseConJaviExamen
             for (int i = 0; i < _marks.Count; i++)
             {
                 Mark m = _marks[i];
-                if (m.Name == s && m.Note > result)
+                if (m.NombreAsignatura == s && m.Note > result)
                    result += m.Note;
             }
             return result / _marks.Count;
             #endregion
+            Mark? boletin = GetMark(s);
+            if (boletin == null)
+                return 0.0;
+            return boletin.GetMax();
+
         }
     }
 }

@@ -143,7 +143,7 @@ namespace ClaseConJaviExamen
             return (index < 0) ? null : _studentList[index];
         }
 
-        int a = 0;
+        //int a = 0;
         //int a = (z == 7)? 1 : (cosa > 0)? 2 : 3
 
         //posible pregunta sobre fibonacci en examen

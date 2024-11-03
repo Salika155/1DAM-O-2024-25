@@ -133,7 +133,7 @@ namespace ClaseConJaviExamen
         //    //si devuelve un -1 vas a querer que devuelva fallo y no un -1;
         //    int index = IndexOfSubject(subject);
 
-        //    return (index >= 0) ? _marks[index] : null;
+        //    return (index >= 0) ? _mark[index] : null;
 
         //}
 

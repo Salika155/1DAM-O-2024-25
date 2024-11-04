@@ -20,15 +20,30 @@ namespace NuevoIntentoExamen
         private int _age;
         private long _nia;
         private Gender _gender;
+        private readonly List<Mark> _marks = new();
 
-        public string? GetName()
+        public string? GetName() => _name;
+        public int GetAge() => _age;
+        public long GetNia() => _nia;
+        public Gender GetGender() => _gender;
+
+        public double GetAverage()
         {
-            return _name;
+            int notesCount = 0;
+            double result = 0.0;
+
+            for(int i = 0; i < _marks.Count; i++)
+            {
+                Mark boletin = _marks[i];
+                notesCount += boletin.GetNotesCount();
+                result += boletin.GetSumatoryAllNotes();
+            }
+            if (notesCount == 0)
+                return 0.0;
+        
+            return result / notesCount;
         }
 
-        internal int GetAverage()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

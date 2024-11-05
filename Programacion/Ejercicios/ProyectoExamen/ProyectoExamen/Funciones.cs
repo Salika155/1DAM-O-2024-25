@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProyectoExamen
 {
+    //MQTT Gestor de servidores centralizado.
     internal class Funciones
     {
         //Crea una funcion que reciba como parametro 2 enteros y devuelva un real que sea el primer parametro mas 1. Todo entre el segundo.
@@ -96,6 +97,72 @@ namespace ProyectoExamen
             return result;
         }
 
+        public static int IndexOfPrime(int n)
+        {
+            if (!IsPrime(n))
+                return -1;
+
+            int index = 0;
+
+            for (int i = 1; i < n; i++)
+            {
+                if (IsPrime(i))
+                    index++;    
+            }
+            return index;
+        }
+
+        //public static List<int> GetPrimoNumbers()
+        //{
+        //    List<int> primos = new List<int>();
+
+        //    int count = 1;
+
+        //    for (int i = 0; i < primos.Count; i++)
+        //    {
+        //        if ((i % 1 == 0) && (i % count == 0))
+        //        {
+        //            primos.Add(i);
+        //        }
+        //    }
+        //    return primos;
+        //}
+
+        public static bool IsPrime(int n)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                if (n % i == 0)
+                    return false;
+            }
+            return true;
+        }
+
+        public static double Ex11(double a, double b, double c, double d, double e, double xmin, double xmax)
+        {
+            double maxValue = E2(a, b, c, d, e, xmin);
+            double muestra = 0.1;
+
+            for (double x = xmin; x <= xmax; x+= muestra)
+            {
+                double value = E2(a, b, c, d, e, x);
+                    if (value > maxValue)
+                    maxValue = value;
+            }
+            return maxValue;
+        }
+
+        public static double GetMinorDouble(double a, double b)
+        {
+            if (a < b)
+                return a;
+            return b;
+        }
+
+        public static double GetMayorDouble(double a, double b)
+        {
+            return (a > b) ? a : b;
+        }
     }
 }
 

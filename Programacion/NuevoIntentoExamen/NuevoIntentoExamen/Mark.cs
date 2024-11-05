@@ -39,5 +39,10 @@ namespace NuevoIntentoExamen
                 result += _listaBoletinNotas[i];
             return result;
         }
+
+        internal double GetMax()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

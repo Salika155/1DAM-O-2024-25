@@ -44,6 +44,52 @@ namespace NuevoIntentoExamen
             return result / notesCount;
         }
 
-        
+        public Mark GetMark(Subject subject)
+        {
+            int index = IndexOfSubject(subject);
+            return (index >= 0) ? _marks[index] : null;
+        }
+
+        private int IndexOfSubject(Subject subject)
+        {
+            for(int i = 0; i < _marks.Count;i++) 
+            {
+                if (_marks[i].NombreAsignatura == subject) return i;
+                return i;
+            }
+            return -1;
+        }
+
+        public void AddMark(Subject subject, double mark)
+        {
+            Mark? m = GetMark(subject);
+            if (m == null)
+            {
+                m = new Mark();
+                m.NombreAsignatura = subject;
+                _marks.Add(m);
+            }
+            else
+                _marks.Add(m);
+        }
+
+        private Mark? GetMarks(Subject subject)
+        {
+            int index = IndexOfSubject(subject);
+            return (index >= 0) ? _marks[index] : null;
+        }
+
+        public double GetMaxMark(Subject subject)
+        {
+            Mark? bolletin = GetMark(subject);
+            if (bolletin == null)
+                return 0.0;
+            return bolletin.GetMax();
+        }
+
+        public bool ContainsSubject(Subject subject)
+        {
+            return IndexOfSubject(subject) >= 0;
+        }
     }
 }

@@ -174,6 +174,11 @@ namespace ProyectoExamen
         //tamaño del sampler.
         public static double Ex11(double a, double b, double c, double d, double e, double xmin, double xmax)
         {
+            if (xmax < xmin)
+            {
+                //es esto o un swap
+                return Ex11(a, b, c, d, e, xmax, xmin);
+            }
             double maxValue = E2(a, b, c, d, e, xmin);
             double muestra = 0.1;
 
@@ -260,7 +265,70 @@ namespace ProyectoExamen
             return result;
         }
 
+        //implementa una funcion que, dado un array de enteros devuelva el valor mas alto
+        public static int GetMayorValorInArray(int[] array)
+        {
+            if (array == null || array.Length == 0)
+                return int.MinValue;
 
+            int max = array[0]; //si pones int.MinValue te ahorras la comprobacion del array length de 0
+            for (int i = 1; i < array.Length; i++) //empiezo en 1 porque el max esta en array[0]
+            {
+                if (array[i] > max)
+                    max = i;
+            }
+            return max;
+        }
+
+        //Implementa una funcion que borre de un array de dobles todas las ocurrencias de un doble en concreto, importante, deberas inferir que devuelve este array
+        //porque en esencia no se pueden borrar cosas de un array
+
+        public static double[] RemoveConcurrencesOfArray(double value, double[] array)
+        {
+            int count = CountInstancesOf(value, array);
+            double[] newArray = new double[array.Length - count];
+
+            if (array == null || array.Length == 0)
+                return newArray;
+            if (count == 0)
+                return Clone(array);
+
+            int index = IndexOfArray(array, value);
+
+            for(int i = 0, j = 0; i < array.Length; i++)
+            {
+                if (array[i] != value)
+                    newArray[j++] = array[i];
+            }
+            return newArray;
+        }
+
+        private static double[] Clone(double[] array)
+        {
+            if (array == null)
+                return []; //devolver array vacio
+            int n = array.Length;
+            double[] result = new double[n];
+            for (int i = 0; i < n; i++)
+                result[i] = array[i];
+            return result;
+        }
+
+        private static int CountInstancesOf(double n, double[] array)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static int IndexOfArray(double[] arrayd, double d)
+        {
+            double[] doubles = new double[0];
+            for(int i = 0; i < arrayd.Length; i++)
+            {
+                if (arrayd[i] == d)
+                    return i;
+            }
+            return -1;
+        }
     }
 }
 

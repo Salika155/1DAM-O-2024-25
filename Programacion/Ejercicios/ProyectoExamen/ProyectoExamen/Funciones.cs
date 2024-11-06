@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ProyectoExamen
 {
+    public enum EstadoMaquina
+    {
+        PREPARADA, PROCESANDO, EJECUTANDO, TERMINANDO
+    }
     //MQTT Gestor de servidores centralizado.
     internal class Funciones
     {
@@ -25,9 +30,10 @@ namespace ProyectoExamen
             double x3 = x2 * x;
             double x4 = x2 * x2;
 
-            return a * x4 + b * x2 + c * x3 + d * x + e;
+            return a * x4 + b * x3 + c * x2 + d * x + e;
         }
 
+        //ej3
         //Crea una funcion que se le pasen 10 enteros y devuelva el menor de ellos.
         public static int GetMinorOfTen(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j)
         {
@@ -47,6 +53,7 @@ namespace ProyectoExamen
             return b;
         }
 
+        //ej 4
         public static int GetDistancia(int a, int b, int c)
         {
             a = 3;
@@ -54,33 +61,34 @@ namespace ProyectoExamen
             c = 7;
             int menor = GetMinor(a, GetMinor(b, c));
             int mayor = GetMayor(a, GetMayor(b, c));
-            int medio = GetMiddle(a, b, c);
-            int dist1 = mayor - medio;
-            int dist2 = medio - menor;
-            return GetMayor(dist1, dist2);
-            
-            
+            int medio = a + b + c - menor - mayor;
+            //int dist1 = mayor - medio;
+            //int dist2 = medio - menor;
+            int dist1 = mayor > medio ? mayor - medio : medio - mayor;
+            int dist2 = medio > menor ? medio - menor : menor - medio;
+            return GetMayor(dist1, dist2); 
         }
 
-        public static int GetMiddle(int a, int b, int c)
-        {
-            //if ((a <= b && b <= c) || (c <= b && b <= a))
-            //    return b;
-            //if ((b <= a && a <= c) || (c <= a && c <= b))
-            //    return a;
-            //return c;
+        //public static int GetMiddle(int a, int b, int c)
+        //{
+        //    //if ((a <= b && b <= c) || (c <= b && b <= a))
+        //    //    return b;
+        //    //if ((b <= a && a <= c) || (c <= a && c <= b))
+        //    //    return a;
+        //    //return c;
 
-            int result = 0;
-            int central = 0;
-            int minor = GetMinor(a, GetMinor(b, c));
-            return minor;
-        }
+        //    int result = 0;
+        //    int central = 0;
+        //    int minor = GetMinor(a, GetMinor(b, c));
+        //    return minor;
+        //}
 
         public static int GetMayor(int a, int b)
         {
             return (a > b) ? a : b;
         }
 
+        //ej5
         public static int DevuelveDigitos(int a)
         {
             if (a < 0)
@@ -92,7 +100,7 @@ namespace ProyectoExamen
             while(a >= 1 || a <= -1)
             {
                 a /= 10;
-                result += 1;
+                result++;
             }
             return result;
         }
@@ -102,9 +110,9 @@ namespace ProyectoExamen
             if (!IsPrime(n))
                 return -1;
 
-            int index = 0;
+            int index = 1;
 
-            for (int i = 1; i < n; i++)
+            for (int i = 2; i < n; i++)
             {
                 if (IsPrime(i))
                     index++;    
@@ -130,7 +138,7 @@ namespace ProyectoExamen
 
         public static bool IsPrime(int n)
         {
-            for (int i = 0; i < n; i++)
+            for (int i = 2; i <= n; i++)
             {
                 if (n % i == 0)
                     return false;
@@ -143,7 +151,7 @@ namespace ProyectoExamen
             double maxValue = E2(a, b, c, d, e, xmin);
             double muestra = 0.1;
 
-            for (double x = xmin; x <= xmax; x+= muestra)
+            for (double x = xmin; x <= xmax; x += muestra)
             {
                 double value = E2(a, b, c, d, e, x);
                     if (value > maxValue)
@@ -163,6 +171,40 @@ namespace ProyectoExamen
         {
             return (a > b) ? a : b;
         }
+
+        public static int SumaRecursiva(int n)
+        {
+            if (n == 1)
+                return 1;
+            return (n * n) + SumaRecursiva(n - 1);
+        }
+
+        //9. (1) Haz una funcion que se le pasen como parametros un enum y un booleano.El enum es el
+        //estado de una maquina(PREPARADA, PROCESANDO, EJECUTANDO, TERMINANDO). Si el
+        //booleano que se le pasa es false, devolvera justamente el enum que se le pasa como parametro, si es
+        //true, devolvera el siguiente estado de la maquina.
+        //Por ejemplo, si se le pasa PROCESANDO y un true, devolvera EJECUTANDO. Si se le pasa
+        //TERMINANDO y un false, devolvera TERMINANDO.
+
+        public static EstadoMaquina GetEstado(EstadoMaquina estado, bool proceso)
+        {
+            if (!proceso)
+                return estado;
+            while (proceso == true) 
+            {
+                if (estado == EstadoMaquina.EJECUTANDO)
+                    return EstadoMaquina.TERMINANDO;
+                if (estado == EstadoMaquina.TERMINANDO)
+                    return EstadoMaquina.PREPARADA;
+                if (estado == EstadoMaquina.PREPARADA)
+                    return EstadoMaquina.PROCESANDO;
+                if (estado == EstadoMaquina.PROCESANDO)
+                    return EstadoMaquina.EJECUTANDO;
+            }
+            return estado;
+        }
+
+        
     }
 }
 

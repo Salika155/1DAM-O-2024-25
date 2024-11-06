@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Reflection.Metadata;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ProyectoExamen
@@ -15,6 +20,8 @@ namespace ProyectoExamen
     internal class Funciones
     {
         //Crea una funcion que reciba como parametro 2 enteros y devuelva un real que sea el primer parametro mas 1. Todo entre el segundo.
+        //1. (0,5) Crea una funcion que reciba como parametro 2 enteros y devuelva un real que sea el primer
+        //parametro mas 1, todo ello entre el segundo.
         public static double E1(int a, int b)
         {
             if (b == 0)
@@ -54,6 +61,10 @@ namespace ProyectoExamen
         }
 
         //ej 4
+        //4. (1) Crea una funcion que se le pasen 3 enteros (no ordenados), y devuelva la distancia maxima
+        //entre el numero que tiene el valor central, con respecto al minimo y al maximo de los otros dos.
+        //Por ejemplo, si se le pasa (3, 1, 7) devolvera un 4, ya que la distancia de 3 y 1 es 2 y la distancia de
+        //3 y 7 es 4.
         public static int GetDistancia(int a, int b, int c)
         {
             a = 3;
@@ -89,6 +100,10 @@ namespace ProyectoExamen
         }
 
         //ej5
+        //5. (0,5) Crea una funcion que devuelva el numero de digitos de un numero entero. Para hacer esta
+        //funcion no se pueden usar strings.
+        //Por ejemplo, el numero de digitos del 154 es 3, el de 75366 es 5. Para ello, puedes ir dividiendo el
+        //numero por 10 hasta que…
         public static int DevuelveDigitos(int a)
         {
             if (a < 0)
@@ -105,6 +120,11 @@ namespace ProyectoExamen
             return result;
         }
 
+        //8. (1) Crea una funcion que reciba como parametro un numero y devuelva la posicion de ese
+        //numero dentro de los numeros primos.Si el numero no es primo, devolvera un -1.
+        //Por ejemplo, sabemos que los numeros primos son: 2, 3, 5, 7, 11, 13, … Si a esta funcion se le pasa
+        //un 7 devolvera un 4, ya que 7 es el cuarto numero primo.Si a esta funcion se le pasa un 6,
+        //devolvera un -1, ya que este no es primo.
         public static int IndexOfPrime(int n)
         {
             if (!IsPrime(n))
@@ -146,6 +166,12 @@ namespace ProyectoExamen
             return true;
         }
 
+        //11. (1.5) Crea una funcion que reciba como parametros los siguientes datos:
+        //a.Los coeficientes a, b, c, d, y e de un polinomio del tipo a.x⁴ + b.x³ + c.x² + d.x¹ + e
+        //b. Un intervalo de muestreo xmin, xmax
+        //c. Un periodo de muestreo de Lambda x = 0,1
+        //d.La funcion debe devolver el valor maximo que toma ese polinomio en el intervalo dado y dado el
+        //tamaño del sampler.
         public static double Ex11(double a, double b, double c, double d, double e, double xmin, double xmax)
         {
             double maxValue = E2(a, b, c, d, e, xmin);
@@ -172,6 +198,10 @@ namespace ProyectoExamen
             return (a > b) ? a : b;
         }
 
+        //6. (1) Realiza una funcion recursiva que, dado un numero n, devuelva:
+        //1² + 2² + 3² + 4² +5² … n²
+        //Consejo, recuerda que cuando hicimos el sumatorio o el productorio, la funcion recursiva devolvia
+        //5 + 4 + 3 + 2 + 1 en vez de 1+2+3+4+5
         public static int SumaRecursiva(int n)
         {
             if (n == 1)
@@ -190,21 +220,47 @@ namespace ProyectoExamen
         {
             if (!proceso)
                 return estado;
-            while (proceso == true) 
-            {
-                if (estado == EstadoMaquina.EJECUTANDO)
-                    return EstadoMaquina.TERMINANDO;
-                if (estado == EstadoMaquina.TERMINANDO)
-                    return EstadoMaquina.PREPARADA;
-                if (estado == EstadoMaquina.PREPARADA)
-                    return EstadoMaquina.PROCESANDO;
-                if (estado == EstadoMaquina.PROCESANDO)
-                    return EstadoMaquina.EJECUTANDO;
-            }
-            return estado;
+
+            if (estado == EstadoMaquina.PREPARADA)
+                return EstadoMaquina.PROCESANDO;
+            else if (estado == EstadoMaquina.PROCESANDO)
+                return EstadoMaquina.EJECUTANDO;
+            else if (estado == EstadoMaquina.EJECUTANDO)
+                return EstadoMaquina.TERMINANDO;
+            else // estado == EstadoMaquina.TERMINANDO
+                return EstadoMaquina.TERMINANDO;
+            #region oculto
+            //switch (estado)
+            //{
+            //    case EstadoMaquina.PREPARADA:
+            //        return EstadoMaquina.PROCESANDO;
+            //    case EstadoMaquina.PROCESANDO:
+            //        return EstadoMaquina.EJECUTANDO;
+            //    case EstadoMaquina.EJECUTANDO:
+            //        return EstadoMaquina.TERMINANDO;
+            //    case EstadoMaquina.TERMINANDO:
+            //        return EstadoMaquina.TERMINANDO;
+            //    default:
+            //        return estado;
+            //}
+            #endregion
         }
 
-        
+        //10. (1) Crea una funcion que se le pase un numero y devuelva la suma de todos sus divisores desde
+        //1 hasta ese numero(sin contar ese numero)
+
+        public static int SumaDivisore(int n)
+        {
+            int result = 0;
+            for (int i = 1; i < n; i++)
+            {
+                if (n % i == 0)
+                    result +=i;
+            }
+            return result;
+        }
+
+
     }
 }
 

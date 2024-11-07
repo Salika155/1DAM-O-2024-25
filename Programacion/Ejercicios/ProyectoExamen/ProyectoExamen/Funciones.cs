@@ -314,9 +314,16 @@ namespace ProyectoExamen
             return result;
         }
 
-        private static int CountInstancesOf(double n, double[] array)
+        public static int CountInstancesOf(double n, double[] array)
         {
-            throw new NotImplementedException();
+            int count = 0;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == n)
+                    count++;
+            }
+            return count;
         }
 
         public static int IndexOfArray(double[] arrayd, double d)

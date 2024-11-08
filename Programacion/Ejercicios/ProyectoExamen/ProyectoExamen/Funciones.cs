@@ -55,9 +55,7 @@ namespace ProyectoExamen
 
         public static int GetMinor(int a, int b)
         {
-            if (a < b)
-                return a;
-            return b;
+            return (a < b) ? a : b;
         }
 
         //ej 4
@@ -212,6 +210,7 @@ namespace ProyectoExamen
             if (n == 1)
                 return 1;
             return (n * n) + SumaRecursiva(n - 1);
+            return (n == 1) ? 1 : (n * n) + SumaRecursiva(n - 1);
         }
 
         //9. (1) Haz una funcion que se le pasen como parametros un enum y un booleano.El enum es el
@@ -249,6 +248,9 @@ namespace ProyectoExamen
             //        return estado;
             //}
             #endregion
+            return (proceso == false) ? estado : estado + 1;
+            //esta es la que me da por buena
+            return !proceso || estado == EstadoMaquina.TERMINANDO ? estado : estado + 1;
         }
 
         //10. (1) Crea una funcion que se le pase un numero y devuelva la suma de todos sus divisores desde

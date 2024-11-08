@@ -64,9 +64,10 @@ namespace _12_09_24
 
         public static bool IsPositive(double num)//mejor value
         {
-            if (num >= 0.0)
-                return true;
-            return false;
+            //if (num >= 0.0)
+            //    return true;
+            //return false;
+            return (num >= 0.0) ? true : false;
         }
 
         //hacer funcion pase dos numeros enteros y devuelva el mayor

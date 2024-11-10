@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs
 {
-    internal class Lobo
+    public class Lobo
     {
+        public Coordenada? coordenada;
     }
 }

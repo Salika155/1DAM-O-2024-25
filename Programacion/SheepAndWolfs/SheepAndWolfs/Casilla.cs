@@ -6,7 +6,22 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs
 {
-    internal class Casilla
+    public enum TerritorioType
     {
+        AGUA,
+        HIERBA,
+        VACIO
+    }
+    public class Casilla
+    {
+        public TerritorioType type;
+        public double regeneration;
+        public Coordenada? coordenada;
+
+        public Coordenada GetCoordenada()
+        {
+            return coordenada;
+        }
+        
     }
 }

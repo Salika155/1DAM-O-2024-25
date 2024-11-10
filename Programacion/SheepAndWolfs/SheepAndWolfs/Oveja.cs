@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs
 {
-    internal class Oveja
+    public class Oveja
     {
+        public Oveja() 
+        { 
+        }
     }
 }

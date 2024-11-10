@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Mundo mundo = new Mundo();
+            Utils.GenerateRandomWorld(mundo);
         }
     }
 }

@@ -13,10 +13,11 @@ namespace ConsoleApp1
 
         public static bool IsEven(int numero)
         {
-            if (numero % 2 == 0)
-                return true;
-            return false;
+            //if (numero % 2 == 0)
+            //    return true;
+            //return false;
             //return numero % 2 == 0;
+            return (numero % 2 == 0) ? true : false;
         }
 
         //funcion que me diga si un numero es impar

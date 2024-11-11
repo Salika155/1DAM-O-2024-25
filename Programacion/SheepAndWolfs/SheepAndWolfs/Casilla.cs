@@ -16,12 +16,9 @@ namespace SheepAndWolfs
     {
         public TerritorioType type;
         public double regeneration;
-        public Coordenada? coordenada;
+        public readonly Coordenada coordenada;
 
-        public Coordenada GetCoordenada()
-        {
-            return coordenada;
-        }
+        
         
     }
 }

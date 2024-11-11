@@ -8,6 +8,6 @@ namespace SheepAndWolfs
 {
     public class Lobo
     {
-        public Coordenada? coordenada;
+        private Coordenada? coordenada;
     }
 }

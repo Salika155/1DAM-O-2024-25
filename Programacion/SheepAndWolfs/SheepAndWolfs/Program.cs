@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Mundo mundo = new Mundo();
+            Mundo mundo = new(40, 30);
             Utils.GenerateRandomWorld(mundo);
         }
     }

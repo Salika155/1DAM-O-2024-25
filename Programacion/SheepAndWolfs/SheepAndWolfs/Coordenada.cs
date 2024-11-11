@@ -8,17 +8,23 @@ namespace SheepAndWolfs
 {
     public class Coordenada
     {
-        public int x;
-        public int y;
+        public readonly int X;
+        public readonly int Y;
 
-        public int GetX()
+        public Coordenada()
         {
-            return x;
+
         }
 
-        public int GetY()
+        public Coordenada(int x, int y)
         {
-            return y;   
+            this.X = x;
+            this.Y = y;
+        }
+
+        public bool EqualsToCoordenada(int x, int y)
+        {
+            return X == x && Y == y;
         }
     }
 }

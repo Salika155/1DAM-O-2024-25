@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs
 {
+    public enum TerritorioType
+    {
+
+    }
     public class Utils
     {
+        private Random random = new Random();
+
+
         public static void GenerateRandomWorld(Mundo mundo)
         {
             if (mundo == null) 
@@ -17,16 +24,20 @@ namespace SheepAndWolfs
             {
                 for(int x = 0; x < mundo.GetWidth(); x++)
                 {
-                    TerritorioType type = GenerateRandomType();
+                    TerritorioType type = Utils.GenerateRandomType(type);
                     Casilla? casilla = mundo.GetCasillaAt(x, y);
                     casilla.type = type;
                 }
             }
         }
 
-        private static TerritorioType GenerateRandomType()
+        private TerritorioType GenerateRandomType()
         {
-            throw new NotImplementedException();    
+            TerritorioType[] terreno = { TerritorioType.AGUA, TerritorioType.HIERBA, TerritorioType.VACIO };
+            int index = random.Next((int)TerritorioType.Count);
+            return terreno[index];
+            //mejor opcion return (TerrainType)index;
+
         }
 
         public void Init()

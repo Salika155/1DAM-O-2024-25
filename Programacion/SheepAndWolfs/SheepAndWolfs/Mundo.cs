@@ -17,54 +17,69 @@ namespace SheepAndWolfs
         {
             this._width = width;
             this._height = height;
+            this._casilla = new List<Casilla>();
+
+            CrearCasillas();
         }
 
-        public int GetWidth()
+        public void CrearCasillas()
         {
-            return _width;
+            for (int y = 0; y < _height; y++) 
+            {
+                for (int  x = 0; x < _width; x++) 
+                {
+                    _casilla.Add(new Casilla(new Coordenada(x, y), TerritorioType.VACIO));
+                }
+            }
         }
 
-        public int GetHeight()
-        {
-            return _height;
-        }
+        public int GetWidth() => _width;
+
+        public int GetHeight() => _height;
 
         public Casilla? GetCasillaAt(int x, int y)
         {
+            //if ((x < 0 || x >=  _width) || (y < 0 || y >= _height))
+            //    return null;
             //for(int i = 0; i < _casilla.Count; i++)
             //{
             //    Casilla? casilla = _casilla[i];
             //    if (casilla.coordenada.EqualsToCoordenada(x, y))
             //        return casilla;
-            return _casilla[y * _width + x];
+            return _casilla[IndexOfCasilla(x, y)];
             //}
             //return null;
         }
 
         //no sirve
-        public void RemoveCasillaAt(int x, int y) 
-        {
-            for (int i = 0; i < _casilla.Count; ++i) 
-            {
-                Casilla? casilla = _casilla[i];
-                if (casilla.coordenada.EqualsToCoordenada(x, y)) 
-                    _casilla.RemoveAt(i);
-            }
-        }
+        //public void RemoveCasillaAt(int x, int y) 
+        //{
+        //    for (int i = 0; i < _casilla.Count; ++i) 
+        //    {
+        //        Casilla? casilla = _casilla[i];
+        //        if (casilla.coordenada.EqualsToCoordenada(x, y)) 
+        //            _casilla.RemoveAt(i);
+        //    }
+        //}
 
         public int IndexOfCasilla (int x, int y)
         {
-            for (int i = 0; i < _casilla.Count; ++i)
-            {
-                Casilla casilla = _casilla[i];
-                if (casilla.coordenada.EqualsToCoordenada(x, y))
-                    return i;
-            }
-            return -1;
+            if ((x < 0 || x >= _width) || (y < 0 || y >= _height))
+                return -1;
+            //for (int i = 0; i < _casilla.Count; ++i)
+            //{
+            //    Casilla casilla = _casilla[i];
+            //    if (casilla.coordenada.EqualsToCoordenada(x, y))
+            //        return i;
+            //}
+            //return -1;
+            return y * _width + x;
         }
 
         public bool ContainsCasilla(int x, int y)
         {
+            //if ((x < 0 || x >= _width) || (y < 0 || y >= _height))
+            //    return false;
             //if (x < 0)
             //y, width, height
             return IndexOfCasilla(x, y) != -1;
@@ -72,11 +87,10 @@ namespace SheepAndWolfs
 
         public int CountCasilla()
         {
-
             return _casilla.Count;
         }
 
-        //removeat???
+        
         //indexOf
         //contains
         //count?

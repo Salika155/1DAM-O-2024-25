@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs
 {
-    public enum TerritorioType
-    {
-        AGUA,
-        HIERBA,
-        VACIO
-    }
+    
     public class Casilla
     {
         public TerritorioType type;
         public double regeneration;
         public readonly Coordenada coordenada;
 
-        
-        
+        public Casilla(Coordenada coordenada, TerritorioType type)
+        {
+            this.type = type;
+            //this.regeneration = regeneration;
+            this.coordenada = coordenada;
+        }
     }
 }

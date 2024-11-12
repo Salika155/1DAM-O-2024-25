@@ -8,12 +8,15 @@ namespace SheepAndWolfs
 {
     public enum TerritorioType
     {
-
+        VACIO,
+        HIERBA,
+        AGUA,
+        COUNT
     }
+
     public class Utils
     {
-        private Random random = new Random();
-
+        private static Random random = new Random();
 
         public static void GenerateRandomWorld(Mundo mundo)
         {
@@ -24,25 +27,28 @@ namespace SheepAndWolfs
             {
                 for(int x = 0; x < mundo.GetWidth(); x++)
                 {
-                    TerritorioType type = Utils.GenerateRandomType(type);
+                    TerritorioType type = GenerateRandomType();
                     Casilla? casilla = mundo.GetCasillaAt(x, y);
-                    casilla.type = type;
+                    if (casilla != null)
+                    {
+                        casilla.type = type;
+                    }
                 }
             }
         }
 
-        private TerritorioType GenerateRandomType()
+        private static TerritorioType GenerateRandomType()
         {
-            TerritorioType[] terreno = { TerritorioType.AGUA, TerritorioType.HIERBA, TerritorioType.VACIO };
-            int index = random.Next((int)TerritorioType.Count);
-            return terreno[index];
-            //mejor opcion return (TerrainType)index;
-
+            //TerritorioType[] terreno = { TerritorioType.AGUA, TerritorioType.HIERBA, TerritorioType.VACIO };
+            int index = random.Next((int)TerritorioType.COUNT);
+            //return terreno[index];
+            //mejor opcion
+            return (TerritorioType)index;
         }
 
-        public void Init()
-        {
+        //public void Init()
+        //{
 
-        }
+        //}
     }
 }

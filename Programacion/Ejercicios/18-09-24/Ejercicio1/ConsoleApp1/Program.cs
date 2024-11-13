@@ -65,6 +65,10 @@
             Console.WriteLine("MCD: ");
             int result12 = Ejercicios.MCD(9, 6);
             Console.WriteLine(result12);
+
+
+            string result22 = EjerciciosParaExamen.Serie2(6);
+            Console.WriteLine(result22);
         }
     }
 }

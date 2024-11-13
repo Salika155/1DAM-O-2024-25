@@ -98,13 +98,13 @@ namespace ConsoleApp1
         {
             if (n < 0)
                 return string.Empty;
-            string result = "0, ";
+            string result = "";
             int aux = 0;
 
             for (int i = 0; i < n ; i++)
             {
-                aux += 2;
                 result += aux;
+                aux += 2;
                 if (i < n - 1)
                     result += ", ";
             }
@@ -118,15 +118,18 @@ namespace ConsoleApp1
             if (n <= 0)
                 return string.Empty;
             string result = "";
-            
-            //for (int i = 1;  i <= n;  i++)
-            //{
-            //    result += i;
-            //    if (n < i)
-            //    {
-            //        result += ", ";
-            //    }
-            //}
+            int aux = 1;
+
+            for (int i = 1; i <= n; i++)
+            {
+                
+                result += aux;
+                aux *= 2;
+                if (i < n)
+                {
+                    result += ", ";
+                }
+            }
             return result;
         }
 

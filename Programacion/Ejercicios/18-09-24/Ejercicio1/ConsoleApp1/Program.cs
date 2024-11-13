@@ -69,6 +69,9 @@
 
             string result22 = EjerciciosParaExamen.Serie2(6);
             Console.WriteLine(result22);
+
+            string result33 = EjerciciosParaExamen.Serie3(6);
+            Console.WriteLine(result33);
         }
     }
 }

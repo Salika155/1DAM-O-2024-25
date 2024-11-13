@@ -6,6 +6,11 @@
         {
             Mundo mundo = new(40, 30);
             Utils.GenerateRandomWorld(mundo);
+
+            Lobo lobo = new Lobo();
+            Oveja oveja = new Oveja();
+
+            Animal l = oveja;
         }
     }
 }

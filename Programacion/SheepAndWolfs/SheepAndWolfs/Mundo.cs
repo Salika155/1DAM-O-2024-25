@@ -8,7 +8,11 @@ namespace SheepAndWolfs
 {
     public class Mundo
     {
+        //mejor en array
         private List<Casilla> _casilla;
+        //lista de lobos y ovejas obligatorio
+        private List<Oveja> ovejas;
+        private List<Lobo> lobos;
         private int _width;
         private int _height;
 
@@ -51,6 +55,8 @@ namespace SheepAndWolfs
             //return null;
         }
 
+
+
         //no sirve
         //public void RemoveCasillaAt(int x, int y) 
         //{
@@ -74,6 +80,7 @@ namespace SheepAndWolfs
             //}
             //return -1;
             return y * _width + x;
+            //dado un index para hallar x e y divido el index entre el ancho como divisor y el cociente sera la y, y el resto la x
         }
 
         public bool ContainsCasilla(int x, int y)

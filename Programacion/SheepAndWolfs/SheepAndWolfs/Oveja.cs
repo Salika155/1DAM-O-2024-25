@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs
 {
-    public class Oveja
+    public class Oveja : Animal
     {
         private Coordenada _coordenada;
         private int _vida;

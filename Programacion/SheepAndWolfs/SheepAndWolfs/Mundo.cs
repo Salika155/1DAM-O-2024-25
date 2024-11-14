@@ -122,34 +122,48 @@ namespace SheepAndWolfs
             return -1;
         }
 
-        public int IndexOfOveja(Oveja oveja)
+        public int CountAnimals()
         {
-            for (int i = 0; i < _ovejas.Count; i++)
-            {
-                if (_ovejas[i].Nombre == oveja.Nombre)
-                    return i;
-            }
-            return -1;
+            return _animals.Count;
         }
 
-        public int IndexOfLobo()
+        public int CountAnimalsType(AnimalType type)
         {
-            for (int i = 0; i < _ovejas.Count; i++)
-            {
-                if (_ovejas[i].Nombre == oveja.Nombre)
-                    return i;
-            }
-            return -1;
+            int aux = 0;
+            for (int i = 0; i < _animals.Count; i++)
+                if (_animals[i].type == type)
+                    aux += 1;
+            return aux;
         }
 
-        public Oveja GetOvejaAt()
-        {
+        //public int IndexOfOveja(Oveja oveja)
+        //{
+        //    for (int i = 0; i < _ovejas.Count; i++)
+        //    {
+        //        if (_ovejas[i].Nombre == oveja.Nombre)
+        //            return i;
+        //    }
+        //    return -1;
+        //}
 
-        }
-        public Lobo GetLoboAt()
-        {
+        //public int IndexOfLobo()
+        //{
+        //    for (int i = 0; i < _ovejas.Count; i++)
+        //    {
+        //        if (_ovejas[i].Nombre == oveja.Nombre)
+        //            return i;
+        //    }
+        //    return -1;
+        //}
 
-        }
+        //public Oveja GetOvejaAt()
+        //{
+
+        //}
+        //public Lobo GetLoboAt()
+        //{
+
+        //}
 
         
         //indexOf

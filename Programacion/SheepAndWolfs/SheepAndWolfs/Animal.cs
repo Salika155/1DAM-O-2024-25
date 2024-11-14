@@ -8,9 +8,9 @@ namespace SheepAndWolfs
 {
     public enum AnimalType
     {
+        ANIMAL,
         OVEJA,
-        LOBO,
-        ANIMAL
+        LOBO
     }
     public class Animal
     {

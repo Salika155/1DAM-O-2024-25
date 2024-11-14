@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class EjerciciosParaExamen
+    public class EjerciciosParaExamen
     {
         //funcion numero par
         public static bool IsEven(int number) => number % 2 == 0;
@@ -17,7 +17,7 @@ namespace ConsoleApp1
         //Funcion que me de una de las dos soluciones de la ecuacion de segundo grado
         public static double SolveSecondGradeEquation(double a, double b, double c)
         {
-            if (a == 0 ||b == 0 ||c == 0)
+            if (a == 0 || b == 0 || c == 0)
                 return double.NaN;
             double x1 = (-b + Math.Sqrt(b * b - 4 * a * c)) / (2 * a);
             double x2 = (-b - Math.Sqrt(b * b - 4 * a * c)) / (2 * a);
@@ -49,7 +49,7 @@ namespace ConsoleApp1
          *                                                 * continue -> salta a la siguiente iteracion
          *                                                         * return -> sale de la funcion
          /for -> for (int i = 0; i < 10; i++)
-    */
+         */
         //funcion que escribe 10 veces hola
         public static void WriteHola()
         {
@@ -66,8 +66,8 @@ namespace ConsoleApp1
         {
             if (n <= 1)
                 return false;
-            
-            for(int i = 2; i < n; i++)
+
+            for (int i = 2; i < n; i++)
             {
                 if (IsDivisible(n, i))
                     return false;
@@ -83,7 +83,7 @@ namespace ConsoleApp1
                 return string.Empty;
             string result = string.Empty;
 
-            for(int i = 0; i <= n; i++)
+            for (int i = 0; i <= n; i++)
             {
                 if (i < n)
                     result += i;
@@ -101,7 +101,7 @@ namespace ConsoleApp1
             string result = "";
             int aux = 0;
 
-            for (int i = 0; i < n ; i++)
+            for (int i = 0; i < n; i++)
             {
                 result += aux;
                 aux += 2;
@@ -122,7 +122,6 @@ namespace ConsoleApp1
 
             for (int i = 1; i <= n; i++)
             {
-                
                 result += aux;
                 aux *= 2;
                 if (i < n)
@@ -135,9 +134,51 @@ namespace ConsoleApp1
 
 
         //Serie4 numero positivos y negativos le paso numero y saca los multiplos de tres alternando en positivo y negativo ej: 0, -3, 6, -9
+        public static string Serie4(int n)
+        {
+            if (n <= 0)
+                return string.Empty;
 
+            string result = "";
+            int aux = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                aux += 3;
+                if (aux % 2 == 0)
+                    result += aux;
+                else
+                    result += -aux;
+
+                if (i < n - 1)
+                    result += ", ";
+            }
+            return result;
+        }
 
         //Serie5 devuelve un string -> le paso un 30 y te hace fibonacci hasta el 30 -> while
+        public static string Serie5(int n) 
+        {
+            if (n <= 0)
+                return string.Empty;
+            string result = "";
+            int aux = 0;
+            int aux2 = 1;
+            int aux3 = aux + aux2;
+
+            while (aux3 <= n)
+            {
+                result += aux3;
+                aux = aux2;
+                aux2 = aux3;
+                aux3 = aux + aux2;
+                if (aux3 <= n)
+                    result += ", ";
+            }
+            return result;
+
+
+        }
 
 
 
@@ -166,6 +207,7 @@ namespace ConsoleApp1
 
         //funcion para hacer el maximo comun divisor de dos numeros
 
-
     }
 }
+
+

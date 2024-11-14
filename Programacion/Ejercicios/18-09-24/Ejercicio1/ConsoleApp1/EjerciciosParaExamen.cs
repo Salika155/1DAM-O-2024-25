@@ -163,27 +163,46 @@ namespace ConsoleApp1
                 return string.Empty;
             string result = "";
             int aux = 0;
-            int aux2 = 1;
-            int aux3 = aux + aux2;
+            int aux1 = 1;
+            int aux2 = 0;
 
-            while (aux3 <= n)
+            while(aux2 < n)
             {
-                result += aux3;
-                aux = aux2;
-                aux2 = aux3;
-                aux3 = aux + aux2;
-                if (aux3 <= n)
+                result += aux2;
+                aux2 = aux + aux1;
+                aux = aux1;
+                aux1 = aux2;
+                if (aux2 < n)
                     result += ", ";
             }
             return result;
-
-
         }
 
 
-
         //si es impar numero x 3 + 1, si el numero es par dividirlo entre 2 -> conjetura collatz
+        public static string Serie6(int n)
+        {
+            if (n <= 0)
+                return string.Empty;
 
+            string result = "";
+            int aux = n;
+
+            while (aux > 1)
+            {
+                if (aux % 2 == 0)
+                    aux /= 2;
+                else
+                    aux = aux * 3 + 1;
+                while (aux > 1)
+                {
+                    result += aux;
+                    if (aux > 1)
+                        result += ", ";
+                }
+            }
+            return result;
+        }
 
 
         //factorial 5 = 5 + 4 + 3 + 2 + 1

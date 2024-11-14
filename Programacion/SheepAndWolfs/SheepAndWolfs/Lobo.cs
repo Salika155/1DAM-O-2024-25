@@ -8,7 +8,7 @@ namespace SheepAndWolfs
 {
     public class Lobo : Animal
     {
-        private Coordenada? _coordenada;
+        //private Coordenada? _coordenada;
         private int _vida;
         
         public Lobo(string name) : base(name, 1000)
@@ -16,11 +16,11 @@ namespace SheepAndWolfs
             
         }
 
-        public void MoverLobo()
-        {
-            _coordenada = new Coordenada();
+        //public void MoverLobo()
+        //{
+        //    _coordenada = new Coordenada();
 
-        }
+        //}
         //esto va en un enum -> o crearse una clase ai
             //-> me creo un array de count del enum para cada caso, y lo relleno de 0
                 //-> hidratacion campo = 902 -> votos beber = 1000 - h
@@ -32,10 +32,10 @@ namespace SheepAndWolfs
         //algoritmo a* pathfinder no es obligatorio
                 
 
-        public void AtacarOveja()
-        {
+        //public void AtacarOveja()
+        //{
 
-        }
+        //}
 
         //class Animal 
         //Lobo : Animal

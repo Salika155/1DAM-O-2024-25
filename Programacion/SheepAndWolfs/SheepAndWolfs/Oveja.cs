@@ -11,10 +11,13 @@ namespace SheepAndWolfs
     {
         private Coordenada _coordenada;
         private int _vida;
-        public Oveja() 
+        private string _name = "";
+        public Oveja() : base("", 500)
         {
             _vida = 500;
+            _name = "oveja1";
         }
+
 
         public void MoverOveja()
         {

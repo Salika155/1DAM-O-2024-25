@@ -10,11 +10,13 @@ namespace SheepAndWolfs
     {
         //mejor en array
         private List<Casilla> _casilla;
+        private (int, int)[] _casillas = new (int, int)[] { };
         //lista de lobos y ovejas obligatorio
-        private List<Oveja> ovejas;
-        private List<Lobo> lobos;
+        private List<Oveja> _ovejas;
+        private List<Lobo> _lobos;
         private int _width;
         private int _height;
+        private List<Animal> _animals;
 
 
         public Mundo(int width, int height)
@@ -22,6 +24,7 @@ namespace SheepAndWolfs
             this._width = width;
             this._height = height;
             this._casilla = new List<Casilla>();
+            this._animals = new List<Animal>();
 
             CrearCasillas();
         }
@@ -83,6 +86,8 @@ namespace SheepAndWolfs
             //dado un index para hallar x e y divido el index entre el ancho como divisor y el cociente sera la y, y el resto la x
         }
 
+
+
         public bool ContainsCasilla(int x, int y)
         {
             //if ((x < 0 || x >= _width) || (y < 0 || y >= _height))
@@ -95,6 +100,55 @@ namespace SheepAndWolfs
         public int CountCasilla()
         {
             return _casilla.Count;
+        }
+
+        public Animal GetAnimalAt(int x, int y, AnimalType type)
+        {
+            for(int i = 0; i < _animals.Count; i++)
+            {
+                if (_animals[i].coordenada.EqualsToCoordenada(x, y) && _animals[i].type == type)
+                    return _animals[i];
+            }
+            return null;
+        }
+
+        public int IndexOfAnimal(Animal animal)
+        {
+            for(int i = 0; i < _animals.Count; i++)
+            {
+                if (_animals[i].type == animal.type && _animals[i].Nombre == animal.Nombre)
+                    return i;
+            }
+            return -1;
+        }
+
+        public int IndexOfOveja(Oveja oveja)
+        {
+            for (int i = 0; i < _ovejas.Count; i++)
+            {
+                if (_ovejas[i].Nombre == oveja.Nombre)
+                    return i;
+            }
+            return -1;
+        }
+
+        public int IndexOfLobo()
+        {
+            for (int i = 0; i < _ovejas.Count; i++)
+            {
+                if (_ovejas[i].Nombre == oveja.Nombre)
+                    return i;
+            }
+            return -1;
+        }
+
+        public Oveja GetOvejaAt()
+        {
+
+        }
+        public Lobo GetLoboAt()
+        {
+
         }
 
         

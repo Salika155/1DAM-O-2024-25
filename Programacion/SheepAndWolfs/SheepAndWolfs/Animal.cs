@@ -26,5 +26,7 @@ namespace SheepAndWolfs
             Nombre = name;
             Vida = n;
         }
+
+        //crearanimales en el constructor
     }
 }

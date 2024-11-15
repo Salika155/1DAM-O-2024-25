@@ -13,9 +13,9 @@ namespace SheepAndWolfs
         public double regeneration;
         public readonly Coordenada coordenada;
 
-        public Casilla(Coordenada coordenada, TerritorioType type)
+        public Casilla(Coordenada coordenada)
         {
-            this.type = type;
+            
             //this.regeneration = regeneration;
             this.coordenada = coordenada;
         }

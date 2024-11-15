@@ -10,10 +10,10 @@ namespace SheepAndWolfs
     {
         //mejor en array
         private List<Casilla> _casilla;
-        private (int, int)[] _casillas = new (int, int)[] { };
+        //private (int, int)[] _casillas = new (int, int)[] { };
+        //private (Coordenada, TerritorioType)[] _casillas = new (Coordenada, TerritorioType)[] { };
+        private Casilla[] _casillas = new Casilla[] { };
         //lista de lobos y ovejas obligatorio
-        private List<Oveja> _ovejas;
-        private List<Lobo> _lobos;
         private int _width;
         private int _height;
         private List<Animal> _animals;
@@ -23,19 +23,21 @@ namespace SheepAndWolfs
         {
             this._width = width;
             this._height = height;
-            this._casilla = new List<Casilla>();
-            this._animals = new List<Animal>();
+            //this._casilla = new List<Casilla>();
+            this._casillas = new Casilla[width * height];
+
 
             CrearCasillas();
         }
 
         public void CrearCasillas()
         {
-            for (int y = 0; y < _height; y++) 
+            for (int y = 0; y < _height; y++)
             {
-                for (int  x = 0; x < _width; x++) 
+                for (int x = 0; x < _width; x++)
                 {
-                    _casilla.Add(new Casilla(new Coordenada(x, y), TerritorioType.VACIO));
+                    int index = Utils.IndexOfCasilla(y, x, _width);
+                    _casillas[index] = new Casilla(new Coordenada(x, y));
                 }
             }
         }
@@ -53,13 +55,15 @@ namespace SheepAndWolfs
             //    Casilla? casilla = _casilla[i];
             //    if (casilla.coordenada.EqualsToCoordenada(x, y))
             //        return casilla;
-            return _casilla[IndexOfCasilla(x, y)];
+            //return _casilla[IndexOfCasilla(x, y)]; -> esta era la corta buena hasta que movi la funcion indexofcasilla a utils
             //}
             //return null;
+            int index = Utils.IndexOfCasilla(x, y, _width);
+            return _casillas[index];
         }
 
 
-
+        #region nosirve
         //no sirve
         //public void RemoveCasillaAt(int x, int y) 
         //{
@@ -70,8 +74,9 @@ namespace SheepAndWolfs
         //            _casilla.RemoveAt(i);
         //    }
         //}
+        #endregion
 
-        public int IndexOfCasilla (int x, int y)
+        public int IndexOfCasilla(int x, int y)
         {
             if ((x < 0 || x >= _width) || (y < 0 || y >= _height))
                 return -1;
@@ -102,9 +107,9 @@ namespace SheepAndWolfs
             return _casilla.Count;
         }
 
-        public Animal GetAnimalAt(int x, int y, AnimalType type)
+        public Animal? GetAnimalAt(int x, int y, AnimalType type)
         {
-            for(int i = 0; i < _animals.Count; i++)
+            for (int i = 0; i < _animals.Count; i++)
             {
                 if (_animals[i].coordenada.EqualsToCoordenada(x, y) && _animals[i].type == type)
                     return _animals[i];
@@ -114,7 +119,7 @@ namespace SheepAndWolfs
 
         public int IndexOfAnimal(Animal animal)
         {
-            for(int i = 0; i < _animals.Count; i++)
+            for (int i = 0; i < _animals.Count; i++)
             {
                 if (_animals[i].type == animal.type && _animals[i].Nombre == animal.Nombre)
                     return i;
@@ -135,6 +140,13 @@ namespace SheepAndWolfs
                     aux += 1;
             return aux;
         }
+
+        ///TODO: Añadir un método para añadir un animal a la lista de animales
+        //public AnimalType GetAnimalTypeAt(int x, int y)
+        //{
+        //    Animal animal = GetAnimalAt(x, y);
+        //    return animal.animalType;
+        //}
 
         //public int IndexOfOveja(Oveja oveja)
         //{
@@ -165,13 +177,13 @@ namespace SheepAndWolfs
 
         //}
 
-        
+
         //indexOf
         //contains
         //count?
 
         //int index = y * width + x
         //index / ancho = cociente la y y resto la x
-       
+
     }
 }

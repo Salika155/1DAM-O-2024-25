@@ -19,14 +19,14 @@ namespace SheepAndWolfs
         }
 
 
-        public void MoverOveja()
-        {
+        //public void MoverOveja()
+        //{
 
-        }
+        //}
 
-        public void ComerHierba()
-        {
+        //public void ComerHierba()
+        //{
 
-        }
+        //}
     }
 }

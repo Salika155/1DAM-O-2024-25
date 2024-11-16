@@ -7,6 +7,9 @@
             Mundo mundo = new(40, 30);
             Utils.GenerateRandomWorld(mundo);
 
+
+            mundo.CreateWolfs(5);
+            mundo.CreateSheeps(5);
             //Lobo lobo = new Lobo("lobo1");
             //Oveja oveja = new Oveja();
 

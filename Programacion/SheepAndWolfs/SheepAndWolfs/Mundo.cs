@@ -58,6 +58,7 @@ namespace SheepAndWolfs
             //return _casilla[IndexOfCasilla(x, y)]; -> esta era la corta buena hasta que movi la funcion indexofcasilla a utils
             //}
             //return null;
+
             int index = Utils.IndexOfCasilla(x, y, _width);
             return _casillas[index];
         }
@@ -90,8 +91,6 @@ namespace SheepAndWolfs
             return y * _width + x;
             //dado un index para hallar x e y divido el index entre el ancho como divisor y el cociente sera la y, y el resto la x
         }
-
-
 
         public bool ContainsCasilla(int x, int y)
         {
@@ -134,12 +133,54 @@ namespace SheepAndWolfs
 
         public int CountAnimalsType(AnimalType type)
         {
+            if (_animals.Count == 0)
+                return 0;
+
             int aux = 0;
             for (int i = 0; i < _animals.Count; i++)
                 if (_animals[i].type == type)
                     aux += 1;
             return aux;
         }
+
+        public void AddAnimal(Animal animal)
+        {
+            if (animal == null)
+                return;
+            _animals.Add(animal);
+        }
+
+        public AnimalType GetAnimalTypeAt(int x, int y, AnimalType type)
+        {
+            Animal? animal = GetAnimalAt(x, y, type);
+            return animal.type;
+        }
+
+        public void CreateWolfs(int wolfs)
+        {
+            //    int wolfsCreated = Utils.GetRandomNumber(0, wolfs + 1);
+            //    for (int i = 0; i < wolfsCreated; i++)
+            //    {
+            //        int x = Utils.GetRandomNumber(0, _width);
+            //        int y = Utils.GetRandomNumber(0, _height);
+            //    }
+        }
+
+            
+
+        public void CreateSheeps(int v)
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    int index = Utils.IndexOfCasilla(y, x, _width);
+                    _casillas[index] = new Casilla(new Coordenada(x, y));
+                }
+            }
+        }
+
+        
 
         ///TODO: Añadir un método para añadir un animal a la lista de animales
         //public AnimalType GetAnimalTypeAt(int x, int y)

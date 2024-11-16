@@ -11,12 +11,13 @@ namespace SheepAndWolfs
         VACIO,
         HIERBA,
         AGUA,
+        ROCA,
         COUNT
     }
 
     public class Utils
     {
-        private static Random random = new Random();
+        private static readonly Random random = new Random();
 
         //GetCasillaAt
         public static Casilla? GetCasillaAt(Mundo mundo, int x, int y)
@@ -60,6 +61,8 @@ namespace SheepAndWolfs
             return y * width + x;
         }
 
+        
+
         private static TerritorioType GenerateRandomType()
         {
             //TerritorioType[] terreno = { TerritorioType.AGUA, TerritorioType.HIERBA, TerritorioType.VACIO };
@@ -81,6 +84,28 @@ namespace SheepAndWolfs
             return (index % width, index / width);
         }
 
+        public static bool IsValidCoordinates(int x, int y, int width, int height)
+        {
+            return x >= 0 && x < width && y >= 0 && y < height;
+        }
+
+        public static void DrawWorld(Mundo mundo)
+        {
+            Console.Clear();
+
+            
+
+            
+
+
+        }
+
+        public Animal CreateAnimal(Animal animal)
+        {
+            return animal;
+        }
 
     }
 }
+
+//resetcolor

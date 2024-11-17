@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs
 {
+    //TODO: esto funciona
     public class Lobo : Animal
     {
         //private Coordenada? _coordenada;
@@ -15,6 +16,7 @@ namespace SheepAndWolfs
         public AnimalType type = AnimalType.LOBO;
         public Coordenada coordenada;
 
+        //TODO: esto funciona
         public Lobo(string name) : base(name, 1000)
         {
             

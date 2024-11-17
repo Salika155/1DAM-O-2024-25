@@ -22,6 +22,7 @@ namespace SheepAndWolfs
             this.Y = y;
         }
 
+        //TODO: esto funciona
         public bool EqualsToCoordenada(int x, int y)
         {
             return X == x && Y == y;

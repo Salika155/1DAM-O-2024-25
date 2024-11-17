@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs
 {
+
     public enum TerritorioType
     {
         TIERRA,
@@ -20,6 +21,7 @@ namespace SheepAndWolfs
     {
         private static readonly Random random = new Random();
 
+        //TODO: esto no lo he usado
         //GetCasillaAt
         public static Casilla? GetCasillaAt(Mundo mundo, int x, int y)
         {
@@ -28,11 +30,13 @@ namespace SheepAndWolfs
             return mundo.GetCasillaAt(x, y);
         }
 
+        //TODO: esto funciona
         public static int GetRandomNumber(int min, int max)
         {
             return random.Next(min, max);
         }
 
+        //TODO: esto no lo he usado
         public static void GenerateRandomWorld(Mundo mundo)
         {
             if (mundo == null) 
@@ -52,6 +56,8 @@ namespace SheepAndWolfs
             }
         }
 
+
+        //TODO: esto funciona
         public static int IndexOfCasilla(int x, int y, int width)
         {
             if (x < 0 || y < 0 || width <= 0)
@@ -59,8 +65,8 @@ namespace SheepAndWolfs
 
             return y * width + x;
         }
-        
 
+        //TODO: esto funciona
         public static TerritorioType GenerateRandomType()
         {
             //TerritorioType[] terreno = { TerritorioType.AGUA, TerritorioType.HIERBA, TerritorioType.VACIO };
@@ -70,13 +76,14 @@ namespace SheepAndWolfs
             return (TerritorioType)index;
         }
 
-        
 
+        //TODO: esto no lo he usado
         public static bool EqualsToCoordenada(Coordenada coor, int x, int y)
         {
             return coor.X == x && coor.Y == y;
         }
 
+        //TODO: esto no lo he usado
         public static (int x, int y) GetCoordinatesFromIndex(int index, int width)
         {
             if (width == 0)
@@ -84,11 +91,13 @@ namespace SheepAndWolfs
             return (index % width, index / width);
         }
 
+        //TODO: esto funciona
         public static bool IsValidCoordinates(int x, int y, int width, int height)
         {
             return x >= 0 && x < width && y >= 0 && y < height;
         }
 
+        //TODO: esto funciona
         public static void DrawWorld(Mundo mundo)
         {
             Console.Clear();
@@ -117,7 +126,7 @@ namespace SheepAndWolfs
                             case TerritorioType.TIERRA:
                                 Console.BackgroundColor = ConsoleColor.Yellow;
                                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                                Console.Write(" H ");
+                                Console.Write(" T ");
                                 break;
                             case TerritorioType.AGUA:
                                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -127,7 +136,7 @@ namespace SheepAndWolfs
                             case TerritorioType.HIERBA:
                                 Console.BackgroundColor = ConsoleColor.Green;
                                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                                Console.Write(" G ");
+                                Console.Write(" H ");
                                 break;
                             case TerritorioType.ROCA:
                                 Console.BackgroundColor = ConsoleColor.Yellow;
@@ -147,7 +156,6 @@ namespace SheepAndWolfs
         }
 
         
-
         //public Animal CreateAnimal(Animal animal)
         //{
         //    return animal;
@@ -157,46 +165,7 @@ namespace SheepAndWolfs
         //{
         //    return mundo.GetAnimalAt(x, y, type);
         //}
-
-        
-
-
     }
-
-
-
 }
-
-//for (int y = 0; y < mundo.GetHeight(); y++)
-//{
-//    for (int x = 0; x < mundo.GetWidth(); x++)
-//    {
-//        Casilla? casilla = GetCasillaAt(mundo, x, y);
-//        if (casilla != null)
-//        {
-//            switch (casilla.type)
-//            {
-//                case TerritorioType.AGUA:
-//                    Console.BackgroundColor = ConsoleColor.Blue;
-//                    break;
-//                case TerritorioType.HIERBA:
-//                    Console.BackgroundColor = ConsoleColor.Green;
-//                    break;
-//                case TerritorioType.ROCA:
-//                    Console.BackgroundColor = ConsoleColor.Gray;
-//                    break;
-//                case TerritorioType.VACIO:
-//                    Console.BackgroundColor = ConsoleColor.Black;
-//                    break;
-//            }
-//        }
-//        Console.Write(" ");
-
-
-
-
-
-
-//    }
 
 //resetcolor

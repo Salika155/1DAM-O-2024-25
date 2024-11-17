@@ -7,16 +7,6 @@
             //Mundo mundo = new(40, 30);
             //Utils.GenerateRandomWorld(mundo);
 
-
-            //mundo.CreateWolfs(5);
-            //mundo.CreateSheeps(5);
-
-            //Utils.DrawWorld(mundo);
-            //Lobo lobo = new Lobo("lobo1");
-            //Oveja oveja = new Oveja();
-
-            //Animal l = oveja;
-
             //prueba casilla
             //Mundo mundo = new Mundo(3, 3);
             //mundo.CrearCasillas();
@@ -28,9 +18,11 @@
             //mundo.AddAnimal(new Oveja("Oveja1"), 4, 4); // Añadir una oveja en la posición 4,4
             //Utils.DrawWorld(mundo);      // Imprimir el tablero
 
-            Mundo mundo = new Mundo(25, 25);
-            mundo.CreateWolfs(Utils.GetRandomNumber(5, 15));
-            mundo.CreateSheeps(Utils.GetRandomNumber(5, 15));
+            Mundo mundo = new Mundo(5, 5);
+            //realmente esto no es necesario, pero no se por que
+            Utils.GenerateRandomWorld(mundo);
+            mundo.CreateWolfs(Utils.GetRandomNumber(3, 6));
+            mundo.CreateSheeps(Utils.GetRandomNumber(3, 6));
             
 
 

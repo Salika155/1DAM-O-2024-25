@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs
 {
+    //TODO: esto funciona
     public class Oveja : Animal
     {
         private Coordenada _coordenada;
@@ -14,6 +15,7 @@ namespace SheepAndWolfs
         private string _name = "";
         private string v;
 
+        //TODO: esto funciona
         public Oveja(string name) : base("", 500)
         {
             _vida = 500;

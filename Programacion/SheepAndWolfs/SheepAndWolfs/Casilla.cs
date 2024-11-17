@@ -13,9 +13,9 @@ namespace SheepAndWolfs
         public double regeneration;
         public readonly Coordenada coordenada;
 
+        //TODO: esto funciona
         public Casilla(Coordenada coordenada)
         {
-            
             //this.regeneration = regeneration;
             this.coordenada = coordenada;
         }

@@ -12,14 +12,16 @@ namespace SheepAndWolfs
         //private List<Casilla> _casilla;
         //private (int, int)[] _casillas = new (int, int)[] { };
         //private (Coordenada, TerritorioType)[] _casillas = new (Coordenada, TerritorioType)[] { };
+
+        //TODO: esto funciona
         private Casilla[] _casillas = new Casilla[] { };
         //lista de lobos y ovejas obligatorio
         private int _width;
         private int _height;
         private List<Animal> _animals;
-        
 
 
+        //TODO: esto funciona
         public Mundo(int width, int height)
         {
             this._width = width;
@@ -44,10 +46,13 @@ namespace SheepAndWolfs
         //    }
         //}
 
+        //TODO: esto funciona
         public int GetWidth() => _width;
 
+        //TODO: esto funciona
         public int GetHeight() => _height;
 
+        //TODO: esto funciona
         public Casilla? GetCasillaAt(int x, int y)
         {
             //if ((x < 0 || x >=  _width) || (y < 0 || y >= _height))
@@ -84,6 +89,7 @@ namespace SheepAndWolfs
         //    //dado un index para hallar x e y divido el index entre el ancho como divisor y el cociente sera la y, y el resto la x
         //}
 
+        //TODO: esto no lo he usado
         public bool ContainsCasilla(int x, int y)
         {
             //if ((x < 0 || x >= _width) || (y < 0 || y >= _height))
@@ -93,11 +99,13 @@ namespace SheepAndWolfs
             return Utils.IndexOfCasilla(x, y, _width) != -1;
         }
 
+        //TODO: esto no lo he usado
         public int CountCasilla()
         {
             return _casillas.Length;
         }
 
+        //TODO: esto funciona
         public Animal? GetAnimalAt(int x, int y, AnimalType type)
         {
             if (!Utils.IsValidCoordinates(x, y, _width, _height))
@@ -111,6 +119,7 @@ namespace SheepAndWolfs
             return null;
         }
 
+        //TODO: esto no lo he usado
         public int IndexOfAnimal(Animal animal)
         {
             for (int i = 0; i < _animals.Count; i++)
@@ -121,11 +130,13 @@ namespace SheepAndWolfs
             return -1;
         }
 
+        //TODO: esto no lo he usado
         public int CountAnimals()
         {
             return _animals.Count;
         }
 
+        //TODO: esto no lo he usado
         public int CountAnimalsType(AnimalType type)
         {
             if (_animals.Count == 0)
@@ -138,6 +149,7 @@ namespace SheepAndWolfs
             return aux;
         }
 
+        //TODO: esto funciona
         public void AddAnimal(Animal animal, int x, int y)
         {
             if (animal == null)
@@ -147,13 +159,14 @@ namespace SheepAndWolfs
             _animals.Add(animal);
         }
 
-
+        //TODO: esto no lo he usado
         public AnimalType GetAnimalTypeAt(int x, int y, AnimalType type)
         {
             Animal? animal = GetAnimalAt(x, y, type);
             return animal.type;
         }
 
+        //TODO: esto funciona
         public void CreateWolfs(int count)
         {
             for (int i = 0; i < count; i++)
@@ -170,6 +183,7 @@ namespace SheepAndWolfs
             }
         }
 
+        //TODO: esto funciona
         public void CreateSheeps(int count)
         {
             for (int i = 0; i < count; i++)
@@ -186,6 +200,7 @@ namespace SheepAndWolfs
             }
         }
 
+        //TODO: esto funciona
         public void CrearCasillas()
         {
             for (int y = 0; y < _height; y++)
@@ -201,18 +216,7 @@ namespace SheepAndWolfs
             }
         }
 
-        //public void CreateSheeps(int v)
-        //{
-        //    for (int y = 0; y < _height; y++)
-        //    {
-        //        for (int x = 0; x < _width; x++)
-        //        {
-        //            int index = Utils.IndexOfCasilla(x, y, _width);
-        //            _casillas[index] = new Casilla(new Coordenada(x, y));
-        //        }
-        //    }
-        //}
-
+        //TODO: esto no lo he usado
         public void ImprimirCasillas()
         {
             for (int y = 0; y < _height; y++)
@@ -233,17 +237,19 @@ namespace SheepAndWolfs
             }
         }
 
+        //TODO: esto no lo he usado
         internal void CreateRocks(int v)
         {
             throw new NotImplementedException();
         }
 
+        //TODO: esto no lo he usado
         internal void CreateWaters(int v)
         {
             throw new NotImplementedException();
         }
 
-        ///TODO: Añadir un método para añadir un animal a la lista de animales
+        
         //public AnimalType GetAnimalTypeAt(int x, int y)
         //{
         //    Animal animal = GetAnimalAt(x, y);
@@ -269,20 +275,6 @@ namespace SheepAndWolfs
         //    }
         //    return -1;
         //}
-
-        //public Oveja GetOvejaAt()
-        //{
-
-        //}
-        //public Lobo GetLoboAt()
-        //{
-
-        //}
-
-
-        //indexOf
-        //contains
-        //count?
 
         //int index = y * width + x
         //index / ancho = cociente la y y resto la x

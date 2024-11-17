@@ -17,7 +17,7 @@ namespace SheepAndWolfs
         public readonly string? Nombre = "";
         public int Vida;
         public AnimalType type = AnimalType.ANIMAL;
-        public Coordenada coordenada;
+        public Coordenada? coordenada;
 
         
 

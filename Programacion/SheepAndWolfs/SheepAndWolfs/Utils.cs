@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SheepAndWolfs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace SheepAndWolfs
 {
     public enum TerritorioType
     {
-        VACIO,
+        TIERRA,
         HIERBA,
         AGUA,
         ROCA,
@@ -22,9 +23,7 @@ namespace SheepAndWolfs
         //GetCasillaAt
         public static Casilla? GetCasillaAt(Mundo mundo, int x, int y)
         {
-            if (mundo == null)
-                return null;
-            if (x < 0 || y < 0 || x >= mundo.GetWidth() || y >= mundo.GetHeight())
+            if (!Utils.IsValidCoordinates(x, y, mundo.GetWidth(), mundo.GetHeight()))
                 return null;
             return mundo.GetCasillaAt(x, y);
         }
@@ -60,17 +59,18 @@ namespace SheepAndWolfs
 
             return y * width + x;
         }
-
         
 
-        private static TerritorioType GenerateRandomType()
+        public static TerritorioType GenerateRandomType()
         {
             //TerritorioType[] terreno = { TerritorioType.AGUA, TerritorioType.HIERBA, TerritorioType.VACIO };
-            int index = random.Next((int)TerritorioType.COUNT);
+            int index = random.Next(0,(int)TerritorioType.COUNT);
             //return terreno[index];
             //mejor opcion
             return (TerritorioType)index;
         }
+
+        
 
         public static bool EqualsToCoordenada(Coordenada coor, int x, int y)
         {
@@ -93,19 +93,110 @@ namespace SheepAndWolfs
         {
             Console.Clear();
 
-            
+            for (int y = 0; y < mundo.GetHeight(); y++)
+            {
+                for (int x = 0; x < mundo.GetWidth(); x++)
+                {
+                    Animal? animal = mundo.GetAnimalAt(x, y, AnimalType.ANIMAL); 
+                    Casilla? casilla = mundo.GetCasillaAt(x, y); 
 
-            
-
-
+                    if (animal is Oveja)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(" O ");
+                    }
+                    else if (animal is Lobo)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write(" L ");
+                    }
+                    else if (casilla is not null)
+                    {
+                        switch (casilla.type)
+                        {
+                            case TerritorioType.TIERRA:
+                                Console.BackgroundColor = ConsoleColor.Yellow;
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.Write(" H ");
+                                break;
+                            case TerritorioType.AGUA:
+                                Console.BackgroundColor = ConsoleColor.Cyan;
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.Write(" A ");
+                                break;
+                            case TerritorioType.HIERBA:
+                                Console.BackgroundColor = ConsoleColor.Green;
+                                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                Console.Write(" G ");
+                                break;
+                            case TerritorioType.ROCA:
+                                Console.BackgroundColor = ConsoleColor.Yellow;
+                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                Console.Write(" R ");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.Write("   ");
+                    }
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
+            }
         }
 
-        public Animal CreateAnimal(Animal animal)
-        {
-            return animal;
-        }
+        
+
+        //public Animal CreateAnimal(Animal animal)
+        //{
+        //    return animal;
+        //}
+
+        //public static Animal? GetAnimalAt(Mundo mundo, int x, int y, AnimalType type)
+        //{
+        //    return mundo.GetAnimalAt(x, y, type);
+        //}
+
+        
+
 
     }
+
+
+
 }
+
+//for (int y = 0; y < mundo.GetHeight(); y++)
+//{
+//    for (int x = 0; x < mundo.GetWidth(); x++)
+//    {
+//        Casilla? casilla = GetCasillaAt(mundo, x, y);
+//        if (casilla != null)
+//        {
+//            switch (casilla.type)
+//            {
+//                case TerritorioType.AGUA:
+//                    Console.BackgroundColor = ConsoleColor.Blue;
+//                    break;
+//                case TerritorioType.HIERBA:
+//                    Console.BackgroundColor = ConsoleColor.Green;
+//                    break;
+//                case TerritorioType.ROCA:
+//                    Console.BackgroundColor = ConsoleColor.Gray;
+//                    break;
+//                case TerritorioType.VACIO:
+//                    Console.BackgroundColor = ConsoleColor.Black;
+//                    break;
+//            }
+//        }
+//        Console.Write(" ");
+
+
+
+
+
+
+//    }
 
 //resetcolor

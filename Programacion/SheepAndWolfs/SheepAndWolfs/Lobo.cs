@@ -10,7 +10,11 @@ namespace SheepAndWolfs
     {
         //private Coordenada? _coordenada;
         private int _vida;
-        
+        public readonly string? Nombre = "";
+        public int Vida;
+        public AnimalType type = AnimalType.LOBO;
+        public Coordenada coordenada;
+
         public Lobo(string name) : base(name, 1000)
         {
             

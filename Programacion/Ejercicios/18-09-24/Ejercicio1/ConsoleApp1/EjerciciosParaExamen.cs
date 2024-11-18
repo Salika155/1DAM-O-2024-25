@@ -15,13 +15,13 @@ namespace ConsoleApp1
         public static bool IsOdd(int number) => number % 2 != 0;
 
         //Funcion que me de una de las dos soluciones de la ecuacion de segundo grado
-        public static double SolveSecondGradeEquation(double a, double b, double c)
+        public static (double, double) SolveSecondGradeEquation(double a, double b, double c)
         {
             if (a == 0 || b == 0 || c == 0)
-                return double.NaN;
+                return (double.NaN, double.NaN);
             double x1 = (-b + Math.Sqrt(b * b - 4 * a * c)) / (2 * a);
             double x2 = (-b - Math.Sqrt(b * b - 4 * a * c)) / (2 * a);
-            return x1;
+            return (x1, x2);
             //comrpobar que raiz no sea 0, asi que mejor sacar las raices por separado
         }
 

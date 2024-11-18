@@ -14,7 +14,7 @@ namespace SheepAndWolfs
         //private (Coordenada, TerritorioType)[] _casillas = new (Coordenada, TerritorioType)[] { };
 
         //TODO: esto funciona
-        private Casilla[] _casillas = new Casilla[] { };
+        private Casilla[] _casillas = [];
         //lista de lobos y ovejas obligatorio
         private int _width;
         private int _height;
@@ -152,18 +152,44 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public void AddAnimal(Animal animal, int x, int y)
         {
-            if (animal == null)
+            if (animal == null || Utils.IsValidCoordinates(x, y, _width, _height) is false)
                 return;
 
             animal.coordenada = new Coordenada(x, y); // Asignar coordenadas al animal
             _animals.Add(animal);
         }
 
+        //hace falta un removeAnimal para cuando un lobo se coma una oveja o un animal se muera por atributos
+
         //TODO: esto no lo he usado
         public AnimalType GetAnimalTypeAt(int x, int y, AnimalType type)
         {
             Animal? animal = GetAnimalAt(x, y, type);
-            return animal.type;
+            return animal?.type ?? AnimalType.ANIMAL;
+        }
+
+        //Aqui creo que se puede hacer un createAnimals que cree los animales y los añada a la lista de animales
+        //TODO: ESTO tengo que volver a hacerlo
+        public void CreateAnimals(int count, AnimalType type)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                int x = Utils.GetRandomNumber(0, _width);
+                int y = Utils.GetRandomNumber(0, _height);
+
+                if (GetAnimalAt(x, y, AnimalType.LOBO) == null) 
+                {
+                    Lobo lobo = new Lobo($"Lobo{i}");
+                    lobo.coordenada = new Coordenada(x, y);
+                    AddAnimal(lobo, x, y);
+                }
+                else if (GetAnimalAt(x, y, AnimalType.OVEJA) == null) 
+                {
+                    Oveja oveja = new Oveja($"Oveja{i}");
+                    oveja.coordenada = new Coordenada(x, y);
+                    AddAnimal(oveja, x, y);
+                }
+            }
         }
 
         //TODO: esto funciona

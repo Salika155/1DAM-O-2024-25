@@ -27,10 +27,10 @@ namespace ConsoleApp1
         }
 
         //Funcion que me de una de las dos soluciones de la ecuacion de segundo grado
-        public static double SolveSecondGradeEquation(double a, double b, double c)
+        public static (double, double) SolveSecondGradeEquation(double a, double b, double c)
         {
             if (a == 0 || b == 0 || c == 0)
-                return double.NaN;
+                return (double.NaN, double.NaN);
 
             double discriminante = (b * b) - 4 * (a * c);
             double sqrt = Math.Sqrt(discriminante) / 2 * a;
@@ -40,9 +40,9 @@ namespace ConsoleApp1
 
             if (sqrt == 0)
             {
-                return double.NaN;
+                return (double.NaN, double.NaN);
             }
-            return result1;
+            return (result1, result2);
             //a = 1, b = -4, c = 3;
             // - b +- (raiz(b^2 - 4 + a + c)/ 2 * a)
         }

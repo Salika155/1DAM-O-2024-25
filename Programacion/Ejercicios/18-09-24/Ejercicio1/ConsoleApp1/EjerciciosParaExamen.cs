@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -206,25 +207,51 @@ namespace ConsoleApp1
 
 
         //factorial 5 = 5 + 4 + 3 + 2 + 1
+        public static string Serie7(int n)
+        {
+            if (n <= 0)
+                return string.Empty;
+            string result = "";
 
+            for (int i = n; i > 0; i--)
+            {
+                result += i;
+                if (i > 1)
+                    result += ", ";
+            }
+            return result;
+        }
 
 
         //productorio de 5 = 5 x 4 x 3 x 2 x 1 = 120
+        public static string Serie8(int n)
+        {
+            if (n <= 0)
+                return string.Empty;
+            string result = "";
+
+            for (int i = n; i > 0; i--)
+            {
+                result += i;
+                if (i > 1)
+                    result += " x ";
+            }
+            return result;
+        }
+
+
+            //funcion que le paso un numero y me devuelve el sumatorio de todos los numeros pares
 
 
 
-        //funcion que le paso un numero y me devuelve el sumatorio de todos los numeros pares
+            //funcion que le paso un numero y devuelve el sumatorio de todos los numeros primos que hay desde el 1 hasta al numero que le paso
+
+
+            //funcion para hacer el minimo comun multiplo de dos numeros
 
 
 
-        //funcion que le paso un numero y devuelve el sumatorio de todos los numeros primos que hay desde el 1 hasta al numero que le paso
-
-
-        //funcion para hacer el minimo comun multiplo de dos numeros
-
-
-
-        //funcion para hacer el maximo comun divisor de dos numeros
+            //funcion para hacer el maximo comun divisor de dos numeros
 
     }
 }

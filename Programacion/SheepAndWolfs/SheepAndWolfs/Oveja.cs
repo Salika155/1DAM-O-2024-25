@@ -15,12 +15,17 @@ namespace SheepAndWolfs
         private string _name = "";
         private string v;
 
-        //TODO: esto funciona
+        public Oveja(string v) : base(v, 500)
+        {
+            this.v = v;
+            _vida = 500;
+            _name = "oveja1";
+        }
+
         public Oveja(string name, int v) : base(name, 500)
         {
             _vida = 500;
             _name = "oveja1";
-            
         }
 
         //si los metodos vienen de la clase padre animal, habra que sobreescribirlos aqui

@@ -15,17 +15,21 @@ namespace SheepAndWolfs
     public class Animal
     {
         //TODO: esto funciona
-        public readonly string? Nombre = "";
-        public int Vida;
-        public AnimalType type = AnimalType.ANIMAL;
+
+        public AnimalType type;
         public Coordenada? coordenada;
+        //food, water, stamina, type y sleep
+        public int food;
+        public int water;
+        public int stamina;
+        public int sleep;
+
 
 
         //TODO: esto funciona
-        public Animal(string name, int n)
+        public Animal(int food, int water, int stamina, int sleep)
         {
-            Nombre = name;
-            Vida = n;
+           
         }
 
         //crearanimales en el constructor

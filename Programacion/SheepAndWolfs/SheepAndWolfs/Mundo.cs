@@ -35,6 +35,22 @@ namespace SheepAndWolfs
             CrearCasillas();
         }
 
+        //TODO: esto funciona
+        public void CrearCasillas()
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    int index = Utils.IndexOfCasilla(x, y, _width);
+                    _casillas[index] = new Casilla(new Coordenada(x, y))
+                    {
+                        type = Utils.GenerateRandomType()
+                    };
+                }
+            }
+        }
+
         #region intento de crearcasilla desde utils copiando la funcion que hay en mundo
         //esto es por el crearcasilla que existe en mundo, la idea es pasarlo a utils
         //public void CrearCasillas()
@@ -106,8 +122,24 @@ namespace SheepAndWolfs
         //hace falta un removeAnimal para cuando un lobo se coma una oveja o un animal se muera por atributos
         public void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            //for (int i = 0; i < _animals.Count; i++)
+            //    if (animal.Vida == 0)
+            //        _animals.RemoveAt(animal);
+
+
         }
+
+        public void MoveAnimal(Animal animal)
+        {
+            //mover al animal, utilizar getanimalat, y pasar por dos for o funcion si puede moverse para empezar a plantear el movimiento
+        }
+
+        //CanAnimalMove?
+        public bool CanAnimalMoveTo(Animal animal, Coordenada coor)
+        {
+            return false;
+        }
+
 
         //Aqui creo que se puede hacer un createAnimals que cree los animales y los añada a la lista de animales
         //TODO: ESTO tengo que volver a hacerlo
@@ -141,9 +173,10 @@ namespace SheepAndWolfs
                 int x = Utils.GetRandomNumber(0, _width);
                 int y = Utils.GetRandomNumber(0, _height);
 
-                if (GetAnimalAt(x, y, AnimalType.LOBO) == null) // Evitar duplicados
+                if (GetAnimalAt(x, y, AnimalType.LOBO) == null)  // Evitar duplicados -> aqui hay que comprobar si la casilla a la que se mueve es roca o agua
                 {
                     Lobo lobo = new Lobo($"Lobo{i}");
+                    //aqui le paso las cosas que le ponga en constructor como parametros
                     lobo.coordenada = new Coordenada(x, y);
                     AddAnimal(lobo, x, y);
                 }
@@ -167,22 +200,6 @@ namespace SheepAndWolfs
             }
         }
 
-        //TODO: esto funciona
-        public void CrearCasillas()
-        {
-            for (int y = 0; y < _height; y++)
-            {
-                for (int x = 0; x < _width; x++)
-                {
-                    int index = Utils.IndexOfCasilla(x, y, _width);
-                    _casillas[index] = new Casilla(new Coordenada(x, y))
-                    {
-                        type = Utils.GenerateRandomType()
-                    };
-                }
-            }
-        }
-
         //----------------------------------------------------------------------------------
 
         //TODO: esto no lo he usado
@@ -191,6 +208,8 @@ namespace SheepAndWolfs
             Animal? animal = GetAnimalAt(x, y, type);
             return animal?.type ?? AnimalType.ANIMAL;
         }
+
+
 
         //TODO: esto no lo he usado
         public int IndexOfAnimal(Animal animal)
@@ -308,4 +327,6 @@ namespace SheepAndWolfs
         //index / ancho = cociente la y y resto la x
 
     }
+
+        
 }

@@ -23,5 +23,12 @@ namespace SheepAndWolfs
 
         private IAType[] _iATypes = new IAType[] {IAType.MoverArriba, IAType.MoverDerecha, IAType.MoverAbajo, IAType.MoverIzquierda,
         IAType.Comer, IAType.Beber, IAType.Dormir};
+
+        //Hacer funcion si oveja puede moverse, o si lobo puede moverse
+
+        //world w = new world
+        //utils.InitializeRandomWorld(w)
+        //while (w.ContainsSheeps() || w.ContainsWater()
+        //w.ExecuteTurns();
     }
 }

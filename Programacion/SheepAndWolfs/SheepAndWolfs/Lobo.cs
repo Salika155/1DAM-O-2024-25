@@ -10,14 +10,16 @@ namespace SheepAndWolfs
     public class Lobo : Animal
     {
         //private Coordenada? _coordenada;
-        private int _vida;
-        public readonly string? Nombre = "";
-        public int Vida;
+        //food, water, stamina, type y sleep
         public AnimalType type = AnimalType.LOBO;
         public Coordenada coordenada;
+        public int food;
+        public int water;
+        public int stamina;
+        public int sleep;
 
         //TODO: esto funciona
-        public Lobo(string name) : base(name, 1000)
+        public Lobo(/*crear variables y pasarlas*/) : base(AnimalType.LOBO)
         {
             
         }

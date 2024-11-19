@@ -10,23 +10,18 @@ namespace SheepAndWolfs
     //TODO: esto funciona
     public class Oveja : Animal
     {
-        private Coordenada? _coordenada;
         private int _vida;
-        private string _name = "";
-        private string v;
+        public readonly string? Nombre = "";
+        public int Vida;
+        public AnimalType type = AnimalType.OVEJA;
+        public Coordenada coordenada;
 
-        public Oveja(string v) : base(v, 500)
+        public Oveja(string name) : base(name, 500)
         {
-            this.v = v;
-            _vida = 500;
-            _name = "oveja1";
+            
         }
 
-        public Oveja(string name, int v) : base(name, 500)
-        {
-            _vida = 500;
-            _name = "oveja1";
-        }
+        
 
         //si los metodos vienen de la clase padre animal, habra que sobreescribirlos aqui
 

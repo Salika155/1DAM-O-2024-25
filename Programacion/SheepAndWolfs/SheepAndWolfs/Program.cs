@@ -21,6 +21,7 @@
             Mundo mundo = new Mundo(5, 5);
             //realmente esto no es necesario, pero no se por que
             Utils.GenerateRandomWorld(mundo);
+            //mundo.CreateAnimals(mundo.CreateWolfs())
             mundo.CreateWolfs(Utils.GetRandomNumber(3, 6));
             mundo.CreateSheeps(Utils.GetRandomNumber(3, 6));
             

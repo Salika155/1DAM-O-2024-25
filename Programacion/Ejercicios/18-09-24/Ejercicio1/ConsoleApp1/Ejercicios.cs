@@ -277,7 +277,6 @@ namespace ConsoleApp1
                     result4 += -aux;
                 else
                     result4 += aux;
-
                 if (i < n - 1)
                     result4 += ", ";
          

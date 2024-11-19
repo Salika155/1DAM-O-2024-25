@@ -139,19 +139,19 @@ namespace ConsoleApp1
 
         public static void WriteHello10Times3(double n)
         {
+            
+            while (n > 0.1)
+            {
+                Console.WriteLine("Numero " + n);
+                n *= 0.5;
+            }
             //if (n <= 0.1)
             //    return;
 
             //for (int i = 0; i < n; i++)
             //{
             //    Console.WriteLine("Numero " + n);
-                
             //}
-            while (n > 0.1)
-            {
-                Console.WriteLine("Numero " + n);
-                n *= 0.5;
-            }
             /*
              double aux = n;
             while (aux > 0.1)
@@ -184,6 +184,14 @@ namespace ConsoleApp1
             //int aux = n;
             string result = "";
 
+            for (int i = 1; i <= n; i++)
+            {
+                result += i;
+                if (i < n)
+                    result += ", ";
+            }
+            return result;
+
             //for (int i = 1; i <= n; i++)
             //{
             //    if (aux > 0)
@@ -193,13 +201,6 @@ namespace ConsoleApp1
             //        result += i;
             //}
             //return result;
-            for (int i = 1; i <= n; i++)
-            {
-                result += i;
-                if (i < n)
-                    result += ", ";
-            }
-            return result;
         }
 
         //serie de numero, paso un numero y devuelvo sumas de 2 las veces que el numero que me han pasado

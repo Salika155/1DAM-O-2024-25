@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs
 {
-
     public enum TerritorioType
     {
         TIERRA,
@@ -36,27 +35,6 @@ namespace SheepAndWolfs
             return random.Next(min, max);
         }
 
-        //TODO: esto no lo he usado
-        public static void GenerateRandomWorld(Mundo mundo)
-        {
-            if (mundo == null) 
-                return;
-
-            for(int y = 0; y < mundo.GetHeight(); y++) 
-            {
-                for(int x = 0; x < mundo.GetWidth(); x++)
-                {
-                    TerritorioType type = GenerateRandomType();
-                    Casilla? casilla = mundo.GetCasillaAt(x, y);
-                    if (casilla != null)
-                    {
-                        casilla.type = type;
-                    }
-                }
-            }
-        }
-
-
         //TODO: esto funciona
         public static int IndexOfCasilla(int x, int y, int width)
         {
@@ -74,21 +52,6 @@ namespace SheepAndWolfs
             //return terreno[index];
             //mejor opcion
             return (TerritorioType)index;
-        }
-
-
-        //TODO: esto no lo he usado
-        public static bool EqualsToCoordenada(Coordenada coor, int x, int y)
-        {
-            return coor.X == x && coor.Y == y;
-        }
-
-        //TODO: esto no lo he usado
-        public static (int x, int y) GetCoordinatesFromIndex(int index, int width)
-        {
-            if (width == 0)
-                return (int.MinValue, int.MinValue);
-            return (index % width, index / width);
         }
 
         //TODO: esto funciona
@@ -116,7 +79,7 @@ namespace SheepAndWolfs
                     }
                     else if (animal is Lobo)
                     {
-                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.Write(" L ");
                     }
                     else if (casilla is not null)
@@ -139,7 +102,7 @@ namespace SheepAndWolfs
                                 Console.Write(" H ");
                                 break;
                             case TerritorioType.ROCA:
-                                Console.BackgroundColor = ConsoleColor.Yellow;
+                                Console.BackgroundColor = ConsoleColor.Gray;
                                 Console.ForegroundColor = ConsoleColor.DarkGray;
                                 Console.Write(" R ");
                                 break;
@@ -155,7 +118,43 @@ namespace SheepAndWolfs
             }
         }
 
-        
+        //TODO: esto no lo he usado
+        public static bool EqualsToCoordenada(Coordenada coor, int x, int y)
+        {
+            if (coor == null || x < 0 || y < 0)
+                return false;
+            return coor.X == x && coor.Y == y;
+        }
+
+        //TODO: esto no lo he usado
+        public static (int x, int y) GetCoordinatesFromIndex(int index, int width)
+        {
+            if (width == 0 || index < 0)
+                return (int.MinValue, int.MinValue);
+            return (index % width, index / width);
+        }
+
+        //TODO: esto no lo he usado
+        public static void GenerateRandomWorld(Mundo mundo)
+        {
+            if (mundo == null)
+                return;
+
+            for (int y = 0; y < mundo.GetHeight(); y++)
+            {
+                for (int x = 0; x < mundo.GetWidth(); x++)
+                {
+                    TerritorioType type = GenerateRandomType();
+                    Casilla? casilla = mundo.GetCasillaAt(x, y);
+                    if (casilla != null)
+                    {
+                        casilla.type = type;
+                    }
+                }
+            }
+        }
+
+
         //public Animal CreateAnimal(Animal animal)
         //{
         //    return animal;

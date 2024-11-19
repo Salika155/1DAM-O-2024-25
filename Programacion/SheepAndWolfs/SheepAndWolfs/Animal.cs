@@ -29,5 +29,8 @@ namespace SheepAndWolfs
         }
 
         //crearanimales en el constructor
+
+        //animals va a tener los metodos de moverse, pero dudo si deberia tener el metodo de comer animales, ya que eso
+        //solo lo haran los lobos, al igual que la hierba las ovejas
     }
 }

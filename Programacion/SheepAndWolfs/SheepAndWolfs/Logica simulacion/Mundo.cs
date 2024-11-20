@@ -143,6 +143,11 @@ namespace SheepAndWolfs
 
         }
 
+        public void RemoveDeadAnimals()
+        {
+            _animals.RemoveAll(animal => animal.food <= 0 || animal.water <= 0 || animal.stamina <= 0);
+        }
+
         public void MoveAnimal(Animal animal, Mundo mundo)
         {
             if (animal == null || mundo == null)

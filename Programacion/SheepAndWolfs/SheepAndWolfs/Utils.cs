@@ -190,11 +190,32 @@ namespace SheepAndWolfs
             //mover al animal, utilizar getanimalat, y pasar por dos for o funcion si puede moverse para empezar a plantear el movimiento
         }
 
+
         
 
         //GetAnimalsArround
 
         //GetAnimalsSortedByDistance
+        public static List<Animal> GetAnimalsSortedByDistance(Animal animal, List<Animal> animals)
+        {
+            if (animal == null || animals == null || animals.Count == 0)
+                return new List<Animal>();
+
+            for (int i = 0; i < animals.Count; i++)
+            {
+                for (int j = i + 1; j < animals.Count; j++)
+                {
+                    if (GetDistanceBetweenAnimals(animal, animals[i]) > GetDistanceBetweenAnimals(animal, animals[j]))
+                    {
+                        Animal temp = animals[i];
+                        animals[i] = animals[j];
+                        animals[j] = temp;
+                    }
+                }
+            }
+
+            return animals;
+        }
 
 
         //public Animal CreateAnimal(Animal animal)

@@ -154,7 +154,7 @@ namespace SheepAndWolfs
             }
         }
 
-        public static double GetDistance(Animal a, Animal b)
+        public static double GetDistanceBetweenAnimals(Animal a, Animal b)
         {
             return GetDistance(a.coordenada, b.coordenada);
         }

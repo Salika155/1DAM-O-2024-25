@@ -136,11 +136,9 @@ namespace SheepAndWolfs
         //hace falta un removeAnimal para cuando un lobo se coma una oveja o un animal se muera por atributos
         public void RemoveAnimal(Animal animal)
         {
-            //for (int i = 0; i < _animals.Count; i++)
-            //    if (animal.Vida == 0)
-            //        _animals.RemoveAt(animal);
-
-
+            if (animal == null)
+                return;
+            _animals.Remove(animal);
         }
 
         public void RemoveDeadAnimals()
@@ -170,7 +168,7 @@ namespace SheepAndWolfs
         }
 
         //CanAnimalMove? -> esto esta mal por el animaltype animal
-        public bool CanAnimalMoveTo(Animal animal, Coordenada coor)
+        public bool CanAnimalMoveTo(Animal? animal, Coordenada coor)
         {
             if (animal == null || coor == null)
                 return false;
@@ -178,7 +176,7 @@ namespace SheepAndWolfs
             Casilla? targetCasilla = GetCasillaAt(coor.X, coor.Y);
             Animal? targetAnimal = GetAnimalAt(coor.X, coor.Y);
 
-            if (targetCasilla == null || targetCasilla.type == TerritorioType.ROCA ||
+            if (targetCasilla == null || targetAnimal == null || targetCasilla.type == TerritorioType.ROCA ||
                 targetCasilla.type == TerritorioType.AGUA)
                 return false;
             if (animal.type == AnimalType.LOBO)
@@ -198,7 +196,7 @@ namespace SheepAndWolfs
 
 
         //Aqui creo que se puede hacer un createAnimals que cree los animales y los añada a la lista de animales
-        //TODO: ESTO tengo que volver a hacerlo
+        //TODO: esto funciona
         public void CreateAnimals(int count, AnimalType type)
         {
             for (int i = 0; i < count; i++)
@@ -314,32 +312,20 @@ namespace SheepAndWolfs
         public int CountCasilla() => _casillas.Length;
         
         //TODO: esto no lo he usado
-        public void ImprimirCasillas()
-        {
-            for (int y = 0; y < _height; y++)
-            {
-                for (int x = 0; x < _width; x++)
-                {
-                    int index = Utils.IndexOfCasilla(x, y, _width);
-                    if (_casillas[index] != null)
-                        Console.Write($"[{_casillas[index].coordenada.X},{_casillas[index].coordenada.Y}] ");
-                    else
-                        Console.Write("[null] ");
-                }
-                Console.WriteLine(); // Nueva línea para cada fila
-            }
-        }
-
-        ////TODO: esto no lo he usado
-        //internal void CreateRocks(int v)
+        //public void ImprimirCasillas()
         //{
-        //    throw new NotImplementedException();
-        //}
-
-        ////TODO: esto no lo he usado
-        //internal void CreateWaters(int v)
-        //{
-        //    throw new NotImplementedException();
+        //    for (int y = 0; y < _height; y++)
+        //    {
+        //        for (int x = 0; x < _width; x++)
+        //        {
+        //            int index = Utils.IndexOfCasilla(x, y, _width);
+        //            if (_casillas[index] != null)
+        //                Console.Write($"[{_casillas[index].coordenada.X},{_casillas[index].coordenada.Y}] ");
+        //            else
+        //                Console.Write("[null] ");
+        //        }
+        //        Console.WriteLine(); // Nueva línea para cada fila
+        //    }
         //}
 
         //public int IndexOfCasilla(int x, int y)
@@ -357,32 +343,6 @@ namespace SheepAndWolfs
         //    //dado un index para hallar x e y divido el index entre el ancho como divisor y el cociente sera la y, y el resto la x
         //}
 
-
-        //public AnimalType GetAnimalTypeAt(int x, int y)
-        //{
-        //    Animal animal = GetAnimalAt(x, y);
-        //    return animal.animalType;
-        //}
-
-        //public int IndexOfOveja(Oveja oveja)
-        //{
-        //    for (int i = 0; i < _ovejas.Count; i++)
-        //    {
-        //        if (_ovejas[i].Nombre == oveja.Nombre)
-        //            return i;
-        //    }
-        //    return -1;
-        //}
-
-        //public int IndexOfLobo()
-        //{
-        //    for (int i = 0; i < _ovejas.Count; i++)
-        //    {
-        //        if (_ovejas[i].Nombre == oveja.Nombre)
-        //            return i;
-        //    }
-        //    return -1;
-        //}
 
         //int index = y * width + x
         //index / ancho = cociente la y y resto la x

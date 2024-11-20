@@ -16,7 +16,7 @@ namespace SheepAndWolfs
     {
         //TODO: esto funciona
 
-        public AnimalType type;
+        public AnimalType? type;
         public Coordenada? coordenada;
         //food, water, stamina, type y sleep
         public int food;

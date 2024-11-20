@@ -11,7 +11,7 @@ namespace SheepAndWolfs
     {
         //private Coordenada? _coordenada;
         //food, water, stamina, type y sleep
-        public AnimalType type = AnimalType.LOBO;
+        
         //public Coordenada coordenada;
         //public int food;
         //public int water;
@@ -20,7 +20,7 @@ namespace SheepAndWolfs
 
         
         //TODO: esto funciona
-        public Lobo(int food, int water, int stamina, int sleep, AnimalType type) : base(food, water, stamina, sleep, type)
+        public Lobo(int food, int water, int stamina, int sleep, AnimalType type) : base(food, water, stamina, sleep, AnimalType.LOBO)
         {
             
         }

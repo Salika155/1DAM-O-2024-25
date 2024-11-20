@@ -21,8 +21,8 @@ namespace SheepAndWolfs
             //posible que si hago mover animal acorte y solo tenga que pasarle el tipo para saber si es un lobo o una oveja
         }
 
-        private IAType[] _iATypes = new IAType[] {IAType.MoverArriba, IAType.MoverDerecha, IAType.MoverAbajo, IAType.MoverIzquierda,
-        IAType.Comer, IAType.Beber, IAType.Dormir};
+        private readonly IAType[] _iATypes = [IAType.MoverArriba, IAType.MoverDerecha, IAType.MoverAbajo, IAType.MoverIzquierda,
+        IAType.Comer, IAType.Beber, IAType.Dormir];
 
         //Hacer funcion si oveja puede moverse, o si lobo puede moverse
 
@@ -30,5 +30,12 @@ namespace SheepAndWolfs
         //utils.InitializeRandomWorld(w)
         //while (w.ContainsSheeps() || w.ContainsWater()
         //w.ExecuteTurns();
+
+
+        public void ExecuteTurns()
+        {
+            
+
+        }
     }
 }

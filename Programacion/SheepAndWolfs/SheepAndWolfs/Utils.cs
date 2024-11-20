@@ -189,8 +189,6 @@ namespace SheepAndWolfs
             }
             //mover al animal, utilizar getanimalat, y pasar por dos for o funcion si puede moverse para empezar a plantear el movimiento
         }
-
-
         
 
         //GetAnimalsArround
@@ -213,9 +211,22 @@ namespace SheepAndWolfs
                     }
                 }
             }
-
             return animals;
         }
+
+        //GetTerritoryType para saber que tipo es
+        public static TerritorioType GetTerritorioType(Casilla casilla)
+        {
+            if (casilla.type == TerritorioType.AGUA)
+                return TerritorioType.AGUA;
+            if (casilla.type == TerritorioType.HIERBA)
+                return TerritorioType.HIERBA;
+            if (casilla.type == TerritorioType.ROCA)
+                return TerritorioType.ROCA;
+            else
+                return TerritorioType.TIERRA;
+        }
+
 
 
         //public Animal CreateAnimal(Animal animal)

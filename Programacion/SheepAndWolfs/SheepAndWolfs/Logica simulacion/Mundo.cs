@@ -141,18 +141,18 @@ namespace SheepAndWolfs
             _animals.Remove(animal);
         }
 
-        public void RemoveDeadAnimals()
-        {
-            _animals.RemoveAll(animal => animal.food <= 0 || animal.water <= 0 || animal.stamina <= 0);
-        }
+        //public void RemoveDeadAnimals()
+        //{
+        //    _animals.RemoveAll(animal => animal.food <= 0 || animal.water <= 0 || animal.stamina <= 0);
+        //}
 
         public void MoveAnimal(Animal animal, Mundo mundo)
         {
             if (animal == null || mundo == null)
                 return;
 
-            int[] XMovs = { -1, 0, 1, 0 };
-            int[] YMovs = { 0, -1, 0, 1 };
+            int[] XMovs = [-1, 0, 1, 0 ];
+            int[] YMovs = [0, -1, 0, 1];
 
             int direction = Utils.GetRandomNumber(0, 4);
 
@@ -208,12 +208,15 @@ namespace SheepAndWolfs
                 {
                     if (type == AnimalType.LOBO)
                     {
+                        //instancia a utils para los campos comida para generarle valores aleatorios
+                        int food = Utils.GetRandomNumber(50, 500);
                         Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO);
                         lobo.coordenada = new Coordenada(x, y);
                         AddAnimal(lobo, x, y);
                     }
                     else if (type == AnimalType.OVEJA)
                     {
+                        //instancia a utils para los campos comida para generarle valores aleatorios
                         Oveja oveja = new Oveja(100, 100, 100, 100, AnimalType.OVEJA);
                         oveja.coordenada = new Coordenada(x, y);
                         AddAnimal(oveja, x, y);

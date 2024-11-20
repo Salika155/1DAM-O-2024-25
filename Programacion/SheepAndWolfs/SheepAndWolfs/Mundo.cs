@@ -96,17 +96,31 @@ namespace SheepAndWolfs
         }
 
         //TODO: esto funciona
-        public Animal? GetAnimalAt(int x, int y, AnimalType type)
+        public Animal? GetAnimalAt(int x, int y)
         {
             if (!Utils.IsValidCoordinates(x, y, _width, _height))
                 return null;
             for (int i = 0; i < _animals.Count; i++)
             {
                 Animal? animal = _animals[i];
-                if (animal.coordenada!.EqualsToCoordenada(x, y) && animal.type == type)
+                if (animal.coordenada!.EqualsToCoordenada(x, y))
                     return animal;
             }
             return null;
+        }
+
+        public Animal? RemoveAnimalAt(int index)
+        {
+            if (index < 0 || index >= _animals.Count)
+                return null;
+            Animal animal = _animals[index];
+            _animals.RemoveAt(index);
+            return animal;
+        }
+
+        public bool IsCasillaOcupada(int x, int y)
+        {
+            return (GetAnimalAt(x, y) != null || GetAnimalAt(x, y) != null)? false : true;
         }
 
         //TODO: esto funciona
@@ -129,15 +143,52 @@ namespace SheepAndWolfs
 
         }
 
-        public void MoveAnimal(Animal animal)
+        public void MoveAnimal(Animal animal, Mundo mundo)
         {
+            if (animal == null || mundo == null)
+                return;
+
+            int[] XMovs = { -1, 0, 1, 0 };
+            int[] YMovs = { 0, -1, 0, 1 };
+
+            int direction = Utils.GetRandomNumber(0, 4);
+
+            int newX = animal.coordenada.X + XMovs[direction];
+            int newY = animal.coordenada.Y + YMovs[direction];
+
+            if (Utils.IsValidCoordinates(newX, newY, mundo.GetWidth(), mundo.GetHeight()) &&
+                CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
+            {
+                animal.coordenada = new Coordenada(newX, newY);
+            }
             //mover al animal, utilizar getanimalat, y pasar por dos for o funcion si puede moverse para empezar a plantear el movimiento
         }
 
-        //CanAnimalMove?
+        //CanAnimalMove? -> esto esta mal por el animaltype animal
         public bool CanAnimalMoveTo(Animal animal, Coordenada coor)
         {
-            return false;
+            if (animal == null || coor == null)
+                return false;
+
+            Casilla? targetCasilla = GetCasillaAt(coor.X, coor.Y);
+            Animal? targetAnimal = GetAnimalAt(coor.X, coor.Y);
+
+            if (targetCasilla == null || targetCasilla.type == TerritorioType.ROCA ||
+                targetCasilla.type == TerritorioType.AGUA)
+                return false;
+            if (animal.type == AnimalType.LOBO)
+            {
+                if (targetAnimal.type == AnimalType.OVEJA)
+                    return true;
+                if (targetAnimal.type == AnimalType.LOBO)
+                    return false;
+            }
+            else if (animal.type == AnimalType.OVEJA)
+            {
+                if (targetAnimal != null)
+                    return false;
+            }
+            return true;
         }
 
 
@@ -150,17 +201,20 @@ namespace SheepAndWolfs
                 int x = Utils.GetRandomNumber(0, _width);
                 int y = Utils.GetRandomNumber(0, _height);
 
-                if (GetAnimalAt(x, y, AnimalType.LOBO) == null)
+                if (GetAnimalAt(x, y) == null)
                 {
-                    Lobo lobo = new Lobo($"Lobo{i}");
-                    lobo.coordenada = new Coordenada(x, y);
-                    AddAnimal(lobo, x, y);
-                }
-                else if (GetAnimalAt(x, y, AnimalType.OVEJA) == null)
-                {
-                    Oveja oveja = new Oveja($"Oveja{i}");
-                    oveja.coordenada = new Coordenada(x, y);
-                    AddAnimal(oveja, x, y);
+                    if (type == AnimalType.LOBO)
+                    {
+                        Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO);
+                        lobo.coordenada = new Coordenada(x, y);
+                        AddAnimal(lobo, x, y);
+                    }
+                    else if (type == AnimalType.OVEJA)
+                    {
+                        Oveja oveja = new Oveja(100, 100, 100, 100, AnimalType.OVEJA);
+                        oveja.coordenada = new Coordenada(x, y);
+                        AddAnimal(oveja, x, y);
+                    }
                 }
             }
         }
@@ -173,9 +227,9 @@ namespace SheepAndWolfs
                 int x = Utils.GetRandomNumber(0, _width);
                 int y = Utils.GetRandomNumber(0, _height);
 
-                if (GetAnimalAt(x, y, AnimalType.LOBO) == null)  // Evitar duplicados -> aqui hay que comprobar si la casilla a la que se mueve es roca o agua
+                if (GetAnimalAt(x, y) == null)  // Evitar duplicados -> aqui hay que comprobar si la casilla a la que se mueve es roca o agua
                 {
-                    Lobo lobo = new Lobo($"Lobo{i}");
+                    Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO);
                     //aqui le paso las cosas que le ponga en constructor como parametros
                     lobo.coordenada = new Coordenada(x, y);
                     AddAnimal(lobo, x, y);
@@ -191,10 +245,12 @@ namespace SheepAndWolfs
                 int x = Utils.GetRandomNumber(0, _width);
                 int y = Utils.GetRandomNumber(0, _height);
 
-                if (GetAnimalAt(x, y, AnimalType.OVEJA) == null) // Evitar duplicados
+                if (GetAnimalAt(x, y) == null) // Evitar duplicados
                 {
-                    Oveja oveja = new Oveja($"Oveja{i}");
-                    oveja.coordenada = new Coordenada(x, y);
+                    Oveja oveja = new(100, 100, 100, 100, AnimalType.OVEJA)
+                    {
+                        coordenada = new Coordenada(x, y)
+                    };
                     AddAnimal(oveja, x, y);
                 }
             }
@@ -205,7 +261,7 @@ namespace SheepAndWolfs
         //TODO: esto no lo he usado
         public AnimalType GetAnimalTypeAt(int x, int y, AnimalType type)
         {
-            Animal? animal = GetAnimalAt(x, y, type);
+            Animal? animal = GetAnimalAt(x, y);
             return animal?.type ?? AnimalType.ANIMAL;
         }
 
@@ -216,7 +272,7 @@ namespace SheepAndWolfs
         {
             for (int i = 0; i < _animals.Count; i++)
             {
-                if (_animals[i].type == animal.type && _animals[i].Nombre == animal.Nombre)
+                if (_animals[i].type == animal.type && _animals[i].coordenada == animal.coordenada)
                     return i;
             }
             return -1;
@@ -269,17 +325,17 @@ namespace SheepAndWolfs
             }
         }
 
-        //TODO: esto no lo he usado
-        internal void CreateRocks(int v)
-        {
-            throw new NotImplementedException();
-        }
+        ////TODO: esto no lo he usado
+        //internal void CreateRocks(int v)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        //TODO: esto no lo he usado
-        internal void CreateWaters(int v)
-        {
-            throw new NotImplementedException();
-        }
+        ////TODO: esto no lo he usado
+        //internal void CreateWaters(int v)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //public int IndexOfCasilla(int x, int y)
         //{

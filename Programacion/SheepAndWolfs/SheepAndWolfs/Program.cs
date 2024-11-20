@@ -18,13 +18,18 @@
             //mundo.AddAnimal(new Oveja("Oveja1"), 4, 4); // Añadir una oveja en la posición 4,4
             //Utils.DrawWorld(mundo);      // Imprimir el tablero
 
-            Mundo mundo = new Mundo(5, 5);
+            Mundo mundo = new Mundo(8, 8);
             //realmente esto no es necesario, pero no se por que
             Utils.GenerateRandomWorld(mundo);
-            //mundo.CreateAnimals(mundo.CreateWolfs())
+
             mundo.CreateWolfs(Utils.GetRandomNumber(3, 6));
             mundo.CreateSheeps(Utils.GetRandomNumber(3, 6));
-            
+
+            //otro enfoque
+            int randomanimals = Utils.GetRandomNumber(3, 6);
+            mundo.CreateAnimals(randomanimals, AnimalType.LOBO);
+            mundo.CreateAnimals(randomanimals, AnimalType.OVEJA);
+
 
 
             Utils.DrawWorld(mundo);

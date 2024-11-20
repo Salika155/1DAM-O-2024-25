@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SheepAndWolfs
+namespace SheepAndWolfs.Obstaculos
 {
-    internal class Obstaculo
+    internal class Roca
     {
     }
 }

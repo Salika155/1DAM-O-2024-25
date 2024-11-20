@@ -69,7 +69,7 @@ namespace SheepAndWolfs
             {
                 for (int x = 0; x < mundo.GetWidth(); x++)
                 {
-                    Animal? animal = mundo.GetAnimalAt(x, y, AnimalType.ANIMAL); 
+                    Animal? animal = mundo.GetAnimalAt(x, y); 
                     Casilla? casilla = mundo.GetCasillaAt(x, y); 
 
                     if (animal is Oveja)
@@ -153,6 +153,48 @@ namespace SheepAndWolfs
                 }
             }
         }
+
+        public static double GetDistance(Animal a, Animal b)
+        {
+            return GetDistance(a.coordenada, b.coordenada);
+        }
+
+        public static double GetDistance(Coordenada? c1, Coordenada? c2)
+        {
+            if (c1 is null || c2 is null)
+                return double.MaxValue;
+            int cx = c2.X - c1.X;
+            int cy = c2.Y - c1.Y;
+            return Math.Sqrt(cx * cx + cy * cy);
+        }
+
+        //repetido en mundo, este tengo que ver que hacer
+        public static void MoveAnimal(Animal animal, Mundo mundo)
+        {
+            if (animal == null || mundo == null)
+                return;
+
+            int[] XMovs = { -1, 0, 1, 0 };
+            int[] YMovs = { 0, -1, 0, 1 };
+
+            int direction = GetRandomNumber(0, 4);
+
+            int newX = animal.coordenada.X + XMovs[direction];
+            int newY = animal.coordenada.Y + YMovs[direction];
+
+            if (IsValidCoordinates(newX, newY, mundo.GetWidth(), mundo.GetHeight()) &&
+                mundo.CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
+            {
+                animal.coordenada = new Coordenada(newX, newY);
+            }
+            //mover al animal, utilizar getanimalat, y pasar por dos for o funcion si puede moverse para empezar a plantear el movimiento
+        }
+
+        
+
+        //GetAnimalsArround
+
+        //GetAnimalsSortedByDistance
 
 
         //public Animal CreateAnimal(Animal animal)

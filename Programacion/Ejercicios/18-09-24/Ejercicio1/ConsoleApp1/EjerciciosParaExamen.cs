@@ -239,19 +239,34 @@ namespace ConsoleApp1
             return result;
         }
 
+        //funcion que le paso un numero y me devuelve el sumatorio de todos los numeros pares
+        public static string Serie9(int n)
+        {
+            if (n <= 0)
+                return string.Empty;
+            string result = "";
 
-            //funcion que le paso un numero y me devuelve el sumatorio de todos los numeros pares
+            for (int i = 0; i <= n; i++)
+            {
+                if (n % 2 == 0)
+                {
+                    result += i;
+                    if (i < n)
+                        result += " + ";
+                }
+            }
+            return result;
+        }
+
+
+        //funcion que le paso un numero y devuelve el sumatorio de todos los numeros primos que hay desde el 1 hasta al numero que le paso
+
+
+        //funcion para hacer el minimo comun multiplo de dos numeros
 
 
 
-            //funcion que le paso un numero y devuelve el sumatorio de todos los numeros primos que hay desde el 1 hasta al numero que le paso
-
-
-            //funcion para hacer el minimo comun multiplo de dos numeros
-
-
-
-            //funcion para hacer el maximo comun divisor de dos numeros
+        //funcion para hacer el maximo comun divisor de dos numeros
 
     }
 }

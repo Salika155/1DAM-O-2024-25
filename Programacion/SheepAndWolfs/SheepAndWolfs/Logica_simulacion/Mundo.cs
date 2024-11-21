@@ -36,6 +36,7 @@ namespace SheepAndWolfs
             CrearCasillas();
         }
 
+        //esto tiene que ir en private, y deberia de crear una copia de cada uno
         public Casilla[] GetAllCasillas() => _casillas;
         public List<Animal> GetAllAnimals() => _animals;
 

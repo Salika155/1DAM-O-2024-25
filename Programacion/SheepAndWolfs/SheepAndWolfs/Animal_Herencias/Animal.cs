@@ -23,6 +23,7 @@ namespace SheepAndWolfs
         public int water;
         public int stamina;
         public int sleep;
+        public string name;
 
 
 

@@ -31,11 +31,11 @@ namespace SheepAndWolfs
 
         public void MoveAnimalType(IAType type, Animal animal)
         {
-            if (animal.food <= 200)
+            if (animal.food <= 100)
                 type = IAType.Comer;
-            if (animal.water <= 200)
+            if (animal.water <= 100)
                 type = IAType.Beber;
-            if (animal.sleep <= 200)
+            if (animal.sleep <= 100)
                 type = IAType.Dormir;
 
         }

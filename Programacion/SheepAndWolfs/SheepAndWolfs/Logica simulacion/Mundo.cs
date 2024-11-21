@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -313,7 +314,33 @@ namespace SheepAndWolfs
 
         //TODO: esto no lo he usado
         public int CountCasilla() => _casillas.Length;
-        
+
+        //esto esta fatal, no puedo hacer un ienumerable de animales
+        internal IEnumerable<Animal> GetAllAnimals()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool EstaCercaHierba(Animal animal, Mundo mundo)
+        {
+            for (int i = 0; i < _casillas.Length; i++)
+            {
+                Casilla casilla = _casillas[i];
+                if (casilla.type == TerritorioType.HIERBA)
+                {
+                    if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, mundo.GetWidth(), mundo.GetHeight()))
+                    {
+                        if (Utils.GetDistance(animal.coordenada, casilla.coordenada) <= 2)
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        //metodo para hallar casillas alrededor de un animal, las casillas son arrays
+
+
         //TODO: esto no lo he usado
         //public void ImprimirCasillas()
         //{

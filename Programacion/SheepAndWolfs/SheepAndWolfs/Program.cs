@@ -30,16 +30,17 @@
             mundo.CreateAnimals(randomanimals, AnimalType.LOBO);
             mundo.CreateAnimals(randomanimals, AnimalType.OVEJA);
 
-            List<Animal> animals = new List<Animal>();
+            //List<Animal> animals = new List<Animal>();
 
-            for (int i = 0; i < animals.Count; i++)
-            {
-                Animal animal = animals[i];
-                mundo.MoveAnimal(animal, mundo);
-            }
-            
+            //for (int i = 0; i < animals.Count; i++)
+            //{
+            //    Animal animal = animals[i];
+            //    mundo.MoveAnimal(animal, mundo);
+            //}
 
 
+            //AI ai = new AI();
+            //ai.ExecuteTurns(mundo);
 
             Utils.DrawWorld(mundo);
 

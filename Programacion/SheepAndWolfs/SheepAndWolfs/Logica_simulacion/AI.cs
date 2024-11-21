@@ -28,27 +28,6 @@ namespace SheepAndWolfs
         //while (w.ContainsSheeps() || w.ContainsWater()
         //w.ExecuteTurns();
 
-        //public IAType GetIAType(AI ai)
-        //{
-        //    for (int i = 0; i < _iATypes.Length; i++)
-        //    {
-        //        if (_iATypes[i] == IAType.MoverAbajo)
-        //            return IAType.MoverAbajo;
-        //        if (_iATypes[i] == IAType.MoverArriba)
-        //            return IAType.MoverArriba;
-        //        if (_iATypes[i] == IAType.MoverDerecha)
-        //            return IAType.MoverDerecha;
-        //        if (_iATypes[i] == IAType.MoverIzquierda)
-        //            return IAType.MoverIzquierda;
-        //        if (_iATypes[i] == IAType.Beber)
-        //            return IAType.Beber;
-        //        if (_iATypes[i] == IAType.Comer)
-        //            return IAType.Comer;
-        //        else
-        //            return IAType.Dormir;
-        //    }
-
-        //}
 
         public void MoveAnimalType(IAType type, Animal animal)
         {
@@ -61,6 +40,7 @@ namespace SheepAndWolfs
 
         }
 
+        //TODO: necesario para que funcione por turnos
         public void ExecuteTurns(Mundo mundo)
         {
             for (int i = 0; i < 20; i++)
@@ -68,6 +48,7 @@ namespace SheepAndWolfs
                 foreach (Animal animal in mundo.GetAllAnimals())
                 {
                     var actiondecided = DecideAnimalAccion(animal, mundo);
+                    Console.WriteLine($"Animal {animal} decide: {actiondecided}");
 
                     switch (actiondecided)
                     {
@@ -86,83 +67,91 @@ namespace SheepAndWolfs
                     }
                 }
 
-                ActualizarEstadoAnimalesPorTurno(mundo);
-                EliminarAnimalesmuertos(mundo);
-
+                mundo.ActualizarEstadoAnimalesPorTurno();
+                mundo.EliminarAnimalesmuertos();
                 Utils.DrawWorld(mundo);
+                Thread.Sleep(500);
             }
 
         }
 
-        
-
-
-        private void EliminarAnimalesmuertos(Mundo mundo)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        //Para actualizar los atributos a cada turno que pasa a los animales
-        private void ActualizarEstadoAnimalesPorTurno(Mundo mundo)
-        {
-            foreach (var animales in mundo.GetAllAnimals())
-            {
-                animales.food -= 10;
-                animales.water -= 10;
-                animales.sleep -= 10;
-            }
-        }
-
+        //TODO: necesario para que funcione por turnos
         private IAType DecideAnimalAccion(Animal animal, Mundo mundo)
         {
             if (animal.food <= 200 && mundo.EstaCercaHierba(animal, mundo))
                 return IAType.Comer;
-            if (animal.water <= 200 && EstaAguaCerca(animal, mundo))
+            if (animal.water <= 200 && mundo.EstaAguaCercaDelAnimal(animal, mundo))
                 return IAType.Beber;
             if (animal.sleep <= 200)
                 return IAType.Dormir;
             return IAType.Mover;
         }
 
-        private bool EstaAguaCerca(Animal animal, Mundo mundo)
+        public Casilla? EstaAguaCerca(Animal animal, Mundo mundo)
         {
-            return true;
+            Casilla? casillaAgua = null;
+            double minDistance = double.MaxValue;
+            var _casillasArray = mundo.GetAllCasillas();
+            for (int i = 0; i < _casillasArray.Length; i++)
+            {
+                Casilla casilla = _casillasArray[i];
+                if (casilla.type == TerritorioType.AGUA)
+                {
+                    double distance = Utils.GetDistance(animal.coordenada, casilla.coordenada);
+                    if (distance < 2 && distance < minDistance)
+                    {
+                        minDistance = distance;
+                        casillaAgua = casilla;
+                    }
+                }
+            }
+            return casillaAgua;
         }
 
-        
-
-        
-
+        //TODO: necesario para que funcione por turnos
         public void ComerHierbaCercanaAnimal(Animal animal, Mundo mundo)
         {
             Casilla? casillaHierba = EstaCercaHierba(animal, mundo);
             if (casillaHierba != null)
             {
                 animal.food += 50;
+
             }
         }
 
         //esto hay que replantearselo
-        private Casilla? EstaCercaHierba(Animal animal, Mundo mundo)
+        public Casilla? EstaCercaHierba(Animal animal, Mundo mundo)
         {
-           throw new NotImplementedException();
-
+            Casilla? casillaHierba = null;
+            double minDistance = double.MaxValue;
+            var _casillasArray = mundo.GetAllCasillas();
+            for (int i = 0; i < _casillasArray.Length; i++)
+            {
+                Casilla casilla = _casillasArray[i];
+                if (casilla.type == TerritorioType.HIERBA)
+                {
+                    double distance = Utils.GetDistance(animal.coordenada, casilla.coordenada);
+                    if (distance < 2 && distance < minDistance)
+                    {
+                        minDistance = distance;
+                        casillaHierba = casilla;
+                    }
+                }
+            }
+            return casillaHierba;
         }
 
+        //TODO: necesario para que funcione por turnos
         public void BeberAguaCercanaAnimal(Animal animal, Mundo mundo)
         {
-            //Casilla? casillaAgua = EstaAguaCerca(animal, mundo);
-            //if (casillaAgua != null)
-            //{
-            //    animal.water += 50;
-            //}
-            throw new NotImplementedException();
+            Casilla? casillaAgua = EstaAguaCerca(animal, mundo);
+            if (casillaAgua != null)
+            {
+                animal.water += 50;
+            }
         }
 
-
-
-        internal static void DormiAnimal(Animal animal, Mundo mundo)
+        public static void DormiAnimal(Animal animal, Mundo mundo)
         {
             animal.sleep += 50;
         }

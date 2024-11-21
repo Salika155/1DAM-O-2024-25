@@ -63,24 +63,28 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public static void DrawWorld(Mundo mundo)
         {
-            Console.Clear();
 
             for (int y = 0; y < mundo.GetHeight(); y++)
             {
                 for (int x = 0; x < mundo.GetWidth(); x++)
                 {
                     Animal? animal = mundo.GetAnimalAt(x, y); 
-                    Casilla? casilla = mundo.GetCasillaAt(x, y); 
+                    Casilla? casilla = mundo.GetCasillaAt(x, y);
 
-                    if (animal is Oveja)
+                    if (animal != null)
                     {
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(" O ");
-                    }
-                    else if (animal is Lobo)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.Write(" L ");
+                        if (animal is Oveja)
+                        {
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.BackgroundColor = ConsoleColor.Black;
+                            Console.Write(" O ");
+                        }
+                        else if (animal is Lobo)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                            Console.BackgroundColor = ConsoleColor.Black;
+                            Console.Write(" L ");
+                        }
                     }
                     else if (casilla is not null)
                     {
@@ -106,11 +110,12 @@ namespace SheepAndWolfs
                                 Console.ForegroundColor = ConsoleColor.DarkGray;
                                 Console.Write(" R ");
                                 break;
+                                
                         }
                     }
                     else
                     {
-                        Console.Write("   ");
+                        Console.WriteLine(" ");
                     }
                     Console.ResetColor();
                 }
@@ -177,22 +182,27 @@ namespace SheepAndWolfs
             int[] XMovs = { -1, 0, 1, 0 };
             int[] YMovs = { 0, -1, 0, 1 };
 
-            int direction = GetRandomNumber(0, 4);
+            int direction = Utils.GetRandomNumber(0, 4);
 
             int newX = animal.coordenada.X + XMovs[direction];
             int newY = animal.coordenada.Y + YMovs[direction];
+
+            Console.WriteLine($"Intentando mover {animal} de ({animal.coordenada.X}, {animal.coordenada.Y}) a ({newX}, {newY})");
 
             if (IsValidCoordinates(newX, newY, mundo.GetWidth(), mundo.GetHeight()) &&
                 mundo.CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
             {
                 animal.coordenada = new Coordenada(newX, newY);
+                Console.WriteLine($"{animal} se movió a ({newX}, {newY})");
+            }
+            else
+            {
+                Console.WriteLine($"{animal} no pudo moverse a ({newX}, {newY})");
             }
             //mover al animal, utilizar getanimalat, y pasar por dos for o funcion si puede moverse para empezar a plantear el movimiento
         }
         
-
         //GetAnimalsArround
-
         //GetAnimalsSortedByDistance
         public static List<Animal> GetAnimalsSortedByDistance(Animal animal, List<Animal> animals)
         {
@@ -226,20 +236,6 @@ namespace SheepAndWolfs
             else
                 return TerritorioType.TIERRA;
         }
-
-        
-
-
-
-        //public Animal CreateAnimal(Animal animal)
-        //{
-        //    return animal;
-        //}
-
-        //public static Animal? GetAnimalAt(Mundo mundo, int x, int y, AnimalType type)
-        //{
-        //    return mundo.GetAnimalAt(x, y, type);
-        //}
     }
 }
 

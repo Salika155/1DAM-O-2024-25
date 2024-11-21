@@ -36,6 +36,9 @@ namespace SheepAndWolfs
             CrearCasillas();
         }
 
+        public Casilla[] GetAllCasillas() => _casillas;
+        public List<Animal> GetAllAnimals() => _animals;
+
         //TODO: esto funciona
         public void CrearCasillas()
         {
@@ -142,11 +145,6 @@ namespace SheepAndWolfs
             _animals.Remove(animal);
         }
 
-        //public void RemoveDeadAnimals()
-        //{
-        //    _animals.RemoveAll(animal => animal.food <= 0 || animal.water <= 0 || animal.stamina <= 0);
-        //}
-
         public void MoveAnimal(Animal animal, Mundo mundo)
         {
             if (animal == null || mundo == null)
@@ -177,22 +175,15 @@ namespace SheepAndWolfs
             Casilla? targetCasilla = GetCasillaAt(coor.X, coor.Y);
             Animal? targetAnimal = GetAnimalAt(coor.X, coor.Y);
 
-            if (targetCasilla == null || targetAnimal == null || targetCasilla.type == TerritorioType.ROCA ||
+            if (targetCasilla == null || targetCasilla.type == TerritorioType.ROCA ||
                 targetCasilla.type == TerritorioType.AGUA)
-                return false;
-            if (animal.type == AnimalType.LOBO)
-            {
-                if (targetAnimal.type == AnimalType.OVEJA)
-                    return true;
-                if (targetAnimal.type == AnimalType.LOBO)
-                    return false;
-            }
-            else if (animal.type == AnimalType.OVEJA)
-            {
-                if (targetAnimal != null)
-                    return false;
-            }
-            return true;
+                //return false;
+                return true;
+            if (targetAnimal != null && targetAnimal.type == AnimalType.LOBO)
+                //return false;
+                return true;
+            //return true;
+            return false;
         }
 
 
@@ -211,14 +202,21 @@ namespace SheepAndWolfs
                     {
                         //instancia a utils para los campos comida para generarle valores aleatorios
                         int food = Utils.GetRandomNumber(50, 500);
-                        Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO);
+                        int water = Utils.GetRandomNumber(50, 500);
+                        int stamina = Utils.GetRandomNumber(50, 500);
+                        int sleep = Utils.GetRandomNumber(50, 500);
+                        Lobo lobo = new Lobo(food, water, stamina, sleep, AnimalType.LOBO);
                         lobo.coordenada = new Coordenada(x, y);
                         AddAnimal(lobo, x, y);
                     }
                     else if (type == AnimalType.OVEJA)
                     {
                         //instancia a utils para los campos comida para generarle valores aleatorios
-                        Oveja oveja = new Oveja(100, 100, 100, 100, AnimalType.OVEJA);
+                        int food = Utils.GetRandomNumber(50, 500);
+                        int water = Utils.GetRandomNumber(50, 500);
+                        int stamina = Utils.GetRandomNumber(50, 500);
+                        int sleep = Utils.GetRandomNumber(50, 500);
+                        Oveja oveja = new Oveja(food, water, stamina, sleep, AnimalType.OVEJA);
                         oveja.coordenada = new Coordenada(x, y);
                         AddAnimal(oveja, x, y);
                     }
@@ -272,8 +270,6 @@ namespace SheepAndWolfs
             return animal?.type ?? AnimalType.ANIMAL;
         }
 
-
-
         //TODO: esto no lo he usado
         public int IndexOfAnimal(Animal animal)
         {
@@ -305,27 +301,17 @@ namespace SheepAndWolfs
         //TODO: esto no lo he usado
         public bool ContainsCasilla(int x, int y)
         {
-            //if ((x < 0 || x >= _width) || (y < 0 || y >= _height))
-            //    return false;
-            //if (x < 0)
-            //y, width, height
             return Utils.IndexOfCasilla(x, y, _width) != -1;
         }
 
         //TODO: esto no lo he usado
         public int CountCasilla() => _casillas.Length;
-
-        //esto esta fatal, no puedo hacer un ienumerable de animales
-        internal IEnumerable<Animal> GetAllAnimals()
-        {
-            throw new NotImplementedException();
-        }
+ 
 
         public bool EstaCercaHierba(Animal animal, Mundo mundo)
         {
-            for (int i = 0; i < _casillas.Length; i++)
+            foreach (var casilla in _casillas)
             {
-                Casilla casilla = _casillas[i];
                 if (casilla.type == TerritorioType.HIERBA)
                 {
                     if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, mundo.GetWidth(), mundo.GetHeight()))
@@ -336,6 +322,49 @@ namespace SheepAndWolfs
                 }
             }
             return false;
+        }
+
+        public bool EstaAguaCercaDelAnimal(Animal animal, Mundo mundo)
+        {
+            foreach (var casilla in _casillas)
+            {
+                if (casilla.type == TerritorioType.AGUA)
+                {
+                    if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, mundo.GetWidth(), mundo.GetHeight()))
+                    {
+                        if (Utils.GetDistance(animal.coordenada, casilla.coordenada) <= 2)
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
+
+        public void EliminarAnimalesmuertos()
+        {
+            for (int i = _animals.Count - 1; i >= 0; i--)
+            {
+                Animal animal = _animals[i];
+                if (animal.food <= 0 || animal.water <= 0 || animal.sleep <= 0)
+                    RemoveAnimalAt(i);
+            }
+        }
+
+        //Para actualizar los atributos a cada turno que pasa a los animales
+        public void ActualizarEstadoAnimalesPorTurno()
+        {
+            foreach (var animales in _animals)
+            {
+                animales.food -= 10;
+                animales.water -= 10;
+                animales.sleep -= 10;
+
+                if (animales.food < 0) animales.food = 0;
+                if (animales.water < 0) animales.water = 0;
+                if (animales.sleep < 0) animales.sleep = 0;
+            }
         }
 
         //metodo para hallar casillas alrededor de un animal, las casillas son arrays

@@ -269,6 +269,9 @@ namespace ConsoleApp1
         //funcion para hacer el maximo comun divisor de dos numeros
 
     }
+
+    
+ 
 }
 
 

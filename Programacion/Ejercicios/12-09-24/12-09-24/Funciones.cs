@@ -8,17 +8,18 @@ namespace _12_09_24
 {
     public class Funciones
     {
+        //Area de rectangulo (b * a)
         public static double GetAreaRectangulo(double w, double h)
         {
             return w * h;
         }
 
-        //perimetro de un rectangulo
+        //perimetro de un rectangulo 2 * (b + a)
         public static double GetPerimetroRectangulo(double w, double h)
         {
             return 2 * (w + h);
         }  
-        //calcula area de un circulo
+        //calcula area de un circulo PiR2
         public static double GetAreaCirculo(double r)
         {
             return Math.PI * (r * r);

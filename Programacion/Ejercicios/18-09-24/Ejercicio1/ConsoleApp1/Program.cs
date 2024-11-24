@@ -12,8 +12,8 @@
             bool result = Ejercicios.IsOdd(2);
             Console.WriteLine(result);
 
-            double ecua = Ejercicios.SolveSecondGradeEquation(1, -4, 3);
-            Console.WriteLine(ecua);
+            (double ecua1, double ecua2) = Ejercicios.SolveSecondGradeEquation(1, -4, 3);
+            Console.WriteLine(ecua1.ToString(), ecua2.ToString());
 
             Ejercicios.MovimientoSexy(5);
 

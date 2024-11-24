@@ -170,8 +170,6 @@ namespace TestLista
                 {
                     l.RemoveAt(i--);
                 }
-                    
-
         }
 
         public static bool IsNegative(int a) => (a) < 0; 
@@ -266,15 +264,83 @@ namespace TestLista
 
         //binary search
 
-        public static 
+        public static int BinarySearch(List<int> l, double value)
+        {
+            if (l == null || l.Count == 0)
+                return -1;
+
+            int min = 0;
+            int max = l.Count - 1;
+
+            while (min <= max)
+            {
+                int mid = (min + max) / 2;
+
+                if (l[mid] == value)
+                    return mid;
+                else if (l[mid] < value)
+                {
+                    max = mid + 1;
+                }
+                else if (l[mid] > value)
+                {
+                    min = mid - 1; 
+                }
+            }
+            return -1;
+        }
 
         //me van a dar una lista de enteros, y puedo modificarla a mi antojo, pero tengo que devolver una lista de enteros con todos los valores que tenga ahi pero ordenados
         //hacer una funcion que le paso una lista de enteros (que se puede modificar) y devuelvo otra lista nueva con los mismos numeros de la original pero ordenados de menor a mayor
 
+        public static List<int> SortList(List<int> list)
+        {
+            List<int> result = new List<int>();
+ 
+            while (list.Count > 0)
+            {
+                int menor = IndexOfMenor(list);
+                int element = list[menor];
+
+                result.Add(element);
+                list.RemoveAt(menor);
+            }
+            return result;
+        }
 
 
         //hacer una funcion que le paso una lista de enteros y me devuelve la mediana (numero que esta en la propia lista, la mitad de los valores estan por debajo y la otra por encima
+        public static int GetMedianaFromList(List<int> l)
+        {
+            OrdenarListaConFor(l);
+            int result = 0;
 
+            if (l.Count % 2 == 0)
+            {
+                int mid = l[l.Count / 2];
+                int min = l[(l.Count / 2) - 1];
+                result = (min + min) / 2;
+            }
+            else
+                result = l[l.Count / 2];
+            return result;
+        }
+
+        public static void OrdenarListaConFor(List<int> l)
+        {
+            for (int i = 0; i < l.Count; i++)
+            {
+                for(int j = i + 1; j < l.Count; j++)
+                {
+                    if (l[j] < l[i])
+                    {
+                        int aux = l[i];
+                        l[i] = l[j];
+                        l[j] = aux;
+                    }
+                }
+            }
+        }
 
 
     }

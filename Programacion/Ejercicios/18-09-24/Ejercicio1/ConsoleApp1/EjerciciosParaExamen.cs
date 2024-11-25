@@ -195,12 +195,8 @@ namespace ConsoleApp1
                     aux /= 2;
                 else
                     aux = aux * 3 + 1;
-                while (aux > 1)
-                {
-                    result += aux;
-                    if (aux > 1)
-                        result += ", ";
-                }
+                
+                result += ", " + aux;
             }
             return result;
         }

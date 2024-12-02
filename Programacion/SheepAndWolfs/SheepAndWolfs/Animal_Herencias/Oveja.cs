@@ -22,13 +22,15 @@ namespace SheepAndWolfs
 
 
         //TODO: esto funciona
-        public Oveja(int food, int water, int stamina, int sleep, AnimalType type) : base(food, water, stamina, sleep, AnimalType.OVEJA)
+        public Oveja(int food, int water, int stamina, int sleep, AnimalType type, string name) : base(food, water, stamina, sleep, AnimalType.OVEJA, name)
         {
-
+            this.food = food;
+            this.water = water;
+            this.stamina = stamina;
+            this.sleep = sleep;
+            this.type = AnimalType.OVEJA;
+            this.name = name;
         }
-
-
-
 
         //si los metodos vienen de la clase padre animal, habra que sobreescribirlos aqui
 

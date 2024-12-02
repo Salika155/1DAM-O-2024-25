@@ -31,19 +31,21 @@ namespace SheepAndWolfs
 
         public void MoveAnimalType(IAType type, Animal animal)
         {
-            if (animal.food <= 100)
+            if (animal.food <= 50)
                 type = IAType.Comer;
-            if (animal.water <= 100)
+            if (animal.water <= 50)
                 type = IAType.Beber;
-            if (animal.sleep <= 100)
+            if (animal.sleep <= 50)
                 type = IAType.Dormir;
+            if (animal.food > 50 && animal.water > 50 && animal.sleep > 50)
+                type = IAType.Mover;
 
         }
 
         //TODO: necesario para que funcione por turnos
         public void ExecuteTurns(Mundo mundo)
         {
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 30; i++)
             {
                 foreach (Animal animal in mundo.GetAllAnimals())
                 {
@@ -112,10 +114,9 @@ namespace SheepAndWolfs
         public void ComerHierbaCercanaAnimal(Animal animal, Mundo mundo)
         {
             Casilla? casillaHierba = EstaCercaHierba(animal, mundo);
-            if (casillaHierba != null)
+            if (casillaHierba != null && DecideAnimalAccion(animal, mundo) == IAType.Comer)
             {
                 animal.food += 50;
-
             }
         }
 
@@ -145,15 +146,19 @@ namespace SheepAndWolfs
         public void BeberAguaCercanaAnimal(Animal animal, Mundo mundo)
         {
             Casilla? casillaAgua = EstaAguaCerca(animal, mundo);
-            if (casillaAgua != null)
+            if (casillaAgua != null && DecideAnimalAccion(animal, mundo) == IAType.Beber)
             {
                 animal.water += 50;
             }
         }
 
-        public static void DormiAnimal(Animal animal, Mundo mundo)
+        public void DormiAnimal(Animal animal, Mundo mundo)
         {
-            animal.sleep += 50;
+            Casilla? casillaDormir = EstaCercaHierba(animal, mundo);
+            if (DecideAnimalAccion(animal, mundo) == IAType.Dormir)
+            {
+                animal.sleep += 50;
+            }
         }
     }
 }

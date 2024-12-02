@@ -20,8 +20,14 @@ namespace SheepAndWolfs
 
         
         //TODO: esto funciona
-        public Lobo(int food, int water, int stamina, int sleep, AnimalType type) : base(food, water, stamina, sleep, AnimalType.LOBO)
+        public Lobo(int food, int water, int stamina, int sleep, AnimalType type, string name) : base(food, water, stamina, sleep, AnimalType.LOBO, name)
         {
+            this.food = food;
+            this.water = water;
+            this.stamina = stamina;
+            this.sleep = sleep;
+            this.type = AnimalType.LOBO;
+            this.name = name;
             
         }
        

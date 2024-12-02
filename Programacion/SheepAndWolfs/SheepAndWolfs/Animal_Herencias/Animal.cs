@@ -28,13 +28,14 @@ namespace SheepAndWolfs
 
 
         //TODO: esto funciona
-        public Animal(int food, int water, int stamina, int sleep, AnimalType type)
+        public Animal(int food, int water, int stamina, int sleep, AnimalType type, string name)
         {
             this.food = food;
             this.water = water;
             this.stamina = stamina;
             this.sleep = sleep;
             this.type = type;
+            this.name = name;
         }
 
         //crearanimales en el constructor

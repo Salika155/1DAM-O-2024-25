@@ -178,13 +178,13 @@ namespace SheepAndWolfs
 
             if (targetCasilla == null || targetCasilla.type == TerritorioType.ROCA ||
                 targetCasilla.type == TerritorioType.AGUA)
-                //return false;
-                return true;
-            if (targetAnimal != null && targetAnimal.type == AnimalType.LOBO)
-                //return false;
-                return true;
+                return false;
             //return true;
-            return false;
+            //if (targetAnimal != null && targetAnimal.type == AnimalType.LOBO)
+                //return false;
+                //return true;
+            return true;
+            //return false;
         }
 
 
@@ -201,23 +201,27 @@ namespace SheepAndWolfs
                 {
                     if (type == AnimalType.LOBO)
                     {
+                        int countlobo = 0;
                         //instancia a utils para los campos comida para generarle valores aleatorios
                         int food = Utils.GetRandomNumber(50, 500);
                         int water = Utils.GetRandomNumber(50, 500);
                         int stamina = Utils.GetRandomNumber(50, 500);
                         int sleep = Utils.GetRandomNumber(50, 500);
-                        Lobo lobo = new Lobo(food, water, stamina, sleep, AnimalType.LOBO);
+                        string name = "Lobo " + countlobo++;
+                        Lobo lobo = new Lobo(food, water, stamina, sleep, AnimalType.LOBO, name);
                         lobo.coordenada = new Coordenada(x, y);
                         AddAnimal(lobo, x, y);
                     }
                     else if (type == AnimalType.OVEJA)
                     {
+                        int countoveja = 0;
                         //instancia a utils para los campos comida para generarle valores aleatorios
                         int food = Utils.GetRandomNumber(50, 500);
                         int water = Utils.GetRandomNumber(50, 500);
                         int stamina = Utils.GetRandomNumber(50, 500);
                         int sleep = Utils.GetRandomNumber(50, 500);
-                        Oveja oveja = new Oveja(food, water, stamina, sleep, AnimalType.OVEJA);
+                        string name = "Oveja " + countoveja++;
+                        Oveja oveja = new Oveja(food, water, stamina, sleep, AnimalType.OVEJA, name);
                         oveja.coordenada = new Coordenada(x, y);
                         AddAnimal(oveja, x, y);
                     }
@@ -228,14 +232,17 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public void CreateWolfs(int count)
         {
+            int countlobo = 0;
+
             for (int i = 0; i < count; i++)
             {
+                countlobo++;
                 int x = Utils.GetRandomNumber(0, _width);
                 int y = Utils.GetRandomNumber(0, _height);
 
                 if (GetAnimalAt(x, y) == null)  // Evitar duplicados -> aqui hay que comprobar si la casilla a la que se mueve es roca o agua
                 {
-                    Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO);
+                    Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO, "lobo" + countlobo);
                     //aqui le paso las cosas que le ponga en constructor como parametros
                     lobo.coordenada = new Coordenada(x, y);
                     AddAnimal(lobo, x, y);
@@ -246,17 +253,17 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public void CreateSheeps(int count)
         {
+            int countoveja = 0;
             for (int i = 0; i < count; i++)
             {
+                countoveja++;
                 int x = Utils.GetRandomNumber(0, _width);
                 int y = Utils.GetRandomNumber(0, _height);
 
                 if (GetAnimalAt(x, y) == null) // Evitar duplicados
                 {
-                    Oveja oveja = new(100, 100, 100, 100, AnimalType.OVEJA)
-                    {
-                        coordenada = new Coordenada(x, y)
-                    };
+                    Oveja oveja = new Oveja(100, 100, 100, 100, AnimalType.OVEJA, "oveja " + countoveja);
+                    oveja.coordenada = new Coordenada(x, y);
                     AddAnimal(oveja, x, y);
                 }
             }

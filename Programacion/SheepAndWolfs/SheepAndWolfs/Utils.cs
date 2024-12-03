@@ -161,7 +161,7 @@ namespace SheepAndWolfs
 
         public static double GetDistanceBetweenAnimals(Animal a, Animal b)
         {
-            return GetDistance(a.coordenada, b.coordenada);
+            return GetDistance(a.GetCoordenada(), b.GetCoordenada());
         }
 
         public static double GetDistance(Coordenada? c1, Coordenada? c2)
@@ -183,16 +183,17 @@ namespace SheepAndWolfs
             int[] YMovs = { 0, -1, 0, 1 };
 
             int direction = Utils.GetRandomNumber(0, 4);
+            var coorde = animal.GetCoordenada();
 
-            int newX = animal.coordenada.X + XMovs[direction];
-            int newY = animal.coordenada.Y + YMovs[direction];
+            int newX = coorde.X + XMovs[direction];
+            int newY = coorde.Y + YMovs[direction];
 
-            Console.WriteLine($"Intentando mover {animal} de ({animal.coordenada.X}, {animal.coordenada.Y}) a ({newX}, {newY})");
+            Console.WriteLine($"Intentando mover {animal} de ({coorde.X}, {coorde.Y}) a ({newX}, {newY})");
 
             if (IsValidCoordinates(newX, newY, mundo.GetWidth(), mundo.GetHeight()) &&
                 mundo.CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
             {
-                animal.coordenada = new Coordenada(newX, newY);
+                coorde = new Coordenada(newX, newY);
                 Console.WriteLine($"{animal} se movió a ({newX}, {newY})");
             }
             else
@@ -213,7 +214,9 @@ namespace SheepAndWolfs
             {
                 for (int j = i + 1; j < animals.Count; j++)
                 {
-                    if (GetDistanceBetweenAnimals(animal, animals[i]) > GetDistanceBetweenAnimals(animal, animals[j]))
+                    var distanceI = GetDistanceBetweenAnimals(animal, animals[i]);
+                    var distanceJ = GetDistanceBetweenAnimals(animal, animals[j]);
+                    if (distanceI > distanceJ)
                     {
                         Animal temp = animals[i];
                         animals[i] = animals[j];

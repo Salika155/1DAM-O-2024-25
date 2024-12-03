@@ -31,15 +31,14 @@ namespace SheepAndWolfs
 
         public void MoveAnimalType(IAType type, Animal animal)
         {
-            if (animal.food <= 50)
+            if (animal.GetSaciedad() <= 50)
                 type = IAType.Comer;
-            if (animal.water <= 50)
+            if (animal.GetHidratacion() <= 50)
                 type = IAType.Beber;
-            if (animal.sleep <= 50)
+            if (animal.GetSueño() <= 50)
                 type = IAType.Dormir;
-            if (animal.food > 50 && animal.water > 50 && animal.sleep > 50)
+            else
                 type = IAType.Mover;
-
         }
 
         //TODO: necesario para que funcione por turnos
@@ -80,11 +79,11 @@ namespace SheepAndWolfs
         //TODO: necesario para que funcione por turnos
         private IAType DecideAnimalAccion(Animal animal, Mundo mundo)
         {
-            if (animal.food <= 200 && mundo.EstaCercaHierba(animal, mundo))
+            if (animal.GetSaciedad() <= 200 && mundo.EstaCercaHierba(animal, mundo))
                 return IAType.Comer;
-            if (animal.water <= 200 && mundo.EstaAguaCercaDelAnimal(animal, mundo))
+            if (animal.GetHidratacion() <= 200 && mundo.EstaAguaCercaDelAnimal(animal, mundo))
                 return IAType.Beber;
-            if (animal.sleep <= 200)
+            if (animal.GetSueño() <= 200)
                 return IAType.Dormir;
             return IAType.Mover;
         }
@@ -99,7 +98,7 @@ namespace SheepAndWolfs
                 Casilla casilla = _casillasArray[i];
                 if (casilla.type == TerritorioType.AGUA)
                 {
-                    double distance = Utils.GetDistance(animal.coordenada, casilla.coordenada);
+                    double distance = Utils.GetDistance(animal.GetCoordenada(), casilla.coordenada);
                     if (distance < 2 && distance < minDistance)
                     {
                         minDistance = distance;
@@ -116,7 +115,7 @@ namespace SheepAndWolfs
             Casilla? casillaHierba = EstaCercaHierba(animal, mundo);
             if (casillaHierba != null && DecideAnimalAccion(animal, mundo) == IAType.Comer)
             {
-                animal.food += 50;
+                animal.SetSaciedad(animal.GetSaciedad()+50);
             }
         }
 
@@ -131,7 +130,7 @@ namespace SheepAndWolfs
                 Casilla casilla = _casillasArray[i];
                 if (casilla.type == TerritorioType.HIERBA)
                 {
-                    double distance = Utils.GetDistance(animal.coordenada, casilla.coordenada);
+                    double distance = Utils.GetDistance(animal.GetCoordenada(), casilla.coordenada);
                     if (distance < 2 && distance < minDistance)
                     {
                         minDistance = distance;
@@ -148,7 +147,7 @@ namespace SheepAndWolfs
             Casilla? casillaAgua = EstaAguaCerca(animal, mundo);
             if (casillaAgua != null && DecideAnimalAccion(animal, mundo) == IAType.Beber)
             {
-                animal.water += 50;
+                animal.SetHidratacion(animal.GetHidratacion()+50);
             }
         }
 
@@ -157,7 +156,7 @@ namespace SheepAndWolfs
             Casilla? casillaDormir = EstaCercaHierba(animal, mundo);
             if (DecideAnimalAccion(animal, mundo) == IAType.Dormir)
             {
-                animal.sleep += 50;
+                animal.SetSueño(animal.GetSueño()+50);
             }
         }
     }

@@ -17,25 +17,28 @@ namespace SheepAndWolfs
         //public int water;
         //public int stamina;
         //public int sleep;
-
         
         //TODO: esto funciona
-        public Lobo(int food, int water, int stamina, int sleep, AnimalType type, string name) : base(food, water, stamina, sleep, AnimalType.LOBO, name)
+        public Lobo(int food, int water, int stamina, int sleep, AnimalType type, string name, int velocidad) : base(food, water, stamina, sleep, AnimalType.LOBO, name, velocidad)
         {
-            this.food = food;
-            this.water = water;
-            this.stamina = stamina;
-            this.sleep = sleep;
-            this.type = AnimalType.LOBO;
-            this.name = name;
             
         }
-       
+
         //public void MoverLobo()
         //{
         //    _coordenada = new Coordenada();
 
         //}
+
+        public override int GetVelocidad()
+        {
+            return base.GetVelocidad() + 5;  // Los lobos tienen 5 unidades más de velocidad que el valor base
+        }
+
+        public override void Mover()
+        {
+            Console.WriteLine($"{GetNombre()} el lobo se mueve a una velocidad de {GetVelocidad()}.");
+        }
         //esto va en un enum -> o crearse una clase ai
         //-> me creo un array de count del enum para cada caso, y lo relleno de 0
         //-> hidratacion campo = 902 -> votos beber = 1000 - h

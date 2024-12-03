@@ -108,7 +108,7 @@ namespace SheepAndWolfs
             for (int i = 0; i < _animals.Count; i++)
             {
                 Animal? animal = _animals[i];
-                if (animal.coordenada!.EqualsToCoordenada(x, y))
+                if (animal.GetCoordenada()!.EqualsToCoordenada(x, y))
                     return animal;
             }
             return null;
@@ -134,7 +134,7 @@ namespace SheepAndWolfs
             if (animal == null || Utils.IsValidCoordinates(x, y, _width, _height) is false)
                 return;
 
-            animal.coordenada = new Coordenada(x, y); // Asignar coordenadas al animal
+            animal.SetCoordenada(x, y); // Asignar coordenadas al animal
             _animals.Add(animal);
         }
 
@@ -156,13 +156,13 @@ namespace SheepAndWolfs
 
             int direction = Utils.GetRandomNumber(0, 4);
 
-            int newX = animal.coordenada.X + XMovs[direction];
-            int newY = animal.coordenada.Y + YMovs[direction];
+            int newX = animal.GetCoordenada().X + XMovs[direction];
+            int newY = animal.GetCoordenada().Y + YMovs[direction];
 
             if (Utils.IsValidCoordinates(newX, newY, mundo.GetWidth(), mundo.GetHeight()) &&
                 CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
             {
-                animal.coordenada = new Coordenada(newX, newY);
+                animal.SetCoordenada(newX, newY);
             }
             //mover al animal, utilizar getanimalat, y pasar por dos for o funcion si puede moverse para empezar a plantear el movimiento
         }
@@ -208,8 +208,9 @@ namespace SheepAndWolfs
                         int stamina = Utils.GetRandomNumber(50, 500);
                         int sleep = Utils.GetRandomNumber(50, 500);
                         string name = "Lobo " + countlobo++;
-                        Lobo lobo = new Lobo(food, water, stamina, sleep, AnimalType.LOBO, name);
-                        lobo.coordenada = new Coordenada(x, y);
+                        int velocidad = 100;
+                        Lobo lobo = new Lobo(food, water, stamina, sleep, AnimalType.LOBO, name, velocidad);
+                        lobo.SetCoordenada(x, y);
                         AddAnimal(lobo, x, y);
                     }
                     else if (type == AnimalType.OVEJA)
@@ -221,8 +222,9 @@ namespace SheepAndWolfs
                         int stamina = Utils.GetRandomNumber(50, 500);
                         int sleep = Utils.GetRandomNumber(50, 500);
                         string name = "Oveja " + countoveja++;
-                        Oveja oveja = new Oveja(food, water, stamina, sleep, AnimalType.OVEJA, name);
-                        oveja.coordenada = new Coordenada(x, y);
+                        int velocidad = 50;
+                        Oveja oveja = new Oveja(food, water, stamina, sleep, AnimalType.OVEJA, name, velocidad);
+                        oveja.SetCoordenada(x, y);
                         AddAnimal(oveja, x, y);
                     }
                 }
@@ -242,9 +244,9 @@ namespace SheepAndWolfs
 
                 if (GetAnimalAt(x, y) == null)  // Evitar duplicados -> aqui hay que comprobar si la casilla a la que se mueve es roca o agua
                 {
-                    Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO, "lobo" + countlobo);
+                    Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO, "lobo" + countlobo, 100);
                     //aqui le paso las cosas que le ponga en constructor como parametros
-                    lobo.coordenada = new Coordenada(x, y);
+                    lobo.SetCoordenada(x, y);
                     AddAnimal(lobo, x, y);
                 }
             }
@@ -262,8 +264,8 @@ namespace SheepAndWolfs
 
                 if (GetAnimalAt(x, y) == null) // Evitar duplicados
                 {
-                    Oveja oveja = new Oveja(100, 100, 100, 100, AnimalType.OVEJA, "oveja " + countoveja);
-                    oveja.coordenada = new Coordenada(x, y);
+                    Oveja oveja = new Oveja(100, 100, 100, 100, AnimalType.OVEJA, "oveja " + countoveja, 50);
+                    oveja.SetCoordenada(x, y);
                     AddAnimal(oveja, x, y);
                 }
             }
@@ -275,7 +277,7 @@ namespace SheepAndWolfs
         public AnimalType GetAnimalTypeAt(int x, int y, AnimalType type)
         {
             Animal? animal = GetAnimalAt(x, y);
-            return animal?.type ?? AnimalType.ANIMAL;
+            return animal?.GetType() ?? AnimalType.ANIMAL;
         }
 
         //TODO: esto no lo he usado
@@ -283,7 +285,8 @@ namespace SheepAndWolfs
         {
             for (int i = 0; i < _animals.Count; i++)
             {
-                if (_animals[i].type == animal.type && _animals[i].coordenada == animal.coordenada)
+                if (_animals[i].GetType() == animal.GetType() 
+                    && _animals[i].GetCoordenada() == animal.GetCoordenada())
                     return i;
             }
             return -1;
@@ -301,7 +304,7 @@ namespace SheepAndWolfs
 
             int aux = 0;
             for (int i = 0; i < _animals.Count; i++)
-                if (_animals[i].type == type)
+                if (_animals[i].GetType() == type)
                     aux += 1;
             return aux;
         }
@@ -324,7 +327,7 @@ namespace SheepAndWolfs
                 {
                     if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, mundo.GetWidth(), mundo.GetHeight()))
                     {
-                        if (Utils.GetDistance(animal.coordenada, casilla.coordenada) <= 2)
+                        if (Utils.GetDistance(animal.GetCoordenada(), casilla.coordenada) <= 2)
                             return true;
                     }
                 }
@@ -340,7 +343,7 @@ namespace SheepAndWolfs
                 {
                     if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, mundo.GetWidth(), mundo.GetHeight()))
                     {
-                        if (Utils.GetDistance(animal.coordenada, casilla.coordenada) <= 2)
+                        if (Utils.GetDistance(animal.GetCoordenada(), casilla.coordenada) <= 2)
                             return true;
                     }
                 }
@@ -355,7 +358,7 @@ namespace SheepAndWolfs
             for (int i = _animals.Count - 1; i >= 0; i--)
             {
                 Animal animal = _animals[i];
-                if (animal.food <= 0 || animal.water <= 0 || animal.sleep <= 0)
+                if (animal.GetSaciedad() <= 0 || animal.GetHidratacion() <= 0 || animal.GetSueño() <= 0)
                     RemoveAnimalAt(i);
             }
         }
@@ -365,13 +368,16 @@ namespace SheepAndWolfs
         {
             foreach (var animales in _animals)
             {
-                animales.food -= 10;
-                animales.water -= 10;
-                animales.sleep -= 10;
+                animales.SetSaciedad(animales.GetSaciedad() -10);
+                animales.SetHidratacion(animales.GetHidratacion() -10);
+                animales.SetSueño(animales.GetSueño()-10);
 
-                if (animales.food < 0) animales.food = 0;
-                if (animales.water < 0) animales.water = 0;
-                if (animales.sleep < 0) animales.sleep = 0;
+                if (animales.GetSaciedad() <= 0) 
+                    animales.SetSaciedad(0);
+                if (animales.GetHidratacion() <= 0) 
+                    animales.SetHidratacion(0);
+                if (animales.GetSueño() <= 0) 
+                    animales.SetSueño(0);
             }
         }
 

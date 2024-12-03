@@ -316,13 +316,13 @@ namespace SheepAndWolfs
         //TODO: esto no lo he usado
         public int CountCasilla() => _casillas.Length;
  
-        public bool EstaCercaHierba(Animal animal, Mundo mundo)
+        public bool EstaCercaHierba(Animal animal)
         {
             foreach (var casilla in _casillas)
             {
                 if (casilla.type == TerritorioType.HIERBA)
                 {
-                    if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, mundo.GetWidth(), mundo.GetHeight()))
+                    if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, GetWidth(), GetHeight()))
                     {
                         if (Utils.GetDistance(animal.GetCoordenada(), casilla.coordenada) <= 2)
                             return true;
@@ -332,13 +332,13 @@ namespace SheepAndWolfs
             return false;
         }
 
-        public bool EstaAguaCercaDelAnimal(Animal animal, Mundo mundo)
+        public bool EstaAguaCercaDelAnimal(Animal animal)
         {
             foreach (var casilla in _casillas)
             {
                 if (casilla.type == TerritorioType.AGUA)
                 {
-                    if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, mundo.GetWidth(), mundo.GetHeight()))
+                    if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, GetWidth(), GetHeight()))
                     {
                         if (Utils.GetDistance(animal.GetCoordenada(), casilla.coordenada) <= 2)
                             return true;

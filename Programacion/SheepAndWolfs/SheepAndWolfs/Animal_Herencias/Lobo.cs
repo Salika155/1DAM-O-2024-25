@@ -21,7 +21,6 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public Lobo(int food, int water, int stamina, int sleep, AnimalType type, string name, int velocidad) : base(food, water, stamina, sleep, AnimalType.LOBO, name, velocidad)
         {
-            
         }
 
         //public void MoverLobo()
@@ -49,10 +48,8 @@ namespace SheepAndWolfs
         //dormir
         //algoritmo a* pathfinder no es obligatorio
 
-
         //public void AtacarOveja()
         //{
-
         //}
 
         //class Animal 

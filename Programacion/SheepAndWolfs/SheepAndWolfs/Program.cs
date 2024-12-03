@@ -1,6 +1,6 @@
 ﻿namespace SheepAndWolfs
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -38,12 +38,10 @@
             //    mundo.MoveAnimal(animal, mundo);
             //}
 
-
             //AI ai = new AI();
             //ai.ExecuteTurns(mundo);
 
             Mundo mundo = new Mundo(10, 10);
-
             // Crear animales
             mundo.CreateSheeps(5);
             mundo.CreateWolfs(2);
@@ -51,10 +49,7 @@
             // Ejecutar la simulación
             AI ia = new AI();
             ia.ExecuteTurns(mundo);
-
             //Utils.DrawWorld(mundo);
-
-
         }
     }
 }

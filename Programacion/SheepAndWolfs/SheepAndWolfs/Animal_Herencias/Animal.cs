@@ -35,7 +35,6 @@ namespace SheepAndWolfs
         private string? _nombre;
         private int _velocidad;
 
-
         //TODO: esto funciona
         public Animal(int food, int water, int stamina, int sleep, AnimalType type, string? name, int speed)
         {
@@ -61,7 +60,6 @@ namespace SheepAndWolfs
         public virtual AnimalType? GetType() => _type;
         public virtual Coordenada? GetCoordenada() => _coordenada;
         public void SetCoordenada(int x, int y) => _coordenada = new Coordenada(x, y);
-
 
         //crearanimales en el constructor
 

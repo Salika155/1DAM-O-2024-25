@@ -13,9 +13,7 @@ namespace SheepAndWolfs
 
         public Coordenada()
         {
-
         }
-
         public Coordenada(int x, int y)
         {
             this.X = x;

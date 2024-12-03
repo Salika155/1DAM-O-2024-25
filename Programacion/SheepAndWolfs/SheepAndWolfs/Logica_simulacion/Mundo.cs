@@ -23,7 +23,6 @@ namespace SheepAndWolfs
         private int _height;
         private List<Animal> _animals;
 
-
         //TODO: esto funciona
         public Mundo(int width, int height)
         {
@@ -187,7 +186,6 @@ namespace SheepAndWolfs
             //return false;
         }
 
-
         //Aqui creo que se puede hacer un createAnimals que cree los animales y los añada a la lista de animales
         //TODO: esto funciona
         public void CreateAnimals(int count, AnimalType type)
@@ -318,7 +316,6 @@ namespace SheepAndWolfs
         //TODO: esto no lo he usado
         public int CountCasilla() => _casillas.Length;
  
-
         public bool EstaCercaHierba(Animal animal, Mundo mundo)
         {
             foreach (var casilla in _casillas)
@@ -350,8 +347,6 @@ namespace SheepAndWolfs
             }
             return false;
         }
-
-
 
         public void EliminarAnimalesmuertos()
         {
@@ -419,8 +414,5 @@ namespace SheepAndWolfs
 
         //int index = y * width + x
         //index / ancho = cociente la y y resto la x
-
-    }
-
-        
+    }    
 }

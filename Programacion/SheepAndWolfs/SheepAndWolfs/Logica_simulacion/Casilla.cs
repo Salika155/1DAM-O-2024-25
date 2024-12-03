@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SheepAndWolfs
-{
-    
+{  
     public class Casilla
     {
         public TerritorioType type;

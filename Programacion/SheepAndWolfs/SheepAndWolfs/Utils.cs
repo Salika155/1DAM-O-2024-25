@@ -63,7 +63,6 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public static void DrawWorld(Mundo mundo)
         {
-
             for (int y = 0; y < mundo.GetHeight(); y++)
             {
                 for (int x = 0; x < mundo.GetWidth(); x++)
@@ -109,8 +108,7 @@ namespace SheepAndWolfs
                                 Console.BackgroundColor = ConsoleColor.Gray;
                                 Console.ForegroundColor = ConsoleColor.DarkGray;
                                 Console.Write(" R ");
-                                break;
-                                
+                                break;   
                         }
                     }
                     else

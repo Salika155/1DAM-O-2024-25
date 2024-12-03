@@ -15,7 +15,6 @@ namespace SheepAndWolfs
             Beber,
             Dormir,
             COUNT
-
             //posible que si hago mover animal acorte y solo tenga que pasarle el tipo para saber si es un lobo o una oveja
         }
 
@@ -27,7 +26,6 @@ namespace SheepAndWolfs
         //utils.InitializeRandomWorld(w)
         //while (w.ContainsSheeps() || w.ContainsWater()
         //w.ExecuteTurns();
-
 
         public void MoveAnimalType(IAType type, Animal animal)
         {
@@ -67,7 +65,6 @@ namespace SheepAndWolfs
                             break;
                     }
                 }
-
                 mundo.ActualizarEstadoAnimalesPorTurno();
                 mundo.EliminarAnimalesmuertos();
                 Utils.DrawWorld(mundo);

@@ -37,6 +37,7 @@ namespace SheepAndWolfs
                     var actionDecided = DecideAnimalAccion(animal, mundo);
                     Console.WriteLine($"Animal {animal} decide: {actionDecided}");
                     HacerAccionCercanaAnimal(animal, mundo);
+                    #region noseuse
                     //switch (actionDecided)
                     //{
                     //    case IAType.Mover:
@@ -52,6 +53,7 @@ namespace SheepAndWolfs
                     //        DormirAnimal(animal, mundo);
                     //        break;
                     //}
+                    #endregion
                 }
                 mundo.ActualizarEstadoAnimalesPorTurno();
                 mundo.EliminarAnimalesmuertos();
@@ -74,13 +76,10 @@ namespace SheepAndWolfs
 
         public void HacerAccionCercanaAnimal(Animal animal, Mundo mundo)
         {
-            
             IAType accionDecidida = DecideAnimalAccion(animal, mundo);
 
             if (accionDecidida == IAType.Mover)
-            {
                 Utils.MoveAnimal(animal, mundo);
-            }
             else
             {
                 Casilla? casillaCercana = EncontrarCasillaTipoCercana(animal, mundo, TerritorioType.HIERBA);
@@ -88,23 +87,16 @@ namespace SheepAndWolfs
                 {
                     case IAType.Comer:
                         if (accionDecidida == IAType.Comer)
-                        {
                             ComerHierbaCercanaAnimal(animal, mundo);
-                        }
                         break;
                     case IAType.Beber:
                         if (accionDecidida == IAType.Beber)
-                        {
                             BeberAguaCercanaAnimal(animal, mundo);
-                        }
                         break;
                     case IAType.Dormir:
                         if (accionDecidida == IAType.Dormir)
-                        {
                             DormirAnimal(animal, mundo);
-                        }
                         break;
-                    
                 }
             }
         }

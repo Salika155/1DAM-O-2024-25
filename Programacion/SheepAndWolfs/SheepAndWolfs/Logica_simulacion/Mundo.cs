@@ -9,16 +9,8 @@ namespace SheepAndWolfs
 {
     public class Mundo
     {
-        #region intentos de elementos y planteamientos (no funcionan)
-        //mejor en array
-        //private List<Casilla> _casilla;
-        //private (int, int)[] _casillas = new (int, int)[] { };
-        //private (Coordenada, TerritorioType)[] _casillas = new (Coordenada, TerritorioType)[] { };
-        #endregion
-
         //TODO: esto funciona
         private Casilla[] _casillas = [];
-        //lista de lobos y ovejas obligatorio -> como hago animales no es necesario
         private int _width;
         private int _height;
         private List<Animal> _animals;
@@ -28,7 +20,6 @@ namespace SheepAndWolfs
         {
             this._width = width;
             this._height = height;
-            //this._casilla = new List<Casilla>();
             this._casillas = new Casilla[width * height];
             this._animals = new List<Animal>();
 
@@ -55,21 +46,6 @@ namespace SheepAndWolfs
             }
         }
 
-        #region intento de crearcasilla desde utils copiando la funcion que hay en mundo
-        //esto es por el crearcasilla que existe en mundo, la idea es pasarlo a utils
-        //public void CrearCasillas()
-        //{
-        //    for (int y = 0; y < _height; y++)
-        //    {
-        //        for (int x = 0; x < _width; x++)
-        //        {
-        //            int index = Utils.IndexOfCasilla(x, y, _width);
-        //            _casillas[index] = new Casilla(new Coordenada(x, y));
-        //        }
-        //    }
-        //}
-        #endregion
-
         //TODO: esto funciona
         public int GetWidth() => _width;
 
@@ -79,19 +55,6 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public Casilla? GetCasillaAt(int x, int y)
         {
-            #region codigo viejo comentado de getcasillaat
-            //if ((x < 0 || x >=  _width) || (y < 0 || y >= _height))
-            //    return null;
-            //for(int i = 0; i < _casilla.Count; i++)
-            //{
-            //    Casilla? casilla = _casilla[i];
-            //    if (casilla.coordenada.EqualsToCoordenada(x, y))
-            //        return casilla;
-            //return _casilla[IndexOfCasilla(x, y)]; -> esta era la corta buena hasta que movi la funcion indexofcasilla a utils
-            //}
-            //return null;
-            #endregion
-
             if (!Utils.IsValidCoordinates(x, y, _width, _height))
                 return null;
 
@@ -163,7 +126,6 @@ namespace SheepAndWolfs
             {
                 animal.SetCoordenada(newX, newY);
             }
-            //mover al animal, utilizar getanimalat, y pasar por dos for o funcion si puede moverse para empezar a plantear el movimiento
         }
 
         //CanAnimalMove? -> esto esta mal por el animaltype animal
@@ -195,7 +157,6 @@ namespace SheepAndWolfs
                     if (type == AnimalType.LOBO)
                     {
                         int countlobo = 0;
-                        //instancia a utils para los campos comida para generarle valores aleatorios
                         int food = Utils.GetRandomNumber(50, 500);
                         int water = Utils.GetRandomNumber(50, 500);
                         int stamina = Utils.GetRandomNumber(50, 500);
@@ -209,7 +170,6 @@ namespace SheepAndWolfs
                     else if (type == AnimalType.OVEJA)
                     {
                         int countoveja = 0;
-                        //instancia a utils para los campos comida para generarle valores aleatorios
                         int food = Utils.GetRandomNumber(50, 500);
                         int water = Utils.GetRandomNumber(50, 500);
                         int stamina = Utils.GetRandomNumber(50, 500);
@@ -237,7 +197,6 @@ namespace SheepAndWolfs
                 if (GetAnimalAt(x, y) == null)  // Evitar duplicados -> aqui hay que comprobar si la casilla a la que se mueve es roca o agua
                 {
                     Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO, "lobo" + CountAnimalsType(AnimalType.LOBO), 100);
-                    //aqui le paso las cosas que le ponga en constructor como parametros
                     lobo.SetCoordenada(x, y);
                     AddAnimal(lobo, x, y);
                 }
@@ -309,8 +268,6 @@ namespace SheepAndWolfs
 
         //Experimento  con CreateAnimals ---------------------------------------------------------------------
 
-
-
         public void CreateAnimals2(int count, AnimalType type)
         {
             for (int i = 0; i < count; i++)
@@ -363,9 +320,6 @@ namespace SheepAndWolfs
             return new Oveja(food, water, stamina, sleep, AnimalType.OVEJA, name, velocidad);
         }
 
-
-
-
         //----------------------------------------------------------------------------------
 
         //TODO: esto no lo he usado
@@ -387,8 +341,6 @@ namespace SheepAndWolfs
             }
             return -1;
         }
-
-        
 
         //TODO: esto no lo he usado
         public bool ContainsCasilla(int x, int y)
@@ -430,48 +382,5 @@ namespace SheepAndWolfs
             }
             return false;
         }
-
-        
-
-        
-
-        //metodo para hallar casillas alrededor de un animal, las casillas son arrays
-
-
-        //TODO: esto no lo he usado
-        //public void ImprimirCasillas()
-        //{
-        //    for (int y = 0; y < _height; y++)
-        //    {
-        //        for (int x = 0; x < _width; x++)
-        //        {
-        //            int index = Utils.IndexOfCasilla(x, y, _width);
-        //            if (_casillas[index] != null)
-        //                Console.Write($"[{_casillas[index].coordenada.X},{_casillas[index].coordenada.Y}] ");
-        //            else
-        //                Console.Write("[null] ");
-        //        }
-        //        Console.WriteLine(); // Nueva línea para cada fila
-        //    }
-        //}
-
-        //public int IndexOfCasilla(int x, int y)
-        //{
-        //    if (x < 0 || y < 0 || _width <= 0)
-        //        return -1;
-        //    //for (int i = 0; i < _casilla.Count; ++i)
-        //    //{
-        //    //    Casilla casilla = _casilla[i];
-        //    //    if (casilla.coordenada.EqualsToCoordenada(x, y))
-        //    //        return i;
-        //    //}
-        //    //return -1;
-        //    return y * _width + x;
-        //    //dado un index para hallar x e y divido el index entre el ancho como divisor y el cociente sera la y, y el resto la x
-        //}
-
-
-        //int index = y * width + x
-        //index / ancho = cociente la y y resto la x
     }    
 }

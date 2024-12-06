@@ -10,18 +10,6 @@ namespace SheepAndWolfs
     //TODO: esto funciona
     public class Oveja : Animal
     {
-
-        //private Coordenada? _coordenada;
-        //food, water, stamina, type y sleep
-        //public AnimalType type = AnimalType.OVEJA;
-        //public Coordenada coordenada;
-        //public int food;
-        //public int water;
-        //public int stamina;
-        //public int sleep;
-
-
-        //TODO: esto funciona
         public Oveja(int food, int water, int stamina, int sleep, AnimalType type, string name, int velocidad) : base(food, water, stamina, sleep, AnimalType.OVEJA, name, velocidad)
         {
             

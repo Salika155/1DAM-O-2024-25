@@ -47,10 +47,7 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public static TerritorioType GenerateRandomType()
         {
-            //TerritorioType[] terreno = { TerritorioType.AGUA, TerritorioType.HIERBA, TerritorioType.VACIO };
             int index = random.Next(0,(int)TerritorioType.COUNT);
-            //return terreno[index];
-            //mejor opcion
             return (TerritorioType)index;
         }
 
@@ -170,37 +167,7 @@ namespace SheepAndWolfs
             int cy = c2.Y - c1.Y;
             return Math.Sqrt(cx * cx + cy * cy);
         }
-
-        //repetido en mundo, este tengo que ver que hacer
-        public static void MoveAnimal(Animal animal, Mundo mundo)
-        {
-            if (animal == null || mundo == null)
-                return;
-
-            int[] XMovs = { -1, 0, 1, 0 };
-            int[] YMovs = { 0, -1, 0, 1 };
-
-            int direction = Utils.GetRandomNumber(0, 4);
-            var coorde = animal.GetCoordenada();
-
-            int newX = coorde.X + XMovs[direction];
-            int newY = coorde.Y + YMovs[direction];
-
-            Console.WriteLine($"Intentando mover {animal} de ({coorde.X}, {coorde.Y}) a ({newX}, {newY})");
-
-            if (IsValidCoordinates(newX, newY, mundo.GetWidth(), mundo.GetHeight()) &&
-                mundo.CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
-            {
-                coorde = new Coordenada(newX, newY);
-                Console.WriteLine($"{animal} se movió a ({newX}, {newY})");
-            }
-            else
-            {
-                Console.WriteLine($"{animal} no pudo moverse a ({newX}, {newY})");
-            }
-            //mover al animal, utilizar getanimalat, y pasar por dos for o funcion si puede moverse para empezar a plantear el movimiento
-        }
-        
+   
         //GetAnimalsArround
         //GetAnimalsSortedByDistance
         public static List<Animal> GetAnimalsSortedByDistance(Animal animal, List<Animal> animals)

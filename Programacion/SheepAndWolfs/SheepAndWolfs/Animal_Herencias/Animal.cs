@@ -14,18 +14,6 @@ namespace SheepAndWolfs
     }
     public abstract class Animal
     {
-        //TODO: esto funciona
-
-        //public AnimalType? type;
-        //public Coordenada? coordenada;
-        ////food, water, stamina, type y sleep
-        //public int saciedad;
-        //public int hidratacion;
-        //public int resistencia;
-        //public int sueño;
-        //public string nombre;
-        //public double velocidad;
-
         private AnimalType? _type;
         private Coordenada? _coordenada;
         private int _saciedad;

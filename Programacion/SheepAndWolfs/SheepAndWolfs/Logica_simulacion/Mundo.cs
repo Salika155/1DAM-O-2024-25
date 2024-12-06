@@ -227,17 +227,16 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public void CreateWolfs(int count)
         {
-            int countlobo = 0;
+            int countlobo = count;
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i <= countlobo; i++)
             {
-                countlobo++;
                 int x = Utils.GetRandomNumber(0, _width);
                 int y = Utils.GetRandomNumber(0, _height);
 
                 if (GetAnimalAt(x, y) == null)  // Evitar duplicados -> aqui hay que comprobar si la casilla a la que se mueve es roca o agua
                 {
-                    Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO, "lobo" + countlobo, 100);
+                    Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO, "lobo" + CountAnimalsType(AnimalType.LOBO), 100);
                     //aqui le paso las cosas que le ponga en constructor como parametros
                     lobo.SetCoordenada(x, y);
                     AddAnimal(lobo, x, y);
@@ -248,19 +247,63 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public void CreateSheeps(int count)
         {
-            int countoveja = 0;
-            for (int i = 0; i < count; i++)
+            int countoveja = count;
+            for (int i = 0; i <= countoveja; i++)
             {
-                countoveja++;
                 int x = Utils.GetRandomNumber(0, _width);
                 int y = Utils.GetRandomNumber(0, _height);
 
                 if (GetAnimalAt(x, y) == null) // Evitar duplicados
                 {
-                    Oveja oveja = new Oveja(100, 100, 100, 100, AnimalType.OVEJA, "oveja " + countoveja, 50);
+                    Oveja oveja = new Oveja(100, 100, 100, 100, AnimalType.OVEJA, "oveja " + CountAnimalsType(AnimalType.OVEJA), 50);
                     oveja.SetCoordenada(x, y);
                     AddAnimal(oveja, x, y);
                 }
+            }
+        }
+
+        //TODO: esto lo he usado
+        public int CountAnimals() => _animals.Count;
+
+
+        //TODO: esto lo he usado
+        public int CountAnimalsType(AnimalType type)
+        {
+            if (_animals.Count == 0)
+                return 0;
+
+            int aux = 0;
+            for (int i = 0; i < _animals.Count; i++)
+                if (_animals[i].GetType() == type)
+                    aux += 1;
+            return aux;
+        }
+
+        //Para actualizar los atributos a cada turno que pasa a los animales
+        public void ActualizarEstadoAnimalesPorTurno()
+        {
+            foreach (var animales in _animals)
+            {
+                animales.SetSaciedad(animales.GetSaciedad() - 10);
+                animales.SetHidratacion(animales.GetHidratacion() - 10);
+                animales.SetSueño(animales.GetSueño() - 10);
+
+                if (animales.GetSaciedad() <= 0)
+                    animales.SetSaciedad(0);
+                if (animales.GetHidratacion() <= 0)
+                    animales.SetHidratacion(0);
+                if (animales.GetSueño() <= 0)
+                    animales.SetSueño(0);
+            }
+        }
+
+        public void EliminarAnimalesmuertos()
+        {
+            for (int i = _animals.Count - 1; i >= 0; i--)
+            {
+                Animal animal = _animals[i];
+                if (animal.GetSaciedad() <= 0 || animal.GetHidratacion() <= 0 || animal.GetSueño() <= 0)
+                    RemoveAnimalAt(i);
             }
         }
 
@@ -280,53 +323,53 @@ namespace SheepAndWolfs
                     Animal animal;
                     if (type == AnimalType.LOBO)
                     {
-                        animal = CreateWolf2(count);
+                        animal = CreateWolf2();
                     }
                     else if (type == AnimalType.OVEJA)
                     {
-                        animal = CreateSheep2(count);
+                        animal = CreateSheep2();
                     }
                     else
                     {
-                        throw new ArgumentException("Tipo de animal no soportado", nameof(type));
+                        throw new ArgumentException("Tipo de animal no soportado");
                     }
-
                     animal.SetCoordenada(x, y);
                     AddAnimal(animal, x, y);
                 }
             }
         }
 
-        private Lobo CreateWolf2(int count)
+        private Lobo CreateWolf2()
         {
-            int n = count;
             int food = Utils.GetRandomNumber(50, 500);
             int water = Utils.GetRandomNumber(50, 500);
             int stamina = Utils.GetRandomNumber(50, 500);
             int sleep = Utils.GetRandomNumber(50, 500);
-            string name = "Lobo " + n++;
+            string name = "Lobo " + CountAnimalsType(AnimalType.LOBO);
             int velocidad = 100;
 
             return new Lobo(food, water, stamina, sleep, AnimalType.LOBO, name, velocidad);
         }
 
-        private Oveja CreateSheep2(int count)
+        private Oveja CreateSheep2()
         {
-            int n = count;
             int food = Utils.GetRandomNumber(50, 500);
             int water = Utils.GetRandomNumber(50, 500);
             int stamina = Utils.GetRandomNumber(50, 500);
             int sleep = Utils.GetRandomNumber(50, 500);
-            string name = "Oveja " + n++;
+            string name = "Oveja " + CountAnimalsType(AnimalType.OVEJA);
             int velocidad = 50;
 
             return new Oveja(food, water, stamina, sleep, AnimalType.OVEJA, name, velocidad);
         }
 
 
+
+
         //----------------------------------------------------------------------------------
 
         //TODO: esto no lo he usado
+        //ES POSIBLE QUE ME HAGA FALTA PARA COMPROBAR EL ANIMAL EN LA CASILLA Y QUE LOS LOBOS ATAQUEN
         public AnimalType GetAnimalTypeAt(int x, int y, AnimalType type)
         {
             Animal? animal = GetAnimalAt(x, y);
@@ -345,22 +388,7 @@ namespace SheepAndWolfs
             return -1;
         }
 
-        //TODO: esto no lo he usado
-        public int CountAnimals() => _animals.Count;
         
-
-        //TODO: esto no lo he usado
-        public int CountAnimalsType(AnimalType type)
-        {
-            if (_animals.Count == 0)
-                return 0;
-
-            int aux = 0;
-            for (int i = 0; i < _animals.Count; i++)
-                if (_animals[i].GetType() == type)
-                    aux += 1;
-            return aux;
-        }
 
         //TODO: esto no lo he usado
         public bool ContainsCasilla(int x, int y)
@@ -403,33 +431,9 @@ namespace SheepAndWolfs
             return false;
         }
 
-        public void EliminarAnimalesmuertos()
-        {
-            for (int i = _animals.Count - 1; i >= 0; i--)
-            {
-                Animal animal = _animals[i];
-                if (animal.GetSaciedad() <= 0 || animal.GetHidratacion() <= 0 || animal.GetSueño() <= 0)
-                    RemoveAnimalAt(i);
-            }
-        }
+        
 
-        //Para actualizar los atributos a cada turno que pasa a los animales
-        public void ActualizarEstadoAnimalesPorTurno()
-        {
-            foreach (var animales in _animals)
-            {
-                animales.SetSaciedad(animales.GetSaciedad() -10);
-                animales.SetHidratacion(animales.GetHidratacion() -10);
-                animales.SetSueño(animales.GetSueño()-10);
-
-                if (animales.GetSaciedad() <= 0) 
-                    animales.SetSaciedad(0);
-                if (animales.GetHidratacion() <= 0) 
-                    animales.SetHidratacion(0);
-                if (animales.GetSueño() <= 0) 
-                    animales.SetSueño(0);
-            }
-        }
+        
 
         //metodo para hallar casillas alrededor de un animal, las casillas son arrays
 

@@ -145,9 +145,9 @@ namespace SheepAndWolfs
             _animals.Remove(animal);
         }
 
-        public void MoveAnimal(Animal animal, Mundo mundo)
+        public void MoveAnimal(Animal? animal)
         {
-            if (animal == null || mundo == null)
+            if (animal == null)
                 return;
 
             int[] XMovs = [-1, 0, 1, 0 ];
@@ -158,7 +158,7 @@ namespace SheepAndWolfs
             int newX = animal.GetCoordenada().X + XMovs[direction];
             int newY = animal.GetCoordenada().Y + YMovs[direction];
 
-            if (Utils.IsValidCoordinates(newX, newY, mundo.GetWidth(), mundo.GetHeight()) &&
+            if (Utils.IsValidCoordinates(newX, newY, GetWidth(), GetHeight()) &&
                 CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
             {
                 animal.SetCoordenada(newX, newY);
@@ -178,12 +178,7 @@ namespace SheepAndWolfs
             if (targetCasilla == null || targetCasilla.type == TerritorioType.ROCA ||
                 targetCasilla.type == TerritorioType.AGUA)
                 return false;
-            //return true;
-            //if (targetAnimal != null && targetAnimal.type == AnimalType.LOBO)
-                //return false;
-                //return true;
             return true;
-            //return false;
         }
 
         //Aqui creo que se puede hacer un createAnimals que cree los animales y los añada a la lista de animales
@@ -268,6 +263,66 @@ namespace SheepAndWolfs
                 }
             }
         }
+
+        //Experimento  con CreateAnimals ---------------------------------------------------------------------
+
+
+
+        public void CreateAnimals2(int count, AnimalType type)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                int x = Utils.GetRandomNumber(0, _width);
+                int y = Utils.GetRandomNumber(0, _height);
+
+                if (GetAnimalAt(x, y) == null) // Evitar duplicados
+                {
+                    Animal animal;
+                    if (type == AnimalType.LOBO)
+                    {
+                        animal = CreateWolf2(count);
+                    }
+                    else if (type == AnimalType.OVEJA)
+                    {
+                        animal = CreateSheep2(count);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Tipo de animal no soportado", nameof(type));
+                    }
+
+                    animal.SetCoordenada(x, y);
+                    AddAnimal(animal, x, y);
+                }
+            }
+        }
+
+        private Lobo CreateWolf2(int count)
+        {
+            int n = count;
+            int food = Utils.GetRandomNumber(50, 500);
+            int water = Utils.GetRandomNumber(50, 500);
+            int stamina = Utils.GetRandomNumber(50, 500);
+            int sleep = Utils.GetRandomNumber(50, 500);
+            string name = "Lobo " + n++;
+            int velocidad = 100;
+
+            return new Lobo(food, water, stamina, sleep, AnimalType.LOBO, name, velocidad);
+        }
+
+        private Oveja CreateSheep2(int count)
+        {
+            int n = count;
+            int food = Utils.GetRandomNumber(50, 500);
+            int water = Utils.GetRandomNumber(50, 500);
+            int stamina = Utils.GetRandomNumber(50, 500);
+            int sleep = Utils.GetRandomNumber(50, 500);
+            string name = "Oveja " + n++;
+            int velocidad = 50;
+
+            return new Oveja(food, water, stamina, sleep, AnimalType.OVEJA, name, velocidad);
+        }
+
 
         //----------------------------------------------------------------------------------
 

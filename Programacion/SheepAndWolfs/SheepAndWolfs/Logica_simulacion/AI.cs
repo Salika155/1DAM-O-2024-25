@@ -63,7 +63,7 @@ namespace SheepAndWolfs
         }
 
         //TODO: necesario para que funcione por turnos
-        private IAType DecideAnimalAccion(Animal animal, Mundo mundo)
+        private static IAType DecideAnimalAccion(Animal animal, Mundo mundo)
         {
             if (animal.GetSaciedad() <= 50 && mundo.EstaCercaHierba(animal))
                 return IAType.Comer;
@@ -102,7 +102,7 @@ namespace SheepAndWolfs
         }
 
         //A PARTIR DE AQUI ES NUEVO
-        public Casilla? EncontrarCasillaTipoCercana(Animal animal, Mundo mundo, TerritorioType type)
+        public static Casilla? EncontrarCasillaTipoCercana(Animal animal, Mundo mundo, TerritorioType type)
         {
             Casilla? casillaTipoObjetivo = null;
             double minDistance = double.MaxValue;
@@ -123,7 +123,7 @@ namespace SheepAndWolfs
             return casillaTipoObjetivo;
         }
 
-        public void ComerHierbaCercanaAnimal(Animal animal, Mundo mundo)
+        public static void ComerHierbaCercanaAnimal(Animal animal, Mundo mundo)
         {
             Casilla? casillaHierba = EncontrarCasillaTipoCercana(animal, mundo, TerritorioType.HIERBA);
             if (casillaHierba != null && DecideAnimalAccion(animal, mundo) == IAType.Comer)
@@ -132,7 +132,7 @@ namespace SheepAndWolfs
             }
         }
 
-        public void BeberAguaCercanaAnimal(Animal animal, Mundo mundo)
+        public static void BeberAguaCercanaAnimal(Animal animal, Mundo mundo)
         {
             Casilla? casillaAgua = EncontrarCasillaTipoCercana(animal, mundo, TerritorioType.AGUA);
             if (casillaAgua != null && DecideAnimalAccion(animal, mundo) == IAType.Beber)
@@ -141,7 +141,7 @@ namespace SheepAndWolfs
             }
         }
 
-        public void DormirAnimal(Animal animal, Mundo mundo)
+        public static void DormirAnimal(Animal animal, Mundo mundo)
         {
             Casilla? casillaDormir = EncontrarCasillaTipoCercana(animal, mundo, TerritorioType.TIERRA);
             if (DecideAnimalAccion(animal, mundo) == IAType.Dormir)

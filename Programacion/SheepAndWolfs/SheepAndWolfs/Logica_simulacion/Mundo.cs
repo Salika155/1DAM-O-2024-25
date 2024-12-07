@@ -116,19 +116,54 @@ namespace SheepAndWolfs
             int[] XMovs = [-1, 0, 1, 0 ];
             int[] YMovs = [0, -1, 0, 1];
 
-            int direction = Utils.GetRandomNumber(0, 4);
-
-            int newX = animal.GetCoordenada().X + XMovs[direction];
-            int newY = animal.GetCoordenada().Y + YMovs[direction];
-
-            if (Utils.IsValidCoordinates(newX, newY, GetWidth(), GetHeight()) &&
-                CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
+            for (int i = 0; i < 4; i++)
             {
-                animal.SetCoordenada(newX, newY);
+                int direction = Utils.GetRandomNumber(0, 4);
+                int newX = animal.GetCoordenada()!.X + XMovs[direction];
+                int newY = animal.GetCoordenada()!.Y + YMovs[direction];
+
+                if (Utils.IsValidCoordinates(newX, newY, GetWidth(), GetHeight()))
+                {
+                    Animal? targetAnimal = GetAnimalAt(newX, newY);
+                    Casilla? targetCasilla = GetCasillaAt(newX, newY);
+
+                    if (targetAnimal != null)
+                    {
+                        ComerOvejaSiendoLobo(animal, targetAnimal);
+                        return;
+                    }
+                    if (targetAnimal == null)
+                    {
+                        if (CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
+                        {
+                            animal.SetCoordenada(newX, newY);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void ComerOvejaSiendoLobo(Animal animal, Animal targetAnimal)
+        {
+            if (animal is Lobo && targetAnimal is Oveja)
+            {
+                Coordenada posicionOveja = targetAnimal.GetCoordenada()!;
+                RemoveAnimal(targetAnimal); // Elimina la oveja
+                animal.SetCoordenada(posicionOveja.X, posicionOveja.Y);
+                animal.SetSaciedad(animal.GetSaciedad() + 100); // Aumenta la saciedad del lobo
+                Console.WriteLine($"El lobo {animal.GetNombre()} se comió a la oveja {targetAnimal.GetNombre()} en la posición {targetAnimal.GetCoordenada()}.");
+            }
+            else if (animal is Oveja && targetAnimal is Lobo)
+            {
+                Console.WriteLine($"La oveja {animal.GetNombre()} evita al lobo {targetAnimal.GetNombre()} en la posición {targetAnimal.GetCoordenada()}.");
+                // La oveja podría evitar moverse o realizar otra acción.
             }
         }
 
         //CanAnimalMove? -> esto esta mal por el animaltype animal
+        //AQUI ME FALTA COMPROBAR QUE LA CASILLA A LA QUE ME QUIERO MOVER TENGA UN ANIMAL, SI ES DEL MISMO TIPO NO MOVERME
+        //SI SOY UN LOBO SI ME MUEVO A LA DE LA OVEJA, SI SOY UNA OVEJA NO ME MUEVO HACIA LA DEL LOBO.
         public bool CanAnimalMoveTo(Animal? animal, Coordenada coor)
         {
             if (animal == null || coor == null)
@@ -140,6 +175,15 @@ namespace SheepAndWolfs
             if (targetCasilla == null || targetCasilla.type == TerritorioType.ROCA ||
                 targetCasilla.type == TerritorioType.AGUA)
                 return false;
+            if (targetAnimal != null)
+            {
+                if (animal.GetType() == targetAnimal.GetType())
+                    return false;
+                else if (animal is Lobo && targetAnimal is Oveja)
+                    return true;
+                else if (animal is Oveja && targetAnimal is Lobo)
+                    return false;
+            }
             return true;
         }
 
@@ -381,6 +425,51 @@ namespace SheepAndWolfs
                 }
             }
             return false;
+        }
+
+        //copia del viejo moveanimals
+        public void MoveAnimal2(Animal? animal)
+        {
+            if (animal == null)
+                return;
+
+            int[] XMovs = [-1, 0, 1, 0];
+            int[] YMovs = [0, -1, 0, 1];
+
+            int direction = Utils.GetRandomNumber(0, 4);
+
+            int newX = animal.GetCoordenada()!.X + XMovs[direction];
+            int newY = animal.GetCoordenada()!.Y + YMovs[direction];
+
+            if (Utils.IsValidCoordinates(newX, newY, GetWidth(), GetHeight()) &&
+                CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
+            {
+                animal.SetCoordenada(newX, newY);
+            }
+        }
+
+        //viejo cananimalmoveto
+        public bool CanAnimalMoveTo2(Animal? animal, Coordenada coor)
+        {
+            if (animal == null || coor == null)
+                return false;
+
+            Casilla? targetCasilla = GetCasillaAt(coor.X, coor.Y);
+            Animal? targetAnimal = GetAnimalAt(coor.X, coor.Y);
+
+            if (targetCasilla == null || targetCasilla.type == TerritorioType.ROCA ||
+                targetCasilla.type == TerritorioType.AGUA)
+                return false;
+            if (targetAnimal != null)
+            {
+                if (animal.GetType() == targetAnimal.GetType())
+                    return false;
+                else if (animal is Lobo && targetAnimal is Oveja)
+                    return true;
+                else if (animal is Oveja && targetAnimal is Lobo)
+                    return false;
+            }
+            return true;
         }
     }    
 }

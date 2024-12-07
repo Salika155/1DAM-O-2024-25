@@ -170,6 +170,8 @@ namespace SheepAndWolfs
    
         //GetAnimalsArround
         //GetAnimalsSortedByDistance
+
+        //ESTE NO LO USO
         public static List<Animal> GetAnimalsSortedByDistance(Animal animal, List<Animal> animals)
         {
             if (animal == null || animals == null || animals.Count == 0)

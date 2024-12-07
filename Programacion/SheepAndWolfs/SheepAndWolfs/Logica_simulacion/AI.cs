@@ -31,10 +31,12 @@ namespace SheepAndWolfs
         {
             for (int i = 0; i < 30; i++)
             {
-                foreach (Animal animal in mundo.GetAllAnimals())
+                var animales = mundo.GetAllAnimals();
+                for (int j = animales.Count - 1; j >= 0; j--)
                 {
-                    var actionDecided = DecideAnimalAccion(animal, mundo);
-                    Console.WriteLine($"Animal {animal} decide: {actionDecided}");
+                    var animal = animales[j];
+                    var actionDecidida = DecideAnimalAccion(animal, mundo);
+                    Console.WriteLine($"Animal {animal} decide: {actionDecidida}");
                     HacerAccionCercanaAnimal(animal, mundo);
                 }
                 mundo.ActualizarEstadoAnimalesPorTurno();
@@ -111,6 +113,7 @@ namespace SheepAndWolfs
             if (casillaHierba != null && DecideAnimalAccion(animal, mundo) == IAType.Comer)
             {
                 animal.SetSaciedad(animal.GetSaciedad() + 50);
+                casillaHierba._valorHierba = casillaHierba._valorHierba - 5;
             }
         }
 

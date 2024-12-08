@@ -13,11 +13,13 @@ namespace SheepAndWolfs
         {
         }
 
+        //Mismo que ovejas
         public override int GetVelocidad()
         {
-            return base.GetVelocidad() + 5;  // Los lobos tienen 5 unidades más de velocidad que el valor base
+            return base.GetVelocidad() + 5;  // Los lobos tienen 5 más de velocidad.
         }
 
+        //Mismo que ovejas
         public override void Mover()
         {
             Console.WriteLine($"{GetNombre()} el lobo se mueve a una velocidad de {GetVelocidad()}.");

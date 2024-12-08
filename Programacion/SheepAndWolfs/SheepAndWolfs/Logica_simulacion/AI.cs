@@ -49,15 +49,16 @@ namespace SheepAndWolfs
         //TODO: necesario para que funcione por turnos
         private static IAType DecideAnimalAccion(Animal animal, Mundo mundo)
         {
-            if (animal.GetSaciedad() <= 50 && mundo.EstaCercaHierba(animal))
+            if (animal.GetSaciedad() <= 150 && mundo.EstaCercaHierba(animal))
                 return IAType.Comer;
-            if (animal.GetHidratacion() <= 50 && mundo.EstaAguaCercaDelAnimal(animal))
+            if (animal.GetHidratacion() <= 150 && mundo.EstaAguaCercaDelAnimal(animal))
                 return IAType.Beber;
-            if (animal.GetSueño() <= 50)
+            if (animal.GetSueño() <= 150)
                 return IAType.Dormir;
             return IAType.Mover;
         }
 
+        //TODO:ESTO LO HE USADO Y FUNCIONA
         public void HacerAccionCercanaAnimal(Animal animal, Mundo mundo)
         {
             IAType accionDecidida = DecideAnimalAccion(animal, mundo);
@@ -86,6 +87,7 @@ namespace SheepAndWolfs
         }
 
         //A PARTIR DE AQUI ES NUEVO
+        //TODO: ESTO FUNCIONA Y SE USA
         public static Casilla? EncontrarCasillaTipoCercana(Animal animal, Mundo mundo, TerritorioType type)
         {
             Casilla? casillaTipoObjetivo = null;
@@ -94,9 +96,9 @@ namespace SheepAndWolfs
             for (int i = 0; i < _casillasArray.Length; i++)
             {
                 Casilla casilla = _casillasArray[i];
-                if (casilla.type == type)
+                if (casilla.Type == type)
                 {
-                    double distance = Utils.GetDistance(animal.GetCoordenada(), casilla.coordenada);
+                    double distance = Utils.GetDistance(animal.GetCoordenada(), casilla.Coord);
                     if (distance < 2 && distance < minDistance)
                     {
                         minDistance = distance;
@@ -107,16 +109,18 @@ namespace SheepAndWolfs
             return casillaTipoObjetivo;
         }
 
+        //TODO:ESTO LO HE USADO Y FUNCIONA
         public static void ComerHierbaCercanaAnimal(Animal animal, Mundo mundo)
         {
             Casilla? casillaHierba = EncontrarCasillaTipoCercana(animal, mundo, TerritorioType.HIERBA);
             if (casillaHierba != null && DecideAnimalAccion(animal, mundo) == IAType.Comer)
             {
                 animal.SetSaciedad(animal.GetSaciedad() + 50);
-                casillaHierba._valorHierba = casillaHierba._valorHierba - 5;
+                casillaHierba.ValorHierba = casillaHierba.ValorHierba - 5;
             }
         }
 
+        //TODO:ESTO LO HE USADO Y FUNCIONA
         public static void BeberAguaCercanaAnimal(Animal animal, Mundo mundo)
         {
             Casilla? casillaAgua = EncontrarCasillaTipoCercana(animal, mundo, TerritorioType.AGUA);
@@ -126,6 +130,7 @@ namespace SheepAndWolfs
             }
         }
 
+        //TODO:ESTO LO HE USADO Y FUNCIONA
         public static void DormirAnimal(Animal animal, Mundo mundo)
         {
             Casilla? casillaDormir = EncontrarCasillaTipoCercana(animal, mundo, TerritorioType.TIERRA);

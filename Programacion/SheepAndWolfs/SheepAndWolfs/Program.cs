@@ -43,8 +43,10 @@
 
             Mundo mundo = new Mundo(10, 10);
             // Crear animales
-            mundo.CreateSheeps(8);
-            mundo.CreateWolfs(6);
+            mundo.CreateAnimals2(8, AnimalType.OVEJA);
+            mundo.CreateAnimals2(6, AnimalType.LOBO);
+            //mundo.CreateSheeps(8);
+            //mundo.CreateWolfs(6);
 
             // Ejecutar la simulación
             AI ia = new AI();

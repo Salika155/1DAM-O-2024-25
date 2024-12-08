@@ -8,22 +8,23 @@ namespace SheepAndWolfs
 {  
     public class Casilla
     {
-        public TerritorioType type;
-        private double regeneration;
-        public readonly Coordenada coordenada;
-        public int _valorHierba;
+        public TerritorioType Type;
+        //private double _regeneration;
+        public readonly Coordenada Coord;
+        public int ValorHierba;
 
         //TODO: esto funciona
         public Casilla(Coordenada coordenada)
         {
             //this.regeneration = regeneration;
-            this.coordenada = coordenada;
-            this._valorHierba = 25;
+            this.Coord = coordenada;
+            this.ValorHierba = 25;
+            //this._regeneration = 5;
         }
 
         public int GetValorHierba()
         {
-            return _valorHierba;
+            return ValorHierba;
         }
     }
 }

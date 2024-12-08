@@ -24,7 +24,7 @@ namespace SheepAndWolfs
         private int _velocidad;
 
         //TODO: esto funciona
-        public Animal(int food, int water, int stamina, int sleep, AnimalType type, string? name, int speed)
+        public Animal(int food, int water, int stamina, int sleep, AnimalType? type, string? name, int speed)
         {
             this._saciedad = food;
             this._hidratacion = water;

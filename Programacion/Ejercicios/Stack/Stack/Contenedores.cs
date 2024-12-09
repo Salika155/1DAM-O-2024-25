@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Stack
@@ -32,7 +33,7 @@ namespace Stack
         public override string? ToString()
         {
             return "<<<<<" + _stack.ToString() + ">>>>>>";
-            return JSONSerializer.Serialize(_stack);
+            return JsonSerializer.Serialize(_stack);
         }
 
         //List<>, Stack, Queue, Set (lista sin duplicados), Dictionary<K,V>
@@ -43,5 +44,17 @@ namespace Stack
             //Contains(key) compara y busca si esta esa key en el diccionario
             //GetValue(k)
             //Clear()
+
+        //Tree<T>
+            //Node<T>
+                //Element 
+                //Hijos
+                //Enlace a Padre
+                    //GetParent
+                    //GetChildCount
+                    //GetChildAt
+                    //AddChild
+                    //Detach (RemoveNodoDePadre)
+                    //GetRoot
     }
 }

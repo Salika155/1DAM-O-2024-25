@@ -9,16 +9,8 @@ namespace SheepAndWolfs
 {
     public class Mundo
     {
-        #region intentos de elementos y planteamientos (no funcionan)
-        //mejor en array
-        //private List<Casilla> _casilla;
-        //private (int, int)[] _casillas = new (int, int)[] { };
-        //private (Coordenada, TerritorioType)[] _casillas = new (Coordenada, TerritorioType)[] { };
-        #endregion
-
         //TODO: esto funciona
         private Casilla[] _casillas = [];
-        //lista de lobos y ovejas obligatorio -> como hago animales no es necesario
         private int _width;
         private int _height;
         private List<Animal> _animals;
@@ -28,7 +20,6 @@ namespace SheepAndWolfs
         {
             this._width = width;
             this._height = height;
-            //this._casilla = new List<Casilla>();
             this._casillas = new Casilla[width * height];
             this._animals = new List<Animal>();
 
@@ -36,6 +27,9 @@ namespace SheepAndWolfs
         }
 
         //esto tiene que ir en private, y deberia de crear una copia de cada uno
+        //pero como trabajo con la lista directamente en este caso tengo dudas, ya que quiero eliminar
+        //los animales muertos de la lista original en el caso de que suceda, no creo que sea necesario
+        //hacer una copia.
         public Casilla[] GetAllCasillas() => _casillas;
         public List<Animal> GetAllAnimals() => _animals;
 
@@ -49,26 +43,11 @@ namespace SheepAndWolfs
                     int index = Utils.IndexOfCasilla(x, y, _width);
                     _casillas[index] = new Casilla(new Coordenada(x, y))
                     {
-                        type = Utils.GenerateRandomType()
+                        Type = Utils.GenerateRandomType()
                     };
                 }
             }
         }
-
-        #region intento de crearcasilla desde utils copiando la funcion que hay en mundo
-        //esto es por el crearcasilla que existe en mundo, la idea es pasarlo a utils
-        //public void CrearCasillas()
-        //{
-        //    for (int y = 0; y < _height; y++)
-        //    {
-        //        for (int x = 0; x < _width; x++)
-        //        {
-        //            int index = Utils.IndexOfCasilla(x, y, _width);
-        //            _casillas[index] = new Casilla(new Coordenada(x, y));
-        //        }
-        //    }
-        //}
-        #endregion
 
         //TODO: esto funciona
         public int GetWidth() => _width;
@@ -79,19 +58,6 @@ namespace SheepAndWolfs
         //TODO: esto funciona
         public Casilla? GetCasillaAt(int x, int y)
         {
-            #region codigo viejo comentado de getcasillaat
-            //if ((x < 0 || x >=  _width) || (y < 0 || y >= _height))
-            //    return null;
-            //for(int i = 0; i < _casilla.Count; i++)
-            //{
-            //    Casilla? casilla = _casilla[i];
-            //    if (casilla.coordenada.EqualsToCoordenada(x, y))
-            //        return casilla;
-            //return _casilla[IndexOfCasilla(x, y)]; -> esta era la corta buena hasta que movi la funcion indexofcasilla a utils
-            //}
-            //return null;
-            #endregion
-
             if (!Utils.IsValidCoordinates(x, y, _width, _height))
                 return null;
 
@@ -113,20 +79,6 @@ namespace SheepAndWolfs
             return null;
         }
 
-        public Animal? RemoveAnimalAt(int index)
-        {
-            if (index < 0 || index >= _animals.Count)
-                return null;
-            Animal animal = _animals[index];
-            _animals.RemoveAt(index);
-            return animal;
-        }
-
-        public bool IsCasillaOcupada(int x, int y)
-        {
-            return (GetAnimalAt(x, y) != null || GetAnimalAt(x, y) != null)? false : true;
-        }
-
         //TODO: esto funciona
         public void AddAnimal(Animal animal, int x, int y)
         {
@@ -145,28 +97,107 @@ namespace SheepAndWolfs
             _animals.Remove(animal);
         }
 
-        public void MoveAnimal(Animal animal, Mundo mundo)
+        //TODO: esto funciona
+        public Animal? RemoveAnimalAt(int index)
         {
-            if (animal == null || mundo == null)
-                return;
-
-            int[] XMovs = [-1, 0, 1, 0 ];
-            int[] YMovs = [0, -1, 0, 1];
-
-            int direction = Utils.GetRandomNumber(0, 4);
-
-            int newX = animal.GetCoordenada().X + XMovs[direction];
-            int newY = animal.GetCoordenada().Y + YMovs[direction];
-
-            if (Utils.IsValidCoordinates(newX, newY, mundo.GetWidth(), mundo.GetHeight()) &&
-                CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
-            {
-                animal.SetCoordenada(newX, newY);
-            }
-            //mover al animal, utilizar getanimalat, y pasar por dos for o funcion si puede moverse para empezar a plantear el movimiento
+            if (index < 0 || index >= _animals.Count)
+                return null;
+            Animal animal = _animals[index];
+            _animals.RemoveAt(index);
+            return animal;
         }
 
+        //Experimento  con CreateAnimals ---------------------------------------------------------------------
+        public void CreateAnimals2(int count, AnimalType type)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                int x = Utils.GetRandomNumber(0, _width);
+                int y = Utils.GetRandomNumber(0, _height);
+
+                if (GetAnimalAt(x, y) == null) // Evitar duplicados
+                {
+                    Animal animal;
+                    if (type == AnimalType.LOBO)
+                        animal = CreateWolf2();
+                    else if (type == AnimalType.OVEJA)
+                        animal = CreateSheep2();
+                    else
+                        throw new ArgumentException("No existe eel tipo de animal");
+                    animal.SetCoordenada(x, y);
+                    AddAnimal(animal, x, y);
+                }
+            }
+        }
+
+        private Lobo CreateWolf2()
+        {
+            int food = Utils.GetRandomNumber(150, 500);
+            int water = Utils.GetRandomNumber(150, 500);
+            int stamina = Utils.GetRandomNumber(150, 500);
+            int sleep = Utils.GetRandomNumber(150, 500);
+            string name = "Lobo " + CountAnimalsType(AnimalType.LOBO);
+            int velocidad = 100;
+
+            return new Lobo(food, water, stamina, sleep, AnimalType.LOBO, name, velocidad);
+        }
+
+        private Oveja CreateSheep2()
+        {
+            int food = Utils.GetRandomNumber(150, 500);
+            int water = Utils.GetRandomNumber(150, 500);
+            int stamina = Utils.GetRandomNumber(150, 500);
+            int sleep = Utils.GetRandomNumber(150, 500);
+            string name = "Oveja " + CountAnimalsType(AnimalType.OVEJA);
+            int velocidad = 50;
+
+            return new Oveja(food, water, stamina, sleep, AnimalType.OVEJA, name, velocidad);
+        }
+
+        //TODO:ESTO LO HE USADO Y FUNCIONA
+        public void MoveAnimal(Animal? animal)
+        {
+            if (animal == null)
+                return;
+
+            int[] XMovs = [-1, 0, 1, 0];
+            int[] YMovs = [0, -1, 0, 1];
+
+            for (int i = 0; i < 4; i++)
+            {
+                int direction = Utils.GetRandomNumber(0, 4);
+                int newX = animal.GetCoordenada()!.X + XMovs[direction];
+                int newY = animal.GetCoordenada()!.Y + YMovs[direction];
+
+                if (Utils.IsValidCoordinates(newX, newY, GetWidth(), GetHeight()))
+                {
+                    Animal? targetAnimal = GetAnimalAt(newX, newY);
+                    Casilla? targetCasilla = GetCasillaAt(newX, newY);
+
+                    if (targetAnimal != null)
+                    {
+                        ComerOvejaSiendoLobo(animal, targetAnimal);
+                        return;
+                    }
+                    if (targetAnimal == null)
+                    {
+                        if (CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
+                        {
+                            animal.SetCoordenada(newX, newY);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        #region comentarios viejos
         //CanAnimalMove? -> esto esta mal por el animaltype animal
+        //AQUI ME FALTA COMPROBAR QUE LA CASILLA A LA QUE ME QUIERO MOVER TENGA UN ANIMAL, SI ES DEL MISMO TIPO NO MOVERME
+        //SI SOY UN LOBO SI ME MUEVO A LA DE LA OVEJA, SI SOY UNA OVEJA NO ME MUEVO HACIA LA DEL LOBO.
+        #endregion
+
+        //TODO:ESTO LO HE USADO Y FUNCIONA
         public bool CanAnimalMoveTo(Animal? animal, Coordenada coor)
         {
             if (animal == null || coor == null)
@@ -175,126 +206,42 @@ namespace SheepAndWolfs
             Casilla? targetCasilla = GetCasillaAt(coor.X, coor.Y);
             Animal? targetAnimal = GetAnimalAt(coor.X, coor.Y);
 
-            if (targetCasilla == null || targetCasilla.type == TerritorioType.ROCA ||
-                targetCasilla.type == TerritorioType.AGUA)
+            if (targetCasilla == null || targetCasilla.Type == TerritorioType.ROCA ||
+                targetCasilla.Type == TerritorioType.AGUA)
                 return false;
-            //return true;
-            //if (targetAnimal != null && targetAnimal.type == AnimalType.LOBO)
-                //return false;
-                //return true;
+            if (targetAnimal != null)
+            {
+                if (animal.GetType() == targetAnimal.GetType())
+                    return false;
+                else if (animal is Lobo && targetAnimal is Oveja)
+                    return true;
+                else if (animal is Oveja && targetAnimal is Lobo)
+                    return false;
+            }
             return true;
-            //return false;
         }
 
-        //Aqui creo que se puede hacer un createAnimals que cree los animales y los añada a la lista de animales
-        //TODO: esto funciona
-        public void CreateAnimals(int count, AnimalType type)
+        //TODO:ESTO LO HE USADO Y FUNCIONA
+        public void ComerOvejaSiendoLobo(Animal animal, Animal targetAnimal)
         {
-            for (int i = 0; i < count; i++)
+            if (animal is Lobo && targetAnimal is Oveja)
             {
-                int x = Utils.GetRandomNumber(0, _width);
-                int y = Utils.GetRandomNumber(0, _height);
-
-                if (GetAnimalAt(x, y) == null)
-                {
-                    if (type == AnimalType.LOBO)
-                    {
-                        int countlobo = 0;
-                        //instancia a utils para los campos comida para generarle valores aleatorios
-                        int food = Utils.GetRandomNumber(50, 500);
-                        int water = Utils.GetRandomNumber(50, 500);
-                        int stamina = Utils.GetRandomNumber(50, 500);
-                        int sleep = Utils.GetRandomNumber(50, 500);
-                        string name = "Lobo " + countlobo++;
-                        int velocidad = 100;
-                        Lobo lobo = new Lobo(food, water, stamina, sleep, AnimalType.LOBO, name, velocidad);
-                        lobo.SetCoordenada(x, y);
-                        AddAnimal(lobo, x, y);
-                    }
-                    else if (type == AnimalType.OVEJA)
-                    {
-                        int countoveja = 0;
-                        //instancia a utils para los campos comida para generarle valores aleatorios
-                        int food = Utils.GetRandomNumber(50, 500);
-                        int water = Utils.GetRandomNumber(50, 500);
-                        int stamina = Utils.GetRandomNumber(50, 500);
-                        int sleep = Utils.GetRandomNumber(50, 500);
-                        string name = "Oveja " + countoveja++;
-                        int velocidad = 50;
-                        Oveja oveja = new Oveja(food, water, stamina, sleep, AnimalType.OVEJA, name, velocidad);
-                        oveja.SetCoordenada(x, y);
-                        AddAnimal(oveja, x, y);
-                    }
-                }
+                Coordenada posicionOveja = targetAnimal.GetCoordenada()!;
+                RemoveAnimal(targetAnimal); // Elimina la oveja
+                animal.SetCoordenada(posicionOveja.X, posicionOveja.Y);
+                animal.SetSaciedad(animal.GetSaciedad() + 100); // Aumenta la saciedad
+                Console.WriteLine($"El lobo {animal.GetNombre()} se comió a la oveja {targetAnimal.GetNombre()} en la posición {targetAnimal.GetCoordenada()}.");
+            }
+            else if (animal is Oveja && targetAnimal is Lobo)
+            {
+                Console.WriteLine($"La oveja {animal.GetNombre()} evita al lobo {targetAnimal.GetNombre()} en la posición {targetAnimal.GetCoordenada()}.");
             }
         }
 
-        //TODO: esto funciona
-        public void CreateWolfs(int count)
-        {
-            int countlobo = 0;
-
-            for (int i = 0; i < count; i++)
-            {
-                countlobo++;
-                int x = Utils.GetRandomNumber(0, _width);
-                int y = Utils.GetRandomNumber(0, _height);
-
-                if (GetAnimalAt(x, y) == null)  // Evitar duplicados -> aqui hay que comprobar si la casilla a la que se mueve es roca o agua
-                {
-                    Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO, "lobo" + countlobo, 100);
-                    //aqui le paso las cosas que le ponga en constructor como parametros
-                    lobo.SetCoordenada(x, y);
-                    AddAnimal(lobo, x, y);
-                }
-            }
-        }
-
-        //TODO: esto funciona
-        public void CreateSheeps(int count)
-        {
-            int countoveja = 0;
-            for (int i = 0; i < count; i++)
-            {
-                countoveja++;
-                int x = Utils.GetRandomNumber(0, _width);
-                int y = Utils.GetRandomNumber(0, _height);
-
-                if (GetAnimalAt(x, y) == null) // Evitar duplicados
-                {
-                    Oveja oveja = new Oveja(100, 100, 100, 100, AnimalType.OVEJA, "oveja " + countoveja, 50);
-                    oveja.SetCoordenada(x, y);
-                    AddAnimal(oveja, x, y);
-                }
-            }
-        }
-
-        //----------------------------------------------------------------------------------
-
-        //TODO: esto no lo he usado
-        public AnimalType GetAnimalTypeAt(int x, int y, AnimalType type)
-        {
-            Animal? animal = GetAnimalAt(x, y);
-            return animal?.GetType() ?? AnimalType.ANIMAL;
-        }
-
-        //TODO: esto no lo he usado
-        public int IndexOfAnimal(Animal animal)
-        {
-            for (int i = 0; i < _animals.Count; i++)
-            {
-                if (_animals[i].GetType() == animal.GetType() 
-                    && _animals[i].GetCoordenada() == animal.GetCoordenada())
-                    return i;
-            }
-            return -1;
-        }
-
-        //TODO: esto no lo he usado
+        //TODO: esto lo he usado
         public int CountAnimals() => _animals.Count;
-        
 
-        //TODO: esto no lo he usado
+        //TODO: esto lo he usado
         public int CountAnimalsType(AnimalType type)
         {
             if (_animals.Count == 0)
@@ -307,47 +254,26 @@ namespace SheepAndWolfs
             return aux;
         }
 
-        //TODO: esto no lo he usado
-        public bool ContainsCasilla(int x, int y)
+        //TODO:ESTO LO HE USADO Y FUNCIONA
+        //Para actualizar los atributos a cada turno que pasa a los animales
+        public void ActualizarEstadoAnimalesPorTurno()
         {
-            return Utils.IndexOfCasilla(x, y, _width) != -1;
-        }
-
-        //TODO: esto no lo he usado
-        public int CountCasilla() => _casillas.Length;
- 
-        public bool EstaCercaHierba(Animal animal)
-        {
-            foreach (var casilla in _casillas)
+            foreach (var animales in _animals)
             {
-                if (casilla.type == TerritorioType.HIERBA)
-                {
-                    if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, GetWidth(), GetHeight()))
-                    {
-                        if (Utils.GetDistance(animal.GetCoordenada(), casilla.coordenada) <= 2)
-                            return true;
-                    }
-                }
+                animales.SetSaciedad(animales.GetSaciedad() - 10);
+                animales.SetHidratacion(animales.GetHidratacion() - 10);
+                animales.SetSueño(animales.GetSueño() - 10);
+
+                if (animales.GetSaciedad() <= 0)
+                    animales.SetSaciedad(0);
+                if (animales.GetHidratacion() <= 0)
+                    animales.SetHidratacion(0);
+                if (animales.GetSueño() <= 0)
+                    animales.SetSueño(0);
             }
-            return false;
         }
 
-        public bool EstaAguaCercaDelAnimal(Animal animal)
-        {
-            foreach (var casilla in _casillas)
-            {
-                if (casilla.type == TerritorioType.AGUA)
-                {
-                    if (Utils.IsValidCoordinates(casilla.coordenada.X, casilla.coordenada.Y, GetWidth(), GetHeight()))
-                    {
-                        if (Utils.GetDistance(animal.GetCoordenada(), casilla.coordenada) <= 2)
-                            return true;
-                    }
-                }
-            }
-            return false;
-        }
-
+        //TODO:ESTO LO HE USADO Y FUNCIONA
         public void EliminarAnimalesmuertos()
         {
             for (int i = _animals.Count - 1; i >= 0; i--)
@@ -358,61 +284,200 @@ namespace SheepAndWolfs
             }
         }
 
-        //Para actualizar los atributos a cada turno que pasa a los animales
-        public void ActualizarEstadoAnimalesPorTurno()
+        //TODO:ESTO LO HE USADO Y FUNCIONA
+        public bool EstaCercaHierba(Animal animal)
         {
-            foreach (var animales in _animals)
+            foreach (var casilla in _casillas)
             {
-                animales.SetSaciedad(animales.GetSaciedad() -10);
-                animales.SetHidratacion(animales.GetHidratacion() -10);
-                animales.SetSueño(animales.GetSueño()-10);
-
-                if (animales.GetSaciedad() <= 0) 
-                    animales.SetSaciedad(0);
-                if (animales.GetHidratacion() <= 0) 
-                    animales.SetHidratacion(0);
-                if (animales.GetSueño() <= 0) 
-                    animales.SetSueño(0);
+                if (casilla.Type == TerritorioType.HIERBA)
+                {
+                    if (Utils.IsValidCoordinates(casilla.Coord.X, casilla.Coord.Y, GetWidth(), GetHeight()))
+                    {
+                        if (Utils.GetDistance(animal.GetCoordenada(), casilla.Coord) <= 2)
+                            return true;
+                    }
+                }
             }
+            return false;
         }
 
-        //metodo para hallar casillas alrededor de un animal, las casillas son arrays
+        //TODO:ESTO LO HE USADO Y FUNCIONA
+        public bool EstaAguaCercaDelAnimal(Animal animal)
+        {
+            foreach (var casilla in _casillas)
+            {
+                if (casilla.Type == TerritorioType.AGUA)
+                {
+                    if (Utils.IsValidCoordinates(casilla.Coord.X, casilla.Coord.Y, GetWidth(), GetHeight()))
+                    {
+                        if (Utils.GetDistance(animal.GetCoordenada(), casilla.Coord) <= 2)
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
 
-
+        //----------------------------------------------------------------------------------
+        #region codigoantiguo
         //TODO: esto no lo he usado
-        //public void ImprimirCasillas()
+        //ES POSIBLE QUE ME HAGA FALTA PARA COMPROBAR EL ANIMAL EN LA CASILLA Y QUE LOS LOBOS ATAQUEN
+        //public AnimalType GetAnimalTypeAt(int x, int y, AnimalType type)
         //{
-        //    for (int y = 0; y < _height; y++)
+        //    Animal? animal = GetAnimalAt(x, y);
+        //    return animal?.GetType() ?? AnimalType.ANIMAL;
+        //}
+
+        ////TODO: esto no lo he usado
+        //public int IndexOfAnimal(Animal animal)
+        //{
+        //    for (int i = 0; i < _animals.Count; i++)
         //    {
-        //        for (int x = 0; x < _width; x++)
+        //        if (_animals[i].GetType() == animal.GetType() 
+        //            && _animals[i].GetCoordenada() == animal.GetCoordenada())
+        //            return i;
+        //    }
+        //    return -1;
+        //}
+
+        ////TODO: esto no lo he usado
+        //public bool ContainsCasilla(int x, int y)
+        //{
+        //    return Utils.IndexOfCasilla(x, y, _width) != -1;
+        //}
+
+        ////TODO: esto no lo he usado
+        //public int CountCasilla() => _casillas.Length;
+
+        ////Comprobar casilla este ocupada
+        ////TODO: esto no lo he usado
+        //public bool IsCasillaOcupada(int x, int y)
+        //{
+        //    return (GetAnimalAt(x, y) != null || GetAnimalAt(x, y) != null) ? false : true;
+        //}
+
+        //Aqui creo que se puede hacer un createAnimals que cree los animales y los añada a la lista de animales
+        //TODO: esto funciona
+        //public void CreateAnimals(int count, AnimalType type)
+        //{
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        int x = Utils.GetRandomNumber(0, _width);
+        //        int y = Utils.GetRandomNumber(0, _height);
+
+        //        if (GetAnimalAt(x, y) == null)
         //        {
-        //            int index = Utils.IndexOfCasilla(x, y, _width);
-        //            if (_casillas[index] != null)
-        //                Console.Write($"[{_casillas[index].coordenada.X},{_casillas[index].coordenada.Y}] ");
-        //            else
-        //                Console.Write("[null] ");
+        //            if (type == AnimalType.LOBO)
+        //            {
+        //                int countlobo = 0;
+        //                int food = Utils.GetRandomNumber(50, 500);
+        //                int water = Utils.GetRandomNumber(50, 500);
+        //                int stamina = Utils.GetRandomNumber(50, 500);
+        //                int sleep = Utils.GetRandomNumber(50, 500);
+        //                string name = "Lobo " + countlobo++;
+        //                int velocidad = 100;
+        //                Lobo lobo = new Lobo(food, water, stamina, sleep, AnimalType.LOBO, name, velocidad);
+        //                lobo.SetCoordenada(x, y);
+        //                AddAnimal(lobo, x, y);
+        //            }
+        //            else if (type == AnimalType.OVEJA)
+        //            {
+        //                int countoveja = 0;
+        //                int food = Utils.GetRandomNumber(50, 500);
+        //                int water = Utils.GetRandomNumber(50, 500);
+        //                int stamina = Utils.GetRandomNumber(50, 500);
+        //                int sleep = Utils.GetRandomNumber(50, 500);
+        //                string name = "Oveja " + countoveja++;
+        //                int velocidad = 50;
+        //                Oveja oveja = new Oveja(food, water, stamina, sleep, AnimalType.OVEJA, name, velocidad);
+        //                oveja.SetCoordenada(x, y);
+        //                AddAnimal(oveja, x, y);
+        //            }
         //        }
-        //        Console.WriteLine(); // Nueva línea para cada fila
         //    }
         //}
 
-        //public int IndexOfCasilla(int x, int y)
+        //TODO: esto funciona
+        //public void CreateWolfs(int count)
         //{
-        //    if (x < 0 || y < 0 || _width <= 0)
-        //        return -1;
-        //    //for (int i = 0; i < _casilla.Count; ++i)
-        //    //{
-        //    //    Casilla casilla = _casilla[i];
-        //    //    if (casilla.coordenada.EqualsToCoordenada(x, y))
-        //    //        return i;
-        //    //}
-        //    //return -1;
-        //    return y * _width + x;
-        //    //dado un index para hallar x e y divido el index entre el ancho como divisor y el cociente sera la y, y el resto la x
+        //    int countlobo = count;
+
+        //    for (int i = 0; i <= countlobo; i++)
+        //    {
+        //        int x = Utils.GetRandomNumber(0, _width);
+        //        int y = Utils.GetRandomNumber(0, _height);
+
+        //        if (GetAnimalAt(x, y) == null)  // Evitar duplicados -> aqui hay que comprobar si la casilla a la que se mueve es roca o agua
+        //        {
+        //            Lobo lobo = new Lobo(100, 100, 100, 100, AnimalType.LOBO, "lobo" + CountAnimalsType(AnimalType.LOBO), 100);
+        //            lobo.SetCoordenada(x, y);
+        //            AddAnimal(lobo, x, y);
+        //        }
+        //    }
         //}
 
+        //TODO: esto funciona
+        //public void CreateSheeps(int count)
+        //{
+        //    int countoveja = count;
+        //    for (int i = 0; i <= countoveja; i++)
+        //    {
+        //        int x = Utils.GetRandomNumber(0, _width);
+        //        int y = Utils.GetRandomNumber(0, _height);
 
-        //int index = y * width + x
-        //index / ancho = cociente la y y resto la x
-    }    
+        //        if (GetAnimalAt(x, y) == null) // Evitar duplicados
+        //        {
+        //            Oveja oveja = new Oveja(100, 100, 100, 100, AnimalType.OVEJA, "oveja " + CountAnimalsType(AnimalType.OVEJA), 50);
+        //            oveja.SetCoordenada(x, y);
+        //            AddAnimal(oveja, x, y);
+        //        }
+        //    }
+        //}
+
+        //copia del viejo moveanimals
+        //public void MoveAnimal2(Animal? animal)
+        //{
+        //    if (animal == null)
+        //        return;
+
+        //    int[] XMovs = [-1, 0, 1, 0];
+        //    int[] YMovs = [0, -1, 0, 1];
+
+        //    int direction = Utils.GetRandomNumber(0, 4);
+
+        //    int newX = animal.GetCoordenada()!.X + XMovs[direction];
+        //    int newY = animal.GetCoordenada()!.Y + YMovs[direction];
+
+        //    if (Utils.IsValidCoordinates(newX, newY, GetWidth(), GetHeight()) &&
+        //        CanAnimalMoveTo(animal, new Coordenada(newX, newY)))
+        //    {
+        //        animal.SetCoordenada(newX, newY);
+        //    }
+        //}
+
+        //viejo cananimalmoveto
+        //public bool CanAnimalMoveTo2(Animal? animal, Coordenada coor)
+        //{
+        //    if (animal == null || coor == null)
+        //        return false;
+
+        //    Casilla? targetCasilla = GetCasillaAt(coor.X, coor.Y);
+        //    Animal? targetAnimal = GetAnimalAt(coor.X, coor.Y);
+
+        //    if (targetCasilla == null || targetCasilla.type == TerritorioType.ROCA ||
+        //        targetCasilla.type == TerritorioType.AGUA)
+        //        return false;
+        //    if (targetAnimal != null)
+        //    {
+        //        if (animal.GetType() == targetAnimal.GetType())
+        //            return false;
+        //        else if (animal is Lobo && targetAnimal is Oveja)
+        //            return true;
+        //        else if (animal is Oveja && targetAnimal is Lobo)
+        //            return false;
+        //    }
+        //    return true;
+        //}
+        #endregion
+    }
 }

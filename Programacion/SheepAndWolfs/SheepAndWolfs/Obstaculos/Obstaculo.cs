@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SheepAndWolfs.Obstaculos
 {
+    //no sirve
     internal class Obstaculo
     {
     }

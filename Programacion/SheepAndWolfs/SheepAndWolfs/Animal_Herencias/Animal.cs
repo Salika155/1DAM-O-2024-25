@@ -14,18 +14,6 @@ namespace SheepAndWolfs
     }
     public abstract class Animal
     {
-        //TODO: esto funciona
-
-        //public AnimalType? type;
-        //public Coordenada? coordenada;
-        ////food, water, stamina, type y sleep
-        //public int saciedad;
-        //public int hidratacion;
-        //public int resistencia;
-        //public int sueño;
-        //public string nombre;
-        //public double velocidad;
-
         private AnimalType? _type;
         private Coordenada? _coordenada;
         private int _saciedad;
@@ -36,7 +24,7 @@ namespace SheepAndWolfs
         private int _velocidad;
 
         //TODO: esto funciona
-        public Animal(int food, int water, int stamina, int sleep, AnimalType type, string? name, int speed)
+        public Animal(int food, int water, int stamina, int sleep, AnimalType? type, string? name, int speed)
         {
             this._saciedad = food;
             this._hidratacion = water;
@@ -47,18 +35,18 @@ namespace SheepAndWolfs
             this._velocidad = speed;
         }
 
-        public virtual int GetSaciedad() => _saciedad;
-        public virtual void SetSaciedad(int value) => _saciedad = value; 
-        public virtual int GetHidratacion() => _hidratacion;
-        public virtual void SetHidratacion(int value) => _hidratacion = value;
-        public virtual int GetResistencia() => _resistencia;
-        public virtual void SetResistencia(int value) => _resistencia = value;
-        public virtual int GetSueño() => _sueño;
-        public virtual void SetSueño(int value) => _sueño = value;
-        public virtual string? GetNombre() => _nombre;
+        public int GetSaciedad() => _saciedad;
+        public void SetSaciedad(int value) => _saciedad = value; 
+        public int GetHidratacion() => _hidratacion;
+        public void SetHidratacion(int value) => _hidratacion = value;
+        public int GetResistencia() => _resistencia;
+        public void SetResistencia(int value) => _resistencia = value;
+        public int GetSueño() => _sueño;
+        public void SetSueño(int value) => _sueño = value;
+        public string? GetNombre() => _nombre;
         public virtual int GetVelocidad() => _velocidad;
         public virtual AnimalType? GetType() => _type;
-        public virtual Coordenada? GetCoordenada() => _coordenada;
+        public Coordenada? GetCoordenada() => _coordenada;
         public void SetCoordenada(int x, int y) => _coordenada = new Coordenada(x, y);
 
         //crearanimales en el constructor

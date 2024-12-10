@@ -81,7 +81,7 @@ namespace ConsoleApp2
 
             for (int i = 2; i <= n; i ++)
             {
-                if (i % n == 0 || i % 2 != 0)
+                if (n % i == 0 || n % 2 != 0)
                     return true;
             }
             return false;

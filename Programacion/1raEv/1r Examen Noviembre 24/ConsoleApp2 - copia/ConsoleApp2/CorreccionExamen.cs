@@ -13,56 +13,66 @@ namespace ConsoleApp2
             if (n == 0)
                 return false;
 
-            string num = Math.Abs(n).ToString(); // Convertimos a cadena y tomamos valor absoluto.
+            n = Math.Abs(n); // Tomamos el valor absoluto del número.
 
-            // Recorremos la cadena buscando tres '6' consecutivos
-            for (int i = 0; i <= num.Length - 3; i++) // Aseguramos no salirnos de la longitud
+            int consecutiveSixes = 0; // Contador para los '6' consecutivos.
+
+            while (n > 0) // Recorremos los dígitos del número.
             {
-                if (num[i] == '6' && num[i + 1] == '6' && num[i + 2] == '6')
+                if (n % 10 == 6) // Si el último dígito es un 6.
                 {
-                    return true; // Retornamos true si encontramos "666"
+                    consecutiveSixes++;
+                    if (consecutiveSixes == 3) // Si encontramos tres '6' consecutivos.
+                    {
+                        return true;
+                    }
                 }
+                else
+                {
+                    consecutiveSixes = 0; // Reiniciamos el contador si el dígito no es '6'.
+                }
+
+                n /= 10; // Eliminamos el último dígito.
             }
 
-            return false; // Si recorremos todo sin hallar "666"
+            return false; // Si no encontramos "666", retornamos false.
         }
-
 
         public static bool IsPrimo(int n)
         {
-            if (n <= 1) // Números menores o iguales a 1 no son primos
+            if (n <= 1) // Números menores o iguales a 1 no son primos.
                 return false;
 
-            for (int i = 2; i <= Math.Sqrt(n); i++) // Solo verificamos hasta la raíz cuadrada de n
+            for (int i = 2; i <= Math.Sqrt(n); i++) // Solo verificamos hasta la raíz cuadrada de n.
             {
-                if (n % i == 0) // Si es divisible por cualquier número, no es primo
+                if (n % i == 0) // Si es divisible por cualquier número, no es primo.
                     return false;
             }
 
-            return true; // Si no encontramos divisores, es primo
+            return true; // Si no encontramos divisores, es primo.
         }
-
 
         public static int SumaNumerosPrimos(int n)
         {
-            if (n <= 0) // Si el valor de entrada es no válido, retornamos 0
+            if (n <= 0) // Si el valor de entrada es no válido, retornamos 0.
                 return 0;
 
-            int suma = 0; // Almacenará la suma de primos
-            int count = 0; // Cuenta cuántos primos llevamos
-            int numero = 2; // Comenzamos desde el primer número primo
+            int suma = 0; // Almacenará la suma de primos.
+            int count = 0; // Cuenta cuántos primos llevamos.
+            int numero = 2; // Comenzamos desde el primer número primo.
 
-            while (count < n) // Repetimos hasta encontrar los primeros n primos
+            while (count < n) // Repetimos hasta encontrar los primeros n primos.
             {
-                if (IsPrimo(numero)) // Si el número es primo, lo sumamos
+                if (IsPrimo(numero)) // Si el número es primo, lo sumamos.
                 {
                     suma += numero;
                     count++;
                 }
-                numero++; // Avanzamos al siguiente número
+                numero++; // Avanzamos al siguiente número.
             }
 
-            return suma; // Retornamos la suma de los primeros n primos
+            return suma; // Retornamos la suma de los primeros n primos.
         }
     }
 }
+

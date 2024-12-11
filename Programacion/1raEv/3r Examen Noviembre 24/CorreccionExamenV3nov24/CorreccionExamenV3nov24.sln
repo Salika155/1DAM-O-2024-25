@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorreccionExamenV3nov24", "CorreccionExamenV3nov24\CorreccionExamenV3nov24.csproj", "{DDDCE47D-DBB7-43B4-94D9-9C55B63D0F04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDDCE47D-DBB7-43B4-94D9-9C55B63D0F04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDDCE47D-DBB7-43B4-94D9-9C55B63D0F04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDDCE47D-DBB7-43B4-94D9-9C55B63D0F04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDDCE47D-DBB7-43B4-94D9-9C55B63D0F04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

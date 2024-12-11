@@ -39,6 +39,20 @@
             Console.Write(listaCompra);
 
 
+            //------------------------------------------------------------------------------------
+
+            int[] arrayNumerosC = new int[] { 3, 1, 5, 4, 2 };
+            int[] array2C = new int[] { 40, 10, 50, 20, 30 };
+            int[] array3C = new int[] { 40, 10, 50, 20, 30 };
+
+            double numeromedioC = Funciones.GetNumNearMidValor(arrayNumerosC);
+            Console.Write(numeromedioC);
+
+            double numeromedio2C = Funciones.GetNumNearMidValor(array2C);
+            Console.Write(numeromedio2C);
+
+            double numeromedio3C = Funciones.GetNumNearMidValor(array3C);
+            Console.Write(numeromedio3C);
         }
     }
 }

@@ -108,7 +108,7 @@ namespace ExamenListaArray
         {
             int count = 0;
 
-            for (int i = 0, j = 0; i < list.Count && j < list.Count; i++, j++)
+            for (int i = 0, j = 0; i < list.Count && j < /*filtro.Count*/ list.Count; i++, j++)
             {
 
                 if (StringEquals(list[i], filtro[j]))

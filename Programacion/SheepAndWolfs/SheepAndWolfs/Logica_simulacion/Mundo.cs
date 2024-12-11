@@ -30,6 +30,8 @@ namespace SheepAndWolfs
         //pero como trabajo con la lista directamente en este caso tengo dudas, ya que quiero eliminar
         //los animales muertos de la lista original en el caso de que suceda, no creo que sea necesario
         //hacer una copia.
+
+        //ESTO ESTA MAL ASI -> PROHIBIDO HACER ESTO
         public Casilla[] GetAllCasillas() => _casillas;
         public List<Animal> GetAllAnimals() => _animals;
 
@@ -108,6 +110,7 @@ namespace SheepAndWolfs
         }
 
         //Experimento  con CreateAnimals ---------------------------------------------------------------------
+       //ESTO AQUI NO VA, EL MUNDO TIENE QUE ESTAR LO MAS LIMPIO POSIBLE PARA EVITAR PROBLEMAS
         public void CreateAnimals2(int count, AnimalType type)
         {
             for (int i = 0; i < count; i++)
@@ -160,6 +163,7 @@ namespace SheepAndWolfs
             if (animal == null)
                 return;
 
+            //ESTO FUNCIONA MAL, SE MUEVE 4 VECES CADA TURNO POR CADA MOVIMIENTO
             int[] XMovs = [-1, 0, 1, 0];
             int[] YMovs = [0, -1, 0, 1];
 
@@ -174,6 +178,7 @@ namespace SheepAndWolfs
                     Animal? targetAnimal = GetAnimalAt(newX, newY);
                     Casilla? targetCasilla = GetCasillaAt(newX, newY);
 
+                    //FALTA SI OVEJA COME LOBO QUE HACER, PORQUE COMO NO HACE NADA SE SALE POR EL RETURN
                     if (targetAnimal != null)
                     {
                         ComerOvejaSiendoLobo(animal, targetAnimal);

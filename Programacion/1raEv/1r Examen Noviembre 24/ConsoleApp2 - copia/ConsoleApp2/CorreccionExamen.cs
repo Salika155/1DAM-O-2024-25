@@ -108,9 +108,9 @@ namespace ConsoleApp2
             if (n <= 1)
                 return false;
 
-            for (int i = 2; i < n; i++)
+            for (int i = 2; i <= Math.Sqrt(n); i++)
             {
-                if (n % 2 == 0)
+                if (n % i == 0)
                     return false;
             }
             return true;

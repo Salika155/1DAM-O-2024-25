@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace LibreriaContenedores
 {
-    internal class Dictionary
+    public class Dictionary<K, V>
     {
+
+
     }
 }

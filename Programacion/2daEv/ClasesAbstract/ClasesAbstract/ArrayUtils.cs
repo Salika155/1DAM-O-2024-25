@@ -10,7 +10,7 @@ namespace ClasesAbstract
     {
         private T[]? _elements = new T[0];
 
-        public static void ShiftLeft(T[] element)
+        public static void ShuftLeft(T[] element)
         {
             if (element == null)
                 return;

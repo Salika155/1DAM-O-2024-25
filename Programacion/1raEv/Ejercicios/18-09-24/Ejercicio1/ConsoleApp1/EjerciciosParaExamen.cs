@@ -256,18 +256,61 @@ namespace ConsoleApp1
 
 
         //funcion que le paso un numero y devuelve el sumatorio de todos los numeros primos que hay desde el 1 hasta al numero que le paso
+        public static int SumatorioPrimos(int n)
+        {
+            int aux = 0;
+            for (int i = 2; i <= n; i++)
+            {
+                if (IsPrimo(i))
+                {
+                    aux += i;
+                }
+            }
+            return aux;
+        }
+
+        public static bool IsPrimo(int n)
+        {
+            if (n <= 1)
+                return false;
+            if (n == 2)
+                return true;
+            if (n % 2 == 0)
+                return false;
+
+            int raiz = (int)Math.Sqrt(n);
+            for (int i = 3; i <= raiz; i+= 2 /* solo impares*/)
+            {
+                if (n % i == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
 
         //funcion para hacer el minimo comun multiplo de dos numeros
-
+        public static double MCM(double n1, double n2)
+        {
+            while (n2 != 0)
+            {
+                double temp = n1;
+                n2 = n1 % n2;
+                n1 = temp;
+            }
+            return n1;
+        }
 
 
         //funcion para hacer el maximo comun divisor de dos numeros
+        public static double MCD(double n1, double n2)
+        {
+            return (n1 * n2) / MCD(n1, n2);
+        }
 
+        
     }
-
-    
- 
 }
 
 

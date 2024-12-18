@@ -123,6 +123,29 @@ namespace ClasesAbstract
             }
             return result;
         }
+        public static bool IsMayor(int a, int b)
+        {
+            return a > b;
+        }
+
+        public static bool IsPositive(int value)
+        {
+            return value > 0;
+        }
+
+        public static bool IsPair(int value)
+        {
+            return value % 2 == 0;
+        }
+
+        //public static int IsMayor(int a, int b)
+        //{
+        //    if (a > b)
+        //        return 1;
+        //    if (a < b)
+        //        return -1;
+        //    return 0;
+        //}
     }
 
     //hasta poner interface era una clase abstract

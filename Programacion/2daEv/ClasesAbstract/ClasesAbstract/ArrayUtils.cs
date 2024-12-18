@@ -99,6 +99,8 @@ namespace ClasesAbstract
         //devuelve array nuevo para cada elemento del array generico, le pregunta al filtro si lo pone o no lo pone
         public static T[] Filter<T>(T[] array, FilterDelegate<T> del)
         {
+            if (array == null || del == null)
+                return new T[0];
             //arrayutils.filter (null, null)
             int count = 0;
 
@@ -108,16 +110,18 @@ namespace ClasesAbstract
                     count++;
             }
             T[] result = new T[count];
+            int index = 0;
 
             for (int i = 0; i < array.Length; i++)
             {
                 if (del(array[i]))
                 {
                     //añadir al nuevo array
+                    result[index] = array[i];
+                    index++;
                 }
-                
             }
-            return null;
+            return result;
         }
     }
 
@@ -138,7 +142,7 @@ namespace ClasesAbstract
         //}
         public bool IsMayor(int a, int b)
         {
-            throw new NotImplementedException();
+            return a > b;
         }
     }
 

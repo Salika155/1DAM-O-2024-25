@@ -9,6 +9,12 @@ namespace AlgoritmoSwapNLetrasDePalabra
     internal class ArrayAlgoritmo
     {
         //cambiar la posicion de dos letras seguidas en una palabra, o mas
+        //sin hacer un nuevo array
 
+        public static void E1(int[] array, int n)
+        {
+            if (array == null || n <= 0)
+                return;
+        }
     }
 }

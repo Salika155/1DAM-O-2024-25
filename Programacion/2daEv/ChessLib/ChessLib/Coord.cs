@@ -14,6 +14,16 @@ namespace ChessLib
             _x = x;
             _y = y;
         }
+
+        public bool EqualsToCoord(int x, int y)
+        {
+            return X == _x && Y == _y;
+        }
+
+        public override string ToString()
+        {
+            return X.ToString() + " , " + Y.ToString();
+        }
     }
 }
 

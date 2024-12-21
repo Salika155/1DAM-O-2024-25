@@ -1,10 +1,11 @@
 ﻿
 namespace ChessLib.Tablero
 {
-    public interface IChessBoard
+    public interface IChessBoard : IChessBoardImmutable
     {
-
-
+        void InitBoard();
+        void Clear();
+        bool MoveFigure(int x, int y);
 
         //Interface IChessBoard : IChessBoardImmutable
         //*  {

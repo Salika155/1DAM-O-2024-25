@@ -1,5 +1,6 @@
 ﻿using ChessLib.Tablero;
 
+
 namespace ChessExec
 {
     internal class Program

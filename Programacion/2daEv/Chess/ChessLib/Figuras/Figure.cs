@@ -16,6 +16,7 @@ namespace ChessLib.Figuras
 
     public enum FigureType
     {
+        BASE,
         PAWN,
         TOWER,
         KING,
@@ -33,10 +34,14 @@ namespace ChessLib.Figuras
         public Coord Coords => _coords;
         public FigureType Type => _typeFigure;
         public FigureColor Color => _colorFigure;
-        public Figure(FigureColor color, Coord coords, FigureType? type)
+
+        
+
+        public Figure(FigureColor color, Coord coords, FigureType type)
         {
             _colorFigure = color;
             _coords = coords;
+            _typeFigure = type;
         }
         public abstract Coord[] GetAvailablePosition(IChessBoard board);
     }

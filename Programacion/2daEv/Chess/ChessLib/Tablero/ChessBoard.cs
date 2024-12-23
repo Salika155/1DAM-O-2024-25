@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,14 +37,17 @@ namespace ChessLib.Tablero
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _figures.Length; i++)
+            {
+                _figures[i] = null; // Limpia cada posición del array sin cambiar la referencia.
+            }
         }
 
         public IFigure? GetFigureAt(int? x, int? y)
         {
             if (x == null || y == null)
                 return null;
-            for (int i = 0; i < _figures.Length - 1; i++)
+            for (int i = 0; i <= _figures.Length - 1; i++)
             {
                 Figure? f = _figures[i];
 
@@ -117,89 +121,114 @@ namespace ChessLib.Tablero
             // Peones
             for (int x = 0; x < _width; x++)
             {
-                _figures[index++] = new Pawn(FigureColor.WHITE, new Coord(x, 1), FigureType.PAWN);
-                _figures[index++] = new Pawn(FigureColor.BLACK, new Coord(x, 6), FigureType.PAWN);
+                var whitePawn = CrearFigura(FigureColor.WHITE, FigureType.PAWN, x, 1);
+                //Console.WriteLine($"Creando figura: {whitePawn.Color} {whitePawn.Type} en {whitePawn.Coords}");
+                _figures[index++] = whitePawn;
 
-                // Asigna las figuras a las casillas correspondientes
-                _casillas[x, 1].Figure = _figures[index - 2]; // Peón blanco
-                _casillas[x, 6].Figure = _figures[index - 1]; // Peón negro
+                // Crear y asignar peones negros
+                var blackPawn = CrearFigura(FigureColor.BLACK, FigureType.PAWN, x, 6);
+                //Console.WriteLine($"Creando figura: {blackPawn.Color} {blackPawn.Type} en {blackPawn.Coords}");
+                _figures[index++] = blackPawn;
             }
 
             // Torres
-            _figures[index++] = new Tower(FigureColor.WHITE, new Coord(0, 0), FigureType.TOWER);
-            _figures[index++] = new Tower(FigureColor.WHITE, new Coord(7, 0), FigureType.TOWER);
-            _figures[index++] = new Tower(FigureColor.BLACK, new Coord(0, 7), FigureType.TOWER);
-            _figures[index++] = new Tower(FigureColor.BLACK, new Coord(7, 7), FigureType.TOWER);
+            //esta no la dibuja
+            var whiteTower1 = CrearFigura(FigureColor.WHITE, FigureType.TOWER, 0, 0);
+            //var whiteTower1 = new Tower(FigureColor.WHITE, FigureType.TOWER, new Coord(0, 0));
+            var whiteTower2 = CrearFigura(FigureColor.WHITE, FigureType.TOWER, 7, 0);
+            var blackTower1 = CrearFigura(FigureColor.BLACK, FigureType.TOWER, 0, 7);
+            var blackTower2 = CrearFigura(FigureColor.BLACK, FigureType.TOWER, 7, 7);
+             
+            _figures[index++] = whiteTower1;
+            _figures[index++] = whiteTower2;
+            _figures[index++] = blackTower1;
+            _figures[index++] = blackTower2;
 
-            // Asigna las torres a las casillas correspondientes
-            _casillas[0, 0].Figure = _figures[index - 4];
-            _casillas[7, 0].Figure = _figures[index - 3];
-            _casillas[0, 7].Figure = _figures[index - 2];
-            _casillas[7, 7].Figure = _figures[index - 1];
+            _casillas[0, 0].Figure = whiteTower1;
+            _casillas[7, 0].Figure = whiteTower2;
+            _casillas[0, 7].Figure = blackTower1;
+            _casillas[7, 7].Figure = blackTower2;
 
             // Caballos
-            _figures[index++] = new Knight(FigureColor.WHITE, new Coord(1, 0), FigureType.KNIGHT);
-            _figures[index++] = new Knight(FigureColor.WHITE, new Coord(6, 0), FigureType.KNIGHT);
-            _figures[index++] = new Knight(FigureColor.BLACK, new Coord(1, 7), FigureType.KNIGHT);
-            _figures[index++] = new Knight(FigureColor.BLACK, new Coord(6, 7), FigureType.KNIGHT);
+            var whiteKnight1 = CrearFigura(FigureColor.WHITE, FigureType.KNIGHT, 1, 0);
+            //var whiteKnight1 = new Knight(FigureColor.WHITE, new Coord(1, 0), FigureType.KNIGHT);
+            var whiteKnight2 = CrearFigura(FigureColor.WHITE, FigureType.KNIGHT, 6, 0);
+            var blackKnight1 = CrearFigura(FigureColor.BLACK, FigureType.KNIGHT, 1, 7);
+            var blackKnight2 = CrearFigura(FigureColor.BLACK, FigureType.KNIGHT, 6, 7);
 
-            // Asigna los caballos a las casillas correspondientes
-            _casillas[1, 0].Figure = _figures[index - 4];
-            _casillas[6, 0].Figure = _figures[index - 3];
-            _casillas[1, 7].Figure = _figures[index - 2];
-            _casillas[6, 7].Figure = _figures[index - 1];
+            _figures[index++] = whiteKnight1;
+            _figures[index++] = whiteKnight2;
+            _figures[index++] = blackKnight1;
+            _figures[index++] = blackKnight2;
+
+            _casillas[1, 0].Figure = whiteKnight1;
+            _casillas[6, 0].Figure = whiteKnight2;
+            _casillas[1, 7].Figure = blackKnight1;
+            _casillas[6, 7].Figure = blackKnight2;
 
             // Alfiles
-            _figures[index++] = new Bishop(FigureColor.WHITE, new Coord(2, 0), FigureType.BISHOP);
-            _figures[index++] = new Bishop(FigureColor.WHITE, new Coord(5, 0), FigureType.BISHOP);
-            _figures[index++] = new Bishop(FigureColor.BLACK, new Coord(2, 7), FigureType.BISHOP);
-            _figures[index++] = new Bishop(FigureColor.BLACK, new Coord(5, 7), FigureType.BISHOP);
+            var whiteBishop1 = CrearFigura(FigureColor.WHITE, FigureType.BISHOP, 2, 0);
+            //var whiteBishop1 = new Bishop(FigureColor.WHITE, new Coord(2, 0), FigureType.BISHOP);
+            var whiteBishop2 = CrearFigura(FigureColor.WHITE, FigureType.BISHOP, 5, 0);
+            var blackBishop1 = CrearFigura(FigureColor.BLACK, FigureType.BISHOP, 2, 7);
+            var blackBishop2 = CrearFigura(FigureColor.BLACK, FigureType.BISHOP, 5, 7);
 
-            // Asigna los alfiles a las casillas correspondientes
-            _casillas[2, 0].Figure = _figures[index - 4];
-            _casillas[5, 0].Figure = _figures[index - 3];
-            _casillas[2, 7].Figure = _figures[index - 2];
-            _casillas[5, 7].Figure = _figures[index - 1];
+            _figures[index++] = whiteBishop1;
+            _figures[index++] = whiteBishop2;
+            _figures[index++] = blackBishop1;
+            _figures[index++] = blackBishop2;
+
+            _casillas[2, 0].Figure = whiteBishop1;
+            _casillas[5, 0].Figure = whiteBishop2;
+            _casillas[2, 7].Figure = blackBishop1;
+            _casillas[5, 7].Figure = blackBishop2;
 
             // Reina
-            _figures[index++] = new Queen(FigureColor.WHITE, new Coord(3, 0), FigureType.QUEEN);
-            _figures[index++] = new Queen(FigureColor.BLACK, new Coord(3, 7), FigureType.QUEEN);
+            var whiteQueen = CrearFigura(FigureColor.WHITE, FigureType.QUEEN, 3, 0);
+            var blackQueen = CrearFigura(FigureColor.BLACK, FigureType.QUEEN, 3, 7);
 
-            // Asigna las reinas a las casillas correspondientes
-            _casillas[3, 0].Figure = _figures[index - 2];
-            _casillas[3, 7].Figure = _figures[index - 1];
+            _figures[index++] = whiteQueen;
+            _figures[index++] = blackQueen;
 
-            // Rey
-            _figures[index++] = new King(FigureColor.WHITE, new Coord(4, 0), FigureType.KING);
-            _figures[index++] = new King(FigureColor.BLACK, new Coord(4, 7), FigureType.KING);
+            _casillas[3, 0].Figure = whiteQueen;
+            _casillas[3, 7].Figure = blackQueen;
 
-            // Asigna los reyes a las casillas correspondientes
-            _casillas[4, 0].Figure = _figures[index - 2];
-            _casillas[4, 7].Figure = _figures[index - 1];
+            //Rey
+            var whiteKing = CrearFigura(FigureColor.WHITE, FigureType.KING, 4, 0);
+            var blackKing = CrearFigura(FigureColor.BLACK, FigureType.KING, 4, 7);
+            
+            //Console.WriteLine($"Creando rey blanco: {whiteKing.Color}, {whiteKing.Type}, {whiteKing.Coords}");
+            //Console.WriteLine($"Creando rey negro: {blackKing.Color}, {blackKing.Type}, {blackKing.Coords}");
+            _figures[index++] = whiteKing;
+            _figures[index++] = blackKing;
+
+            _casillas[4, 0].Figure = whiteKing;
+            _casillas[4, 7].Figure = blackKing;
         }
 
         //esto asi no me gusta, tengo que revisarlo
         public static Figure CrearFigura(FigureColor color, FigureType type, int x, int y)
         {
+            //return new Figure(color, new Coord(x, y), type);
             switch (type)
             {
                 case FigureType.PAWN:
-                    return new Pawn(color, new Coord(x, y), type);
+                    return new Pawn(color, type, new Coord(x, y));
 
                 case FigureType.TOWER:
-                    return new Tower(color, new Coord(x, y), type);
+                    return new Tower(color, type, new Coord(x, y));
 
                 case FigureType.BISHOP:
-                    return new Bishop(color, new Coord(x, y), type);
+                    return new Bishop(color, type, new Coord(x, y));
 
                 case FigureType.KNIGHT:
-                    return new Knight(color, new Coord(x, y), type);
+                    return new Knight(color, type, new Coord(x, y));
 
                 case FigureType.KING:
-                    return new King(color, new Coord(x, y), type);
+                    return new King(color, type, new Coord(x, y));
 
                 case FigureType.QUEEN:
-                    return new Queen(color, new Coord(x, y), type);
+                    return new Queen(color, type, new Coord(x, y));
 
                 default:
                     throw new NotImplementedException($"La figura de tipo {type} no está implementada.");
@@ -220,11 +249,12 @@ namespace ChessLib.Tablero
 
         public void PrintBoard()
         {
-            for (int y = _height - 1; y >= 0; y--)
+            for (int y = 0; y < _height; y++)
             {
                 for (int x = 0; x < _width; x++)
                 {
                     IFigure? figure = GetFigureAt(x, y);
+                    //FigureColor figure1 = GetFigureColor()
                     if (figure != null)
                     {
                         DrawFigure(figure);
@@ -238,8 +268,10 @@ namespace ChessLib.Tablero
             }
         }
 
+
         public static void DrawFigure(IFigure figure)
         {
+            //Console.WriteLine($"Dibujando figura: {figure.Color} {figure.Type}");
             switch (figure.Type)
             {
                 case FigureType.BISHOP:
@@ -259,6 +291,9 @@ namespace ChessLib.Tablero
                     break;
                 case FigureType.TOWER:
                     Console.Write(" T ");
+                    break;
+                default:
+                    Console.Write(" ? ");
                     break;
             }
         }

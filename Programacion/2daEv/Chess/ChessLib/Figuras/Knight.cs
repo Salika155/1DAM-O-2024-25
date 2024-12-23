@@ -10,7 +10,7 @@ namespace ChessLib.Figuras
 {
     public class Knight : Figure
     {
-        public Knight(FigureColor color, Coord coords, FigureType type) : base(color, coords, FigureType.KNIGHT)
+        public Knight(FigureColor color, FigureType type, Coord coords) : base(color, coords, FigureType.KNIGHT)
         {
         }
 

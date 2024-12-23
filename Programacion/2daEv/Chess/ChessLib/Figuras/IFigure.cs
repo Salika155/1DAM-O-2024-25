@@ -10,6 +10,7 @@ namespace ChessLib.Figuras
     public interface IFigure
     {
         FigureType Type { get; }
+        FigureColor Color { get; }
     }
 }
 

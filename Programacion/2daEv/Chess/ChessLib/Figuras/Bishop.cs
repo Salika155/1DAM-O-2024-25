@@ -10,7 +10,7 @@ namespace ChessLib.Figuras
 {
     public class Bishop : Figure
     {
-        public Bishop(FigureColor color, Coord coords, FigureType type) : base(color, coords, FigureType.BISHOP)
+        public Bishop(FigureColor color, FigureType type, Coord coords) : base(color, coords, FigureType.BISHOP)
         {
         }
 

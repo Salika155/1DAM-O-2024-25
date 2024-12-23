@@ -10,7 +10,7 @@ namespace ChessLib.Figuras
 {
     internal class Pawn : Figure
     {
-        public Pawn(FigureColor color, Coord coords, FigureType type) : base(color, coords, FigureType.PAWN)
+        public Pawn(FigureColor color, FigureType type, Coord coords) : base(color, coords, FigureType.PAWN)
         {
         }
 

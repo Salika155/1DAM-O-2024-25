@@ -75,4 +75,55 @@ namespace AlgoritmoSwapNLetrasDePalabra
             fin--;
         }
     }
+
+    using System;
+
+namespace AlgoritmoSwapNLetrasDePalabra
+    {
+        internal class ArrayAlgoritmo
+        {
+            public static void Main(string[] args)
+            {
+                // Ejemplo: array que representa la palabra "sofia".
+                string[] array = { "s", "o", "f", "i", "a" };
+                int n = 2;
+
+                Console.Write("Array original: ");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write(array[i]);
+                }
+                Console.WriteLine();
+
+                // Realizar la rotación directamente en la misma función.
+                int length = array.Length;
+                n %= length; // Asegurar que n no exceda la longitud del array.
+                int count = 0; // Contador de elementos movidos.
+
+                for (int start = 0; count < length; start++)
+                {
+                    int current = start;
+                    string prev = array[start];
+
+                    do
+                    {
+                        int next = (current + n) % length; // Calcular el siguiente índice.
+                        string temp = array[next]; // Guardar temporalmente el siguiente elemento.
+                        array[next] = prev; // Mover el elemento previo al índice actual.
+                        prev = temp; // Actualizar el elemento previo.
+                        current = next; // Avanzar al siguiente índice.
+                        count++; // Incrementar el contador de elementos movidos.
+                    } while (start != current); // Terminar cuando se regrese al índice inicial.
+                }
+
+                Console.Write("Array tras rotar a la izquierda " + n + " posiciones: ");
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Console.Write(array[i]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+
 }

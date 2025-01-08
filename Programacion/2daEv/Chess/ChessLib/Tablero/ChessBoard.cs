@@ -1,10 +1,5 @@
 ﻿using ChessLib.Figuras;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ChessLib.Tablero
 {
@@ -254,6 +249,7 @@ namespace ChessLib.Tablero
                 for (int x = 0; x < _width; x++)
                 {
                     IFigure? figure = GetFigureAt(x, y);
+                    //Casilla casilla = GetCasillaAt(x, y);
                     //FigureColor figure1 = GetFigureColor()
                     if (figure != null)
                     {
@@ -263,11 +259,25 @@ namespace ChessLib.Tablero
                     {
                         Console.Write(" . ");
                     }
+
+                    //intento para pintar casillas por colores
+                    //for (int i = 0; i < _casillas.Length; i++)
+                    //{
+                    //    if (i % 2 == 0)
+                    //        Console.BackgroundColor = ConsoleColor.Black;
+                    //    else
+                    //        Console.BackgroundColor = ConsoleColor.White;
+                    //}
+                    
                 }
                 Console.WriteLine();
             }
         }
 
+        private Casilla GetCasillaAt(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
 
         public static void DrawFigure(IFigure figure)
         {

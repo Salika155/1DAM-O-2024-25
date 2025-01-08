@@ -27,10 +27,10 @@ namespace ChessLib.Tablero
         }
 
         public CasillaColor Color => _casillaColor;
-        public Casilla(Coord coord, CasillaColor type)
+        public Casilla(Coord coord, CasillaColor color)
         {
             _coord = coord;
-            _casillaColor = type;
+            _casillaColor = color;
             Figure = null;
         }
 

@@ -20,12 +20,21 @@ namespace ChessLib.Figuras
 
     public abstract class Figure : IFigure
     {
-        private readonly FigureColor? _colorFigure;
-        private readonly FigureType? _typeFigure;
-        private readonly Coord _coords;
+        private FigureColor? _colorFigure;
+        private FigureType? _typeFigure;
+        private Coord _coords;
         private int _movementCount;
 
-        public Coord Coords => _coords;
+        public Coord Coords
+        {
+            get => GetCoord();
+            set
+            {
+                _coords = value;
+            }
+        }
+        public FigureColor Color => GetColor();
+        public FigureType Type => GetFigureType();
         public Figure(FigureColor color, Coord coords, FigureType? type)
         {
             _colorFigure = color;
@@ -33,27 +42,35 @@ namespace ChessLib.Figuras
             _typeFigure = type;
             _movementCount = 0;
         }
-        public abstract Coord[] GetAvailablePosition(IChessBoard board);
 
-        public Coord GetCoord()
+        public int GetFigureMovements() => _movementCount;
+        public void SumMovements() => _movementCount++;
+
+        public Coord GetCoord() => Coords;
+        public FigureColor GetColor() => Color;
+        public FigureType GetFigureType() => Type;
+
+        public abstract Coord? GetAvailablePosition(IChessBoard board);
+        
+        public abstract List<Coord> GetAllAvailablePosition(IChessBoard board);
+
+        public virtual bool IsValidMove(Coord target, IChessBoard board)
         {
-            return _coords;
+            // Comprobar si la coordenada de destino está dentro de los límites del tablero
+            if (target.X < 0 || target.X >= board.GetWidth() || target.Y < 0 || target.Y >= board.GetHeight())
+                return false;
+
+            // Comprobar si la casilla está ocupada por una figura del mismo color
+            var targetCell = board.GetFigureAt(target.X, target.Y);
+            if (targetCell != null && targetCell.GetColor() == this.GetColor())
+                return false;  // No se puede mover a una casilla ocupada por una pieza del mismo color
+
+            // Delega la validación específica a la clase derivada (ejemplo: Bishop, Knight, etc.)
+            return IsMoveValidForPiece(target, board);
         }
 
-        public FigureColor GetColor()
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract bool IsMoveValidForPiece(Coord target, IChessBoard board);
 
-        public FigureType GetFigureType()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetFigureMovements()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
 

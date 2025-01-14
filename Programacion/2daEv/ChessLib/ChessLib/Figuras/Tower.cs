@@ -10,7 +10,17 @@ namespace ChessLib.Figuras
             
         }
 
-        public override Coord[] GetAvailablePosition(IChessBoard board)
+        public override List<Coord> GetAllAvailablePosition(IChessBoard board)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Coord? GetAvailablePosition(IChessBoard board)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
         {
             throw new NotImplementedException();
         }

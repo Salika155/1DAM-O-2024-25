@@ -51,12 +51,12 @@ namespace ChessLib.Tablero
 
         public int GetHeight()
         {
-            throw new NotImplementedException();
+            return _height;
         }
 
         public int GetWidth()
         {
-            throw new NotImplementedException();
+            return _width;
         }
 
         //Metodo para inicializar las casillas

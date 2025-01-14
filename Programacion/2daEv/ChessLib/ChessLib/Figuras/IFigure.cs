@@ -8,8 +8,10 @@ namespace ChessLib.Figuras
         Coord GetCoord();
         FigureColor GetColor();
         FigureType GetFigureType();
-        Coord[] GetAvailablePosition(IChessBoard board);
         int GetFigureMovements();
+        Coord? GetAvailablePosition(IChessBoard board);
+        List<Coord> GetAllAvailablePosition(IChessBoard board);
+        
     }
 }
 

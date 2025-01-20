@@ -57,7 +57,10 @@ namespace ChessLib.Figuras
 
         protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
         {
-            throw new NotImplementedException();
+            //esto esta mal
+            while ((target.X > 0 && target.X <= 7) && (target.Y > 0 && target.Y <= 7))
+                return true;
+            return false;
         }
     }
 }

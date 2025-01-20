@@ -1,6 +1,5 @@
 ﻿using ChessLib.Tablero;
 
-
 namespace ChessExec
 {
     internal class Program
@@ -9,9 +8,15 @@ namespace ChessExec
         {
             // Crear un tablero de ajedrez
             var chessBoard = new ChessBoard();
+            Init();
 
             // Mostrar información básica (solo para probar)
             
+        }
+
+        private static void Init()
+        {
+            throw new NotImplementedException();
         }
     }
 }

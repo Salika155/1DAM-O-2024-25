@@ -1,5 +1,4 @@
-﻿
-using ChessLib.Tablero;
+﻿using ChessLib.Tablero;
 
 namespace ChessLib.Figuras
 {
@@ -10,8 +9,7 @@ namespace ChessLib.Figuras
         FigureType GetFigureType();
         int GetFigureMovements();
         Coord? GetAvailablePosition(IChessBoard board);
-        List<Coord> GetAllAvailablePosition(IChessBoard board);
-        
+        List<Coord> GetAllAvailablePosition(IChessBoard board); 
     }
 }
 

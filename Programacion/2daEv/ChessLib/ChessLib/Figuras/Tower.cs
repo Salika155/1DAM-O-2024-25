@@ -1,5 +1,4 @@
-﻿
-using ChessLib.Tablero;
+﻿using ChessLib.Tablero;
 
 namespace ChessLib.Figuras
 {

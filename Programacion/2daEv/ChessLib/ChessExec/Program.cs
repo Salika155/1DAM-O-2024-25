@@ -9,6 +9,7 @@ namespace ChessExec
             // Crear un tablero de ajedrez
             var chessBoard = new ChessBoard();
             Init();
+            
 
             // Mostrar información básica (solo para probar)
             

@@ -27,7 +27,7 @@ namespace ChessLib.Tablero
 
         }
 
-        IChessBoard b = new ChessBoard();
+        
 
         public void Clear()
         {

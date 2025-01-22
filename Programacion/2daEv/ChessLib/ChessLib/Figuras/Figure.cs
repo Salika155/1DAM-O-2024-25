@@ -71,6 +71,7 @@ namespace ChessLib.Figuras
 
         protected abstract bool IsMoveValidForPiece(Coord target, IChessBoard board);
 
+        
     }
 }
 

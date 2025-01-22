@@ -35,7 +35,7 @@ namespace ChessLib.Figuras
                     {
                         if (targetCell.GetColor() != Color)
                             position.Add(new Coord(x, y));
-                        break;   
+                        break;
                     }
                     position.Add(new Coord(x, y));
                 }
@@ -53,16 +53,53 @@ namespace ChessLib.Figuras
             // Ejemplo: devolver la primera posición válida
             return positions[0];
         }
-
-        protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
-        {
-            //esto esta mal
-            while ((target.X > 0 && target.X <= 7) && (target.Y > 0 && target.Y <= 7))
-                return true;
-            return false;
-        }
     }
 }
+
+        //protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
+        //{
+        //    var availablePositions = GetAllAvailablePosition(board);
+        //    foreach (var pos in availablePositions)
+        //    {
+        //        if (pos.X == target.X && pos.Y == target.Y)
+        //            return true;
+        //    }
+        //    return false;
+        //}
+
+//        protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
+//{
+//    // Movimiento diagonal
+//    int deltaX = Math.Abs(target.X - Coords.X);
+//    int deltaY = Math.Abs(target.Y - Coords.Y);
+
+//    if (deltaX != deltaY)
+//        return false; // No es un movimiento diagonal
+
+//    return PathIsClear(target, board);
+//}
+
+//private bool PathIsClear(Coord target, IChessBoard board)
+//{
+//    int stepX = target.X > Coords.X ? 1 : -1;
+//    int stepY = target.Y > Coords.Y ? 1 : -1;
+
+//    int x = Coords.X + stepX;
+//    int y = Coords.Y + stepY;
+
+//    while (x != target.X && y != target.Y)
+//    {
+//        if (board.GetFigureAt(x, y) != null)
+//            return false; // Hay una figura bloqueando el camino
+
+//        x += stepX;
+//        y += stepY;
+//    }
+
+//    return true;
+
+//    }
+//}
 
 //class Bishop : Figure
 //         *

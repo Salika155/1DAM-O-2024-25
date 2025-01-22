@@ -9,7 +9,8 @@ namespace ChessLib.Figuras
         FigureType GetFigureType();
         int GetFigureMovements();
         Coord? GetAvailablePosition(IChessBoard board);
-        List<Coord> GetAllAvailablePosition(IChessBoard board); 
+        List<Coord> GetAllAvailablePosition(IChessBoard board);
+        bool IsValidMove(Coord targetCoord, ChessBoard chessBoard);
     }
 }
 

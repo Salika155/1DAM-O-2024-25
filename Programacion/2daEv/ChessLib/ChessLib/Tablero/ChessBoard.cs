@@ -108,7 +108,7 @@ namespace ChessLib.Tablero
 
             // Comprobar si el movimiento es válido según la lógica de la figura
             var targetCoord = new Coord(toX, toY);
-            if (!figure.IsValidMove(targetCoord, this))
+            if (!figure.ValidateMove(targetCoord, this))
                 return false;
 
             // Realizar el movimiento

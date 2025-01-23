@@ -71,7 +71,7 @@ namespace ChessLib.Figuras
 
         protected abstract bool IsMoveValidForPiece(Coord target, IChessBoard board);
 
-        public bool IsValidMove(Coord targetCoord, ChessBoard chessBoard)
+        public bool ValidateMove(Coord targetCoord, ChessBoard chessBoard)
         {
             throw new NotImplementedException();
         }

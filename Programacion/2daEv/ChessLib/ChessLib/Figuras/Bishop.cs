@@ -4,55 +4,60 @@ namespace ChessLib.Figuras
 {
     public class Bishop : Figure
     {
-        public Bishop(FigureColor color, Coord coords, FigureType type) : base(color, coords, FigureType.BISHOP)
+        public Bishop(FigureColor color, FigureType type, Coord coords) : base(color, FigureType.BISHOP, coords)
         {
 
         }
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         {
-            var position = new List<Coord>();
-
-            int[] movX = { 1, 1, -1, -1 };
-            int[] movY = { 1, 1, -1, -1 };
-
-            for (int i = 0; i < movX.Length; i++)
-            {
-                int x = Coords.X;
-                int y = Coords.Y;
-
-                while (true)
-                {
-                    x += movX[i];
-                    y += movY[i];
-
-                    if (x < 0 || x >= board.GetWidth() || y < 0 || y >= board.GetHeight())
-                        break;
-
-                    var targetCell = board.GetFigureAt(x, y);
-
-                    if (targetCell != null)
-                    {
-                        if (targetCell.GetColor() != Color)
-                            position.Add(new Coord(x, y));
-                        break;
-                    }
-                    position.Add(new Coord(x, y));
-                }
-            }
-            return position;
+            throw new NotImplementedException();
         }
 
-        public override Coord? GetAvailablePosition(IChessBoard board)
-        {
-            var positions = GetAllAvailablePosition(board);
+        //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
+        //{
+        //    var position = new List<Coord>();
 
-            if (positions.Count == 0)
-                return null;
+        //    int[] movX = { 1, 1, -1, -1 };
+        //    int[] movY = { 1, 1, -1, -1 };
 
-            // Ejemplo: devolver la primera posición válida
-            return positions[0];
-        }
+        //    for (int i = 0; i < movX.Length; i++)
+        //    {
+        //        int x = Coords.X;
+        //        int y = Coords.Y;
+
+        //        while (true)
+        //        {
+        //            x += movX[i];
+        //            y += movY[i];
+
+        //            if (x < 0 || x >= board.GetWidth() || y < 0 || y >= board.GetHeight())
+        //                break;
+
+        //            var targetCell = board.GetFigureAt(x, y);
+
+        //            if (targetCell != null)
+        //            {
+        //                if (targetCell.GetColor() != Color)
+        //                    position.Add(new Coord(x, y));
+        //                break;
+        //            }
+        //            position.Add(new Coord(x, y));
+        //        }
+        //    }
+        //    return position;
+        //}
+
+        //public override Coord? GetAvailablePosition(IChessBoard board)
+        //{
+        //    var positions = GetAllAvailablePosition(board);
+
+        //    if (positions.Count == 0)
+        //        return null;
+
+        //    // Ejemplo: devolver la primera posición válida
+        //    return positions[0];
+        //}
     }
 }
 

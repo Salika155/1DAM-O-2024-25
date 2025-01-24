@@ -1,10 +1,11 @@
 ﻿using ChessLib.Tablero;
+using System.Drawing;
 
 namespace ChessLib.Figuras
 {
     public class Tower : Figure
     {
-        public Tower(FigureColor color, Coord coords, FigureType type) : base(color, coords, FigureType.TOWER)
+        public Tower(FigureColor color, FigureType type, Coord coords) : base(color, FigureType.TOWER, coords)
         {
             
         }
@@ -14,14 +15,19 @@ namespace ChessLib.Figuras
             throw new NotImplementedException();
         }
 
-        public override Coord? GetAvailablePosition(IChessBoard board)
-        {
-            throw new NotImplementedException();
-        }
+        //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
-        {
-            throw new NotImplementedException();
-        }
+        //public override Coord? GetAvailablePosition(IChessBoard board)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

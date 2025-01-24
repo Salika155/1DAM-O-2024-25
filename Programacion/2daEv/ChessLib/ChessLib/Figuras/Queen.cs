@@ -4,7 +4,7 @@ namespace ChessLib.Figuras
 {
     public class Queen : Figure
     {
-        public Queen(FigureColor color, Coord coords, FigureType type) : base(color, coords, FigureType.QUEEN)
+        public Queen(FigureColor color, FigureType type, Coord coords) : base(color, FigureType.QUEEN, coords)
         {
         }
 
@@ -13,14 +13,19 @@ namespace ChessLib.Figuras
             throw new NotImplementedException();
         }
 
-        public override Coord? GetAvailablePosition(IChessBoard board)
-        {
-            throw new NotImplementedException();
-        }
+        //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
-        {
-            throw new NotImplementedException();
-        }
+        //public override Coord? GetAvailablePosition(IChessBoard board)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

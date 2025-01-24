@@ -9,11 +9,11 @@ namespace ChessLib.Figuras
         FigureType GetFigureType();
         //mismo caso
         Coord GetCoord();
-
         int GetFigureMovements();
         //Coord? GetAvailablePosition(IChessBoard board);
-        //List<Coord> GetAllAvailablePosition(IChessBoard board);
+        
         bool ValidateMove(Coord targetCoord, ChessBoard chessBoard);
+        List<Coord> GetAllAvailablePosition(IChessBoard board);
     }
 }
 

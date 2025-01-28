@@ -1,5 +1,4 @@
-﻿
-using ChessLib.Tablero;
+﻿using ChessLib.Tablero;
 
 namespace ChessLib.Figuras
 {
@@ -26,11 +25,9 @@ namespace ChessLib.Figuras
         private readonly FigureType _typeFigure;
         private readonly Coord _coords;
 
+        public FigureColor Color => _colorFigure;
         public Coord Coords => _coords;
         public FigureType Type => _typeFigure;
-        public FigureColor Color => _colorFigure;
-
-        
 
         public Figure(FigureColor color, Coord coords, FigureType type)
         {
@@ -38,7 +35,16 @@ namespace ChessLib.Figuras
             _coords = coords;
             _typeFigure = type;
         }
+        public abstract List<Coord> GetAvailablePositions(IChessBoard board);
+
+        public Figure Move(Coord newCoords)
+        {
+            return CreateNewInstance(newCoords);
+        }
+
+        protected abstract Figure CreateNewInstance(Coord newCoords);
         public abstract Coord[] GetAvailablePosition(IChessBoard board);
+        
     }
 }
 

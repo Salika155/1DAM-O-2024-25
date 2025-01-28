@@ -214,7 +214,7 @@ namespace ChessLib.Tablero
                     return new Tower(color, type, new Coord(x, y));
 
                 case FigureType.BISHOP:
-                    return new Bishop(color, type, new Coord(x, y));
+                    return new Bishop(color, new Coord(x, y));
 
                 case FigureType.KNIGHT:
                     return new Knight(color, type, new Coord(x, y));

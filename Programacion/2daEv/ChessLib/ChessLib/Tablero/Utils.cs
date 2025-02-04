@@ -5,7 +5,7 @@ namespace ChessLib.Tablero
     {
         internal static int IndexOfCasilla(int x, int y, int width)
         {
-            throw new NotImplementedException();
+            return y * width + x;
         }
     }
 }

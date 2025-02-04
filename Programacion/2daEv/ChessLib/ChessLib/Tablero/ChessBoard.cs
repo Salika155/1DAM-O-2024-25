@@ -28,27 +28,36 @@ namespace ChessLib.Tablero
         }
 
         
-
         public void Clear()
         {
-            throw new NotImplementedException();
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    _casillas[x, y].Figure = null;
+                }
+            }
         }
 
         public IFigure? GetFigureAt(int x, int y)
         {
-            if (x < 0 || x >= Width || y < 0 || y >= Height)
+            if (x < 0 || x >= _width || y < 0 || y >= _height)
                 return null; // Fuera del tablero.
             return _casillas[x, y].Figure;
         }
 
         public IFigure GetFigureAt(int index)
         {
-            throw new NotImplementedException();
+            if (index < 0 || index >= _figures.Length)
+            {
+                throw new ArgumentOutOfRangeException("Index is out of range");
+            }
+            return _figures[index];
         }
 
         public int GetFigureCount()
         {
-            return _figures.Length - 1;
+            return _figures.Length;
         }
 
         public int GetHeight()
@@ -62,64 +71,98 @@ namespace ChessLib.Tablero
         }
 
         //Metodo para inicializar las casillas
+
         public void InitBoard()
         {
-            // Piezas blancas
+            // Colocar las piezas blancas
             _casillas[0, 0].Figure = new Tower(FigureColor.WHITE, new Coord(0, 0), FigureType.TOWER);
-            _casillas[7, 0].Figure = new Tower(FigureColor.WHITE, new Coord(7, 0), FigureType.TOWER);
             _casillas[1, 0].Figure = new Knight(FigureColor.WHITE, new Coord(1, 0), FigureType.KNIGHT);
-            _casillas[6, 0].Figure = new Knight(FigureColor.WHITE, new Coord(6, 0), FigureType.KNIGHT);
             _casillas[2, 0].Figure = new Bishop(FigureColor.WHITE, new Coord(2, 0), FigureType.BISHOP);
-            _casillas[5, 0].Figure = new Bishop(FigureColor.WHITE, new Coord(5, 0), FigureType.BISHOP);
             _casillas[3, 0].Figure = new Queen(FigureColor.WHITE, new Coord(3, 0), FigureType.QUEEN);
             _casillas[4, 0].Figure = new King(FigureColor.WHITE, new Coord(4, 0), FigureType.KING);
+            _casillas[5, 0].Figure = new Bishop(FigureColor.WHITE, new Coord(5, 0), FigureType.BISHOP);
+            _casillas[6, 0].Figure = new Knight(FigureColor.WHITE, new Coord(6, 0), FigureType.KNIGHT);
+            _casillas[7, 0].Figure = new Tower(FigureColor.WHITE, new Coord(7, 0), FigureType.TOWER);
 
-            for (int i = 0; i < _width; i++)
+            for (int x = 0; x < 8; x++)
             {
-                _casillas[i, 1].Figure = new Pawn(FigureColor.WHITE, new Coord(i, 1), FigureType.PAWN);
+                _casillas[x, 1].Figure = new Pawn(FigureColor.WHITE, new Coord(x, 1), FigureType.PAWN);
             }
 
-            // Piezas negras
+            // Colocar las piezas negras
             _casillas[0, 7].Figure = new Tower(FigureColor.BLACK, new Coord(0, 7), FigureType.TOWER);
-            _casillas[7, 7].Figure = new Tower(FigureColor.BLACK, new Coord(7, 7), FigureType.TOWER);
             _casillas[1, 7].Figure = new Knight(FigureColor.BLACK, new Coord(1, 7), FigureType.KNIGHT);
-            _casillas[6, 7].Figure = new Knight(FigureColor.BLACK, new Coord(6, 7), FigureType.KNIGHT);
             _casillas[2, 7].Figure = new Bishop(FigureColor.BLACK, new Coord(2, 7), FigureType.BISHOP);
-            _casillas[5, 7].Figure = new Bishop(FigureColor.BLACK, new Coord(5, 7), FigureType.BISHOP);
             _casillas[3, 7].Figure = new Queen(FigureColor.BLACK, new Coord(3, 7), FigureType.QUEEN);
             _casillas[4, 7].Figure = new King(FigureColor.BLACK, new Coord(4, 7), FigureType.KING);
+            _casillas[5, 7].Figure = new Bishop(FigureColor.BLACK, new Coord(5, 7), FigureType.BISHOP);
+            _casillas[6, 7].Figure = new Knight(FigureColor.BLACK, new Coord(6, 7), FigureType.KNIGHT);
+            _casillas[7, 7].Figure = new Tower(FigureColor.BLACK, new Coord(7, 7), FigureType.TOWER);
 
-            for (int i = 0; i < _width; i++)
+            for (int x = 0; x < 8; x++)
             {
-                _casillas[i, 6].Figure = new Pawn(FigureColor.BLACK, new Coord(i, 6), FigureType.PAWN);
+                _casillas[x, 6].Figure = new Pawn(FigureColor.BLACK, new Coord(x, 6), FigureType.PAWN);
             }
         }
+
         //hara falta metodo para inicializar figuras
 
-        public bool MoveFigure(int fromX, int fromY, int toX, int toY)
+        public bool MoveFigure(int x, int y)
         {
-            var origin = _casillas[fromX, fromY];
-            var destination = _casillas[toX, toY];
+            #region codigoviejo
+            //var origin = _casillas[fromX, fromY];
+            //var destination = _casillas[toX, toY];
 
-            if (origin.Figure == null)
-                return false; // No hay figura en la casilla de origen
+            //if (origin.Figure == null)
+            //    return false; // No hay figura en la casilla de origen
 
-            var figure = origin.Figure;
+            //var figure = origin.Figure;
 
-            // Comprobar si el movimiento es válido según la lógica de la figura
-            var targetCoord = new Coord(toX, toY);
-            if (!figure.ValidateMove(targetCoord, this))
+            //// Comprobar si el movimiento es válido según la lógica de la figura
+            //var targetCoord = new Coord(toX, toY);
+            //if (!figure.ValidateMove(targetCoord, this))
+            //    return false;
+
+            //// Realizar el movimiento
+            //destination.Figure = figure;
+            //origin.Figure = null;
+
+            //// Actualizar la posición de la figura
+            ////figure.GetCoord() = targetCoord;
+            ////figure.SumMovements();
+
+            //return true;
+            #endregion
+            // Verificar si las coordenadas están dentro del tablero
+            if (x < 0 || x >= _width || y < 0 || y >= _height)
+            {
                 return false;
+            }
 
-            // Realizar el movimiento
-            destination.Figure = figure;
-            origin.Figure = null;
+            // Obtener la figura en la posición actual
+            var figure = _casillas[x, y].Figure;
 
-            // Actualizar la posición de la figura
-            //figure.GetCoord() = targetCoord;
-            //figure.SumMovements();
+            // Verificar si hay una figura en la posición actual
+            if (figure == null)
+            {
+                return false;
+            }
 
-            return true;
+            // Obtener las posiciones disponibles para la figura
+            var availablePositions = figure.GetAvailablePosition(this);
+
+            // Verificar si la nueva posición está en las posiciones disponibles
+            foreach (var pos in availablePositions)
+            {
+                if (pos.X == x && pos.Y == y)
+                {
+                    // Mover la figura a la nueva posición
+                    _casillas[x, y].Figure = figure;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void RemoveFigureAt(int x, int y)
@@ -141,10 +184,9 @@ namespace ChessLib.Tablero
             }
         }
 
-        public bool MoveFigure(int x, int y)
-        {
-            throw new NotImplementedException();
-        }
+        //------------------------------------------------------------
+
+        
     }
 }
 

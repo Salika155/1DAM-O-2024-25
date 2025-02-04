@@ -1,4 +1,5 @@
 ﻿using ChessLib.Tablero;
+using System.Drawing;
 
 namespace ChessLib.Figuras
 {
@@ -21,36 +22,9 @@ namespace ChessLib.Figuras
     public abstract class Figure : IFigure
     {
         private readonly FigureColor? _colorFigure;
-        private FigureType? _typeFigure;
+        private readonly FigureType? _typeFigure;
         private Coord _coords;
         private int _movementCount;
-
-        public FigureColor Color => GetColor();
-        //tocara cambiarlo y hacerlo propiedad, ya que necesito get y set
-        public FigureType Type
-        {
-            get => GetFigureType();
-            set
-            {
-                _typeFigure = value;
-            }
-        }
-        public Coord Coords
-        {
-            get => GetCoord();
-            set
-            {
-                _coords = value;
-            }
-        }
-
-        public int GetFigureMovements() => _movementCount;
-        public void SumMovements() => _movementCount++;
-
-        //--------------------------------------
-        public Coord GetCoord() => Coords;
-        public FigureColor GetColor() => Color;
-        public FigureType GetFigureType() => Type;
 
         public Figure(FigureColor color, FigureType? type, Coord coords)
         {
@@ -59,6 +33,29 @@ namespace ChessLib.Figuras
             _coords = coords;
             _movementCount = 0;
         }
+        public FigureColor? Color => GetColor();
+        public FigureType? Type => GetFigureType();
+        public Coord Coords => GetCoord();
+        public int MovementCount => GetFigureMovements();
+
+
+        public FigureColor? GetColor() => _colorFigure;
+        public FigureType? GetFigureType() => _typeFigure;
+        public Coord GetCoord() => _coords;
+        public int GetFigureMovements() => _movementCount;
+        
+
+        public void MoveTo(Coord newCoords)
+        {
+            _coords = newCoords;
+            _movementCount++;
+        }
+
+        public abstract Coord[] GetAvailablePosition(IChessBoard board);
+        public abstract List<Coord> GetAllAvailablePosition(IChessBoard board);
+        //tocara cambiarlo y hacerlo propiedad, ya que necesito get y set
+
+        //--------------------------------------
 
         public bool ValidateMove(Coord targetCoord, ChessBoard chessBoard)
         {
@@ -67,10 +64,7 @@ namespace ChessLib.Figuras
 
         //-------------------------------------
 
-        //public abstract Coord? GetAvailablePosition(IChessBoard board);
-
-        public abstract List<Coord> GetAllAvailablePosition(IChessBoard board);
-
+        //AQUI
         //public virtual bool IsValidMove(Coord target, IChessBoard board)
         //{
         //    // Comprobar si la coordenada de destino está dentro de los límites del tablero
@@ -87,8 +81,6 @@ namespace ChessLib.Figuras
         //}
 
         //protected abstract bool IsMoveValidForPiece(Coord target, IChessBoard board);
-
-
     }
 }
 

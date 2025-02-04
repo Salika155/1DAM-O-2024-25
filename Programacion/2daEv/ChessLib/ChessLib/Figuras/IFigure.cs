@@ -11,9 +11,14 @@ namespace ChessLib.Figuras
         Coord GetCoord();
         int GetFigureMovements();
         //Coord? GetAvailablePosition(IChessBoard board);
-        
+        Coord[] GetAvailablePosition(IChessBoard board);
+        //--------------------------------------------
+        //esto va aparte de momento
         bool ValidateMove(Coord targetCoord, ChessBoard chessBoard);
         List<Coord> GetAllAvailablePosition(IChessBoard board);
+        
+        
+        
     }
 }
 

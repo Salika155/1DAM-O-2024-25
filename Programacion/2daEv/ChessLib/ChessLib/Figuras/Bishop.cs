@@ -48,16 +48,94 @@ namespace ChessLib.Figuras
         //    return position;
         //}
 
-        //public override Coord? GetAvailablePosition(IChessBoard board)
-        //{
-        //    var positions = GetAllAvailablePosition(board);
+        public override Coord[] GetAvailablePosition(IChessBoard board)
+        {
+            List<Coord> availablePositions = new List<Coord>();
 
-        //    if (positions.Count == 0)
-        //        return null;
+            #region comentado
+            //var positions = GetAllAvailablePosition(board);
 
-        //    // Ejemplo: devolver la primera posición válida
-        //    return positions[0];
-        //}
+            //if (positions.Count == 0)
+            //    return null;
+
+            //// Ejemplo: devolver la primera posición válida
+            //return positions[0];
+            #endregion
+
+            // Movimiento en diagonal hacia arriba-izquierda
+            int x = Coords.X - 1;
+            int y = Coords.Y - 1;
+            while (x >= 0 && y >= 0)
+            {
+                var figure = board.GetFigureAt(x, y);
+                if (figure is null)
+                    availablePositions.Add(new Coord(x, y));
+                else
+                {
+                    if (figure.GetColor() != this.GetColor())
+                        availablePositions.Add(new Coord(x, y));
+                    break;
+                }
+                x--;
+                y--;
+            }
+
+            // Movimiento en diagonal hacia arriba-derecha
+            x = Coords.X + 1;
+            y = Coords.Y - 1;
+
+            while (x >= 0 && y >= 0)
+            {
+                var figure = board.GetFigureAt(x, y);
+                if (figure is null)
+                    availablePositions.Add(new Coord(x, y));
+                else
+                {
+                    if (figure.GetColor() != this.GetColor())
+                        availablePositions.Add(new Coord(x, y));
+                    break;
+                }
+                x++;
+                y--;
+            }
+
+            // Movimiento en diagonal hacia abajo-izquierda
+            x = Coords.X - 1;
+            y = Coords.Y + 1;
+            while (x >= 0 && y >= 0)
+            {
+                var figure = board.GetFigureAt(x, y);
+                if (figure is null)
+                    availablePositions.Add(new Coord(x, y));
+                else
+                {
+                    if (figure.GetColor() != this.GetColor())
+                        availablePositions.Add(new Coord(x, y));
+                    break;
+                }
+                x--;
+                y++;
+            }
+
+            // Movimiento en diagonal hacia abajo-derecha
+            x = Coords.X + 1;
+            y = Coords.Y + 1;
+            while (x < board.GetWidth() && y < board.GetHeight())
+            {
+                var figure = board.GetFigureAt(x, y);
+                if (figure == null)
+                    availablePositions.Add(new Coord(x, y));
+                else
+                {
+                    if (figure.GetColor() != this.GetColor())
+                        availablePositions.Add(new Coord(x, y));
+                    break;
+                }
+                x++;
+                y++;
+            }
+            return availablePositions.ToArray();
+        }
     }
 }
 

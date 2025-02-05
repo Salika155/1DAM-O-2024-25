@@ -25,32 +25,6 @@ namespace ChessLib.Figuras
         private Coord _coords;
         private int _movementCount;
 
-        public FigureColor Color => GetColor();
-        //tocara cambiarlo y hacerlo propiedad, ya que necesito get y set
-        public FigureType Type
-        {
-            get => GetFigureType();
-            set
-            {
-                _typeFigure = value;
-            }
-        }
-        public Coord Coords
-        {
-            get => GetCoord();
-            set
-            {
-                _coords = value;
-            }
-        }
-
-        public int GetFigureMovements() => _movementCount;
-        public void SumMovements() => _movementCount++;
-
-        //--------------------------------------
-        public Coord GetCoord() => Coords;
-        public FigureColor GetColor() => Color;
-        public FigureType GetFigureType() => Type;
 
         public Figure(FigureColor color, FigureType? type, Coord coords)
         {
@@ -60,35 +34,38 @@ namespace ChessLib.Figuras
             _movementCount = 0;
         }
 
+        public FigureColor? Color => _colorFigure;
+        public FigureType? Type => _typeFigure;
+        public Coord Coords => _coords;
+        public int MovementCount => _movementCount;
+
+        public FigureColor? GetColor() => _colorFigure;
+        public FigureType? GetFigureType() => _typeFigure;
+        public Coord GetCoord() => _coords;
+        public int GetMovementsCount() => _movementCount;
+
+        public void MoveFigure(Coord newCoords)
+        {
+            _coords = newCoords;
+            _movementCount++;
+        }
+
+        // Métodos abstractos
+        public abstract Coord[] GetAvailablePosition(IChessBoard board);
+        public abstract List<Coord> GetAllAvailablePosition(IChessBoard board);
+
+
+        //--------------------------------------
+
         public bool ValidateMove(Coord targetCoord, ChessBoard chessBoard)
         {
             throw new NotImplementedException();
         }
 
-        //-------------------------------------
 
-        //public abstract Coord? GetAvailablePosition(IChessBoard board);
+        //FigureColor IFigure.GetColor() => _colorFigure ?? throw new InvalidOperationException();
 
-        public abstract List<Coord> GetAllAvailablePosition(IChessBoard board);
-
-        //public virtual bool IsValidMove(Coord target, IChessBoard board)
-        //{
-        //    // Comprobar si la coordenada de destino está dentro de los límites del tablero
-        //    if (target.X < 0 || target.X >= board.GetWidth() || target.Y < 0 || target.Y >= board.GetHeight())
-        //        return false;
-
-        //    // Comprobar si la casilla está ocupada por una figura del mismo color
-        //    var targetCell = board.GetFigureAt(target.X, target.Y);
-        //    if (targetCell != null && targetCell.GetColor() == this.GetColor())
-        //        return false;  // No se puede mover a una casilla ocupada por una pieza del mismo color
-
-        //    // Delega la validación específica a la clase derivada (ejemplo: Bishop, Knight, etc.)
-        //    return IsMoveValidForPiece(target, board);
-        //}
-
-        //protected abstract bool IsMoveValidForPiece(Coord target, IChessBoard board);
-
-
+        //FigureType IFigure.GetFigureType() => _typeFigure ?? throw new InvalidOperationException();
     }
 }
 

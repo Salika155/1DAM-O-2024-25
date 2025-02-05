@@ -4,16 +4,17 @@ namespace ChessLib.Figuras
 {
     public interface IFigure
     {
-        FigureColor GetColor();
+        FigureColor? GetColor();
         //este es posible que si tenga que hacerlo propiedad para un get/set
-        FigureType GetFigureType();
+        FigureType? GetFigureType();
         //mismo caso
         Coord GetCoord();
-        int GetFigureMovements();
+        int GetMovementsCount();
         //Coord? GetAvailablePosition(IChessBoard board);
         
         bool ValidateMove(Coord targetCoord, ChessBoard chessBoard);
         List<Coord> GetAllAvailablePosition(IChessBoard board);
+        void MoveFigure(Coord targetCoord);
     }
 }
 

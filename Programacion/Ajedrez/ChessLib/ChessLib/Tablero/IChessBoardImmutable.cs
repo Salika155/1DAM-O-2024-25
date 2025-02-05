@@ -4,11 +4,14 @@ namespace ChessLib.Tablero
 {
     public interface IChessBoardImmutable
     {
-        IFigure GetFigureAt(int x, int y);
+        IFigure? GetFigureAt(int x, int y);
         int GetWidth();
         int GetHeight();
-        IFigure GetFigureAt(int index);
+        IFigure? GetFigureAt(int index);
         int GetFigureCount();
+
+        int Width => GetWidth();
+        int Height => GetHeight();
     }
 }
 

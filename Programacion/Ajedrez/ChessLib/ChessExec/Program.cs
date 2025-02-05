@@ -7,17 +7,20 @@ namespace ChessExec
         static void Main(string[] args)
         {
             // Crear un tablero de ajedrez
-            var chessBoard = new ChessBoard();
+            var chessBoard = new ChessBoard(8, 8);
             Init();
-            
+            chessBoard.PrintBoard();
+
 
             // Mostrar información básica (solo para probar)
-            
         }
 
         private static void Init()
         {
-            throw new NotImplementedException();
+            
         }
     }
+
+        
+    
 }

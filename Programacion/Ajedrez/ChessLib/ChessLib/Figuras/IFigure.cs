@@ -11,10 +11,11 @@ namespace ChessLib.Figuras
         Coord GetCoord();
         int GetMovementsCount();
         //Coord? GetAvailablePosition(IChessBoard board);
-        
-        bool ValidateMove(Coord targetCoord, ChessBoard chessBoard);
-        List<Coord> GetAllAvailablePosition(IChessBoard board);
         void MoveFigure(Coord targetCoord);
+        Coord[] GetAvailablePositions(IChessBoard board);
+        //----------------------------------------------------
+        List<Coord> GetAllAvailablePosition(IChessBoard board);
+        bool ValidateMove(Coord targetCoord, ChessBoard chessBoard);
     }
 }
 

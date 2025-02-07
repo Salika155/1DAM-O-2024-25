@@ -51,7 +51,7 @@ namespace ChessLib.Figuras
         }
 
         // Métodos abstractos
-        public abstract Coord[] GetAvailablePosition(IChessBoard board);
+        public abstract Coord[] GetAvailablePositions(IChessBoard board);
         public abstract List<Coord> GetAllAvailablePosition(IChessBoard board);
 
 
@@ -61,6 +61,7 @@ namespace ChessLib.Figuras
         {
             throw new NotImplementedException();
         }
+
 
 
         //FigureColor IFigure.GetColor() => _colorFigure ?? throw new InvalidOperationException();

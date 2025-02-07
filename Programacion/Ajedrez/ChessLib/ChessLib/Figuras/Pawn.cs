@@ -36,13 +36,34 @@ namespace ChessLib.Figuras
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         {
-            throw new NotImplementedException();
+            List<Coord> moves = new List<Coord>();
+            //int direction = GetColor == FigureColor.WHITE ? 1 : -1;
+
+            //// Movimiento hacia adelante
+            //Coord forward = new Coord(GetPosition().X, GetPosition().Y + direction);
+            //if (board.IsPositionEmpty(forward))
+            //    moves.Add(forward);
+
+            //// Capturas diagonales
+            //CheckDiagonalCapture(board, direction, -1, moves); // Izquierda
+            //CheckDiagonalCapture(board, direction, 1, moves);  // Derecha
+
+            return moves;
         }
 
-        public override Coord[] GetAvailablePosition(IChessBoard board)
+        public override Coord[] GetAvailablePositions(IChessBoard board)
         {
             throw new NotImplementedException();
         }
+
+        //private void CheckDiagonalCapture(IChessBoard board, int dirY, int dirX, List<Coord> moves)
+        //{
+        //    Coord target = new Coord(GetPosition().X + dirX, GetPosition().Y + dirY);
+        //    if (board.HasEnemyPiece(target, GetColor))
+        //        moves.Add(target);
+        //}
+
+        //-----
 
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{

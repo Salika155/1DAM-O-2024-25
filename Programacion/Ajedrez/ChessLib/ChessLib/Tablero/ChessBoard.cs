@@ -19,7 +19,7 @@ namespace ChessLib.Tablero
             _casillas = new Casilla[width, height];
             _figures = new Figure[32];
             CrearCasillas();
-            InitBoard();
+            //InitBoard();
             //metodo para iniciar fichas
         }
 
@@ -139,7 +139,7 @@ namespace ChessLib.Tablero
 
         public bool MoveFigure(int x, int y)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
 

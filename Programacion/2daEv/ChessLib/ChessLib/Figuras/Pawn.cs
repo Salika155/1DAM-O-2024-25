@@ -2,14 +2,44 @@
 
 namespace ChessLib.Figuras
 {
-    public abstract class Pawn : Figure
+    public class Pawn : Figure
     {
         public Pawn(FigureColor color, FigureType type, Coord coords) 
             : base(color, FigureType.PAWN, coords)
         {
         }
 
-        public abstract bool ValidateMove(Coord newCoords);
+        public override Coord[] GetAvailablePosition(IChessBoard board)
+        {
+            List<Coord> moves = new List<Coord>();
+            int direction = Color == FigureColor.WHITE ? 1 : -1;
+
+            Coord movAdelante = new Coord(Coords.X, Coords.Y + direction);
+            if (board.IsPositionEmpty(movAdelante))
+                moves.Add(movAdelante);
+
+            CheckDiagonalCapture(board, direction, -1, moves); // Izquierda
+            CheckDiagonalCapture(board, direction, 1, moves);  // Derecha
+            return moves.ToArray();
+        }
+
+        private void CheckDiagonalCapture(IChessBoard board, int directionY, int directionX, List<Coord> moves)
+        {
+            Coord target = new Coord(Coords.X + directionX, Coords.Y + directionY);
+            if (board.HasEnemyPiece(target, Color))
+                moves.Add(target);
+        }
+
+        public virtual bool ValidateMove(Coord newCoords)
+        {
+            return true;
+        }
+
+        public FigureType? GetFigureType()
+        {
+            return Type;
+        }
+
         //public override bool ValidateMove(Coord newCoords)
         //{
         //    int direction = (Color == FigureColor.WHITE) ? 1 : -1;
@@ -25,19 +55,22 @@ namespace ChessLib.Figuras
         //    return false;
         //}
 
-        public void Promote(FigureType newType)
+        public void Promote(FigureType newType, FigureType? type)
         {
             if (newType == FigureType.PAWN || newType == FigureType.KING)
             {
                 throw new InvalidOperationException("Un peón no puede promocionar a peón o rey.");
             }
-            Type = newType;
+
+            type = newType;
         }
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         {
             throw new NotImplementedException();
         }
+
+        
 
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{

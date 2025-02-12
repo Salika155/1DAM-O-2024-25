@@ -10,7 +10,29 @@ namespace ChessLib.Figuras
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         {
-            throw new NotImplementedException();
+            return GetAvailablePosition(board).ToList();
+        }
+
+        public override Coord[] GetAvailablePosition(IChessBoard board)
+        {
+            List<Coord> moves = new List<Coord>();
+            int x = Coords.X;
+            int y = Coords.Y;
+
+            // Movimiento en todas las direcciones (1 casilla)
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0) 
+                        continue;
+                    Coord newPos = new Coord(x + i, y + j);
+                    if (board.IsPositionEmpty(newPos) || board.HasEnemyPiece(newPos, Color))
+                        moves.Add(newPos);
+                }
+            }
+
+            return moves.ToArray();
         }
 
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)

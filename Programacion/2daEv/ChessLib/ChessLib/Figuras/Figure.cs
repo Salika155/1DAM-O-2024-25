@@ -21,29 +21,29 @@ namespace ChessLib.Figuras
 
     public abstract class Figure : IFigure
     {
-        private readonly FigureColor? _colorFigure;
-        private readonly FigureType? _typeFigure;
+        private readonly FigureColor _colorFigure;
+        private readonly FigureType _typeFigure;
         private Coord _coords;
         private int _movementCount;
 
-        public Figure(FigureColor color, FigureType? type, Coord coords)
+        public Figure(FigureColor color, FigureType type, Coord coords)
         {
             _colorFigure = color;
             _typeFigure = type;
             _coords = coords;
             _movementCount = 0;
         }
-        public FigureColor? Color => GetColor();
-        public FigureType? Type => GetFigureType();
-        public Coord Coords => GetCoord();
-        public int MovementCount => GetFigureMovements();
+        public FigureColor Color => _colorFigure;
+        public FigureType Type => _typeFigure;
+        public Coord Coords => _coords;
+        public int MovementCount => _movementCount;
 
 
         public FigureColor? GetColor() => _colorFigure;
         public FigureType? GetFigureType() => _typeFigure;
         public Coord GetCoord() => _coords;
         public int GetFigureMovements() => _movementCount;
-        
+
 
         public void MoveTo(Coord newCoords)
         {
@@ -57,10 +57,14 @@ namespace ChessLib.Figuras
 
         //--------------------------------------
 
+        //esto hay que simplificarlo
         public bool ValidateMove(Coord targetCoord, ChessBoard chessBoard)
         {
-            throw new NotImplementedException();
+            var availablePositions = GetAvailablePosition(chessBoard);
+            return availablePositions.Contains(targetCoord);
         }
+
+        
 
         //-------------------------------------
 

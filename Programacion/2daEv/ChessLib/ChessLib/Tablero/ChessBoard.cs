@@ -20,6 +20,7 @@ namespace ChessLib.Tablero
             _height = height;
             _casillas = new Casilla[width, height];
             _figures = new Figure[32];
+            _figureCount = 0;
             InitializeBoard();
             //metodo para iniciar fichas
         }
@@ -31,6 +32,7 @@ namespace ChessLib.Tablero
 
         public void InitializeBoard()
         {
+            //DrawBoard();
             CrearCasillas();
             CreateFigures();
         }
@@ -50,15 +52,19 @@ namespace ChessLib.Tablero
 
         public void CreateFigures()
         {
-            // Colocar las piezas blancas
-            CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(0, 0));
-            CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(1, 0));
-            CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(2, 0));
-            CreateFigure(FigureType.QUEEN, FigureColor.WHITE, new Coord(3, 0));
-            CreateFigure(FigureType.KING, FigureColor.WHITE, new Coord(4, 0));
-            CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 0));
-            CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
-            CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
+            //for (int x = 0; x < 8; x++)
+            //{
+                // Colocar las piezas blancas
+                CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(0, 0));
+                CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(1, 0));
+                CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(2, 0));
+                CreateFigure(FigureType.QUEEN, FigureColor.WHITE, new Coord(3, 0));
+                CreateFigure(FigureType.KING, FigureColor.WHITE, new Coord(4, 0));
+                CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 0));
+                CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
+                CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
+            //}
+            
 
             for (int x = 0; x < 8; x++)
             {
@@ -83,10 +89,7 @@ namespace ChessLib.Tablero
 
         public void CreateFigure(FigureType type, FigureColor color, Coord coord)
         {
-            if (_figureCount >= _figures.Length)
-            {
-                throw new Exception("No se pueden añadir más figuras, el array está lleno.");
-            }
+            Console.WriteLine($"Añadiendo figura {type} en ({coord.X}, {coord.Y}). Contador: {_figureCount}");
 
             Figure figura = type switch
             {
@@ -99,8 +102,9 @@ namespace ChessLib.Tablero
                 _ => throw new ArgumentException("Tipo de figura inválido")
             };
 
-            _casillas[coord.X, coord.Y].Figure = figura;
             _figures[_figureCount++] = figura;
+            _casillas[coord.X, coord.Y].Figure = figura;
+            
         }
 
         public bool MoveFigure(int x, int y)
@@ -146,7 +150,7 @@ namespace ChessLib.Tablero
             return _casillas[x, y].Figure;
         }
 
-        public IFigure GetFigureAt(int index)
+        public IFigure? GetFigureAt(int index)
         {
             if (index < 0 || index >= _figures.Length)
             {
@@ -182,15 +186,23 @@ namespace ChessLib.Tablero
             _figureCount = 0;
         }
 
-        public bool IsPositionEmpty(Coord movAdelante)
+        public bool IsPositionEmpty(Coord coord)
         {
-            throw new NotImplementedException();
+            if (coord.X < 0 || coord.X >= _width || coord.Y < 0 || coord.Y >= _height)
+                return false; // Fuera del tablero.
+
+            return _casillas[coord.X, coord.Y].Figure == null;
         }
 
-        public bool HasEnemyPiece(Coord target, FigureColor color)
+        public bool HasEnemyPiece(Coord coord, FigureColor color)
         {
-            throw new NotImplementedException();
+            if (coord.X < 0 || coord.X >= _width || coord.Y < 0 || coord.Y >= _height)
+                return false; // Fuera del tablero.
+
+            IFigure? figura = _casillas[coord.X, coord.Y].Figure;
+            return figura != null && figura.GetColor() != color;
         }
+
 
         public bool IsKingInCheck(FigureColor color)
         {
@@ -236,8 +248,92 @@ namespace ChessLib.Tablero
 
             return true;
         }
+
+        //posible inciso
+
+
+        //comprobar el width y height, porque no puedo pasarle un chessboard en la clase chessboard
+        static void DrawBoard(ChessBoard board)
+        {
+            Console.WriteLine("  a b c d e f g h");
+            for (int y = 0; y < board.GetHeight(); y++)
+            {
+                Console.Write(8 - y + " ");
+                for (int x = 0; x < board.GetWidth(); x++)
+                {
+                    IFigure? figura = board.GetFigureAt(x, y);
+                    Console.Write(figura != null ? GetSymbol(figura) : "· ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        static string GetSymbol(IFigure figura)
+        {
+            if (figura is Pawn) return figura.GetColor() == FigureColor.WHITE ? "P " : "p ";
+            if (figura is Tower) return figura.GetColor() == FigureColor.WHITE ? "T " : "t ";
+            if (figura is Knight) return figura.GetColor() == FigureColor.WHITE ? "N " : "n ";
+            if (figura is Bishop) return figura.GetColor() == FigureColor.WHITE ? "B " : "b ";
+            if (figura is Queen) return figura.GetColor() == FigureColor.WHITE ? "Q " : "q ";
+            if (figura is King) return figura.GetColor() == FigureColor.WHITE ? "K " : "k ";
+            return "· ";
+        }
+
+        public List<IFigure> GetAllFigures()
+        {
+            List<IFigure> figures = new List<IFigure>();
+
+            foreach (var figura in _figures)
+            {
+                if (figura != null)
+                {
+                    figures.Add(figura);
+                }
+            }
+
+            return figures;
+        }
     }
 }
+
+
+//public void PrintBoard()
+//{
+//    for (int y = Height - 1; y >= 0; y--)
+//    {
+//        Console.Write(y + 1 + " "); // Números de filas
+//        for (int x = 0; x < Width; x++)
+//        {
+//            var figure = GetFigureAt(x, y);
+//            char symbol = figure switch
+//            {
+//                Pawn => 'P',
+//                Tower => 'T',
+//                Knight => 'N',
+//                Bishop => 'B',
+//                Queen => 'Q',
+//                King => 'K',
+//                _ => ' ' // Casilla vacía
+//            };
+
+//            // Determinar el color de la casilla
+//            Console.BackgroundColor = (x + y) % 2 == 0 ? ConsoleColor.DarkGray : ConsoleColor.White;
+//            Console.ForegroundColor = figure != null && figure.GetColor() == FigureColor.BLACK ? ConsoleColor.Black : ConsoleColor.DarkRed;
+
+//            Console.Write($" {symbol} ");
+//            Console.ResetColor();
+//        }
+//        Console.WriteLine();
+//    }
+
+//    Console.Write("  ");
+//    for (char c = 'A'; c < 'A' + Width; c++)
+//    {
+//        Console.Write(" " + c + " "); // Letras de columnas
+//    }
+//    Console.WriteLine();
+//}
+
 
 //class ChessBoard : IChessBoard
 //         *

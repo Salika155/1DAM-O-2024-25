@@ -15,7 +15,12 @@ namespace ChessLib.Figuras
             throw new NotImplementedException();
         }
 
-        public override Coord[] GetAvailablePosition(IChessBoard board)
+        public Coord[] GetAvailablePosition(IChessBoard board)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Coord[] GetAvailablePositions(IChessBoard board)
         {
             throw new NotImplementedException();
         }

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MaquinaChocolate": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

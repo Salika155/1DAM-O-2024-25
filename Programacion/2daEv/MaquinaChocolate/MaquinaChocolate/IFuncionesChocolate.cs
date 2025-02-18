@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace MaquinaChocolate
 {
+    // Interfaz para definir los métodos de la máquina
     public interface IFuncionesChocolate
     {
-        double CalculateChocolateSample();
-
-        //void AddSample(double precio, double cantidad);
+        double CalculateChocolateSample(double dinero);
+        
     }
+
+    
 }

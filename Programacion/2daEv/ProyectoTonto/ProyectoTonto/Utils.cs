@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static ProyectoTonto.Utils;
-
+﻿
 namespace ProyectoTonto
 {
-    class Utils
+    public static class Utils
     {
         public delegate T GenDelegate<T>(int index);
         public delegate bool FilterDelegate<T>(T value);
@@ -31,9 +25,25 @@ namespace ProyectoTonto
             return result;
         }
 
-        public static object FilterProfundo<T>(List<int> lenter, FilterDelegate<T> )
+        //public static List<T> FilterProfundo<T>(this List<T> list, FilterDelegate<T> filter)
+        //{
+        //    List<T> result = new List<T>();
+
+        //    foreach (var item in list)
+        //    {
+        //        if (filter(item))
+        //        {
+        //            result.Add(item);
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        public static List<T> FilterProfundo<T>(this List<T> list, FilterDelegate<T> filter)
         {
-            throw new NotImplementedException();
+            list = list.Where(item => filter(item)).ToList(); // Filtra la lista actual y la actualiza
+            return list; // Devuelve la misma lista para permitir el encadenamiento
         }
     }
 }

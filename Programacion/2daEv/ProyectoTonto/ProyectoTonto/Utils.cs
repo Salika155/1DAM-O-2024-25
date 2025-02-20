@@ -1,4 +1,6 @@
 ﻿
+
+
 namespace ProyectoTonto
 {
     public static class Utils
@@ -40,10 +42,54 @@ namespace ProyectoTonto
         //    return result;
         //}
 
-        public static List<T> FilterProfundo<T>(this List<T> list, FilterDelegate<T> filter)
+        //public static List<T> FilterProfundo<T>(this List<T> list, FilterDelegate<T> filter)
+        //{
+        //    list = list.Where(item => filter(item)).ToList(); // Filtra la lista actual y la actualiza
+        //    return list; // Devuelve la misma lista para permitir el encadenamiento
+        //}
+
+        public class FilterClass<T>
         {
-            list = list.Where(item => filter(item)).ToList(); // Filtra la lista actual y la actualiza
-            return list; // Devuelve la misma lista para permitir el encadenamiento
+            private List<T> filteringList;
+
+            public FilterClass(List<T> filteringList)
+            {
+                this.filteringList = filteringList;
+            }
+
+            public FilterClass<T> FilterProfundo(FilterDelegate<T> filter)
+            {
+                return new FilterClass<T>(null);
+            }
+
+            //objetivo hacer objetos efimeros, se puede devolver la list
+            public FilterClass<T> FilterProfundo1(FilterDelegate<T> filter)
+            {
+                List<T> list = new List<T>();
+
+                foreach (T item in filteringList)
+                    if (filter(item))
+                        list.Add(item);
+                return new FilterClass<T>(list);
+            }
+
+            public List<T> ToList()
+            {
+                return new List<T>(filteringList);
+            }
+        }
+
+        public static FilterClass<T> FilterProfundo1<T>(List<T> list, FilterDelegate<T> filter)
+        {
+            return new FilterClass<T>(list).FilterProfundo1(filter);
+        }
+
+        public static FilterClass<T> FilterProfundo<T>(List<T> list, FilterDelegate<T> filter)
+        {
+            List<T> l = new List<T>();
+            var f = new FilterClass<T>(list);
+
+            return f;
         }
     }
 }

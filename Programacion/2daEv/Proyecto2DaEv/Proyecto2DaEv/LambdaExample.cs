@@ -34,5 +34,23 @@ namespace Proyecto2DaEv
 
             Where es un método de LINQ que aplica el filtro.
          */
+
+        public static void ProbarLambda1()
+        {
+            List<int> numeros = new List<int> { 1, 2, 3, 4, 5 };
+
+            // Filtrar números pares usando una lambda
+            var pares = numeros.Where(n => n % 2 == 0).ToList();
+
+            Console.WriteLine("Números pares:");
+            foreach (int num in pares)
+            {
+                Console.WriteLine(num); // 2, 4
+            }
+        }
+        /*
+         *  Línea 10: n => n % 2 == 0 → Función lambda que retorna true si n es par.
+            Línea 10: Where(...) → Filtra la lista según la condición.
+         */
     }
 }

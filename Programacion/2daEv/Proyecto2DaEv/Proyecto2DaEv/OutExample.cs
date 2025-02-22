@@ -26,6 +26,29 @@ namespace Proyecto2DaEv
             return true; // División válida
         }
 
+        // Método que devuelve si un número es par y su mitad usando 'out'
+        public static bool EsPar1(int numero, out int mitad)
+        {
+            mitad = numero / 2; // Asignamos valor a 'mitad' (obligatorio con 'out')
+            return numero % 2 == 0;
+        }
+
+        public static void ProbarOut1()
+        {
+            int numero = 10;
+            int mitad;
+
+            bool esPar = EsPar1(numero, out mitad);
+
+            Console.WriteLine($"¿Es par? {esPar}, Mitad: {mitad}"); // ¿Es par? True, Mitad: 5
+        }
+
+        /*
+         *  out int mitad → Variable mitad se inicializa dentro del método.
+            return ... → Devuelve si el número es par.
+            EsPar(numero, out mitad) → Asigna valor a mitad.
+         */
+
         public static void ProbarOut()
         {
             int resultado;

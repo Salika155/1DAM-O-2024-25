@@ -1,4 +1,4 @@
-namespace WebApplication1
+namespace ChessApp
 {
     public class Program
     {

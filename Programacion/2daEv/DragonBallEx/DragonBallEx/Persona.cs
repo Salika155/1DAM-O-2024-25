@@ -26,7 +26,7 @@ namespace DragonBallEx
         public double Energia { get => _energia; }
         public double Esquiva { get => _deseoEsquivar; }
 
-        public Persona(string name, RazaType raza, double energia, double deseoEsquivar)
+        public Persona(string name, RazaType raza)
         {
             _name = name;
             _raza = raza;

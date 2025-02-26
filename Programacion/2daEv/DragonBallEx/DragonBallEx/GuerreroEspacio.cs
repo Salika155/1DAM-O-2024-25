@@ -32,12 +32,12 @@ namespace DragonBallEx
 
         public override double GetCapacidadParada()
         {
-            throw new NotImplementedException();
+            return _capacidadDeParar;
         }
 
         public override double GetEsquivaCapacidad()
         {
-            throw new NotImplementedException();
+            return _capacidadDeEsquivar;
         }
     }
 }

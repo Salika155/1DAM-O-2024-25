@@ -8,7 +8,7 @@ namespace DragonBallEx
 {
     class Namekiano : Persona
     {
-        public Namekiano(string name, RazaType raza, double energia, double deseoEsquivar) : base(name, raza, energia, deseoEsquivar)
+        public Namekiano(string name) : base(name, RazaType.NAMEKIANO)
         {
         }
 

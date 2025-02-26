@@ -8,7 +8,7 @@ namespace DragonBallEx
 {
     class Supersaiyajin : Persona
     {
-        public Supersaiyajin(string name, RazaType raza, double energia, double deseoEsquivar) : base(name, raza, energia, deseoEsquivar)
+        public Supersaiyajin(string name) : base(name, RazaType.SUPERSAIYAJIN)
         {
         }
 

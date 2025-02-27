@@ -7,6 +7,16 @@
             throw new NotImplementedException();
         }
 
+        public object GetStudentFromList(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Student[] GetStudents()
+        {
+            throw new NotImplementedException();
+        }
+
         public Student? GetStudentWithId(long id)
         {
             throw new NotImplementedException();

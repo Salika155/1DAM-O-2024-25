@@ -10,6 +10,14 @@ namespace ChessApp.Controllers
     //studentcontroller es una pool
     public class StudentController : ControllerBase
     {
+
+        private IDatabase _database;
+
+        public StudentController(IDatabase database)
+        {
+            _database = database;
+        }
+        
         #region codigoanterior
         //private static readonly Dictionary<long, Student> _studentList = new Dictionary<long, Student>();
 
@@ -27,15 +35,15 @@ namespace ChessApp.Controllers
         [HttpGet]
 
         //injeccion de dependencias: singleton, me lo das lo uso y me lo cargo, o una pool de algo
-        public Student[] Get(IDatabase database)
+        public Student[] Get()
         {
-            return database.GetStudents();
+            return _database.GetStudents();
         }
 
         
-        public Student? GetStudent(int id)
+        public Student? GetStudent(long id)
         {
-            return GetStudentFromList(id);
+            return _database.GetStudentFromList(id) as Student;
         }
 
         [HttpPost]
@@ -45,9 +53,10 @@ namespace ChessApp.Controllers
             //int index = GetIndexOfStudent(id);
             //_studentList[index] = newStudent;
 
-            if (!_studentList.ContainsKey(id))
-                return false;
-            _studentList[id] = newStudent;
+            //este caso es para el diccionario
+            //if (!_studentList.ContainsKey(id))
+            //    return false;
+            //_studentList[id] = newStudent;
 
             //var student = GetStudentFromList(id);
             //if (student == null)
@@ -56,26 +65,32 @@ namespace ChessApp.Controllers
             //    return false;
             //student.Name = newStudent.Name;
             //student.Age = newStudent.Age;
+            if (_database.GetStudentFromList(id) == null)
+                return false;
+
+            _database.UpdateStudent(id, newStudent);
             return true;
 
         }
 
-        private int GetIndexOfStudent(int id)
+        private int GetIndexOfStudent(long id)
         {
             throw new NotImplementedException();
         }
 
-        [HttpGet("{id}")]
-        public void AddStudent(Student student)
+        [HttpPost]
+        public void AddStudent([FromBody]Student student)
         {
             if (student != null)
-                _studentList[student.Id] = student;
+                //_studentList[student.Id] = student;
+                _database.AddStudent(student);
         }
 
         [HttpGet("{id}")]
         public void DeleteStudent(long id)
         {
-            _studentList.Remove(id);
+            //_studentList.Remove(id);
+            _database.RemoveStudent(id);
         }
 
     }
@@ -102,3 +117,5 @@ namespace ChessApp.Controllers
 //    return _instance;
 //}
 ////private static Connection
+///
+//FigureWrapper -> actua intermedio en la clase

@@ -25,6 +25,11 @@ namespace DragonBallEx
             _capacidadDeParar = Utils.GetRandom(0.4, 0.9);
         }
 
+        public GuerreroEspacio(string name, RazaType raza) : base(name, raza)
+        {
+            
+        }
+
         public override void Atacar(Persona persona)
         {
             throw new NotImplementedException();

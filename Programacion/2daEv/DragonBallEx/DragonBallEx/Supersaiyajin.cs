@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace DragonBallEx
 {
-    class Supersaiyajin : Persona
+    class Supersaiyajin : GuerreroEspacio
     {
+        private double _ataqueConRayo;
+        private double _ataqueConGolpes;
+        private double _capacidadDeEsquivar;
+        private double _capacidadDeParar;
         public Supersaiyajin(string name) : base(name, RazaType.SUPERSAIYAJIN)
         {
+            _ataqueConRayo = Utils.GetRandom(0.3, 0.6);
+            _ataqueConGolpes = Utils.GetRandom(0.1, 0.8);
+            _capacidadDeEsquivar = Utils.GetRandom(0.2, 0.4);
+            _capacidadDeParar = Utils.GetRandom(0.4, 0.9);
         }
 
         public override void Atacar(Persona persona)
@@ -19,12 +27,12 @@ namespace DragonBallEx
 
         public override double GetCapacidadParada()
         {
-            throw new NotImplementedException();
+            return _capacidadDeParar;
         }
 
         public override double GetEsquivaCapacidad()
         {
-            throw new NotImplementedException();
+            return _capacidadDeEsquivar;
         }
     }
 }

@@ -49,5 +49,14 @@ namespace DragonBallEx
             double random = Utils.GetRandom(0, 1);
                return random < _deseoEsquivar;
         }
+
+        //public void RecibirAtaque(double blockdmg, double maxdmg)
+        //{
+        //    if (QuiereEsquivar() && ObtenerCapacidadDeEsquiva() > Utils.GetRandom(0, 1)) return;
+        //    if (!QuiereEsquivar() && ObtenerCapacidadDeParada() > Utils.GetRandom(0, 1))
+        //        QuitarEnergia(blockdmg);
+        //    else
+        //        QuitarEnergia(maxdmg);
+        //}
     }
 }

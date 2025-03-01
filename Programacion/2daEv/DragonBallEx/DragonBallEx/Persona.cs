@@ -50,6 +50,16 @@ namespace DragonBallEx
                return random < _deseoEsquivar;
         }
 
+        public void RecibirAtaque(double bloqueoDaño, double maximoDaño)
+        {
+            if (QuiereEsquivar() && GetEsquivaCapacidad() > Utils.GetRandom(0, 1))
+                return;
+            else if (!QuiereEsquivar() && GetEsquivaCapacidad() > Utils.GetRandom(0, 1))
+                QuitarEnergia(bloqueoDaño);
+            else
+                QuitarEnergia(maximoDaño);
+        }
+
         //public void RecibirAtaque(double blockdmg, double maxdmg)
         //{
         //    if (QuiereEsquivar() && ObtenerCapacidadDeEsquiva() > Utils.GetRandom(0, 1)) return;

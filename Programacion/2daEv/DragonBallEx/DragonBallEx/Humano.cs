@@ -25,44 +25,28 @@ namespace DragonBallEx
             _capacidadDeParar = Utils.GetRandom(0.7, 0.9);
         }
 
-        public override void Atacar(Persona persona)
-        {
-            QuitarEnergia(1);
-            if (Utils.GetRandom(0, 1) < AtaqueConGolpe)
-            {
-                if(!IntentarEsquivar(persona) && !IntentarParar(persona))
-                {
-                    // Si no esquiva ni para, recibe el ataque completo
-                    Console.WriteLine($"{Name} atacó a {persona.Name} y le quitó 3 puntos de energía.");
-                    persona.QuitarEnergia(3);
-                }
-            }
-            else
-            { 
-                Console.WriteLine($"{Name} falló el ataque contra {persona.Name}."); 
-            }
-        }
+        #region comentado
+        //public bool IntentarParar(Persona persona)
+        //{
+        //    if(Utils.GetRandom(0, 1) < persona.GetCapacidadParada())
+        //    {
+        //        Console.WriteLine($"{persona.Name} paró el ataque de {Name}.");
+        //        persona.QuitarEnergia(0.5); // Pierde 0.5 de energía al parar
+        //        return true; // El ataque fue parado
+        //    }
+        //    return false;
+        //}
 
-        private bool IntentarParar(Persona persona)
-        {
-            if(Utils.GetRandom(0, 1) < persona.GetCapacidadParada())
-            {
-                Console.WriteLine($"{persona.Name} paró el ataque de {Name}.");
-                persona.QuitarEnergia(0.5); // Pierde 0.5 de energía al parar
-                return true; // El ataque fue parado
-            }
-            return false;
-        }
-
-        private bool IntentarEsquivar(Persona persona)
-        {
-            if (persona.QuiereEsquivar() && Utils.GetRandom(0, 1) < persona.GetEsquivaCapacidad())
-            {
-                Console.WriteLine($"{persona.Name} esquivó el ataque de {Name}.");
-                return true;
-            }
-            return false;
-        }
+        //public bool IntentarEsquivar(Persona persona)
+        //{
+        //    if (persona.QuiereEsquivar() && Utils.GetRandom(0, 1) < persona.GetEsquivaCapacidad())
+        //    {
+        //        Console.WriteLine($"{persona.Name} esquivó el ataque de {Name}.");
+        //        return true;
+        //    }
+        //    return false;
+        //}
+        #endregion
 
         public override double GetCapacidadParada()
         {
@@ -74,36 +58,43 @@ namespace DragonBallEx
             return _capacidadDeEsquivar;
         }
 
-        //public override void Atacar(Persona persona)
-        //{
-        //    QuitarEnergia(1);
-        //    if (Utils.GetRandom(0, 1) < AtaqueConGolpe)
-        //    {
-        //        if (persona.QuiereEsquivar())
-        //        {
-        //            if (Utils.GetRandom(0, 1) < CapacidadEsquiva)
-        //            {
-        //                Console.WriteLine($"{persona.Name} esquivó el ataque de {Name}.");
-        //                return; // El ataque fue esquivado
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (Utils.GetRandom(0, 1) < persona.GetCapacidadParada())
-        //            {
-        //                Console.WriteLine($"{persona.Name} paró el ataque de {Name}.");
-        //                persona.QuitarEnergia(0.5); // Pierde 0.5 de energía al parar
-        //                return;
-        //            }
-        //        }
-        //        // Si no esquiva ni para, recibe el ataque completo
-        //        Console.WriteLine($"{Name} atacó a {persona.Name} y le quitó 3 puntos de energía.");
-        //        persona.QuitarEnergia(3);
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"{Name} falló el ataque contra {persona.Name}.");
-        //    }
-        //}
+        public override void Atacar(Persona persona)
+        {
+            QuitarEnergia(1);
+            #region comentado
+            //if (Utils.GetRandom(0, 1) < AtaqueConGolpe)
+            //{
+            //    if(!IntentarEsquivar(persona) && !IntentarParar(persona))
+            //    {
+            //        // Si no esquiva ni para, recibe el ataque completo
+            //        Console.WriteLine($"{Name} atacó a {persona.Name} y le quitó 3 puntos de energía.");
+            //        persona.QuitarEnergia(3);
+            //    }
+            //}
+            //else
+            //{ 
+            //    Console.WriteLine($"{Name} falló el ataque contra {persona.Name}."); 
+            //}
+
+            //if (persona.QuiereEsquivar() && Utils.GetRandom(0, 1) < persona.GetEsquivaCapacidad())
+            //{
+            //    Console.WriteLine($"{persona.Name} esquivó el ataque de {Name}.");
+            //    QuitarEnergia(0);
+            //}
+            //else if (!persona.QuiereEsquivar() && Utils.GetRandom(0, 1) < persona.GetCapacidadParada())
+            //{
+            //    Console.WriteLine($"{persona.Name} paró el ataque de {Name}.");
+            //    QuitarEnergia(0.5);
+            //}
+            //else
+            //{
+            //    persona.QuiereEsquivar() && Utils.GetRandom(0, 1) >= persona.GetEsquivaCapacidad() = QuitarEnergia(3);
+
+            //}
+            #endregion
+            if (Utils.GetRandom(0, 1) > _ataqueConGolpes)
+                persona.RecibirAtaque(0.5, 3);
+
+        }
     }
 }

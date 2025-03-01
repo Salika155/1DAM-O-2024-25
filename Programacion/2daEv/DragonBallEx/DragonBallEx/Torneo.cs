@@ -10,7 +10,7 @@ namespace DragonBallEx
     {
         public delegate void VisitAction(Persona participante);
 
-        private readonly List<Persona>? _participantes;
+        private readonly List<Persona> _participantes = new List<Persona>();
         private static int _participantCounter = 1;
 
 
@@ -46,17 +46,11 @@ namespace DragonBallEx
             string n = $"Persona{_participantCounter++}";
             double randomType = Utils.GetRandom(0, 1);
             if (randomType < 0.25)
-            {
                 return new Humano(n);
-            }
-            else if (randomType < 0.50 && randomType >= 0.25)
-            {
+            else if (randomType < 0.50)
                 return new GuerreroEspacio(n);
-            }
-            else if (randomType < 0.75 && randomType >= 0.50)
-            {
+            else if (randomType < 0.75)
                 return new Supersaiyajin(n);
-            }
             else
                 return new Namekiano(n);
         }
@@ -72,7 +66,7 @@ namespace DragonBallEx
             while(participantesActivos.Count > 1)
             {
                 List<Persona> ganadoresRonda = new List<Persona>();
-                for(int i = 0; i < ganadoresRonda.Count; i += 2)
+                for(int i = 0; i < participantesActivos.Count; i += 2)
                 {
                     Persona participante1 = participantesActivos[i];
                     Persona participante2 = participantesActivos[i + 1];
@@ -86,15 +80,14 @@ namespace DragonBallEx
                     ganadoresRonda.Add(ganador);
                 }
                 participantesActivos = ganadoresRonda;
-
             }
             resultados.Add($"{participantesActivos[0].Name} es el ganador del torneo!");
             return resultados;
         }
 
-        private string? SimularCombate(Persona participante1, Persona participante2)
+        private string SimularCombate(Persona participante1, Persona participante2)
         {
-            while(participante1.Energia > 0 && participante2.Energia > 0)
+            while (participante1.Energia > 0 && participante2.Energia > 0)
             {
                 participante1.Atacar(participante2);
                 if (participante2.Energia > 0)
@@ -102,8 +95,12 @@ namespace DragonBallEx
                     participante2.Atacar(participante1);
                 }
             }
+
             string? nombreGanador = participante1.Energia > 0 ? participante1.Name : participante2.Name;
-            return nombreGanador;
+            string? nombrePerdedor = participante1.Energia > 0 ? participante2.Name : participante1.Name;
+
+            Console.WriteLine($"{nombrePerdedor} ha sido eliminado.");
+            return $"{participante1.Name} vs {participante2.Name} -> Ganador: {nombreGanador}";
         }
 
         public void Visit(VisitAction action)

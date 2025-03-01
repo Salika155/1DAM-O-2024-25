@@ -52,9 +52,9 @@ namespace DragonBallEx
 
         public void RecibirAtaque(double bloqueoDaño, double maximoDaño)
         {
-            if (QuiereEsquivar() && GetEsquivaCapacidad() > Utils.GetRandom(0, 1))
+            if (QuiereEsquivar() && Utils.GetRandom(0, 1) < GetEsquivaCapacidad())
                 return;
-            else if (!QuiereEsquivar() && GetEsquivaCapacidad() > Utils.GetRandom(0, 1))
+            else if (!QuiereEsquivar() && Utils.GetRandom(0, 1) < GetEsquivaCapacidad())
                 QuitarEnergia(bloqueoDaño);
             else
                 QuitarEnergia(maximoDaño);

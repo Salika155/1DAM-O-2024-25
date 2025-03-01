@@ -8,5 +8,30 @@ namespace ExamenDomino
 {
     class Ficha
     {
+        private int _numArriba;
+        private int _numAbajo;
+
+        public int NumArriba { get => _numArriba; }
+        public int NumAbajo { get => _numAbajo; }
+
+        public Ficha(int numArriba, int numAbajo)
+        {
+            _numArriba = numArriba;
+            _numAbajo = numAbajo;
+        }
+
+        public static bool EsDoble(int numArriba, int numAbajo)
+        {
+            return numArriba == numAbajo;
+        }
+
+        public static int PuntuajeFicha(int numArriba, int numAbajo)
+        {
+            int puntuacionTotal = numArriba + numAbajo;
+            if (EsDoble(numArriba, numAbajo))
+                puntuacionTotal = puntuacionTotal * 2;
+            return puntuacionTotal;
+        }
+        
     }
 }

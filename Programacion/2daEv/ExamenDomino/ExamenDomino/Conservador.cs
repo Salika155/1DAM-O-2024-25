@@ -13,14 +13,30 @@ namespace ExamenDomino
 
         }
 
-        public override int PuntuajeFicha(Ficha ficha)
+        public override Ficha? TirarFicha()
         {
-            return ficha.PuntuajeFicha(ficha.NumArriba, ficha.NumAbajo);
+            if (ManoJugador.Count == 0)
+                return null; // No hay fichas para jugar.
+
+            Ficha fichaMayor = ManoJugador[0]; // Suponemos que la primera es la mayor.
+            int indiceMayor = 0; // Guardamos el índice para eliminarla después.
+
+            // Recorremos la lista para encontrar la ficha con mayor puntuación.
+            for (int i = 1; i < ManoJugador.Count; i++)
+            {
+                if (ManoJugador[i].PuntuajeFicha(ManoJugador[i].NumArriba, ManoJugador[i].NumAbajo) >
+                    fichaMayor.PuntuajeFicha(fichaMayor.NumArriba, fichaMayor.NumAbajo))
+                {
+                    fichaMayor = ManoJugador[i];
+                    indiceMayor = i;
+                }
+            }
+
+            // Eliminamos la ficha seleccionada de la mano.
+            ManoJugador.RemoveAt(indiceMayor);
+
+            return fichaMayor; // Retornamos la ficha con mayor puntuación.
         }
 
-        public override Ficha TirarFicha()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

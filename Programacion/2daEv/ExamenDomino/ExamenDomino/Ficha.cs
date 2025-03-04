@@ -27,8 +27,8 @@ namespace ExamenDomino
 
         public int PuntuajeFicha(int numArriba, int numAbajo)
         {
-            int puntuacionTotal = numArriba + numAbajo;
-            if (EsDoble(numArriba, numAbajo))
+            int puntuacionTotal = NumArriba + NumAbajo;
+            if (EsDoble(NumArriba, NumAbajo))
                 puntuacionTotal = puntuacionTotal * 2;
             return puntuacionTotal;
         }

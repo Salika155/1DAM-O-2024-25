@@ -27,7 +27,20 @@ namespace ExamenDomino
                 _manoJugador.Add(ficha);
         }
 
-        public abstract int PuntuajeFicha(Ficha ficha);
-        
+        public int PuntuajeFichaJugador(Ficha ficha)
+        {
+            return ficha.PuntuajeFicha(ficha.NumArriba, ficha.NumAbajo);
+        }
+
+        public int PuntuacionTotalMano()
+        {
+            int total = 0;
+            foreach (var ficha in _manoJugador)
+            {
+                total += PuntuajeFichaJugador(ficha);
+            }
+            return total;
+        }
+
     }
 }

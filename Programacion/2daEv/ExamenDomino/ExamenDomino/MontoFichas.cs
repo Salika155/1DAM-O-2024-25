@@ -22,7 +22,7 @@ namespace ExamenDomino
         {
             for (int i = 0; i <= 6; i++)
             {
-                for (int j = 0; j <= 0; j++)
+                for (int j = 0; j <= 6; j++)
                 {
                     _fichasList.Add(new Ficha(i, j));
                 }

@@ -13,11 +13,6 @@ namespace ExamenDomino
             
         }
 
-        public override int PuntuajeFicha(Ficha ficha)
-        {
-            throw new NotImplementedException();
-        }
-
         public override Ficha? TirarFicha()
         {
             // Comprobamos si la mano está vacía

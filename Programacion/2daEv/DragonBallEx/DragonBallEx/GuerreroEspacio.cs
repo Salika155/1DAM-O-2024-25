@@ -32,7 +32,28 @@ namespace DragonBallEx
 
         public override void Atacar(Persona persona)
         {
-            throw new NotImplementedException();
+            double randomAttack = Utils.GetRandom(0, 1); // Decide aleatoriamente si ataca con golpes o con rayo
+
+            if (randomAttack < 0.5) // 50% de probabilidad de atacar con golpes
+            {// Ataca con golpes
+                if (Utils.GetRandom(0, 1) < _ataqueConGolpes) // Verifica si el ataque tiene éxito
+                {
+                    QuitarEnergia(5); // Gasta 5 puntos de energía
+                    persona.RecibirAtaque(2, 7); // Daño reducido (2) o completo (7)
+                }
+                else
+                    Console.WriteLine($"{Name} falló el ataque con golpes contra {persona.Name}.");
+            }
+            else // 50% de probabilidad de atacar con rayo
+            {// Ataca con rayo
+                if (Utils.GetRandom(0, 1) < _ataqueConRayo) // Verifica si el ataque tiene éxito
+                {
+                    QuitarEnergia(100); // Gasta 100 puntos de energía
+                    persona.RecibirAtaque(25, 300); // Daño reducido (25) o completo (300)
+                }
+                else
+                    Console.WriteLine($"{Name} falló el ataque con rayo contra {persona.Name}.");
+            }
         }
 
         public override double GetCapacidadParada()

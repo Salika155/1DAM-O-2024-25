@@ -15,7 +15,7 @@ namespace DragonBallEx
         {
             if (min >= max)
                 throw new Exception("No puede ser menor o mayor a los limites");
-            return min + (_r.NextDouble() * (min - max));
+            return min + (_r.NextDouble() * (max - min));
         }
     }
 }

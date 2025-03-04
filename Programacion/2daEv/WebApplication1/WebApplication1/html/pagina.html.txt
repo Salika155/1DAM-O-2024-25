@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Estudiantes</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <h2>Lista de Estudiantes</h2>
+    <button onclick="cargarEstudiantes()">Obtener Estudiantes</button>
+    <table id="tablaEstudiantes">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se llenarán los datos -->
+        </tbody>
+    </table>
+
+    <script>
+        async function cargarEstudiantes() {
+            try {
+                const response = await fetch("http://localhost:5000/Student");
+                if (!response.ok) throw new Error("Error al obtener los datos");
+
+                const estudiantes = await response.json();
+                const tabla = document.getElementById("tablaEstudiantes").getElementsByTagName("tbody")[0];
+                tabla.innerHTML = ""; // Limpiar tabla antes de cargar nuevos datos
+
+                estudiantes.forEach(estudiante => {
+                    let fila = tabla.insertRow();
+                    fila.insertCell(0).innerText = estudiante.id;
+                    fila.insertCell(1).innerText = estudiante.name;
+                    fila.insertCell(2).innerText = estudiante.age;
+                });
+            } catch (error) {
+                console.error("Error:", error);
+                alert("No se pudieron cargar los estudiantes.");
+            }
+        }
+    </script>
+</body>
+</html>

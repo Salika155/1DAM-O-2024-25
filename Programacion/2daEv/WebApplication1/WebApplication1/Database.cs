@@ -2,19 +2,25 @@
 {
     public class Database : IDatabase
     {
+        private readonly List<Student> _students = new();
+
+        //public Database()
+        //{
+
+        //}
         public void AddStudent(Student student)
         {
-            throw new NotImplementedException();
+            _students.Add(student);
         }
 
         public object GetStudentFromList(long id)
         {
-            throw new NotImplementedException();
+            return _students.ToList();
         }
 
         public Student[] GetStudents()
         {
-            throw new NotImplementedException();
+            return _students.ToArray();
         }
 
         public Student? GetStudentWithId(long id)

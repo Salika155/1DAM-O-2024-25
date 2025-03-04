@@ -176,14 +176,27 @@ namespace NodosYArbol
 
             if (hijo == null)
                 return;
-            var oldParent = hijo.Parent;
+            if (hijo == this)
+                return;
+            if (ContainsChild(hijo))
+                return;
+            if (ContainsAncestor(hijo))
+                return;
+            //var oldParent = hijo.Parent;
 
-            if (oldParent != null)
-            {
-                oldParent.RemoveChild(hijo); //esto puede ser el detach
-            }
-            hijo.Parent = new WeakReference<T>(this);
-            this._listaNodos.Add(hijo);
+            //if (oldParent != null)
+            //{
+            //    oldParent.RemoveChild(hijo); //esto puede ser el detach
+            //}
+            //hijo.Parent = new WeakReference<T>(this);
+            //this._listaNodos.Add(hijo);
+
+            //tengo que comprobar que el nodo que me añaden no sea ni mi padre, ni un hijo
+        }
+
+        private bool ContainsChild(object n)
+        {
+            throw new NotImplementedException();
         }
 
         public void RemoveChild(Nodo<T> hijo)
@@ -258,5 +271,42 @@ namespace NodosYArbol
 
             return result;
         }
+
+        public bool ContainsAncestor(Nodo<T> n)
+        {
+            //var parent = Parent;
+            //if (parent == n)
+            //    return true;
+            //if (parent == null)
+            //    return false;
+            //return parent.ContainsAncestor(n);
+            var current = Parent;
+            while(current != null)
+            {
+                if (current == n)
+                    return true;
+                current = current.Parent;
+            }
+            return false;
+        }
+
+        //devolver una lista de todos los ancestros;
+        public List<Nodo<T>> GetListaNodosAncestros()
+        {
+            List<Nodo<T>> result = new();
+            GetAncestors(result);
+            return result;
+        }
+
+        private void GetAncestors(List<Nodo<T>> l)
+        {
+            //var l = node.Ancestors;
+            //hacer var parent strong
+            if (parent != null)
+                l.Add(parent);
+            parent.GetAncestors(l);
+
+        }
+        //la forma facil es como el containsancestor
     }
 }

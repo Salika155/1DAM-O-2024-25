@@ -25,7 +25,7 @@ namespace ExamenDomino
             return numArriba == numAbajo;
         }
 
-        public static int PuntuajeFicha(int numArriba, int numAbajo)
+        public int PuntuajeFicha(int numArriba, int numAbajo)
         {
             int puntuacionTotal = numArriba + numAbajo;
             if (EsDoble(numArriba, numAbajo))

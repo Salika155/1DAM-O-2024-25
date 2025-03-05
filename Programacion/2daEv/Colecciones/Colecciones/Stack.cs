@@ -13,15 +13,22 @@ namespace Colecciones
          * será el primero en salir.
          */
         private readonly List<T> _itemsList;
+        private T[] _stackArray = new T[0];
 
         public Stack()
         {
             _itemsList = new();
         }
+
         public bool IsEmpty()
         {
             return (_itemsList.Count == 0);
         }
+
+        //public bool IsEmptyA()
+        //{
+        //    return (_stackArray.Length == 0);
+        //}
 
         public T Peek()
         {
@@ -44,5 +51,15 @@ namespace Colecciones
                 throw new Exception("debes introducir algo");
             _itemsList.Add(item);
         }
+
+        //mejor empezar desde el final a eliminar
+        public void Clear()
+        {
+            for (int i = _itemsList.Count - 1; i >= 0; i--)
+            {
+                _itemsList.RemoveAt(i);
+            }
+        }
+            
     }
 }

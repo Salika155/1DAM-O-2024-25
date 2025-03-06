@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Colecciones
 {
+    public delegate bool DelegadoFiltro<T>(T item);
     interface IArbol<T>
     {
         #region codigo
@@ -23,12 +24,10 @@ namespace Colecciones
         //T item { get; set; }
         #endregion
 
-        Nodo<T> Root { get; set; }
-        void AddChild(Nodo<T> padre, Nodo<T> hijo);
-        void RemoveChild(Nodo<T> padre, Nodo<T> hijo);
-        bool Contains(Nodo<T> nodo);
+        Nodo<T>? Root { get; }
+        //bool Contains(T item);
         void Clear();
-        Nodo<T>? FindNode(Func<Nodo<T>, bool> filtro);
-        List<T> Filter(Func<Nodo<T>, bool> filtro);
+        Nodo<T>? FindNode(DelegadoFiltro<T> filtro);
+        List<T> Filter(DelegadoFiltro<T> filtro);
     }
 }

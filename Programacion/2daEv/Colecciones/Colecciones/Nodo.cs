@@ -8,5 +8,6 @@ namespace Colecciones
 {
     class Nodo<T>
     {
+        private List<Nodo<T>> _childList = new();
     }
 }

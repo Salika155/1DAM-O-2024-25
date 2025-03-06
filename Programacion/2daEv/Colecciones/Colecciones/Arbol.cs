@@ -8,6 +8,7 @@ namespace Colecciones
 {
     class Arbol<T> : IArbol<T>
     {
+
         public delegate bool FilterDelegate();
         public Nodo<T> Root { get; set; }
         private List<T> _nodoList = new();
@@ -21,6 +22,7 @@ namespace Colecciones
         {
             if (hijo == null)
                 return;
+
             if (_nodoList[i] == hijo)
             _nodoList.Add(hijo);
         }
@@ -70,6 +72,26 @@ namespace Colecciones
             throw new NotImplementedException();
         }
 
+        public void AddChild(Nodo<T> padre, Nodo<T> hijo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveChild(Nodo<T> padre, Nodo<T> hijo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Nodo<T>? FindNode(Func<Nodo<T>, bool> filtro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<T> Filter(Func<Nodo<T>, bool> filtro)
+        {
+            throw new NotImplementedException();
+        }
+
         //List<T> Filter(FilterDelegate<T> filter)
         //{
         //    var result = new List<T>();
@@ -81,32 +103,32 @@ namespace Colecciones
         //    return result;
         //}
 
-        void Filter(FilterDelegate<T> filter, List<T> result)
-        {
-            //primero me verifico a mi mismo
-            if (filter(this.Item))
-                result.Add(this.Item);
-            //funcion filter se propaga hacia abajo
-            foreach(var c in _children)
-            {
-                c.Filter(filter, result);
-            }
-        }
+        //void Filter(FilterDelegate<T> filter, List<T> result)
+        //{
+        //    //primero me verifico a mi mismo
+        //    if (filter(this.Item))
+        //        result.Add(this.Item);
+        //    //funcion filter se propaga hacia abajo
+        //    foreach(var c in _children)
+        //    {
+        //        c.Filter(filter, result);
+        //    }
+        //}
         //la otra funcion filter llamas a esta, con la lista creada y return result o lista
 
         //funcion que le paso un delegado (filtro), se lo voy a pedir a un nodo. Lo que quiero que devuelva es el primer nodo que 
         //cumpla ese filtro
-        Nodo<T>? FindNode(Filter filter)
-        {
-            if (filter(Item))
-                return this;
-            foreach(var c in _children)
-            {
-                var n = c.FindNode(filter);
-                if (n != null)
-                    return n;
-            }
-            return null;
-        }
+        //Nodo<T>? FindNode(Filter filter)
+        //{
+        //    if (filter(Item))
+        //        return this;
+        //    foreach(var c in _children)
+        //    {
+        //        var n = c.FindNode(filter);
+        //        if (n != null)
+        //            return n;
+        //    }
+        //    return null;
+        //}
     }
 }

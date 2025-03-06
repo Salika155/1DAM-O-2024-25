@@ -23,20 +23,12 @@ namespace Colecciones
         //T item { get; set; }
         #endregion
 
-        T item { get; set; }
-        IArbol<T> Parent { get; set; }
-        int ChildCount();
-
-
-        Nodo<T> GetRoot();
-        void AddChild(Nodo<T> hijo);
-        void Detatch();
-        bool IsRoot(Nodo<T> nodo);
-        Nodo<T> GetChildAt(int index);
+        Nodo<T> Root { get; set; }
+        void AddChild(Nodo<T> padre, Nodo<T> hijo);
+        void RemoveChild(Nodo<T> padre, Nodo<T> hijo);
         bool Contains(Nodo<T> nodo);
         void Clear();
-        
-        void RemoveChild(Nodo<T> hijo);
-        List<Nodo<T>> GetAncestors(); 
+        Nodo<T>? FindNode(Func<Nodo<T>, bool> filtro);
+        List<T> Filter(Func<Nodo<T>, bool> filtro);
     }
 }

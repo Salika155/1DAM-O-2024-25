@@ -6,121 +6,137 @@ using System.Threading.Tasks;
 
 namespace Colecciones
 {
-    public delegate int Comparator<T>(T a, T b);
+    //public delegate int Comparator<T>(T a, T b);
     class Arbol<T> 
     {
-        List<Nodo<T>> _children = new List<Nodo<T>>();
-        public T item;
-        private WeakReference<Nodo<T>>? _parent;
-        public delegate void Visitor(Nodo<T> n);
+        private Nodo<T>? _root;
 
-
-        public int ChildCount
+        public Nodo<T>? Root
         {
-            get { return _children.Count; }
-        }
-        public Nodo<T>? Parent
-        {
-            get { return GetParent(); }
-            set { SetParent(value); }
+            get => _root;
+            set => _root = value;
         }
 
-
-
-        public Arbol()
+        public void Clear()
         {
-        }
-
-        public Arbol(Nodo<T> parent, List<Nodo<T>> children, T item)
-        {
-            _parent = new WeakReference<Nodo<T>>(parent);
-            _children = children;
-            this.item = item;
-        }
-
-
-        Nodo<T>? GetParent()
-        {
-            if (_parent == null)
-                return null;
-            Nodo<T>? result;
-            _parent.TryGetTarget(out result);
-            return result;
-        }
-
-        public void SetParent(Nodo<T>? newParent)
-        {
-            Unlink();
-            if (newParent != null)
-                newParent.AddChild(this);
-        }
-        public void AddChild(Nodo<T> child)
-        {
-            if (child == null)
-                return;
-            child._parent = new WeakReference<Nodo<T>>(this);
-            _children.Add(child);
-        }
-
-        public void Unlink()
-        {
-            var p = GetParent();
-            if (p == null)
-                return;
-
-            int index = GetIndexOf(this);
-            p._children.RemoveAt(index);
-            _parent = null;
-        }
-
-        int GetIndexOf(Nodo<T> value)
-        {
-            for (int i = 0; i < _children.Count; i++)
+            if (Root != null)
             {
-                if (value == _children[i])
-                    return i;
-            }
-            return -1;
-        }
-        public Nodo<T> GetRoot()
-        {
-            var p = Parent;
-            if (p == null)
-                return this;
-            return p.GetRoot();
-        }
-
-
-
-        public void Visit(Visitor visitor)
-        {
-            visitor(this);
-
-            foreach (Nodo<T> n in _children)
-            {
-                n.Visit(visitor);
+                Root = null;
             }
         }
 
-        public Nodo<T>? FindNodeWithItem(T value, Comparator<T> c)
-        {
-            if (c(item, value) == 0)
-                return this;
+        #region arbolcomentadoconnodo
+        ////public delegate void Visitor(Nodo<T> n);
+        //public Arbol(Nodo<T>? root)
+        //{
+        //    Root = root;
+        //}
 
-            foreach (var child in _children)
-            {
-                var ch = child.FindNodeWithItem(value, c);
-                if (ch != null)
-                    return ch;
-            }
+        //public int ChildCount
+        //{
+        //    get { return _children.Count; }
+        //}
+        //public Nodo<T>? Parent
+        //{
+        //    get { return GetParent(); }
+        //    set { SetParent(value); }
+        //}
 
-            return null;
-        }
 
-        public bool Contains(T value, Comparator<T> comp)
-        {
-            return FindNodeWithItem(value, comp) != null;
-        }
+        //public Arbol()
+        //{
+        //}
+
+        //public Arbol(Nodo<T> parent, List<Nodo<T>> children, T item)
+        //{
+        //    _parent = new WeakReference<Nodo<T>>(parent);
+        //    _children = children;
+        //    this.item = item;
+        //}
+
+
+        //Nodo<T>? GetParent()
+        //{
+        //    if (_parent == null)
+        //        return null;
+        //    Nodo<T>? result;
+        //    _parent.TryGetTarget(out result);
+        //    return result;
+        //}
+
+        //public void SetParent(Nodo<T>? newParent)
+        //{
+        //    Unlink();
+        //    if (newParent != null)
+        //        newParent.AddChild(this);
+        //}
+        //public void AddChild(Nodo<T> child)
+        //{
+        //    if (child == null)
+        //        return;
+        //    child._parent = new WeakReference<Nodo<T>>(this);
+        //    _children.Add(child);
+        //}
+
+        //public void Unlink()
+        //{
+        //    var p = GetParent();
+        //    if (p == null)
+        //        return;
+
+        //    int index = GetIndexOf(this);
+        //    p._children.RemoveAt(index);
+        //    _parent = null;
+        //}
+
+        //int GetIndexOf(Nodo<T> value)
+        //{
+        //    for (int i = 0; i < _children.Count; i++)
+        //    {
+        //        if (value == _children[i])
+        //            return i;
+        //    }
+        //    return -1;
+        //}
+        //public Nodo<T> GetRoot()
+        //{
+        //    var p = Parent;
+        //    if (p == null)
+        //        return this;
+        //    return p.GetRoot();
+        //}
+
+
+
+        //public void Visit(Visitor visitor)
+        //{
+        //    visitor(this);
+
+        //    foreach (Nodo<T> n in _children)
+        //    {
+        //        n.Visit(visitor);
+        //    }
+        //}
+
+        //public Nodo<T>? FindNodeWithItem(T value, Comparator<T> c)
+        //{
+        //    if (c(item, value) == 0)
+        //        return this;
+
+        //    foreach (var child in _children)
+        //    {
+        //        var ch = child.FindNodeWithItem(value, c);
+        //        if (ch != null)
+        //            return ch;
+        //    }
+
+        //    return null;
+        //}
+
+        //public bool Contains(T value, Comparator<T> comp)
+        //{
+        //    return FindNodeWithItem(value, comp) != null;
+        //}
 
 
 
@@ -240,5 +256,6 @@ namespace Colecciones
         //    }
         //    return null;
         //}
+        #endregion
     }
 }

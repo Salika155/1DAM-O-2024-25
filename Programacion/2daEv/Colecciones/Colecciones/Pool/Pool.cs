@@ -58,7 +58,7 @@ namespace Colecciones
             // Método para crear un nuevo objeto (puede sobrescribirse en una clase derivada).
             protected virtual T CreateObject()
             {
-                throw new NotImplementedException("Debes implementar CreateObject en una clase derivada.");
+                return _createFunc();
             }
 
             // Cantidad de objetos disponibles en la Pool.

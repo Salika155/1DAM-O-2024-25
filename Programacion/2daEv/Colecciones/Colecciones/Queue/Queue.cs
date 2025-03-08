@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Colecciones
+namespace Colecciones.Queue
 {
     class Queue<T> : IQueue<T>
     {
@@ -53,7 +53,7 @@ namespace Colecciones
 
         public bool IsEmpty()
         {
-            return (_itemList.Count == 0); 
+            return _itemList.Count == 0; 
         }
 
         public T Last()

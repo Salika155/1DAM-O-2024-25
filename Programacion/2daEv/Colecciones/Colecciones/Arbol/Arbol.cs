@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Colecciones
+namespace Colecciones.Arbol
 {
     //public delegate int Comparator<T>(T a, T b);
     class Arbol<T> 

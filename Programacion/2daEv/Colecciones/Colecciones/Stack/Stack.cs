@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Colecciones
+namespace Colecciones.Stack
 {
     class Stack<T> : IStack<T>
     {
@@ -13,7 +13,7 @@ namespace Colecciones
          * será el primero en salir.
          */
         private readonly List<T> _itemsList;
-        private T[] _stackArray = new T[0];
+        //private T[] _stackArray = new T[0];
 
         public Stack()
         {
@@ -22,7 +22,7 @@ namespace Colecciones
 
         public bool IsEmpty()
         {
-            return (_itemsList.Count == 0);
+            return _itemsList.Count == 0;
         }
 
         //public bool IsEmptyA()
@@ -32,6 +32,9 @@ namespace Colecciones
 
         public T Peek()
         {
+            if (IsEmpty())
+                throw new InvalidOperationException("El Stack está vacío.");
+
             return _itemsList[_itemsList.Count - 1];
         }
 
@@ -55,9 +58,9 @@ namespace Colecciones
         //mejor empezar desde el final a eliminar
         public void Clear()
         {
-            for (int i = _itemsList.Count - 1; i >= 0; i--)
+            while (!IsEmpty())
             {
-                _itemsList.RemoveAt(i);
+                _itemsList.RemoveAt(_itemsList.Count - 1);
             }
         }
             

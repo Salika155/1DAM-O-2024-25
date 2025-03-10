@@ -10,20 +10,35 @@ namespace AutosLocos
     {
         private double _weight;
 
-        public Rock(string? name, double position, double activationRange, double weight)
-            : base(name, position, activationRange)
+        public Rock(double position) : base("Piedra", position)
         {
-            if (weight < 10 || weight > 30)
-                throw new Exception("El peso debe estar entre 10 y 30.");
-
-            _weight = weight;
+            _weight = Utils.RandomRange(10, 30);
         }
 
         public double Weight => _weight;
 
-        public override bool IsAlive => true;  // Define tu propia lógica aquí
+        public override void Simulate(IRace race)
+        {
+            foreach(RaceObject c in race.GetRacers())
+            {
+                if(c.Position <= this.Position + 20 && 
+                    c.Position >= this.Position - 20)
+                {
+                    if (Utils.Probability(10 + _weight))
+                    {
+                        c.Position -= 25;
+                    }
+                }
+            }
+        }
+        //public override bool IsEnable()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public override bool IsAlive => true;  // Define tu propia lógica aquí
 
         // ✅ Aquí especificamos que este obstáculo es de tipo ROCK
-        public override ObstacleType Type => ObstacleType.ROCK;
+        //public override ObstacleType Type => ObstacleType.ROCK;
     }
 }

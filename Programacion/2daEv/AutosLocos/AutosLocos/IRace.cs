@@ -18,5 +18,7 @@ namespace AutosLocos
         void VisitObjects(Visitor visitor);
         int GetObjectCount();
         RaceObject GetObjectAt(int index);
+        public List<RaceObject> Simulate();
+        public List<RaceObject> GetRacers();
     }
 }

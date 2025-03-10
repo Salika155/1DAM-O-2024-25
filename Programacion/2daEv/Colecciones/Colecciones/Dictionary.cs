@@ -58,7 +58,8 @@ namespace Colecciones
 
             for (int i = 0; i < _itemList.Count; i++)
             {
-                if (Equals(_itemList[i].Key, key))
+                var keyitem = _itemList[i].Key;
+                if (Equals(keyitem, key))
                     return i;
             }
             return -1;
@@ -189,6 +190,14 @@ namespace Colecciones
             // Si la acción es null, no hacemos nada
             if (action == null)
                 return;
+            //foreach (var item in _itemList)
+            //{
+            //    // Comprobación de que key y value no sean null
+            //    if (item.Key != null && item.Value != null)
+            //    {
+            //        action(item.Key, item.Value);
+            //    }
+            //}
 
             for (int i = 0; i < _itemList.Count; i++)
             {
@@ -218,6 +227,16 @@ namespace Colecciones
                     result.Add(_itemList[i].Key, _itemList[i].Value);
                 }
             }
+
+            //foreach(var item in _itemList)
+            //{
+            //    if (item.Key != null && item.Value != null &&
+            //        predicate(item.Key, item.Value))
+            //    {
+            //        result.Add(item.Key, item.Value);
+            //    }
+            //}
+
             return result;
         }
     }

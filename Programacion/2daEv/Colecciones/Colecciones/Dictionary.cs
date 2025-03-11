@@ -77,7 +77,8 @@ namespace Colecciones
 
             for (int i = 0; i < _itemList.Count; i++)
             {
-                if (Equals(_itemList[i].Value, value))
+                var itemValue = _itemList[i];
+                if (Equals(itemValue.Value, value))
                     return true;
             }
             return false;

@@ -29,7 +29,7 @@ namespace Colecciones.Stack
         //{
         //    return (_stackArray.Length == 0);
         //}
-
+        
         public T Peek()
         {
             if (IsEmpty())
@@ -62,6 +62,7 @@ namespace Colecciones.Stack
             {
                 _itemsList.RemoveAt(_itemsList.Count - 1);
             }
+            
         }
             
     }

@@ -286,5 +286,120 @@ namespace Colecciones.Arbol
         {
             return EqualityComparer<T>.Default.Equals(item1, item2);
         }
+
+        #region comentado nodos
+        /* 
+         * public class Nodo<T>
+{
+    public delegate bool FilterDelegate<T>(T item);
+
+    private readonly List<Nodo<T>> _childList = new List<Nodo<T>>();
+    private WeakReference<Nodo<T>>? _parent;
+    private Nodo<T> _root;
+    private T? _data;
+    private Nodo<T> _childAt;
+
+    public Nodo<T> this[int indice]
+    {
+        get { return _childAt[indice]; }
+    }
+    public T Data { get => _data; set => _data = value; }
+    public Nodo<T> Root => GetRoot();
+    public int Count => _childList.Count;
+    public Nodo<T> Parent { get => GetParent(); set => SetParent(value); }
+
+    public Nodo<T> GetRoot()
+    {
+        if (Parent != null)
+            return Parent.GetRoot();
+        return this;
+    }
+    public Nodo<T>? GetParent()
+    {
+        if (_parent == null)
+            return null;
+        Nodo<T> padre;
+        if (_parent.TryGetTarget(out padre))
+            return padre;
+        return null;
+    }
+    public void SetParent(Nodo<T> n)
+    {
+        if (n == null)
+            return;
+        if (n == this)
+            return;
+
+        n.AddChild(this);
+    }
+    public void AddChild(Nodo<T> child)
+    {
+        if (child == null)
+            return;
+        if (ContainsChild(child) || IsAncestor(child) || child == this)
+            return;
+
+        if (Parent != null)
+            Detach();
+        child._parent = new WeakReference<Nodo<T>>(this);
+        _childList.Add(child);
+    }
+    public void Detach()
+    {
+        if (Parent == null)
+            return;
+        Nodo<T> padre = Parent;
+        for (int i = 0; i < padre.Count; i++)
+        {
+            if (padre._childList[i].Equals(this))
+            {
+                padre._childList[i]._parent = null;
+                padre._childList.RemoveAt(i);
+                return;
+            }
+        }
+    }
+    public bool ContainsChild(Nodo<T> n)
+    {
+        if (n == null)
+            throw new Exception("No puedes ponerte un hijo null");
+        for (int i = 0; i < Count; i++)
+        {
+            if (_childList[i].Equals(n))
+                return true;
+        }
+        return false;
+    }
+    public bool IsAncestor(Nodo<T> n)
+    {
+        if (n == null)
+            throw new Exception("");
+        if (Parent == n)
+            return true;
+        if (Parent == null)
+            return false;
+        return Parent.IsAncestor(n);
+    }
+
+    public void FilterNodes(List<Nodo<T>> l, FilterDelegate<T> del)
+    {
+        if(del(Data))
+        {
+            l.Add(this);
+        }
+        for(int i = 0; i < Count; i++)
+        {
+            _childList[i].FilterNodes(l,del);
+        }
+    }
+    public List<Nodo<T>> Filter2(FilterDelegate<T> del)
+    {
+        List<Nodo<T>> result = new List<Nodo<T>>();
+        FilterNodes(result, del);
+        return result;
+    }
+}
+         * */
+        #endregion
     }
 }

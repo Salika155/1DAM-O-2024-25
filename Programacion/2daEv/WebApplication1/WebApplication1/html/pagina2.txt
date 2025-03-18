@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Estudiante</title>
+</head>
+<body>
+    <h2>Añadir Estudiante</h2>
+
+    <p>ID: <input type="number" id="id"></p>
+    <p>Nombre: <input type="text" id="name"></p>
+    <p>Edad: <input type="number" id="age"></p>
+
+    <button onclick="addStudent()">Agregar</button>
+
+    <p id="response"></p>
+
+    <script>
+        function addStudent() {
+            const student = {
+                id: document.getElementById("id").value,
+                name: document.getElementById("name").value,
+                age: document.getElementById("age").value
+            };
+
+            fetch("http://localhost:5000/Student", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(student)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("response").innerText = "Estudiante agregado correctamente.";
+            })
+            .catch(error => {
+                document.getElementById("response").innerText = "Error al agregar estudiante.";
+                console.error(error);
+            });
+        }
+    </script>
+</body>
+</html>

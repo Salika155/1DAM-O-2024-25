@@ -79,11 +79,12 @@ namespace ChessApp.Controllers
         }
 
         [HttpPost]
-        public void AddStudent([FromBody]Student student)
+        public Student AddStudent(/*[FromBody]*/Student student)
         {
             if (student != null)
                 //_studentList[student.Id] = student;
                 _database.AddStudent(student);
+            return student;
         }
 
         [HttpGet("{id}")]

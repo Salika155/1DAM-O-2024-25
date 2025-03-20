@@ -5,7 +5,7 @@ namespace ChessLib.Tablero
     {
         void InitBoard();
         void Clear();
-        bool MoveFigure(int x, int y);
+        bool MoveSelectedFigure(int x, int y);
 
         //Interface IChessBoard : IChessBoardImmutable
         //*  {

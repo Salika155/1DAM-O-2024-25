@@ -8,6 +8,8 @@ namespace ChessLib.Tablero
         private readonly int _width;
         private readonly int _height;
         private readonly Figure[] _figures;
+        private IFigure? _selectedFigure = null;
+        private Coord? _selectedCoord = null;
 
         public int Width => _width;
         public int Height => _height;
@@ -19,10 +21,76 @@ namespace ChessLib.Tablero
             _casillas = new Casilla[width, height];
             _figures = new Figure[32];
             CrearCasillas();
+            InitBoard();
             //InitBoard();
             //metodo para iniciar fichas
         }
 
+        #region crearfiguras
+        private void CrearFiguras()
+        {
+            CrearPeones();
+            CrearTorres();
+            CrearAlfiles();
+            CrearCaballos();
+            CrearReyes();
+        }
+
+        private void CrearReyes()
+        {
+            //reyes blancos
+            _casillas[3, 0].Figure = new Queen(FigureColor.WHITE, FigureType.QUEEN, new Coord(3, 0));
+            _casillas[4, 0].Figure = new King(FigureColor.WHITE, FigureType.KING, new Coord(4, 0));
+            //reyes negros
+            _casillas[3, 7].Figure = new Queen(FigureColor.BLACK, FigureType.QUEEN, new Coord(3, 7));
+            _casillas[4, 7].Figure = new King(FigureColor.BLACK, FigureType.KING, new Coord(4, 7));
+        }
+
+        private void CrearCaballos()
+        {
+            //caballos blancos
+            _casillas[1, 0].Figure = new Knight(FigureColor.WHITE, FigureType.KNIGHT, new Coord(1, 0));
+            _casillas[6, 0].Figure = new Knight(FigureColor.WHITE, FigureType.KNIGHT, new Coord(6, 0));
+            //caballos negros
+            _casillas[1, 7].Figure = new Knight(FigureColor.BLACK, FigureType.KNIGHT, new Coord(1, 7));
+            _casillas[6, 7].Figure = new Knight(FigureColor.BLACK, FigureType.KNIGHT, new Coord(6, 7));
+        }
+
+        private void CrearAlfiles()
+        {
+            //alfiles blancos
+            _casillas[2, 0].Figure = new Bishop(FigureColor.WHITE, FigureType.BISHOP, new Coord(2, 0));
+            _casillas[5, 0].Figure = new Bishop(FigureColor.WHITE, FigureType.BISHOP, new Coord(5, 0));
+            //alfiles negros
+            _casillas[2, 7].Figure = new Bishop(FigureColor.BLACK, FigureType.BISHOP, new Coord(2, 7));
+            _casillas[5, 7].Figure = new Bishop(FigureColor.BLACK, FigureType.BISHOP, new Coord(5, 7));
+        }
+
+        private void CrearTorres()
+        {
+            //torres blancas
+            _casillas[0, 0].Figure = new Tower(FigureColor.WHITE, FigureType.TOWER, new Coord(0, 0));
+            _casillas[7, 0].Figure = new Tower(FigureColor.WHITE, FigureType.TOWER, new Coord(7, 0));
+            //torres negras
+            _casillas[0, 7].Figure = new Tower(FigureColor.BLACK, FigureType.TOWER, new Coord(0, 7));
+            _casillas[7, 7].Figure = new Tower(FigureColor.BLACK, FigureType.TOWER, new Coord(7, 7));
+        }
+
+        private void CrearPeones()
+        {
+            // Piezas blancas
+            for (int i = 0; i < _width; i++)
+            {
+                _casillas[i, 1].Figure = new Pawn(FigureColor.WHITE, FigureType.PAWN, new Coord(i, 1));
+            }
+
+            // Piezas negras
+            for (int i = 0; i < _width; i++)
+            {
+                _casillas[i, 6].Figure = new Pawn(FigureColor.BLACK, FigureType.PAWN, new Coord(i, 6));
+            }
+        }
+        #endregion
 
         public void Clear()
         {
@@ -64,59 +132,47 @@ namespace ChessLib.Tablero
             return _width;
         }
 
-        //Metodo para inicializar las casillas
         public void InitBoard()
         {
-            // Piezas blancas
-            _casillas[0, 0].Figure = new Tower(FigureColor.WHITE, FigureType.TOWER, new Coord(0, 0));
-            _casillas[7, 0].Figure = new Tower(FigureColor.WHITE, FigureType.TOWER, new Coord(7, 0));
-            _casillas[1, 0].Figure = new Knight(FigureColor.WHITE, FigureType.KNIGHT, new Coord(1, 0));
-            _casillas[6, 0].Figure = new Knight(FigureColor.WHITE, FigureType.KNIGHT, new Coord(6, 0));
-            _casillas[2, 0].Figure = new Bishop(FigureColor.WHITE, FigureType.BISHOP, new Coord(2, 0));
-            _casillas[5, 0].Figure = new Bishop(FigureColor.WHITE, FigureType.BISHOP, new Coord(5, 0));
-            _casillas[3, 0].Figure = new Queen(FigureColor.WHITE, FigureType.QUEEN, new Coord(3, 0));
-            _casillas[4, 0].Figure = new King(FigureColor.WHITE, FigureType.KING, new Coord(4, 0));
-
-            for (int i = 0; i < _width; i++)
-            {
-                _casillas[i, 1].Figure = new Pawn(FigureColor.WHITE, FigureType.PAWN, new Coord(i, 1));
-            }
-
-            // Piezas negras
-            _casillas[0, 7].Figure = new Tower(FigureColor.BLACK, FigureType.TOWER, new Coord(0, 7));
-            _casillas[7, 7].Figure = new Tower(FigureColor.BLACK, FigureType.TOWER, new Coord(7, 7));
-            _casillas[1, 7].Figure = new Knight(FigureColor.BLACK, FigureType.KNIGHT, new Coord(1, 7));
-            _casillas[6, 7].Figure = new Knight(FigureColor.BLACK, FigureType.KNIGHT, new Coord(6, 7));
-            _casillas[2, 7].Figure = new Bishop(FigureColor.BLACK, FigureType.BISHOP, new Coord(2, 7));
-            _casillas[5, 7].Figure = new Bishop(FigureColor.BLACK, FigureType.BISHOP, new Coord(5, 7));
-            _casillas[3, 7].Figure = new Queen(FigureColor.BLACK, FigureType.QUEEN, new Coord(3, 7));
-            _casillas[4, 7].Figure = new King(FigureColor.BLACK, FigureType.KING, new Coord(4, 7));
-
-            for (int i = 0; i < _width; i++)
-            {
-                _casillas[i, 6].Figure = new Pawn(FigureColor.BLACK, FigureType.PAWN, new Coord(i, 6));
-            }
+            CrearFiguras();
         }
-        //hara falta metodo para inicializar figuras
 
-        public bool MoveFigure(int fromX, int fromY, int toX, int toY)
+        public bool MoveFigure(IChessBoard board, int fromX, int fromY, int toX, int toY)
         {
-            var figure = GetFigureAt(fromX, fromY);
-            if (figure == null)
-                return false; // No hay figura en la casilla de origen
-
-            var targetCoord = new Coord(toX, toY);
-            if (!figure.GetAllAvailablePosition(this).Contains(targetCoord))
-                return false; // Movimiento no válido
-
+            //tiene que haber alguna manera de sacar todo esto sin necesidad de volver a 
+            //crearlos pero ahora no lo se
+           var figure = GetFigureAt(fromX, fromY);
+            if (!CanFigureBeMoved(board, fromX, fromY, toX, toY))
+                return false;
+            
             // Realizar el movimiento
             _casillas[toX, toY].Figure = figure;
             _casillas[fromX, fromY].Figure = null;
-            figure.MoveFigure(targetCoord);
-
+            figure.MoveFigure(new Coord(toX, toY));
             return true;
         }
 
+        public bool CanFigureBeMoved(IChessBoard board, int fromX, int fromY, int toX, int toY)
+        {
+            var figure = GetFigureAt(fromX, fromY);
+            return FigureBeMoved(board, figure, toX, toY);
+        }
+
+        private bool FigureBeMoved(IChessBoard board, IFigure? figure, int toX, int toY)
+        {
+            if (figure == null)
+                return false;
+            var targetCoord = new Coord(toX, toY);
+            var availablePositions = figure.GetAllAvailablePosition(board);
+
+            // Recorrer manualmente la lista en lugar de usar Contains
+            foreach (var coord in availablePositions)
+            {
+                if (coord.X == targetCoord.X && coord.Y == targetCoord.Y)
+                    return true;
+            }
+            return false;
+        }
 
         public void RemoveFigureAt(int x, int y)
         {
@@ -124,6 +180,7 @@ namespace ChessLib.Tablero
                 _casillas[x, y].Figure = null;
         }
 
+        //Metodo para inicializar las casillas
         public void CrearCasillas()
         {
             for (int y = 0; y < _height; y++)
@@ -131,18 +188,77 @@ namespace ChessLib.Tablero
                 for (int x = 0; x < _width; x++)
                 {
                     var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.BLACK;
-
                     _casillas[x, y] = new Casilla(new Coord(x, y));
                 }
             }
         }
 
-        public bool MoveFigure(int x, int y)
+        public bool MoveSelectedFigure(int x, int y)
         {
-            return true;
+            var figure = GetFigureAt(x, y);
+            if (figure == null)
+            {
+                _selectedFigure = null;
+                _selectedCoord = null;
+                return false; // No hay figura en esa casilla
+            }
+
+            _selectedFigure = figure;
+            _selectedCoord = new Coord(x, y);
+            return true; // Figura seleccionada correctamente
         }
 
+        //ESTE POR HUEVOS TIENE QUE PODERSE SIMPLIFICAR
+        public void MostrarMovimientosDisponibles(IChessBoard board)
+        {
+            if (_selectedFigure == null || _selectedCoord == null)
+            {
+                Console.WriteLine("No hay ninguna figura seleccionada.");
+                return;
+            }
 
+            var availableMoves = _selectedFigure.GetAllAvailablePosition(board);
+            //esto es para no usar el this
+            //ESTO PODRIA HACERSE CON UN DELEGADO VISIT CREO
+
+
+            Console.WriteLine($"Movimientos disponibles para {_selectedFigure.GetType().Name} en {_selectedCoord}:");
+
+            for (int y = Height - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    var figure = GetFigureAt(x, y);
+                    char symbol = figure switch
+                    {
+                        Pawn => 'P',
+                        Tower => 'T',
+                        Knight => 'N',
+                        Bishop => 'B',
+                        Queen => 'Q',
+                        King => 'K',
+                        _ => ' ' // Casilla vacía
+                    };
+
+                    // Si esta casilla está en los movimientos permitidos, márcala con '*'
+                    if (availableMoves.Any(c => c.X == x && c.Y == y))
+                    {
+                        Console.BackgroundColor = ConsoleColor.Green;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = (x + y) % 2 == 0 ? ConsoleColor.DarkGray : ConsoleColor.White;
+                    }
+
+                    Console.ForegroundColor = figure != null && figure.GetColor() == FigureColor.BLACK ? ConsoleColor.Black : ConsoleColor.DarkRed;
+                    Console.Write($" {symbol} ");
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
+            }
+        }
+
+        //dibuja tablero
         public void PrintBoard()
         {
             for (int y = Height - 1; y >= 0; y--)
@@ -161,17 +277,18 @@ namespace ChessLib.Tablero
                         King => 'K',
                         _ => ' ' // Casilla vacía
                     };
+                    PrintColorCasillas(x, y, figure, symbol);
 
-                    // Determinar el color de la casilla
-                    Console.BackgroundColor = (x + y) % 2 == 0 ? ConsoleColor.DarkGray : ConsoleColor.White;
-                    Console.ForegroundColor = figure != null && figure.GetColor() == FigureColor.BLACK ? ConsoleColor.Black : ConsoleColor.DarkRed;
-
-                    Console.Write($" {symbol} ");
-                    Console.ResetColor();
                 }
                 Console.WriteLine();
             }
+            PrintLetrasFichas();
+            
+        }
 
+        // Determinar el color de la casilla
+        public void PrintLetrasFichas()
+        {
             Console.Write("  ");
             for (char c = 'A'; c < 'A' + Width; c++)
             {
@@ -180,6 +297,14 @@ namespace ChessLib.Tablero
             Console.WriteLine();
         }
 
+        public void PrintColorCasillas(int x, int y, IFigure figure, char symbol)
+        {
+            Console.BackgroundColor = (x + y) % 2 == 0 ? ConsoleColor.DarkGray : ConsoleColor.White;
+            Console.ForegroundColor = figure != null && figure.GetColor() == FigureColor.BLACK ? ConsoleColor.Black : ConsoleColor.DarkRed;
+
+            Console.Write($" {symbol} ");
+            Console.ResetColor();
+        }
     }
 }
 

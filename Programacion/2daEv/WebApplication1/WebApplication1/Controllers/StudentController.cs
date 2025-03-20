@@ -40,13 +40,13 @@ namespace ChessApp.Controllers
             return _database.GetStudents();
         }
 
-        
+        [HttpGet("{id}")]
         public Student? GetStudent(long id)
         {
             return _database.GetStudentFromList(id) as Student;
         }
 
-        [HttpPost]
+        [HttpPut("{id}")]
         public bool UpdateStudent(long id, [FromBody] Student newStudent)
         {
             //esto para lista antes
@@ -78,8 +78,9 @@ namespace ChessApp.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpPost]
-        public Student AddStudent(/*[FromBody]*/Student student)
+        [HttpPost]  // Ahora solo hay un POST
+        [Route("add")]
+        public Student AddStudent([FromBody] Student student)
         {
             if (student != null)
                 //_studentList[student.Id] = student;
@@ -87,7 +88,7 @@ namespace ChessApp.Controllers
             return student;
         }
 
-        [HttpGet("{id}")]
+        [HttpDelete("{id}")]
         public void DeleteStudent(long id)
         {
             //_studentList.Remove(id);

@@ -86,6 +86,7 @@ namespace ChessApp.Controllers
                 //_studentList[student.Id] = student;
                 _database.AddStudent(student);
             return student;
+            //trycatch
         }
 
         [HttpDelete("{id}")]

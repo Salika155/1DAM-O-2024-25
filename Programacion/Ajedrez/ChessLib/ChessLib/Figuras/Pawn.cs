@@ -4,26 +4,10 @@ namespace ChessLib.Figuras
 {
     public class Pawn : Figure
     {
-        public Pawn(FigureColor color, FigureType type, Coord coords) 
+        public Pawn(FigureColor color, Coord coords) 
             : base(color, FigureType.PAWN, coords)
         {
         }
-
-        //public abstract bool ValidateMove(Coord newCoords);
-        //public override bool ValidateMove(Coord newCoords)
-        //{
-        //    int direction = (Color == FigureColor.WHITE) ? 1 : -1;
-        //    if (newCoords.X == Coords.X && newCoords.Y == Coords.Y + direction)
-        //    {
-        //        return true;
-        //    }
-        //    // Captura en diagonal.
-        //    if (Math.Abs(newCoords.X - Coords.X) == 1 && newCoords.Y == Coords.Y + direction)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
 
         public void Promote(FigureType newType)
         {
@@ -37,47 +21,47 @@ namespace ChessLib.Figuras
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         {
             List<Coord> moves = new List<Coord>();
-            //int direction = GetColor == FigureColor.WHITE ? 1 : -1;
+            int direction = (Color == FigureColor.RED) ? 1 : -1;
 
             //// Movimiento hacia adelante
             //Coord forward = new Coord(GetPosition().X, GetPosition().Y + direction);
             //if (board.IsPositionEmpty(forward))
             //    moves.Add(forward);
-
-            //// Capturas diagonales
-            //CheckDiagonalCapture(board, direction, -1, moves); // Izquierda
-            //CheckDiagonalCapture(board, direction, 1, moves);  // Derecha
+            MovimientoHaciaDelante(board, moves, direction);
+            CapturaDiagonal(board, moves, direction);
 
             return moves;
+        
         }
 
-        public override Coord[] GetAvailablePositions(IChessBoard board)
+        public void CapturaDiagonal(IChessBoard board, List<Coord> moves, int direction)
         {
-            throw new NotImplementedException();
+            int[] desplazamientoDiagonal = { -1, 1 };
+
+            foreach (var desplazam in desplazamientoDiagonal)
+            {
+                ValidaMovYAdd(board, moves, Coords.X + desplazam, Coords.Y + direction);
+            }
         }
 
-        //private void CheckDiagonalCapture(IChessBoard board, int dirY, int dirX, List<Coord> moves)
-        //{
-        //    Coord target = new Coord(GetPosition().X + dirX, GetPosition().Y + dirY);
-        //    if (board.HasEnemyPiece(target, GetColor))
-        //        moves.Add(target);
-        //}
+        public void MovimientoHaciaDelante(IChessBoard board, List<Coord> movim, int direccion)
+        {
+            ValidaMovYAdd(board, movim, Coords.X, Coords.Y + direccion);
 
-        //-----
+            if (MovementCount == 0)
+            {
+                ValidaMovYAdd(board, movim, Coords.X, Coords.Y + 2 * direccion);
+            }
+        }
 
-        //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public void ValidaMovYAdd(IChessBoard board, List<Coord> moves, int newX, int newY)
+        {
+            if (new Coord(newX, newY).EstaDentroDeLimitesTablero() &&
+                board.CanFigureBeMoved(board, Coords.X, Coords.Y, newX, newY))
+            {
+                moves.Add(new Coord(newX, newY));
+            }
+        }
 
-        //public override Coord? GetAvailablePosition(IChessBoard board)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

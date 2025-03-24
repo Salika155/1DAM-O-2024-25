@@ -12,7 +12,16 @@ namespace ChessLib
     {
         private ChessBoard? _tablero;
         private FigureColor _turnoActual;
-        private Coord? _piezaSeleccionada;
-        private List<Coord>? _movimientosValidos;
+        //private Coord? _piezaSeleccionada;
+        //private List<Coord>? _movimientosValidos;
+
+        public GameController()
+        {
+            _tablero = new ChessBoard(8, 8);
+            _tablero.InitBoard();
+            //empiezan los rojos
+            _turnoActual = FigureColor.RED;
+        }
+
     }
 }

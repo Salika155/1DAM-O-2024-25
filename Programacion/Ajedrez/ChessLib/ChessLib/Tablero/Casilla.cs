@@ -16,21 +16,18 @@ namespace ChessLib.Tablero
         //private Coord coord;
 
         public Coord Coords => _coord;
+        public CasillaColor Color => _casillaColor;
         public IFigure? Figure
         {
             get => _figure;
-            set
-            {
-                _figure = value;
-            }
+            set => _figure = value;
         }
-
-        public CasillaColor Color => _casillaColor;
+        
         public Casilla(Coord coord, CasillaColor type)
         {
             _coord = coord;
             _casillaColor = type;
-            Figure = null;
+            _figure = null;
         }
 
         //public Casilla(Coord coord)

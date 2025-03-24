@@ -4,21 +4,37 @@ namespace ChessLib.Figuras
 {
     public class Bishop : Figure
     {
-        public Bishop(FigureColor color, FigureType type, Coord coords) : base(color, FigureType.BISHOP, coords)
+        public Bishop(FigureColor color, Coord coords) : base(color, FigureType.BISHOP, coords)
         {
 
         }
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         {
-            throw new NotImplementedException();
+            List<Coord> movim = new List<Coord>();
+
+            int[][] direccionMov = 
+            { new[] { 1, 1 }, new[] { 1, -1 }, new[] { -1, 1 }, new[] { -1, -1 } };
+
+            foreach (var direction in direccionMov)
+            {
+                int newX = Coords.X + direction[0];
+                int newY = Coords.Y + direction[1];
+
+                if (new Coord(newX, newY).EstaDentroDeLimitesTablero() &&
+                board.CanFigureBeMoved(board, Coords.X, Coords.Y, newX, newY))
+                {
+                    movim.Add(new Coord(newX, newY));
+                }
+            }
+            return movim;
         }
 
-        public override Coord[] GetAvailablePositions(IChessBoard board)
-        {
-            List<Coord> moves = new List<Coord>();
-            return moves.ToArray();
-        }
+        //public override Coord[] GetAvailablePositions(IChessBoard board)
+        //{
+        //    List<Coord> moves = new List<Coord>();
+        //    return moves.ToArray();
+        //}
 
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{

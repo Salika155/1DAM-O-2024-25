@@ -1,27 +1,60 @@
 ﻿using ChessLib.Tablero;
+using System.Drawing;
 
 namespace ChessLib.Figuras
 {
     public class Queen : Figure
     {
-        public Queen(FigureColor color, FigureType type, Coord coords) : base(color, FigureType.QUEEN, coords)
+        private readonly Tower _towerMovement;
+        private readonly Bishop _bishopMovement;
+
+        public Queen(FigureColor color, Coord coords) : base(color, FigureType.QUEEN, coords)
         {
+            // Creamos instancias "ficticias" solo para reutilizar su lógica de movimiento
+            _towerMovement = new Tower(color, coords);
+            _bishopMovement = new Bishop(color, coords);
         }
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         {
-            throw new NotImplementedException();
+            List<Coord> movim = new List<Coord>();
+            var towerMovim = _towerMovement.GetAllAvailablePosition(board);
+            var alfilMovim = _bishopMovement.GetAllAvailablePosition(board);
+
+            CombineMoves(movim, towerMovim);
+            CombineMoves(movim, alfilMovim);
+            return movim;
         }
 
-        public  Coord[] GetAvailablePosition(IChessBoard board)
+        private void CombineMoves(List<Coord> target, List<Coord> origenfigura)
         {
-            throw new NotImplementedException();
+            foreach(var movim in origenfigura)
+            {
+                if (!ContainsCoord(target, movim))
+                target.Add(movim);
+            }
         }
 
-        public override Coord[] GetAvailablePositions(IChessBoard board)
+        private bool ContainsCoord(List<Coord> coords, Coord movim)
         {
-            throw new NotImplementedException();
+            //esto seguramente se pueda cambiar por una llamada a indexof
+            foreach (var c in coords)
+            {
+                if (c.X == movim.X && c.Y == movim.Y)
+                    return true;
+            }
+            return false;
         }
+
+        //public  Coord[] GetAvailablePosition(IChessBoard board)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public override Coord[] GetAvailablePositions(IChessBoard board)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{

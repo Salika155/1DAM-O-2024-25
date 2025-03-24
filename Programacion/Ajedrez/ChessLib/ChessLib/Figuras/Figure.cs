@@ -21,10 +21,15 @@ namespace ChessLib.Figuras
     public abstract class Figure : IFigure
     {
         private readonly FigureColor _colorFigure;
-        private FigureType _typeFigure;
+        private readonly FigureType _typeFigure;
         private Coord _coords;
         private int _movementCount;
 
+        public FigureColor? Color => _colorFigure;
+        public FigureType? Type => _typeFigure;
+        public Coord Coords => _coords;
+        //coordenadas requiere de un set
+        public int MovementCount => _movementCount;
 
         public Figure(FigureColor color, FigureType type, Coord coords)
         {
@@ -33,12 +38,6 @@ namespace ChessLib.Figuras
             _coords = coords;
             _movementCount = 0;
         }
-
-        public FigureColor? Color => _colorFigure;
-        public FigureType? Type => _typeFigure;
-        public Coord Coords => _coords;
-        //coordenadas requiere de un set
-        public int MovementCount => _movementCount;
 
         public FigureColor? GetColor() => _colorFigure;
         public FigureType? GetFigureType() => _typeFigure;
@@ -52,16 +51,16 @@ namespace ChessLib.Figuras
         }
 
         // Métodos abstractos
-        public abstract Coord[] GetAvailablePositions(IChessBoard board);
+        //public abstract Coord[] GetAvailablePositions(IChessBoard board);
         public abstract List<Coord> GetAllAvailablePosition(IChessBoard board);
 
 
         //--------------------------------------
 
-        public bool ValidateMove(Coord targetCoord, ChessBoard chessBoard)
-        {
-            throw new NotImplementedException();
-        }
+        //public bool ValidateMove(Coord targetCoord, ChessBoard chessBoard)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
 
 

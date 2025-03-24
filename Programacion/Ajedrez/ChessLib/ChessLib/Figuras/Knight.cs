@@ -10,20 +10,37 @@ namespace ChessLib.Figuras
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         {
-            var posiblesmovs = new List<Coord>();
+            var posiblesMovs = new List<Coord>();
 
-            return posiblesmovs;
+            int[][] direccionMovimientos =
+            {
+                new[] { 2, 1 }, new[] { 2, -1 }, new[] { -2, 1 }, new[] { -2, -1 },
+                new[] { 1, 2 }, new[] { 1, -2 }, new[] { -1, 2 }, new[] { -1, -2 }
+            };
+
+            foreach (var direccion in direccionMovimientos)
+            {
+                int newX = Coords.X + direccion[0];
+                int newY = Coords.Y + direccion[1];
+                if (new Coord(newX, newY).EstaDentroDeLimitesTablero() &&
+                board.CanFigureBeMoved(board, Coords.X, Coords.Y, newX, newY))
+                {
+                    posiblesMovs.Add(new Coord(newX, newY));
+                }
+            }
+            return posiblesMovs;
         }
 
-        public Coord[] GetAvailablePosition(IChessBoard board)
-        {
-            throw new NotImplementedException();
-        }
+        #region codigoviejo
+        //public Coord[] GetAvailablePosition(IChessBoard board)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public override Coord[] GetAvailablePositions(IChessBoard board)
-        {
-            throw new NotImplementedException();
-        }
+        //public override Coord[] GetAvailablePositions(IChessBoard board)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{
@@ -39,5 +56,6 @@ namespace ChessLib.Figuras
         //{
         //    throw new NotImplementedException();
         //}
+        #endregion
     }
 }

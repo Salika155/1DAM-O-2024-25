@@ -10,6 +10,7 @@ namespace ChessLib.Tablero
         private readonly Figure[] _figures;
         private IFigure? _selectedFigure = null;
         private Coord? _selectedCoord = null;
+        private FigureColor _currentTurn = FigureColor.RED;
 
         public int Width => _width;
         public int Height => _height;
@@ -39,11 +40,11 @@ namespace ChessLib.Tablero
         private void CrearReyes()
         {
             //reyes blancos
-            _casillas[3, 0].Figure = new Queen(FigureColor.RED, FigureType.QUEEN, new Coord(3, 0));
-            _casillas[4, 0].Figure = new King(FigureColor.RED, FigureType.KING, new Coord(4, 0));
+            _casillas[3, 0].Figure = new Queen(FigureColor.RED, new Coord(3, 0));
+            _casillas[4, 0].Figure = new King(FigureColor.RED, new Coord(4, 0));
             //reyes negros
-            _casillas[3, 7].Figure = new Queen(FigureColor.BLACK, FigureType.QUEEN, new Coord(3, 7));
-            _casillas[4, 7].Figure = new King(FigureColor.BLACK, FigureType.KING, new Coord(4, 7));
+            _casillas[3, 7].Figure = new Queen(FigureColor.BLACK, new Coord(3, 7));
+            _casillas[4, 7].Figure = new King(FigureColor.BLACK, new Coord(4, 7));
         }
 
         private void CrearCaballos()
@@ -59,21 +60,21 @@ namespace ChessLib.Tablero
         private void CrearAlfiles()
         {
             //alfiles blancos
-            _casillas[2, 0].Figure = new Bishop(FigureColor.RED, FigureType.BISHOP, new Coord(2, 0));
-            _casillas[5, 0].Figure = new Bishop(FigureColor.RED, FigureType.BISHOP, new Coord(5, 0));
+            _casillas[2, 0].Figure = new Bishop(FigureColor.RED, new Coord(2, 0));
+            _casillas[5, 0].Figure = new Bishop(FigureColor.RED, new Coord(5, 0));
             //alfiles negros
-            _casillas[2, 7].Figure = new Bishop(FigureColor.BLACK, FigureType.BISHOP, new Coord(2, 7));
-            _casillas[5, 7].Figure = new Bishop(FigureColor.BLACK, FigureType.BISHOP, new Coord(5, 7));
+            _casillas[2, 7].Figure = new Bishop(FigureColor.BLACK, new Coord(2, 7));
+            _casillas[5, 7].Figure = new Bishop(FigureColor.BLACK, new Coord(5, 7));
         }
 
         private void CrearTorres()
         {
             //torres blancas
-            _casillas[0, 0].Figure = new Tower(FigureColor.RED, FigureType.TOWER, new Coord(0, 0));
-            _casillas[7, 0].Figure = new Tower(FigureColor.RED, FigureType.TOWER, new Coord(7, 0));
+            _casillas[0, 0].Figure = new Tower(FigureColor.RED, new Coord(0, 0));
+            _casillas[7, 0].Figure = new Tower(FigureColor.RED, new Coord(7, 0));
             //torres negras
-            _casillas[0, 7].Figure = new Tower(FigureColor.BLACK, FigureType.TOWER, new Coord(0, 7));
-            _casillas[7, 7].Figure = new Tower(FigureColor.BLACK, FigureType.TOWER, new Coord(7, 7));
+            _casillas[0, 7].Figure = new Tower(FigureColor.BLACK, new Coord(0, 7));
+            _casillas[7, 7].Figure = new Tower(FigureColor.BLACK, new Coord(7, 7));
         }
 
         private void CrearPeones()
@@ -81,13 +82,13 @@ namespace ChessLib.Tablero
             // Piezas blancas
             for (int i = 0; i < _width; i++)
             {
-                _casillas[i, 1].Figure = new Pawn(FigureColor.RED, FigureType.PAWN, new Coord(i, 1));
+                _casillas[i, 1].Figure = new Pawn(FigureColor.RED, new Coord(i, 1));
             }
 
             // Piezas negras
             for (int i = 0; i < _width; i++)
             {
-                _casillas[i, 6].Figure = new Pawn(FigureColor.BLACK, FigureType.PAWN, new Coord(i, 6));
+                _casillas[i, 6].Figure = new Pawn(FigureColor.BLACK, new Coord(i, 6));
             }
         }
         #endregion
@@ -137,6 +138,35 @@ namespace ChessLib.Tablero
             CrearFiguras();
         }
 
+        public void InitGame()
+        {
+            while (true)
+            {
+                Console.Clear();
+                PrintBoard();
+                Console.WriteLine($"Turno de las piezas: {_currentTurn}");
+                ExecuteTurn();
+            }
+        }
+
+        public void ExecuteTurn()
+        {
+
+        }
+
+        //Metodo para inicializar las casillas
+        public void CrearCasillas()
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.BLACK;
+                    _casillas[x, y] = new Casilla(new Coord(x, y), color);
+                }
+            }
+        }
+
         public bool MoveFigure(IChessBoard board, int fromX, int fromY, int toX, int toY)
         {
             //tiene que haber alguna manera de sacar todo esto sin necesidad de volver a 
@@ -182,19 +212,6 @@ namespace ChessLib.Tablero
                 _casillas[x, y].Figure = null;
         }
 
-        //Metodo para inicializar las casillas
-        public void CrearCasillas()
-        {
-            for (int y = 0; y < _height; y++)
-            {
-                for (int x = 0; x < _width; x++)
-                {
-                    var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.BLACK;
-                    _casillas[x, y] = new Casilla(new Coord(x, y), color);
-                }
-            }
-        }
-
         public bool MoveSelectedFigure(int x, int y)
         {
             var figure = GetFigureAt(x, y);
@@ -204,7 +221,6 @@ namespace ChessLib.Tablero
                 _selectedCoord = null;
                 return false; // No hay figura en esa casilla
             }
-
             _selectedFigure = figure;
             _selectedCoord = new Coord(x, y);
             return true; // Figura seleccionada correctamente
@@ -280,12 +296,10 @@ namespace ChessLib.Tablero
                         _ => ' ' // Casilla vacía
                     };
                     PrintColorCasillas(x, y, figure, symbol);
-
                 }
                 Console.WriteLine();
             }
             PrintLetrasFichas();
-            
         }
 
         // Determinar el color de la casilla

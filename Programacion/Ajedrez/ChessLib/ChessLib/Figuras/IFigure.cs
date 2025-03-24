@@ -13,11 +13,11 @@ namespace ChessLib.Figuras
         //Coord? GetAvailablePosition(IChessBoard board);
         void MoveFigure(Coord targetCoord);
         //esto es posible que tenga que borrarlo
-        Coord[] GetAvailablePositions(IChessBoard board);
+        //Coord[] GetAvailablePositions(IChessBoard board);
         //----------------------------------------------------
         List<Coord> GetAllAvailablePosition(IChessBoard board);
         //esto tambien pero no lo descarto
-        bool ValidateMove(Coord targetCoord, ChessBoard chessBoard);
+        //bool ValidateMove(Coord targetCoord, ChessBoard chessBoard);
     }
 }
 

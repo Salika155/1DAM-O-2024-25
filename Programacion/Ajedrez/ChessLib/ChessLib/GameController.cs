@@ -10,9 +10,9 @@ namespace ChessLib
 {
     public class GameController
     {
-        private ChessBoard _tablero;
+        private ChessBoard? _tablero;
         private FigureColor _turnoActual;
         private Coord? _piezaSeleccionada;
-        private List<Coord> _movimientosValidos;
+        private List<Coord>? _movimientosValidos;
     }
 }

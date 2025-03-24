@@ -5,7 +5,7 @@ namespace ChessLib.Figuras
     public enum FigureColor
     {
         BLACK,
-        WHITE
+        RED
     }
 
     public enum FigureType
@@ -20,13 +20,13 @@ namespace ChessLib.Figuras
 
     public abstract class Figure : IFigure
     {
-        private readonly FigureColor? _colorFigure;
-        private FigureType? _typeFigure;
+        private readonly FigureColor _colorFigure;
+        private FigureType _typeFigure;
         private Coord _coords;
         private int _movementCount;
 
 
-        public Figure(FigureColor color, FigureType? type, Coord coords)
+        public Figure(FigureColor color, FigureType type, Coord coords)
         {
             _colorFigure = color;
             _typeFigure = type;
@@ -37,6 +37,7 @@ namespace ChessLib.Figuras
         public FigureColor? Color => _colorFigure;
         public FigureType? Type => _typeFigure;
         public Coord Coords => _coords;
+        //coordenadas requiere de un set
         public int MovementCount => _movementCount;
 
         public FigureColor? GetColor() => _colorFigure;

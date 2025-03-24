@@ -20,6 +20,11 @@ namespace ChessLib
             return X == _x && Y == _y;
         }
 
+        public bool EstaDentroDeLimitesTablero()
+        {
+            return X >= 0 && X < 8 && Y >= 0 && Y < 8;
+        }
+
         public override string ToString()
         {
             return X.ToString() + " , " + Y.ToString();

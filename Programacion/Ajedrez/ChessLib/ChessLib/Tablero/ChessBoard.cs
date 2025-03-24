@@ -39,8 +39,8 @@ namespace ChessLib.Tablero
         private void CrearReyes()
         {
             //reyes blancos
-            _casillas[3, 0].Figure = new Queen(FigureColor.WHITE, FigureType.QUEEN, new Coord(3, 0));
-            _casillas[4, 0].Figure = new King(FigureColor.WHITE, FigureType.KING, new Coord(4, 0));
+            _casillas[3, 0].Figure = new Queen(FigureColor.RED, FigureType.QUEEN, new Coord(3, 0));
+            _casillas[4, 0].Figure = new King(FigureColor.RED, FigureType.KING, new Coord(4, 0));
             //reyes negros
             _casillas[3, 7].Figure = new Queen(FigureColor.BLACK, FigureType.QUEEN, new Coord(3, 7));
             _casillas[4, 7].Figure = new King(FigureColor.BLACK, FigureType.KING, new Coord(4, 7));
@@ -49,18 +49,18 @@ namespace ChessLib.Tablero
         private void CrearCaballos()
         {
             //caballos blancos
-            _casillas[1, 0].Figure = new Knight(FigureColor.WHITE, FigureType.KNIGHT, new Coord(1, 0));
-            _casillas[6, 0].Figure = new Knight(FigureColor.WHITE, FigureType.KNIGHT, new Coord(6, 0));
+            _casillas[1, 0].Figure = new Knight(FigureColor.RED, new Coord(1, 0));
+            _casillas[6, 0].Figure = new Knight(FigureColor.RED, new Coord(6, 0));
             //caballos negros
-            _casillas[1, 7].Figure = new Knight(FigureColor.BLACK, FigureType.KNIGHT, new Coord(1, 7));
-            _casillas[6, 7].Figure = new Knight(FigureColor.BLACK, FigureType.KNIGHT, new Coord(6, 7));
+            _casillas[1, 7].Figure = new Knight(FigureColor.BLACK, new Coord(1, 7));
+            _casillas[6, 7].Figure = new Knight(FigureColor.BLACK, new Coord(6, 7));
         }
 
         private void CrearAlfiles()
         {
             //alfiles blancos
-            _casillas[2, 0].Figure = new Bishop(FigureColor.WHITE, FigureType.BISHOP, new Coord(2, 0));
-            _casillas[5, 0].Figure = new Bishop(FigureColor.WHITE, FigureType.BISHOP, new Coord(5, 0));
+            _casillas[2, 0].Figure = new Bishop(FigureColor.RED, FigureType.BISHOP, new Coord(2, 0));
+            _casillas[5, 0].Figure = new Bishop(FigureColor.RED, FigureType.BISHOP, new Coord(5, 0));
             //alfiles negros
             _casillas[2, 7].Figure = new Bishop(FigureColor.BLACK, FigureType.BISHOP, new Coord(2, 7));
             _casillas[5, 7].Figure = new Bishop(FigureColor.BLACK, FigureType.BISHOP, new Coord(5, 7));
@@ -69,8 +69,8 @@ namespace ChessLib.Tablero
         private void CrearTorres()
         {
             //torres blancas
-            _casillas[0, 0].Figure = new Tower(FigureColor.WHITE, FigureType.TOWER, new Coord(0, 0));
-            _casillas[7, 0].Figure = new Tower(FigureColor.WHITE, FigureType.TOWER, new Coord(7, 0));
+            _casillas[0, 0].Figure = new Tower(FigureColor.RED, FigureType.TOWER, new Coord(0, 0));
+            _casillas[7, 0].Figure = new Tower(FigureColor.RED, FigureType.TOWER, new Coord(7, 0));
             //torres negras
             _casillas[0, 7].Figure = new Tower(FigureColor.BLACK, FigureType.TOWER, new Coord(0, 7));
             _casillas[7, 7].Figure = new Tower(FigureColor.BLACK, FigureType.TOWER, new Coord(7, 7));
@@ -81,7 +81,7 @@ namespace ChessLib.Tablero
             // Piezas blancas
             for (int i = 0; i < _width; i++)
             {
-                _casillas[i, 1].Figure = new Pawn(FigureColor.WHITE, FigureType.PAWN, new Coord(i, 1));
+                _casillas[i, 1].Figure = new Pawn(FigureColor.RED, FigureType.PAWN, new Coord(i, 1));
             }
 
             // Piezas negras
@@ -142,6 +142,8 @@ namespace ChessLib.Tablero
             //tiene que haber alguna manera de sacar todo esto sin necesidad de volver a 
             //crearlos pero ahora no lo se
            var figure = GetFigureAt(fromX, fromY);
+            if (figure == null)
+                return false;
             if (!CanFigureBeMoved(board, fromX, fromY, toX, toY))
                 return false;
             
@@ -188,7 +190,7 @@ namespace ChessLib.Tablero
                 for (int x = 0; x < _width; x++)
                 {
                     var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.BLACK;
-                    _casillas[x, y] = new Casilla(new Coord(x, y));
+                    _casillas[x, y] = new Casilla(new Coord(x, y), color);
                 }
             }
         }

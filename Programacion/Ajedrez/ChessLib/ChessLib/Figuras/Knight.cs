@@ -4,13 +4,15 @@ namespace ChessLib.Figuras
 {
     public class Knight : Figure
     {
-        public Knight(FigureColor color, FigureType type, Coord coords) : base(color, FigureType.KNIGHT, coords)
+        public Knight(FigureColor color, Coord coords) : base(color, FigureType.KNIGHT, coords)
         {
         }
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         {
-            throw new NotImplementedException();
+            var posiblesmovs = new List<Coord>();
+
+            return posiblesmovs;
         }
 
         public Coord[] GetAvailablePosition(IChessBoard board)

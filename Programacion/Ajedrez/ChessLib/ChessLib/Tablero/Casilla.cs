@@ -13,7 +13,7 @@ namespace ChessLib.Tablero
         private readonly Coord _coord;
         private readonly CasillaColor _casillaColor;
         private IFigure? _figure;
-        private Coord coord;
+        //private Coord coord;
 
         public Coord Coords => _coord;
         public IFigure? Figure
@@ -33,9 +33,9 @@ namespace ChessLib.Tablero
             Figure = null;
         }
 
-        public Casilla(Coord coord)
-        {
-            this.coord = coord;
-        }
+        //public Casilla(Coord coord)
+        //{
+        //    this._coord = coord;
+        //}
     }
 }

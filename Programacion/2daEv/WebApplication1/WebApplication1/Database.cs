@@ -6,7 +6,7 @@
         {
             public string WhitePlayer1;
             public string BlackPlayer2;
-            public IBoard Board;
+            //public IBoard Board;
         }
         private readonly List<Student> _students = new();
         private readonly Dictionary<string, List<MatchDescription>

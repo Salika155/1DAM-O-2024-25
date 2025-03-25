@@ -11,7 +11,11 @@ namespace ChessApp
         object GetStudentFromList(long id);
 
         void AddUser(string userName);
-        Requests.Match[] GetMatches();
-        Requests.Match CreateMatch(string name, string password, string ownerId);
+        Requests.MatchRecord[] GetMatches();
+        Requests.MatchRecord GetMatchInfo(string matchName);
+        Requests.MatchRecord CreateMatch(string name, string password, string ownerId);
+        void JoinMatch(string newOponentId, string matchName);
+        GetMatch(string matchName);
+        
     }
 }

@@ -151,7 +151,22 @@ namespace ChessLib.Tablero
 
         public void ExecuteTurn()
         {
+            while(true)
+            {
+                Console.WriteLine($"Turno de: {_currentTurn}");
+                var origen = SeleccionarPieza();
+                    if (origen == null)
+                    continue;
 
+                Console.WriteLine($"Has seleccionado una pieza en {ConvertirANotacionAjedrez(origen.Value)}");
+                MostrarMovimientosDisponibles(this);
+                Console.WriteLine("Introduce la casilla de destino (Ejemplo: E3):");
+                var destino = LeerCordenadas();
+                if (destino == null)
+                    continue;
+
+
+            }
         }
 
         //Metodo para inicializar las casillas

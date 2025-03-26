@@ -6,11 +6,18 @@ namespace ChessApp.Controllers
     [Route("[controller]")]
     public class ChessController : ControllerBase
     {
-        [HttpPost]
-        public Requests.AvailablePosition.Response GetAvailablePositions(Requests.AvailablePosition.Request request)
+
+        private IDatabase _database;
+        public ChessController(IDatabase database)
         {
-            return null;
+            _database = database;
         }
+
+        //[HttpPost]
+        //public Requests.AvailablePosition.Response GetAvailablePositions(Requests.AvailablePosition.Request request)
+        //{
+            
+        //}
         
     }
 }

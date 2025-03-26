@@ -20,51 +20,51 @@ namespace ChessApp.Requests
     //    public string WinnerId { get; set; } = string.Empty;
     //    public bool IsStarted { get; set; } 
     //    public bool IsCompleted { get; set; }
-    public class BattleField
-    {
-        #region comentado
-        //public enum FigureColor
-        //{
-        //    BLACK,
-        //    RED,
-        //}
+    //public class BattleField
+    //{
+    //    #region comentado
+    //    //public enum FigureColor
+    //    //{
+    //    //    BLACK,
+    //    //    RED,
+    //    //}
 
-        //public enum FigureType
-        //{
-        //    PAWN,
-        //    KNIGHT,
-        //    BISHOP,
-        //    KING,
-        //    TOWER,
-        //    QUEEN
-        //}
-        #endregion
-        public record Figure(
-            int x,
-            int y,
-            FigureColor Color,
-            FigureType Type
-            );
-        public Figure[] Figures { get; set; } = [];
-    }
+    //    //public enum FigureType
+    //    //{
+    //    //    PAWN,
+    //    //    KNIGHT,
+    //    //    BISHOP,
+    //    //    KING,
+    //    //    TOWER,
+    //    //    QUEEN
+    //    //}
+    //    #endregion
+    //    public record Figure(
+    //        int x,
+    //        int y,
+    //        FigureColor Color,
+    //        FigureType Type
+    //        );
+    //    public Figure[] Figures { get; set; } = [];
+    //}
 
-    public class AvailablePosition
-    {
-        public record Coordinates(
-           int x,
-           int y);
+    //public class AvailablePosition
+    //{
+    //    public record Coordinates(
+    //       int x,
+    //       int y);
 
-        public record Request(int x, int y)
-        {
+    //    public record Request(int x, int y)
+    //    {
 
-        }
+    //    }
 
-        public class Response
-        {
+    //    public class Response
+    //    {
 
-        }
+    //    }
 
-        public Coordinates[] Coords { get; set; } = [];
-    }
+    //    public Coordinates[] Coords { get; set; } = [];
+    //}
     //}
 }

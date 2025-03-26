@@ -1,4 +1,3 @@
-using ChessApp;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChessApp.Controllers
@@ -11,90 +10,90 @@ namespace ChessApp.Controllers
     public class StudentController : ControllerBase
     {
 
-        private IDatabase _database;
+        //    private IDatabase _database;
 
-        public StudentController(IDatabase database)
-        {
-            _database = database;
-        }
-        
-        #region codigoanterior
-        //private static readonly Dictionary<long, Student> _studentList = new Dictionary<long, Student>();
+        //    public StudentController(IDatabase database)
+        //    {
+        //        _database = database;
+        //    }
 
-        //public static Student? GetStudentFromList(long id)
-        //{
-        //    Student? result = null;
-        //    _studentList.TryGetValue(id, out result);
-        //    return result;
-        //    //foreach (var student in _studentList)
-        //    //    if (student.Id == id)
-        //    //        return student;
-        //    //return null;
-        //}
-        #endregion
-        [HttpGet]
+        //    #region codigoanterior
+        //    //private static readonly Dictionary<long, Student> _studentList = new Dictionary<long, Student>();
 
-        //injeccion de dependencias: singleton, me lo das lo uso y me lo cargo, o una pool de algo
-        public Student[] Get()
-        {
-            return _database.GetStudents();
-        }
+        //    //public static Student? GetStudentFromList(long id)
+        //    //{
+        //    //    Student? result = null;
+        //    //    _studentList.TryGetValue(id, out result);
+        //    //    return result;
+        //    //    //foreach (var student in _studentList)
+        //    //    //    if (student.Id == id)
+        //    //    //        return student;
+        //    //    //return null;
+        //    //}
+        //    #endregion
+        //    [HttpGet]
 
-        [HttpGet("{id}")]
-        public Student? GetStudent(long id)
-        {
-            return _database.GetStudentFromList(id) as Student;
-        }
+        //    //injeccion de dependencias: singleton, me lo das lo uso y me lo cargo, o una pool de algo
+        //    public Student[] Get()
+        //    {
+        //        return _database.GetStudents();
+        //    }
 
-        [HttpPut("{id}")]
-        public bool UpdateStudent(long id, [FromBody] Student newStudent)
-        {
-            //esto para lista antes
-            //int index = GetIndexOfStudent(id);
-            //_studentList[index] = newStudent;
+        //    [HttpGet("{id}")]
+        //    public Student? GetStudent(long id)
+        //    {
+        //        return _database.GetStudentFromList(id) as Student;
+        //    }
 
-            //este caso es para el diccionario
-            //if (!_studentList.ContainsKey(id))
-            //    return false;
-            //_studentList[id] = newStudent;
+        //    [HttpPut("{id}")]
+        //    public bool UpdateStudent(long id, [FromBody] Student newStudent)
+        //    {
+        //        //esto para lista antes
+        //        //int index = GetIndexOfStudent(id);
+        //        //_studentList[index] = newStudent;
 
-            //var student = GetStudentFromList(id);
-            //if (student == null)
-            //    return false;
-            //if (id != newStudent.Id)
-            //    return false;
-            //student.Name = newStudent.Name;
-            //student.Age = newStudent.Age;
-            if (_database.GetStudentFromList(id) == null)
-                return false;
+        //        //este caso es para el diccionario
+        //        //if (!_studentList.ContainsKey(id))
+        //        //    return false;
+        //        //_studentList[id] = newStudent;
 
-            _database.UpdateStudent(id, newStudent);
-            return true;
+        //        //var student = GetStudentFromList(id);
+        //        //if (student == null)
+        //        //    return false;
+        //        //if (id != newStudent.Id)
+        //        //    return false;
+        //        //student.Name = newStudent.Name;
+        //        //student.Age = newStudent.Age;
+        //        if (_database.GetStudentFromList(id) == null)
+        //            return false;
 
-        }
+        //        _database.UpdateStudent(id, newStudent);
+        //        return true;
 
-        private int GetIndexOfStudent(long id)
-        {
-            throw new NotImplementedException();
-        }
+        //    }
 
-        [HttpPost]  // Ahora solo hay un POST
-        [Route("add")]
-        public Student AddStudent([FromBody] Student student)
-        {
-            if (student != null)
-                //_studentList[student.Id] = student;
-                _database.AddStudent(student);
-            return student;
-            //trycatch
-        }
+        //    private int GetIndexOfStudent(long id)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
 
-        [HttpDelete("{id}")]
-        public void DeleteStudent(long id)
-        {
-            //_studentList.Remove(id);
-            _database.RemoveStudent(id);
-        }
+        //    [HttpPost]  // Ahora solo hay un POST
+        //    [Route("add")]
+        //    public Student AddStudent([FromBody] Student student)
+        //    {
+        //        if (student != null)
+        //            //_studentList[student.Id] = student;
+        //            _database.AddStudent(student);
+        //        return student;
+        //        //trycatch
+        //    }
+
+        //    [HttpDelete("{id}")]
+        //    public void DeleteStudent(long id)
+        //    {
+        //        //_studentList.Remove(id);
+        //        _database.RemoveStudent(id);
+        //    }
 
     }
 }

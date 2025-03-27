@@ -153,21 +153,85 @@ namespace ChessLib.Tablero
         {
             while(true)
             {
-                Console.WriteLine($"Turno de: {_currentTurn}");
-                var origen = SeleccionarPieza();
-                    if (origen == null)
-                    continue;
+                //Console.WriteLine($"Turno de: {_currentTurn}");
+                //var origen = SeleccionarPieza();
+                //    if (origen == null)
+                //    continue;
 
-                Console.WriteLine($"Has seleccionado una pieza en {ConvertirANotacionAjedrez(origen.Value)}");
-                MostrarMovimientosDisponibles(this);
-                Console.WriteLine("Introduce la casilla de destino (Ejemplo: E3):");
-                var destino = LeerCordenadas();
-                if (destino == null)
-                    continue;
+                //Console.WriteLine($"Has seleccionado una pieza en {ConvertirANotacionAjedrez(origen.Value)}");
+                //MostrarMovimientosDisponibles(this);
+                //Console.WriteLine("Introduce la casilla de destino (Ejemplo: E3):");
+                //var destino = LeerCoordenadas();
+                //if (destino == null)
+                //    continue;
 
+                //if (MoveFigure(this, origen.Value.X, origen.Value.Y, destino.Value.X, destino.Value.Y))
+                //{
+                //    Console.WriteLine($"Moviste la pieza a {ConvertirANotacionAjedrez(destino.Value)}");
+                //    CambiarTurno();
+                //    break; // Sale del bucle y pasa al siguiente turno
+                //}
+                //else
+                //{
+                //    Console.WriteLine("Movimiento inválido, intenta otra vez.");
+                //}
 
             }
         }
+
+        //public Coord? SeleccionarPieza()
+        //{
+        //    Console.WriteLine("Selecciona una pieza (Ejemplo: E2):");
+        //    var coords = LeerCoordenadas();
+        //    if (coords == null)
+        //        throw new Exception();
+        //    IFigure? figura = GetFigureAt(coords.Value.X, coords.Value.Y);
+        //    _selectedFigure = figura;
+        //    _selectedCoord = coords;
+        //    return coords;
+
+        //}
+
+        //private void CambiarTurno()
+        //{
+        //    _currentTurn = (_currentTurn == FigureColor.RED) ? FigureColor.BLACK : FigureColor.RED;
+        //}
+
+        //private string ConvertirANotacionAjedrez(Coord coord)
+        //{
+        //    char letra = (char)('A' + coord.X);
+        //    int numero = coord.Y + 1;
+        //    return $"{letra}{numero}";
+        //}
+
+        //private Coord? LeerCoordenadas()
+        //{
+        //    string? input = Console.ReadLine()?.Trim().ToUpper();
+
+        //    if (string.IsNullOrEmpty(input) || input.Length < 2)
+        //    {
+        //        Console.WriteLine("Formato inválido. Usa: LetraNúmero (Ej: E2)");
+        //        return null;
+        //    }
+
+        //    char letra = input[0];
+        //    string numeroStr = input.Substring(1);
+
+        //    if (!EsLetraValida(letra) || !EsNumero(numeroStr))
+        //    {
+        //        Console.WriteLine("Formato inválido. Usa: LetraNúmero (Ej: E2)");
+        //        return null;
+        //    }
+
+        //    int x = letra - 'A';
+        //    int y = int.Parse(numeroStr) - 1;
+
+        //    return new Coord(x, y);
+        //}
+
+        //private bool EsLetraValida(char letra) => letra >= 'A' && letra <= 'H';
+
+        //private bool EsNumero(string str) => str.Length == 1 && str[0] >= '1' && str[0] <= '8';
 
         //Metodo para inicializar las casillas
         public void CrearCasillas()

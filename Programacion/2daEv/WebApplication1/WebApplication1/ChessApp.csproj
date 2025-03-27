@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Requests\MatchRecord.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ChessEngine\ChessEngine.csproj" />
   </ItemGroup>
 

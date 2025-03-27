@@ -10,7 +10,7 @@ namespace ChessApp
             public string BlackPlayer2 = string.Empty;
             //public IBoard Board;
         }
-        private readonly List<Student> _students = new();
+        //private readonly List<Student> _students = new();
         private readonly Dictionary<string, List<MatchDescription>> _matches = new ();
         public void AddUser(string userName)
         {
@@ -27,10 +27,13 @@ namespace ChessApp
             }
             
         }
-
+        //hacer esta
         public MatchRecord[] GetMatches()
         {
-            throw new NotImplementedException();
+            MatchRecord[] arrayMatches = new MatchRecord[0];
+
+
+            return arrayMatches;
         }
 
         public MatchRecord GetMatchInfo(string matchName)
@@ -38,9 +41,10 @@ namespace ChessApp
             throw new NotImplementedException();
         }
 
+        //y esta
         public MatchRecord CreateMatch(string name, string password, string ownerId)
         {
-            throw new NotImplementedException();
+            //return new MatchRecord(name, password, ownerId);
         }
 
         public void JoinMatch(string newOponentId, string matchName)
@@ -58,6 +62,7 @@ namespace ChessApp
             throw new NotImplementedException();
         }
 
+        #region codigostudentcontroller
         //public Database()
         //{
 
@@ -91,5 +96,6 @@ namespace ChessApp
         //{
         //    throw new NotImplementedException();
         //}
+        #endregion
     }
 }

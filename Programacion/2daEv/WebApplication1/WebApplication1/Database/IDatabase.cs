@@ -14,6 +14,7 @@ namespace ChessApp
         //hacer esta
         Requests.MatchRecord[] GetMatches();
         Requests.MatchRecord GetMatchInfo(string matchName);
+        //y esta
         Requests.MatchRecord CreateMatch(string name, string password, string ownerId);
         void JoinMatch(string newOponentId, string matchName);
         Requests.MatchRecord GetMatch(string matchName);

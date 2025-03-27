@@ -149,10 +149,12 @@ namespace ChessLib.Tablero
             }
         }
 
+        //a partir de aqui tengo que revisar esto porque no me convence
         public void ExecuteTurn()
         {
             while(true)
             {
+                #region codigocomentado
                 //Console.WriteLine($"Turno de: {_currentTurn}");
                 //var origen = SeleccionarPieza();
                 //    if (origen == null)
@@ -175,10 +177,53 @@ namespace ChessLib.Tablero
                 //{
                 //    Console.WriteLine("Movimiento inválido, intenta otra vez.");
                 //}
+                #endregion
+                Console.Clear();
+                PrintBoard();
+                Console.WriteLine($"Turno de las piezas: {_currentTurn}");
 
+                var origen = SeleccionarFigura();
+                
+                var destino = SeleccionarDestino(origen.Value);
+                
+
+                
             }
         }
 
+        private object SeleccionarDestino(object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        private Coord? SeleccionarFigura()
+        {
+            var origen = SolicitarCoordenada();
+        }
+
+        private Coord? SolicitarCoordenada(string mensaje)
+        {
+            Console.Write(mensaje);
+            return LeerCoordenada(Console.ReadLine());
+        }
+
+        //no me gusta esto
+        public Coord? LeerCoordenada(string? entrada)
+        {
+            if (string.IsNullOrWhiteSpace(entrada) || entrada.Length < 2)
+                return null;
+
+            char columna = entrada[0];
+            if (columna < 'A' || columna > 'H')
+                return null;
+
+            if (!int.TryParse(entrada[1].ToString(), out int fila) || fila < 1 || fila > 8)
+                return null;
+
+            return new Coord(columna - 'A', fila - 1);
+        }
+
+        #region codigocomentado
         //public Coord? SeleccionarPieza()
         //{
         //    Console.WriteLine("Selecciona una pieza (Ejemplo: E2):");
@@ -232,6 +277,7 @@ namespace ChessLib.Tablero
         //private bool EsLetraValida(char letra) => letra >= 'A' && letra <= 'H';
 
         //private bool EsNumero(string str) => str.Length == 1 && str[0] >= '1' && str[0] <= '8';
+        #endregion
 
         //Metodo para inicializar las casillas
         public void CrearCasillas()

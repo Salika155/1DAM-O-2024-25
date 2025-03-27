@@ -15,24 +15,36 @@ namespace ChessApp.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
-        public UserLogin.Response LoginUser(UserLogin.Request request)
+        [HttpPost("login")]
+        public IActionResult LoginUser(UserLogin.Request request)
         {
             try
             {
                 //return new UserLogin.Response(request.NickName, true);
                 _database.AddUser(request.NickName);
-                return new UserLogin.Response(request.NickName, true);
+                return Ok(new UserLogin.Response(request.NickName.ToLower(), true));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error");
-                return new UserLogin.Response(request.NickName, false);
+                return BadRequest(new UserLogin.Response(request.NickName, false));
             }
-           
-
         }
-
+        [HttpPost("creatematch")]
+        public IActionResult CreateMatch(Requests.CreateMatch.Request request)
+        {
+            try
+            {
+                //tiene que devolver un creatematch.Request no hacer uso del metodo.
+                return Ok(_database.CreateMatch(request.MatchName, request.OwnerId.ToLower()));
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error" + ex.Message);
+                return BadRequest(new Requests.CreateMatch.Request(string.Empty, string.Empty));
+            }
+            
+        }
 
     }
 }

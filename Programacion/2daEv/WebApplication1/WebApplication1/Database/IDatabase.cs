@@ -12,12 +12,15 @@ namespace ChessApp
 
         void AddUser(string userName);
         //hacer esta
-        Requests.MatchRecord[] GetMatches();
-        Requests.MatchRecord GetMatchInfo(string matchName);
+        Requests.Response[] GetMatches();
+        //para mañana
+        Requests.Response GetMatchInfo(string matchName);
         //y esta
-        Requests.MatchRecord CreateMatch(string name, string password, string ownerId);
+        Requests.Response CreateMatch(string name, string ownerId);
+        //y esta -> me pone como oponente
         void JoinMatch(string newOponentId, string matchName);
-        Requests.MatchRecord GetMatch(string matchName);
+        Requests.Response GetMatch(string matchName);
+        //getavailableposition y mover ficha
         
     }
 }

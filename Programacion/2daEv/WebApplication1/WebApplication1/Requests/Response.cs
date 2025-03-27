@@ -2,14 +2,19 @@
 
 namespace ChessApp.Requests
 {
-    public record MatchRecord(
+    public class CreateMatch
+    {
+        public record Request(string OwnerId, string MatchName);
+    }
+
+    public record Response(
         string? Name,
         string? OwnerId,
-        string? OponentId,
-        string NextPlayerId,
-        string WinnerId,
-        bool IsStarted,
-        bool IsCompleted
+        string? OponentId = "",
+        string NextPlayerId = "",
+        string WinnerId ="",
+        bool IsStarted = false,
+        bool IsCompleted = false
         );
 
     public class Match

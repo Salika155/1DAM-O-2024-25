@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Requests\MatchRecord.cs" />
+    <None Include="Requests\Response.cs" />
   </ItemGroup>
 
   <ItemGroup>

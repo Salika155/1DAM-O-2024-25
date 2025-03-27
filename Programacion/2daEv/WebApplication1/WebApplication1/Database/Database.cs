@@ -4,10 +4,12 @@ namespace ChessApp
 {
     public class Database : IDatabase
     {
-        private class MatchDescription
+        internal class MatchDescription
         {
-            public string WhitePlayer1 = string.Empty;
-            public string BlackPlayer2 = string.Empty;
+            public string Name = string.Empty;
+            public string OponentId = string.Empty;
+            //public string WhitePlayer1 = string.Empty;
+            //public string BlackPlayer2 = string.Empty;
             //public IBoard Board;
         }
         //private readonly List<Student> _students = new();
@@ -28,23 +30,49 @@ namespace ChessApp
             
         }
         //hacer esta
-        public MatchRecord[] GetMatches()
+        public Response[] GetMatches()
         {
-            MatchRecord[] arrayMatches = new MatchRecord[0];
 
+            List<Response> result = new();
+            lock(_matches)
+            {
+                foreach (var entry in _matches)
+                {
+                    string ownerId = entry.Key;
+                    foreach (var match in entry.Value)
+                    {
+                        result.Add(DatabaseUtils.ToMatchResponse(match, ownerId));
 
-            return arrayMatches;
+                    }
+                }
+            }
+            return result.ToArray();
         }
 
-        public MatchRecord GetMatchInfo(string matchName)
+        public Response GetMatchInfo(string matchName)
         {
             throw new NotImplementedException();
         }
 
         //y esta
-        public MatchRecord CreateMatch(string name, string password, string ownerId)
+        public Response CreateMatch(string name, string ownerId)
         {
-            //return new MatchRecord(name, password, ownerId);
+            List<MatchDescription> matches;
+            MatchDescription match;
+            lock(_matches)
+            {
+                if (!_matches.TryGetValue(ownerId, out matches))
+                    throw new ArgumentException(ownerId);
+                if (DatabaseUtils.ExistMatch(_matches, name))
+                    throw new Exception($"Match {name} already exists");
+                match = new MatchDescription()
+                {
+                    Name = name,
+                };
+                matches.Add(match);
+            }
+            
+            return DatabaseUtils.ToMatchResponse(match, ownerId);
         }
 
         public void JoinMatch(string newOponentId, string matchName)
@@ -52,12 +80,12 @@ namespace ChessApp
             throw new NotImplementedException();
         }
 
-        public MatchRecord[] GetMatch(string matchName)
+        public Response[] GetMatch(string matchName)
         {
             throw new NotImplementedException();
         }
 
-        MatchRecord IDatabase.GetMatch(string matchName)
+        Response IDatabase.GetMatch(string matchName)
         {
             throw new NotImplementedException();
         }

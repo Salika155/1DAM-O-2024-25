@@ -7,7 +7,7 @@ namespace ChessApp.Controllers
     public class ChessController : ControllerBase
     {
 
-        private IDatabase _database;
+        private readonly IDatabase _database;
         public ChessController(IDatabase database)
         {
             _database = database;

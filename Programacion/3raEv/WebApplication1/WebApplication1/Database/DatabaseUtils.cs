@@ -1,4 +1,6 @@
-﻿namespace ChessApp
+﻿using ChessApp.Modelo;
+
+namespace ChessApp
 
 {
     public class DatabaseUtils
@@ -28,6 +30,11 @@
                 match.OponentId
                 );
             return newMatch;
+        }
+
+        internal static MatchStatus ToMatchStatus(Database.MatchDescription match, string ownerId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

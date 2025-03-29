@@ -1,4 +1,4 @@
-﻿using ChessApp;
+﻿
 namespace ChessApp
 {
     public interface IDatabase
@@ -12,15 +12,17 @@ namespace ChessApp
 
         void AddUser(string userName);
         //hacer esta
-        Requests.Response[] GetMatches();
+        Modelo.MatchStatus[] GetMatches();
         //para mañana
-        Requests.Response GetMatchInfo(string matchName);
+        Modelo.MatchStatus GetMatchInfo(string matchName);
         //y esta
-        Requests.Response CreateMatch(string name, string ownerId);
+        Modelo.MatchStatus CreateMatch(string name, string ownerId);
         //y esta -> me pone como oponente
         void JoinMatch(string newOponentId, string matchName);
-        Requests.Response GetMatch(string matchName);
+        Modelo.BattleField GetMatch(string matchName);
         //getavailableposition y mover ficha
+        Modelo.AllAvailablePos GetAvailablePosition(string matchName, int fromX, int fromY);
+        void Move(string matchName, int fromX, int fromY, int toX, int toY);
         
     }
 }

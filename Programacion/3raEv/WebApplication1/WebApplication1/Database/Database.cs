@@ -1,10 +1,11 @@
-﻿using ChessApp.Requests;
+﻿using ChessApp.Modelo;
+using ChessApp.Requests;
 
 namespace ChessApp
 {
     public class Database : IDatabase
     {
-        internal class MatchDescription
+        public class MatchDescription
         {
             public string Name = string.Empty;
             public string OponentId = string.Empty;
@@ -13,7 +14,7 @@ namespace ChessApp
             //public IBoard Board;
         }
         //private readonly List<Student> _students = new();
-        private readonly Dictionary<string, List<MatchDescription>> _matches = new ();
+        private readonly Dictionary<string, List<MatchDescription>> _matches = new();
         public void AddUser(string userName)
         {
             if (userName == null)
@@ -21,20 +22,20 @@ namespace ChessApp
             if (userName.Length == 0)
                 throw new ArgumentOutOfRangeException();
             //para threats, para que no pasen a la vez, cuando pase uno y llegue consulta de otro, lo lockea hasta terminar con el primero.
-            lock(_matches)
+            lock (_matches)
             {
                 if (_matches.ContainsKey(userName))
                     return;
                 _matches[userName] = new List<MatchDescription>();
             }
-            
+
         }
         //hacer esta
         public Response[] GetMatches()
         {
 
             List<Response> result = new();
-            lock(_matches)
+            lock (_matches)
             {
                 foreach (var entry in _matches)
                 {
@@ -59,7 +60,7 @@ namespace ChessApp
         {
             List<MatchDescription> matches;
             MatchDescription match;
-            lock(_matches)
+            lock (_matches)
             {
                 if (!_matches.TryGetValue(ownerId, out matches))
                     throw new ArgumentException(ownerId);
@@ -71,7 +72,7 @@ namespace ChessApp
                 };
                 matches.Add(match);
             }
-            
+
             return DatabaseUtils.ToMatchResponse(match, ownerId);
         }
 
@@ -80,12 +81,80 @@ namespace ChessApp
             throw new NotImplementedException();
         }
 
-        public Response[] GetMatch(string matchName)
+        //public Response[] GetMatch(string matchName)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public Modelo.BattleField GetMatch(string matchName)
+        {
+            lock (_matches)
+            {
+                foreach (var entry in _matches)
+                {
+                    foreach (var match in entry.Value)
+                    {
+                        if (match.Name == matchName)
+                        {
+                            return new Modelo.BattleField(match); // Convertimos a BattleField
+                        }
+                    }
+                }
+            }
+            throw new Exception($"Match {matchName} not found");
+        }
+
+
+
+        MatchStatus IDatabase.GetMatchInfo(string matchName)
         {
             throw new NotImplementedException();
         }
 
-        Response IDatabase.GetMatch(string matchName)
+        MatchStatus IDatabase.CreateMatch(string name, string ownerId)
+        {
+            List<MatchDescription> matches;
+            MatchDescription match;
+            lock (_matches)
+            {
+                if (!_matches.TryGetValue(ownerId, out matches))
+                    throw new ArgumentException(ownerId);
+                if (DatabaseUtils.ExistMatch(_matches, name))
+                    throw new Exception($"Match {name} already exists");
+
+                match = new MatchDescription()
+                {
+                    Name = name,
+                };
+                matches.Add(match);
+            }
+
+            return DatabaseUtils.ToMatchStatus(match, ownerId); // Convertimos a MatchStatus
+        }
+
+        MatchStatus[] IDatabase.GetMatches()
+        {
+            List<MatchStatus> result = new();
+            lock (_matches)
+            {
+                foreach (var entry in _matches)
+                {
+                    string ownerId = entry.Key;
+                    foreach (var match in entry.Value)
+                    {
+                        result.Add(DatabaseUtils.ToMatchStatus(match, ownerId)); // Convertimos a MatchStatus
+                    }
+                }
+            }
+            return result.ToArray();
+        }
+
+        public AllAvailablePos GetAvailablePosition(string matchName, int fromX, int fromY)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Move(string matchName, int fromX, int fromY, int toX, int toY)
         {
             throw new NotImplementedException();
         }

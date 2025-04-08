@@ -181,24 +181,49 @@ namespace ChessLib.Tablero
                 Console.Clear();
                 PrintBoard();
                 Console.WriteLine($"Turno de las piezas: {_currentTurn}");
+                string messageParaMover = "Selecciona una pieza (Ej: E2): ";
+                var origen = SolicitarCoordenada(messageParaMover);
+                if (origen == null)
+                {
+                    Console.WriteLine("Coordenada invalida");
+                    continue;
+                }
+                    
+                var figura = GetFigureAt(origen.Value.X, origen.Value.Y);
+                if (figura == null || figura.GetColor() != _currentTurn)
+                {
+                    Console.WriteLine("No puedes mover esta pieza.");
+                    continue;
+                }
 
-                var origen = SeleccionarFigura();
-                
-                var destino = SeleccionarDestino(origen.Value);
-                
+                _selectedFigure = figura;
+                _selectedCoord = origen;
 
-                
+                MostrarMovimientosDisponibles(this);
+
+                var destino = SolicitarCoordenada("Selecciona la casilla de destino (Ej: E4): ");
+                if (destino is null)
+                {
+                    Console.WriteLine("Coordenada inválida.");
+                    continue;
+                }
+
+                if (MoveFigure(this, origen.Value.X, origen.Value.Y, destino.Value.X, destino.Value.Y))
+                {
+                    CambiarTurno();
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Movimiento inválido. Intenta de nuevo.");
+                }
             }
+
         }
 
-        private object SeleccionarDestino(object value)
+        private void CambiarTurno()
         {
-            throw new NotImplementedException();
-        }
-
-        private Coord? SeleccionarFigura()
-        {
-            var origen = SolicitarCoordenada();
+            _currentTurn = _currentTurn == FigureColor.RED ? FigureColor.BLACK : FigureColor.RED;
         }
 
         private Coord? SolicitarCoordenada(string mensaje)
@@ -297,9 +322,7 @@ namespace ChessLib.Tablero
             //tiene que haber alguna manera de sacar todo esto sin necesidad de volver a 
             //crearlos pero ahora no lo se
            var figure = GetFigureAt(fromX, fromY);
-            if (figure == null)
-                return false;
-            if (!CanFigureBeMoved(board, fromX, fromY, toX, toY))
+            if (figure == null || !CanFigureBeMoved(board, fromX, fromY, toX, toY))
                 return false;
             
             // Realizar el movimiento

@@ -43,7 +43,6 @@ namespace ChessApp
                     foreach (var match in entry.Value)
                     {
                         result.Add(DatabaseUtils.ToMatchResponse(match, ownerId));
-
                     }
                 }
             }

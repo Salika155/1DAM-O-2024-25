@@ -152,73 +152,55 @@ namespace ChessLib.Tablero
         //a partir de aqui tengo que revisar esto porque no me convence
         public void ExecuteTurn()
         {
-            while(true)
+            while (true)
             {
-                #region codigocomentado
-                //Console.WriteLine($"Turno de: {_currentTurn}");
-                //var origen = SeleccionarPieza();
-                //    if (origen == null)
-                //    continue;
-
-                //Console.WriteLine($"Has seleccionado una pieza en {ConvertirANotacionAjedrez(origen.Value)}");
-                //MostrarMovimientosDisponibles(this);
-                //Console.WriteLine("Introduce la casilla de destino (Ejemplo: E3):");
-                //var destino = LeerCoordenadas();
-                //if (destino == null)
-                //    continue;
-
-                //if (MoveFigure(this, origen.Value.X, origen.Value.Y, destino.Value.X, destino.Value.Y))
-                //{
-                //    Console.WriteLine($"Moviste la pieza a {ConvertirANotacionAjedrez(destino.Value)}");
-                //    CambiarTurno();
-                //    break; // Sale del bucle y pasa al siguiente turno
-                //}
-                //else
-                //{
-                //    Console.WriteLine("Movimiento inválido, intenta otra vez.");
-                //}
-                #endregion
-                Console.Clear();
-                PrintBoard();
-                Console.WriteLine($"Turno de las piezas: {_currentTurn}");
-                string messageParaMover = "Selecciona una pieza (Ej: E2): ";
-                var origen = SolicitarCoordenada(messageParaMover);
-                if (origen == null)
+                while (true)
                 {
-                    Console.WriteLine("Coordenada invalida");
-                    continue;
-                }
-                    
-                var figura = GetFigureAt(origen.Value.X, origen.Value.Y);
-                if (figura == null || figura.GetColor() != _currentTurn)
-                {
-                    Console.WriteLine("No puedes mover esta pieza.");
-                    continue;
-                }
+                    Console.Clear();
+                    PrintBoard();
+                    Console.WriteLine($"Turno de las piezas: {_currentTurn}");
 
-                _selectedFigure = figura;
-                _selectedCoord = origen;
+                    var origen = SolicitarCoordenada("Selecciona una pieza (Ej: E2): ");
+                    if (origen == null)
+                    {
+                        Console.WriteLine("Coordenada inválida. Pulsa una tecla para continuar.");
+                        Console.ReadKey();
+                        continue;
+                    }
 
-                MostrarMovimientosDisponibles(this);
+                    var figura = GetFigureAt(origen.Value.X, origen.Value.Y);
+                    if (figura == null || figura.GetColor() != _currentTurn)
+                    {
+                        Console.WriteLine("No puedes mover esta pieza. Pulsa una tecla para continuar.");
+                        Console.ReadKey();
+                        continue;
+                    }
 
-                var destino = SolicitarCoordenada("Selecciona la casilla de destino (Ej: E4): ");
-                if (destino is null)
-                {
-                    Console.WriteLine("Coordenada inválida.");
-                    continue;
-                }
+                    _selectedFigure = figura;
+                    _selectedCoord = origen;
 
-                if (MoveFigure(this, origen.Value.X, origen.Value.Y, destino.Value.X, destino.Value.Y))
-                {
-                    CambiarTurno();
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Movimiento inválido. Intenta de nuevo.");
+                    MostrarMovimientosDisponibles(this);
+
+                    var destino = SolicitarCoordenada("Selecciona la casilla de destino (Ej: E4): ");
+                    if (destino == null)
+                    {
+                        Console.WriteLine("Coordenada inválida. Pulsa una tecla para continuar.");
+                        Console.ReadKey();
+                        continue;
+                    }
+
+                    if (MoveFigure(this, origen.Value.X, origen.Value.Y, destino.Value.X, destino.Value.Y))
+                    {
+                        CambiarTurno();
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Movimiento inválido. Pulsa una tecla para intentar de nuevo.");
+                        Console.ReadKey();
+                    }
                 }
             }
-
         }
 
         private void CambiarTurno()

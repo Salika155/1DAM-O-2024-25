@@ -1,4 +1,5 @@
 ﻿using ChessApp.Requests;
+using System.Drawing;
 
 namespace ChessApp
 {
@@ -80,12 +81,49 @@ namespace ChessApp
             throw new NotImplementedException();
         }
 
-        public Response[] GetMatch(string matchName)
+        //public Response[] GetMatch(string matchName)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        //public creatematch.Response GetMatch()
+
+        
+        public BattleField GetMatch(string matchName)
         {
-            throw new NotImplementedException();
+            BattleField result = new BattleField();
+            result.Status = new MatchStatus()
+            {
+                Name = matchName,
+                OwnerId = "test",
+                OponentId = "nacho",
+                NextPlayerId = "test",
+                WinnerId = "",
+                IsStarted = true,
+                IsCompleted = false
+            };
+            List<BattleField.Figure> figures = new();
+            figures.Add(new BattleField.Figure(
+               0,
+               0,
+               BattleField.FigureColor.BLACK,
+               BattleField.FigureType.PAWN
+               ));
+            figures.Add(new BattleField.Figure(
+               1,
+               1,
+               BattleField.FigureColor.RED,
+               BattleField.FigureType.TOWER
+               ));
+
+
+
+            result.Figures = figures.ToArray();
+            return result;
         }
 
-        Response IDatabase.GetMatch(string matchName)
+       
+
+        MatchStatus IDatabase.GetMatchInfo(string matchName)
         {
             throw new NotImplementedException();
         }

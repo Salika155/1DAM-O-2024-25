@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ChessApp
 {
     public class Program
@@ -8,7 +10,11 @@ namespace ChessApp
             var builder = WebApplication.CreateBuilder(args);
             //// Add services to the container.
             ////recorre cod fuente buscando anotacion apicontroller
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                }); ;
             ////para hacer que cada vez que creo algo y le tenga que llover un database llamas a idatabase y lo metes dejandolo vivo
             builder.Services.AddSingleton<IDatabase, Database>();
 

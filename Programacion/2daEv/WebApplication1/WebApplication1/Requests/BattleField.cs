@@ -22,10 +22,10 @@ namespace ChessApp.Requests
         }
         #endregion
         public record Figure(
-            int X,
-            int Y,
+            FigureType Type,
             FigureColor Color,
-            FigureType Type
+            int X,
+            int Y
             )
         {
             //public Figure(int x, int y, FigureColor color, FigureType type)

@@ -102,18 +102,17 @@ namespace ChessApp
             };
             List<BattleField.Figure> figures = new();
             figures.Add(new BattleField.Figure(
-               0,
-               0,
+               BattleField.FigureType.PAWN,
                BattleField.FigureColor.BLACK,
-               BattleField.FigureType.PAWN
+               0,
+               0
                ));
             figures.Add(new BattleField.Figure(
-               1,
-               1,
+               BattleField.FigureType.TOWER,
                BattleField.FigureColor.RED,
-               BattleField.FigureType.TOWER
+               1,
+               1
                ));
-
 
 
             result.Figures = figures.ToArray();

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero de Ajedrez</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 20px auto;
+            background-color: #f0d9b5;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <canvas id="chessboard" width="400" height="400"></canvas>
+        <button onclick="drawMatch()">Tocame</button>
+        <button onclick="MoveRight()">MoveRight</button>
+        <button id="timerBtn" onclick="toggleTimer()">Activar Timer</button>
+        <button onclick="toggleTimer()">Activar/Desactivar Timer</button>
+
+    </div>
+    
+    <script>
+        const assetManager = {}; // Diccionario para almacenar imágenes precargadas
+        let imagesLoaded = 0;
+        let totalImages = 0;
+
+        // Función para precargar imágenes
+        function preloadImages(imagePaths, callback) {
+            totalImages = Object.keys(imagePaths).length;
+            if (totalImages === 0) {
+                callback();
+                return;
+            }
+
+            for (let fileName in imagePaths) {
+                let img = new Image();
+                img.src = imagePaths[fileName];
+                
+                img.onload = function () {
+                    assetManager[fileName] = img;
+                    imagesLoaded++;
+                    if (imagesLoaded === totalImages) {
+                        callback(); // Llamar a la función cuando todas las imágenes estén cargadas
+                    }
+                };
+
+                img.onerror = function () {
+                    console.error(`No se pudo cargar la imagen: ${imagePaths[fileName]}`);
+                    imagesLoaded++;
+                    if (imagesLoaded === totalImages) {
+                        callback();
+                    }
+                };
+            }
+        }
+
+        // Función para obtener una imagen precargada
+        function getImage(fileName) {
+            return assetManager[fileName] || null;
+        }
+
+        function drawBoard(ctx, size) {
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    if ((row + col) % 2 === 1) {
+                        ctx.fillStyle = "#b58863"; // Color oscuro
+                        ctx.fillRect(col * size, row * size, size, size);
+                    }
+                }
+            }
+        }
+
+        function drawFigure(ctx, size, figure){
+    if (figure.type == "tower" && figure.color == "black")
+        drawImage(ctx, figure.x, figure.y, "torrenegra", size);
+    else
+        drawImage(ctx, figure.x, figure.y, "torreblanca", size);
+}
+
+        function drawMatch(){
+            //ctx.clearRect(0, 0, canvas.width, canvas.height);
+            //drawBoard(ctx, size);
+            //drawFigures(ctx, size, figures);
+            fetch("http://localhost:3000/match")
+        .then(response => response.json())
+        .then(data => {
+            const figures = data.figures;
+
+            figures.forEach(f => {
+                console.log(`Figura: ${f.figureType}, Color: ${f.color}, Posición: (${f.x}, ${f.y})`);
+                // Aquí iría la lógica de dibujo...
+            });
+        })
+        .catch(error => {
+            console.error("Error al obtener el estado de la partida:", error);
+        });
+        }
+
+        function MoveRight(){
+            for(let i = 0; i < figures.length; i++){
+            figures[i].x += 1;
+        }
+            drawMatch();
+
+        }
+
+        function drawFigures(ctx, size, figures){
+            for(let i = 0; i < figures.length; i++)
+                drawFigure(ctx, size, figures[i]);
+        }
+
+        function drawCircle(ctx, col, row, color, size) {
+            const centerX = col * size + size / 2;
+            const centerY = row * size + size / 2;
+            const radius = size / 3;
+
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawImage(ctx, col, row, fileName, size) {
+            const img = getImage(fileName);
+            if (!img) return; // Si la imagen no está en el diccionario, no hacer nada
+
+            const scale = Math.min(size / img.width, size / img.height);
+            const newWidth = img.width * scale;
+            const newHeight = img.height * scale;
+            const offsetX = (size - newWidth) / 2;
+            const offsetY = (size - newHeight) / 2;
+
+            ctx.drawImage(img, col * size + offsetX, row * size + offsetY, newWidth, newHeight);
+        }
+
+        const canvas = document.getElementById("chessboard");
+        const ctx = canvas.getContext("2d");
+        const size = canvas.width / 8;
+
+        // Definir las imágenes a precargar usando los nombres de archivo directamente
+        const imagesToLoad = {
+            "torreblanca": "resources/torreblanca.png",
+            "torrenegra": "resources/torrenegra.png"
+        };
+
+        const figures = [
+            {color: "white", type: "tower", x:0, y:0 },
+            {color: "black", type: "pawn", x:6, y:6},
+            {color: "black", type: "tower", x:7, y:7 },
+            {color: "white", type: "king", x:4, y:7}
+        ]
+
+        // Precargar imágenes y luego dibujar el tablero y piezas
+        preloadImages(imagesToLoad, function () {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el lienzo antes de redibujar
+            drawBoard(ctx, size);
+            drawFigures(ctx, size, figures);
+            drawCircle(ctx, 0, 0, "Red", size);
+            drawCircle(ctx, 1, 1, "Blue", size);
+            drawImage(ctx, 2, 2, "torreblanca", size);
+            drawImage(ctx, 3, 3, "torrenegra", size);
+
+            // Dibujar un rectángulo exterior
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "#000";
+            ctx.strokeRect(0, 0, canvas.width, canvas.height);
+        });
+
+        // Detectar clics en el tablero
+        canvas.addEventListener("click", function (event) {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const col = Math.floor(x / size);
+            const row = Math.floor(y / size);
+
+            alert(`Has hecho click en la casilla (${row}, ${col})`);
+        });
+
+        let timerId = null;
+
+        function toggleTimer() {
+    const btn = document.getElementById("timerBtn");
+    if (timerId === null) {
+        timerId = setInterval(drawMatch, 1000);
+        btn.textContent = "Detener Timer";
+    } else {
+        clearInterval(timerId);
+        timerId = null;
+        btn.textContent = "Activar Timer";
+    }
+}
+
+
+    </script>
+</body>
+</html>
+
+
+

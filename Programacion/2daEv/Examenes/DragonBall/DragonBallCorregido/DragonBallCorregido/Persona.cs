@@ -8,13 +8,15 @@ namespace DragonBallCorregido
 {
     public enum Raza
     {
-
+        HUMANO,
+        GUERREROESPACIO,
+        SUPERSAIYAJIN
     }
 
     public abstract class Persona
     {
         private readonly string? _name;
-        public readonly Raza Raza => GetRaza();
+        private readonly Raza Raza => GetRaza();
         private double _deseoEsquivar;
 
 

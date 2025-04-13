@@ -16,7 +16,7 @@ namespace DragonBallCorregido
     public abstract class Persona
     {
         private readonly string? _name;
-        private readonly Raza Raza => GetRaza();
+        private Raza Raza => GetRaza();
         private double _deseoEsquivar;
 
 
@@ -31,7 +31,7 @@ namespace DragonBallCorregido
         }
         public void QuitarEnergia(double energia)
         {
-            return Utils.GetRandom() < _deseoEsquivar;
+            //return Utils.GetRandom() < _deseoEsquivar;
         }
 
         public bool QuiereEsquivar()

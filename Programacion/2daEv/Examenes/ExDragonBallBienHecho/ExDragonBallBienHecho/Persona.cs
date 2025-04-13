@@ -41,9 +41,7 @@ namespace ExDragonBallBienHecho
         public bool QuiereEsquivar()
         {
             double esquivar = Utils.GetRandomDouble(0, 1);
-            if (esquivar > _deseoEsquivar)
-                return true;
-            return false;
+            return (esquivar > _deseoEsquivar) ? true : false;
         }
 
         public static Persona CrearPersona(string name, RazaType raza)
@@ -54,11 +52,11 @@ namespace ExDragonBallBienHecho
             switch(raza)
             {
                 case RazaType.HUMANO:
-                    return new Humano(name, energia, deseoEsquivar);
+                    return Humano.CrearHumano(name, energia, deseoEsquivar);
                 case RazaType.GUERREROESPACIO:
-                    return new GuerreroEspacio(name, energia, deseoEsquivar);
+                    return GuerreroEspacio.CreateGuerreroEspacio(name, energia, deseoEsquivar);
                 case RazaType.SUPERSAIYAJIN:
-                    return new Supersaiyajin(name, energia, deseoEsquivar);
+                    return Supersaiyajin.CreateSuperSaiyajin(name, energia, deseoEsquivar);
                 default:
                     throw new ArgumentException("Raza desconocida");
             }

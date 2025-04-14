@@ -21,7 +21,9 @@
         <button onclick="toggleTimer()">Activar/Desactivar Timer</button>
 
     </div>
-    
+    <div id="statusContainer"></div>
+
+
     <script>
         const assetManager = {}; // Diccionario para almacenar imágenes precargadas
         let imagesLoaded = 0;
@@ -38,7 +40,7 @@
             for (let fileName in imagePaths) {
                 let img = new Image();
                 img.src = imagePaths[fileName];
-                
+
                 img.onload = function () {
                     assetManager[fileName] = img;
                     imagesLoaded++;
@@ -73,48 +75,121 @@
             }
         }
 
-        function drawFigure(ctx, size, figure){
-    if (figure.type == "tower" && figure.color == "black")
-        drawImage(ctx, figure.x, figure.y, "torrenegra", size);
-    else
-        drawImage(ctx, figure.x, figure.y, "torreblanca", size);
-}
+        function drawFigure(ctx, size, figure) {
+            if (figure.type == "tower" && figure.color == "black")
+                drawImage(ctx, figure.x, figure.y, "torrenegra", size);
+            else
+                drawImage(ctx, figure.x, figure.y, "torreblanca", size);
+        }
 
-        function updateFigures(){
-            //ctx.clearRect(0, 0, canvas.width, canvas.height);
-            //drawBoard(ctx, size);
-            //drawFigures(ctx, size, figures);
-            fetch("http://localhost:3000/match", {
+        //function drawMatch(data) {
+        //    const figures = data.figures;
+
+        //    figures.forEach(f => {
+        //        console.log(`Figura: ${f.figureType}, Color: ${f.color}, Posición: (${f.x}, ${f.y})`);
+        //        // Aquí iría la lógica de dibujo...
+        //    }
+
+        //    function updateFigures() {
+        //            //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //            //drawBoard(ctx, size);
+        //            //drawFigures(ctx, size, figures);
+        //            fetch("http://localhost:3000/match", {
+        //                method: "POST",
+        //                headers: {
+        //                    "Content-Type": "application/json"
+        //                },
+        //                body: JSON.stringify({}) // Puedes incluir datos si el servidor los requiere
+        //            })
+        //                .then(response => response.json())
+        //                .then(data => {
+        //                    drawMatch(data);
+        //                });
+        //        })
+        //        .catch(error => {
+        //            console.error("Error al obtener el estado de la partida:", error);
+        //        });
+        //}
+
+        //function MoveRight() {
+        //    for (let i = 0; i < figures.length; i++) {
+        //        figures[i].x += 1;
+        //    }
+        //    updateFigures();
+
+        //}
+
+        function drawMatch(data) {
+            // Actualizamos las figuras con la respuesta del servidor
+            figures.length = 0; // Limpiamos el array actual
+            for (const fig of data.figures) {
+                figures.push({
+                    x: fig.x,
+                    y: fig.y,
+
+                    type: getFigureType(fig),
+                    color: fig.figureColor === 0 ? "white" : "black"
+                });
+            }
+
+            // Redibujamos el tablero
+            drawBoard(ctx, tileSize);
+            drawFigures(ctx, tileSize, figures);
+        }
+
+        function updateFigures() {
+            fetch("http://localhost:5000/chess/match", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({}) // Puedes incluir datos si el servidor los requiere
+                body: JSON.stringify({ MatchName: "tests" })
             })
                 .then(response => response.json())
                 .then(data => {
-                    const figures = data.figures;
-
-                    figures.forEach(f => {
-                        console.log(`Figura: ${f.figureType}, Color: ${f.color}, Posición: (${f.x}, ${f.y})`);
-                        // Aquí iría la lógica de dibujo...
-                    });
+                    drawMatch(data);
                 })
                 .catch(error => {
-                    console.error("Error al obtener el estado de la partida:", error);
+                    alert("Error al obtener los datos de la partida: " + error)
+                    console.error("Error al obtener los datos de la partida:", error);
+                });
+            // Obtener el estado de la partida
+            fetch("http://localhost:5000/chess/status", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ MatchName: "test" })
+            })
+                .then(response => response.json())
+                .then(status => {
+                    const container = document.getElementById("matchStatusContainer");
+                    container.innerHTML = `
+                <table border="1" cellpadding="5" style="margin-top: 10px; background-color: white;">
+                    <tr><th>Propiedad</th><th>Valor</th></tr>
+                    <tr><td>Nombre</td><td>${status.name}</td></tr>
+                    <tr><td>Dueño</td><td>${status.ownerId}</td></tr>
+                    <tr><td>Oponente</td><td>${status.oponentId || "-"}</td></tr>
+                    <tr><td>Jugador Siguiente</td><td>${status.nextPlayerId || "-"}</td></tr>
+                    <tr><td>Ganador</td><td>${status.winnerId || "-"}</td></tr>
+                    <tr><td>¿Iniciada?</td><td>${status.isStarted ? "Sí" : "No"}</td></tr>
+                    <tr><td>¿Completada?</td><td>${status.isCompleted ? "Sí" : "No"}</td></tr>
+                </table>
+            `;
+                })
+                .catch(error => {
+                    console.error("Error al obtener el estado:", error);
                 });
         }
 
-        function MoveRight(){
-            for(let i = 0; i < figures.length; i++){
-            figures[i].x += 1;
-        }
-            updateFigures();
-
+        function moveRight() {
+            for (let i = 0; i < figures.length; i++)
+                figures[i].x += 1;
         }
 
-        function drawFigures(ctx, size, figures){
-            for(let i = 0; i < figures.length; i++)
+
+        function drawFigures(ctx, size, figures) {
+            for (let i = 0; i < figures.length; i++)
                 drawFigure(ctx, size, figures[i]);
         }
 
@@ -190,16 +265,16 @@
         let timerId = null;
 
         function toggleTimer() {
-    const btn = document.getElementById("timerBtn");
-    if (timerId === null) {
-        timerId = setInterval(updateFigures, 1000);
-        btn.textContent = "Detener Timer";
-    } else {
-        clearInterval(timerId);
-        timerId = null;
-        btn.textContent = "Activar Timer";
-    }
-}
+            const btn = document.getElementById("timerBtn");
+            if (timerId === null) {
+                timerId = setInterval(updateFigures, 1000);
+                btn.textContent = "Detener Timer";
+            } else {
+                clearInterval(timerId);
+                timerId = null;
+                btn.textContent = "Activar Timer";
+            }
+        }
 
 
     </script>

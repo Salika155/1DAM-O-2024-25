@@ -1,11 +1,12 @@
 ﻿using ChessApp.Requests;
 using System.Drawing;
+using System.Xml.Linq;
 
 namespace ChessApp
 {
     public class Database : IDatabase
     {
-        internal class MatchDescription
+        public class MatchDescription
         {
             public string Name = string.Empty;
             public string OponentId = string.Empty;
@@ -49,10 +50,10 @@ namespace ChessApp
             return result.ToArray();
         }
 
-        public Response GetMatchInfo(string matchName)
-        {
-            throw new NotImplementedException();
-        }
+        //public Response GetMatchInfo(string matchName)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //y esta
         public Response CreateMatch(string name, string ownerId)
@@ -90,15 +91,17 @@ namespace ChessApp
         public BattleField GetMatch(string matchName)
         {
             BattleField result = new BattleField();
-            result.Status = new MatchStatus()
-            {
-                Name = matchName,
-                OwnerId = "test",
-                OponentId = "nacho",
-                NextPlayerId = "test",
-                WinnerId = "",
-                IsStarted = true,
-                IsCompleted = false
+            result.Status = GetMatchInfo(matchName);
+                { 
+            //result.Status = new MatchStatus()
+            //{
+            //    Name = matchName,
+            //    OwnerId = "test",
+            //    OponentId = "nacho",
+            //    NextPlayerId = "test",
+            //    WinnerId = "",
+            //    IsStarted = true,
+            //    IsCompleted = false
             };
             List<BattleField.Figure> figures = new();
             figures.Add(new BattleField.Figure(
@@ -121,9 +124,20 @@ namespace ChessApp
 
        
 
-        MatchStatus IDatabase.GetMatchInfo(string matchName)
+        public MatchStatus GetMatchInfo(string matchName)
         {
-            throw new NotImplementedException();
+            //comprobar
+            MatchStatus result = new();
+            {
+                result.Name = matchName;
+                result.OwnerId = "test";
+                result.OponentId = "nacho";
+                result.NextPlayerId = "test";
+                result.WinnerId = "";
+                result.IsStarted = true;
+                result.IsCompleted = false;
+            };
+            return result;
         }
 
         #region codigostudentcontroller

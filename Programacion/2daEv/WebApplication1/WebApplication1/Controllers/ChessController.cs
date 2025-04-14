@@ -14,7 +14,30 @@ namespace ChessApp.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
+        [HttpPost("status")]
+        public IActionResult GetMatchStatus(Requests.GetMatchStatus.Request request)
+        {
+            try
+            {
+                var status = _database.GetMatchInfo(request.matchName);
+                var response = new Requests.GetMatchStatus.Response();
+                response.Name = status.Name;
+                response.OponentId = status.OponentId;
+                response.NextPlayerId = status.NextPlayerId;
+                response.IsStarted = status.IsStarted;
+                response.IsCompleted = status.IsCompleted;
+                response.WinnerId = status.WinnerId;
+                response.OwnerId = status.OwnerId;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error " + ex.Message);
+                return BadRequest(new Requests.GetMatch.Response());
+            }
+        }
+
+        [HttpPost("match")]
         public IActionResult GetMatch(Requests.GetMatch.Request request)
         {
             try

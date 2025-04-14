@@ -14,6 +14,48 @@ namespace ChessApp.Controllers
             _logger = logger;
         }
 
+        [HttpPost("avpos")]
+        public IActionResult GetAvailablePositions(Requests.GetAvailablePosition.Request request)
+        {
+            try
+            {
+                var response = new Requests.GetAvailablePosition.Response();
+                var position = _database.GetAvailablePositions(request.playerName, request.x, request.y)
+
+                    List<Requests.GetAvailablePosition.Coordinates> list = new();
+                foreach(var coords in position.Coords)
+                {
+                    list.Add(new Requests.GetAvailablePosition.Coordinates(coords, ))
+                }
+                response.Coords = list.ToArray();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error " + ex.Message);
+                return BadRequest(new Requests.GetAvailablePosition.Response());
+            }
+        }
+
+        [HttpPost("move")]
+        public IActionResult MoveFigure(Requests.MoveFigure.Request request)
+        {
+            try
+            {
+                _database.Move(
+                    request.PlayerName, 
+                    request.SourceX, 
+                    request.SourceY, 
+                    request.DestinationX, 
+                    request.DestinationY);
+                return Ok(new Requests.MoveFigure.Response(true));
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error " + ex.Message);
+                return BadRequest(new Requests.MoveFigure.Response(false));
+            }
+        }
+
         [HttpPost("status")]
         public IActionResult GetMatchStatus(Requests.GetMatchStatus.Request request)
         {

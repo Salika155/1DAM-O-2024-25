@@ -5,21 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tablero de Ajedrez</title>
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #2c3e50;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #8b5a2b;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
         canvas {
             display: block;
-            margin: 20px auto;
-            background-color: #f0d9b5;
+            border: 5px solid #000;
+            background-color: #d2b48c;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div>
+    <div id="container">
         <canvas id="chessboard" width="400" height="400"></canvas>
-        <button onclick="updateFigures()">Tocame</button>
-        <button onclick="MoveRight()">MoveRight</button>
-        <button id="timerBtn" onclick="toggleTimer()">Activar Timer</button>
-        <button onclick="toggleTimer()">Activar/Desactivar Timer</button>
-
+        <div id="matchStatusContainer"></div>
+        <button onclick="updateFigures()">Tócame</button>
+        <button onclick="moveRight()">Mover a la derecha</button>
+        <button onclick="toggleTimer()" id="timerButton">Iniciar</button>
     </div>
     <div id="statusContainer"></div>
 
@@ -234,6 +253,9 @@
             //{color: "white", type: "king", x:4, y:7}
         ]
 
+        const availablePositions = [];
+        const selectedCell = null;
+
         // Precargar imágenes y luego dibujar el tablero y piezas
         preloadImages(imagesToLoad, function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el lienzo antes de redibujar
@@ -255,27 +277,34 @@
             const rect = canvas.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
-
             const col = Math.floor(x / size);
             const row = Math.floor(y / size);
 
-            alert(`Has hecho click en la casilla (${row}, ${col})`);
+            //ESTO ES NUEVO
+            if (IsAvailablePosition(col, row && selectedCell != null)) {
+                FetchMoveFigure(selectedCell.x, selectedCell.y, col, row);
+            } else {
+                selectedCell = { x: col, y: row }
+                fetchAvailablePositions(col, row)
+            }
+            //const colLetter = String.fromCharCode(65 + col);
+            //alert(`Has hecho click en la casilla (${row}, ${col})`);
         });
 
         let timerId = null;
 
         function toggleTimer() {
-            const btn = document.getElementById("timerBtn");
+            const btn = document.getElementById("timerButton");
+
             if (timerId === null) {
                 timerId = setInterval(updateFigures, 1000);
-                btn.textContent = "Detener Timer";
+                btn.textContent = "Detener";
             } else {
                 clearInterval(timerId);
                 timerId = null;
-                btn.textContent = "Activar Timer";
+                btn.textContent = "Iniciar";
             }
         }
-
 
     </script>
 </body>

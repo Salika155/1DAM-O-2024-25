@@ -21,6 +21,9 @@ namespace ChessApp
         void JoinMatch(string newOponentId, string matchName);
         Requests.BattleField GetMatch(string matchName);
         //getavailableposition y mover ficha
+
+        List<Position>GetAvailablePositions()
+        void Move(string matchName, int fromX, int fromY, int toX, int toY);
         
     }
 }

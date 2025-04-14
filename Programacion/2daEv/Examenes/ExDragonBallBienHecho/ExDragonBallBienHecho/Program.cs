@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            ITorneo torneo = new Torneo(); // Cambiar a una clase concreta que implemente ITorneo
+            torneo.Init();
         }
     }
 }

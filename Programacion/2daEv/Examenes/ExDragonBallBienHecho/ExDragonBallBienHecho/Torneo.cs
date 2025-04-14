@@ -50,7 +50,13 @@ namespace ExDragonBallBienHecho
 
         public List<Persona> FiltrarListaParticipantes(FilterDelegate filter)
         {
-            throw new NotImplementedException();
+            List<Persona> filtrados = new();
+
+            foreach(var c in _participantesTorneo)
+            {
+                
+            }
+            return filtrados;
         }
 
         public Persona GetWinner()

@@ -27,12 +27,13 @@ namespace ExDragonBall
             _participantes.Add(p);
         }
 
-        public List<Persona> DevolverGanador()
+        public Persona DevolverGanador()
         {
-            List<Persona> ganador = new List<Persona>();
+            var persona = _participantes[0];
             if (_participantes.Count == 1)
-                ganador = DevolverGanador();
-            return ganador;
+                return persona;
+            throw new Exception("Aun no existe un ganador");
+           
         }
 
         public List<Persona> DevolverParticipantes()
@@ -56,14 +57,14 @@ namespace ExDragonBall
             
         }
 
-        public void CreateParticipantes()
+        public void CreateParticipantes(int num)
         {
             if (_participantesCount <= 0)
                 return; 
 
-            for (int i = 0; i < _participantesCount; i++)
+            for (int i = 0; i < num; i++)
             {
-               
+                
             }
         }
 

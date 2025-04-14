@@ -12,6 +12,6 @@ namespace ExDragonBall
         void AddParticipantes(Persona p);
         void ExecuteRound();
         List<Persona> DevolverParticipantes();
-        List<Persona> DevolverGanador();
+        Persona DevolverGanador();
     }
 }

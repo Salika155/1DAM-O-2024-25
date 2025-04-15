@@ -49,30 +49,45 @@
         let totalImages = 0;
 
         // Función para precargar imágenes
-        function preloadImages(imagePaths, callback) {
-            totalImages = Object.keys(imagePaths).length;
-            if (totalImages === 0) {
-                callback();
-                return;
-            }
+        //function preloadImages(imagePaths, callback) {
+        //    totalImages = Object.keys(imagePaths).length;
+        //    if (totalImages === 0) {
+        //        callback();
+        //        return;
+        //    }
 
-            for (let fileName in imagePaths) {
-                let img = new Image();
-                img.src = imagePaths[fileName];
+        //    for (let fileName in imagePaths) {
+        //        let img = new Image();
+        //        img.src = imagePaths[fileName];
 
-                img.onload = function () {
-                    assetManager[fileName] = img;
-                    imagesLoaded++;
-                    if (imagesLoaded === totalImages) {
-                        callback(); // Llamar a la función cuando todas las imágenes estén cargadas
-                    }
-                };
+        //        img.onload = function () {
+        //            assetManager[fileName] = img;
+        //            imagesLoaded++;
+        //            if (imagesLoaded === totalImages) {
+        //                callback(); // Llamar a la función cuando todas las imágenes estén cargadas
+        //            }
+        //        };
 
-                img.onerror = function () {
-                    console.error(`No se pudo cargar la imagen: ${imagePaths[fileName]}`);
-                    imagesLoaded++;
-                    if (imagesLoaded === totalImages) {
-                        callback();
+        //        img.onerror = function () {
+        //            console.error(`No se pudo cargar la imagen: ${imagePaths[fileName]}`);
+        //            imagesLoaded++;
+        //            if (imagesLoaded === totalImages) {
+        //                callback();
+        //            }
+        //        };
+        //    }
+        //}
+        // Precargar imágenes
+        function preloadImages(imagesToLoad, callback) {
+            let loadedCount = 0;
+            for (const fileName of imagesToLoad) {
+                const img = new Image();
+                img.src = fileName;
+                img.onload = () => {
+                    imageCache[fileName] = img;
+                    loadedCount++;
+                    if (loadedCount === imagesToLoad.length) {
+                        callback(); // Ejecutar una vez que todo esté cargado
                     }
                 };
             }
@@ -230,6 +245,10 @@
             const scale = Math.min(size / img.width, size / img.height);
             const newWidth = img.width * scale;
             const newHeight = img.height * scale;
+            if (newHeight > img.width * 0.8) {
+                newHeight = img.width * 0.8;
+                newWidth = newHeight * scale;
+            }
             const offsetX = (size - newWidth) / 2;
             const offsetY = (size - newHeight) / 2;
 
@@ -243,7 +262,17 @@
         // Definir las imágenes a precargar usando los nombres de archivo directamente
         const imagesToLoad = {
             "torreblanca": "resources/torreblanca.png",
-            "torrenegra": "resources/torrenegra.png"
+            "torrenegra": "resources/torrenegra.png",
+            "alfilblanco": "resources/alfilblanco.png",
+            "alfilnegro": "resources/alfilnegro.png",
+            "caballoblanco": "resources/caballoblanco.png",
+            "caballonegro": "resources/caballonegro.png",
+            "peonblanco": "resources/peonblanco.png",
+            "peonnegro": "resources/peonnegro.png",
+            "reinablanca": "resources/reinablanca.png",
+            "reinanegra": "resources/reinanegra.png",
+            "reyblanco": "resources/reyblanco.png",
+            "reynegro": "resources/reynegro.png"
         };
 
         const figures = [

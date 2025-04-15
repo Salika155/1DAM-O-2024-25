@@ -101,19 +101,22 @@
         function drawBoard(ctx, size) {
             for (let row = 0; row < 8; row++) {
                 for (let col = 0; col < 8; col++) {
-                    if ((row + col) % 2 === 1) {
-                        ctx.fillStyle = "#b58863"; // Color oscuro
-                        ctx.fillRect(col * size, row * size, size, size);
-                    }
+                    ctx.fillStyle = getCellColor(col, row);
+                    ctx.fillRect(col * size, row * size, size, size);  
                 }
             }
         }
 
         function drawFigure(ctx, size, figure) {
-            if (figure.type == "tower" && figure.color == "black")
-                drawImage(ctx, figure.x, figure.y, "torrenegra", size);
-            else
-                drawImage(ctx, figure.x, figure.y, "torreblanca", size);
+            //if (figure.type == "tower" && figure.color == "black")
+            //    drawImage(ctx, figure.x, figure.y, "torrenegra", size);
+            //else
+            //    drawImage(ctx, figure.x, figure.y, "torreblanca", size);
+            const prefix = figure.color === "white" ? "w" : "b";
+            const type = figure.type; // debe ser: pawn, king, queen, bishop, knight, tower
+            const imagePath = `img/${prefix}${type}.png`;
+
+            drawImage(figure.x, figure.y, imagePath);
         }
 
         //function drawMatch(data) {
@@ -171,6 +174,23 @@
             drawFigures(ctx, tileSize, figures);
         }
 
+        function getCellColor(col, row) {
+            return (row + col) % 2 === 1 ? "#f0d9b5" : "#b58863";
+        }
+
+        function getFigureType(fig) {
+            switch (fig.figureType) {
+                case 0: return "pawn";
+                case 1: return "tower";
+                case 2: return "knight";
+                case 3: return "bishop";
+                case 4: return "queen";
+                case 5: return "king";
+                default: return "unknown";
+            }
+        }
+
+
         function updateFigures() {
             fetch("http://localhost:5000/chess/match", {
                 method: "POST",
@@ -221,11 +241,16 @@
                 figures[i].x += 1;
         }
 
+        preloadImages(imagesToLoad, () => {
+
+        })
+
 
         function drawFigures(ctx, size, figures) {
             for (let i = 0; i < figures.length; i++)
                 drawFigure(ctx, size, figures[i]);
         }
+
 
         function drawCircle(ctx, col, row, color, size) {
             const centerX = col * size + size / 2;
@@ -238,21 +263,21 @@
             ctx.fill();
         }
 
-        function drawImage(ctx, col, row, fileName, size) {
+        function drawImage(col, row, fileName) {
             const img = getImage(fileName);
             if (!img) return; // Si la imagen no está en el diccionario, no hacer nada
 
+            const aspectRatio = img.width / img.height;
             const scale = Math.min(size / img.width, size / img.height);
-            const newWidth = img.width * scale;
-            const newHeight = img.height * scale;
-            if (newHeight > img.width * 0.8) {
-                newHeight = img.width * 0.8;
-                newWidth = newHeight * scale;
+            let newWidth = size * 0.8;
+            let newHeight = newWidth / aspectRatio;
+            if (newHeight > size * 0.8) {
+                newHeight = size * 0.8;
+                newWidth = newHeight * aspectRatio;
             }
-            const offsetX = (size - newWidth) / 2;
-            const offsetY = (size - newHeight) / 2;
-
-            ctx.drawImage(img, col * size + offsetX, row * size + offsetY, newWidth, newHeight);
+            const offsetX = col * size + size / 2;
+            const offsetY = row * size + size / 2;
+            ctx.drawImage(img, offsetX - newWidth / 2, offsetY - newHeight / 2, newWidth, newHeight);
         }
 
         const canvas = document.getElementById("chessboard");

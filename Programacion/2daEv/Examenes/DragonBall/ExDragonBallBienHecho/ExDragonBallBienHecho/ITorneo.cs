@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ExDragonBallBienHecho
 {
-    delegate bool FilterDelegate(List<Persona> p);
+    delegate bool FilterDelegate(Persona p);
+    
     interface ITorneo
     {
         void Init();

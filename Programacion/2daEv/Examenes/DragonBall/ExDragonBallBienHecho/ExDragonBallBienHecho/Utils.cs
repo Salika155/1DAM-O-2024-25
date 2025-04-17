@@ -8,16 +8,16 @@ namespace ExDragonBallBienHecho
 {
     class Utils
     {
-        Random r = new Random();
+        static Random r = new Random();
 
         public static int GetRandom(int a, int b)
         {
-            return a * b;
+            return r.Next(a, b);  // Genera un número aleatorio entre a y b (b no incluido)
         }
 
-        internal static double GetRandomDouble(double v1, double v2)
+        public static double GetRandomDouble(double v1, double v2)
         {
-            throw new NotImplementedException();
+            return r.NextDouble() * (v2 - v1) + v1;  // Genera un número aleatorio entre v1 y v2
         }
     }
 }

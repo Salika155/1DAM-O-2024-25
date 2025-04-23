@@ -30,7 +30,7 @@
             Predicate<int> elDelegadoPredi = new Predicate<int>(Funciones.DamePares);
             List<int> numPares = _listaNumeros.FindAll(elDelegadoPredi);
 
-            foreach(int n in numPares)
+            foreach (int n in numPares)
             {
                 Console.WriteLine(n);
             }
@@ -67,7 +67,7 @@
 
 
             //lambdas y delegados complejos
-            List<int> valoresLista = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            List<int> valoresLista = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             List<int> valoresListaPares = valoresLista.FindAll(i => i % 2 == 0);
             foreach (var i in valoresListaPares)
                 Console.WriteLine(i);
@@ -77,7 +77,7 @@
             {
                 Console.WriteLine("el numero par que buscas es: ");
                 Console.WriteLine(num);
-                });
+            });
 
             //llambda compara edad personas que sean iguales o no
             ComparatorPersonas comparaEdad = (n1, n2) => n1 == n2;
@@ -98,6 +98,57 @@
             // Comparar personas por nombre
             bool mismosNombres = Funciones.CompararElementos(p1, p2, (per1, per2) => per1.Nombre == per2.Nombre);
             Console.WriteLine("¿Personas con mismo nombre? " + mismosNombres);
+
+            //DICCIONARIO
+
+            Dictionary<int, string> mydict = new Dictionary<int, string>()
+            {
+                {1, "Jose" },
+                {2, "Jaime" },
+                {3, "Jesus" },
+                {4, "Juan" }
+            };
+
+            foreach (KeyValuePair<int, string> estudiantes in mydict)
+            {
+                Console.WriteLine($"{estudiantes.Key} - {estudiantes.Value}");
+            }
+
+            for (int i = 0; i <= mydict.Count - 1; i++)
+            {
+                Console.WriteLine($"{mydict.ElementAt(i).Key} - {mydict.ElementAt(i).Value}");
+
+
+            }
+
+            Dictionary<string, int> edades = new();
+            //rellenar diccionario
+            edades.Add("Juan", 18);
+            edades.Add("Diana", 35);
+            //introducidos como array
+            edades["Maria"] = 25;
+            edades["Antonio"] = 29;
+            //recorrer diccionario
+            foreach(KeyValuePair<string, int> persona in edades)
+            {
+                Console.WriteLine("Nombre: " + persona.Key + "Edad: " + persona.Value);
+                Console.WriteLine("Nombre: {0}, Edad: {1}", persona.Key, persona.Value);
+            }
+            //STACK
+
+            Stack<int> stack = new();
+            foreach(int n in new int[5] {2, 4, 6, 8, 10})
+            {
+                stack.Push(n);
+            }
+
+            stack.Pop(); 
+            foreach(int n in stack)
+            {
+                Console.WriteLine(n);
+            }
+
+        
         }
 
         //delegado predicado

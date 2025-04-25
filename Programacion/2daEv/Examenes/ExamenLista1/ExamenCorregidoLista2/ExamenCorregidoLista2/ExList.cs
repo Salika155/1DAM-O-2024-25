@@ -90,8 +90,10 @@ namespace ExamenCorregidoLista2
 
             for (int i = 0; i < _count; i++)
             {
-
+                if (filter(_items[i]))
+                    return i;
             }
+            return -1;
         }
 
         public void Visit(VisitDelegate<T> visit)

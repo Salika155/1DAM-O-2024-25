@@ -58,7 +58,7 @@ namespace ExListaEV2Ex1BienHecho
         }
 
         // Método privado que devuelve una nueva lista con los elementos en orden inverso
-        private ExList<T> ReverseArray()
+        public ExList<T> ReverseArray()
         {
             var result = Clone();    // Crea una copia de la lista actual
             result.Reversed();       // Invierte los elementos de la copia
@@ -82,9 +82,9 @@ namespace ExListaEV2Ex1BienHecho
         }
 
         // Método privado que crea una copia (clon) exacta de la lista actual
-        private ExList<T> Clone()
+        public ExList<T> Clone()
         {
-            var clone = new ExList<T>(); // Crea una nueva instancia de ExList<T>
+            ExList<T> clone = new(); // Crea una nueva instancia de ExList<T>
 
             // Copia cada elemento actual al nuevo array usando Add()
             for (int i = 0; i < Count; i++)

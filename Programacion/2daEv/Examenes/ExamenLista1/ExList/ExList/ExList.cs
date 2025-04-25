@@ -41,7 +41,7 @@ namespace ExamenList
                 {
                     if(Empty)
                         throw new Exception("No existen elementos en la lista");
-                    var itemlast = _elementosLista[_elementosLista.Count];
+                    var itemlast = _elementosLista[CountElements - 1];
                     return itemlast;
                 }
             }
@@ -157,7 +157,7 @@ namespace ExamenList
 
         public bool Contains(T element)
         {
-            throw new Exception();
+            return IndexOf(element) != -1;
 
         }
 
@@ -173,9 +173,11 @@ namespace ExamenList
 
         public void VisitElement(Visit<T> elements)
         {
+            if (elements == null)
+                return;
             foreach(var c in _arrayList)
             {
-                
+                elements(c);
             }
         }
 

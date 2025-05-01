@@ -2,9 +2,9 @@
 {
     public class GetMatch
     {
-        internal class Response
+        public class Response
         {
-            public Figure[] Figures { get; internal set; }
+            public Figure[]? Figures { get; internal set; }
 
             //internal class Figure
             //{

@@ -78,7 +78,29 @@ namespace ChessApp
 
         public void JoinMatch(string newOponentId, string matchName)
         {
-            throw new NotImplementedException();
+            lock (_matches)
+            {
+                foreach (var entry in _matches)
+                {
+                    var ownerId = entry.Key;
+                    var match = entry.Value.FirstOrDefault(m => m.Name == matchName);
+                    if (match != null)
+                    {
+                        if (ownerId == newOponentId)
+                            throw new Exception("El propietario no puede unirse como oponente.");
+
+                        if (!string.IsNullOrEmpty(match.OponentId))
+                            throw new Exception("La partida ya tiene un oponente.");
+
+                        match.OponentId = newOponentId;
+
+                        // También puedes iniciar el estado de partida aquí si es necesario.
+                        return;
+                    }
+                }
+
+                throw new Exception("Partida no encontrada.");
+            }
         }
 
         //public Response[] GetMatch(string matchName)
@@ -138,14 +160,20 @@ namespace ChessApp
             return result;
         }
 
-        public List<GetAvailablePosition> GetAvailablePositions(string playerName, int x, int y)
+       
+        public void Move(string matchName, int fromX, int fromY, int toX, int toY)
         {
             throw new NotImplementedException();
         }
 
-        public void Move(string matchName, int fromX, int fromY, int toX, int toY)
+        List<GetAvailablePosition.Coordinates> IDatabase.GetAvailablePositions(string playerName, int x, int y)
         {
-            throw new NotImplementedException();
+            // Simulación lógica de movimiento (peón hacia adelante y atrás)
+            return new List<GetAvailablePosition.Coordinates>
+            {
+                new(x + 1, y),
+                new(x - 1, y)
+            };
         }
 
         #region codigostudentcontroller

@@ -22,7 +22,7 @@ namespace ChessApp
         Requests.BattleField GetMatch(string matchName);
         //getavailableposition y mover ficha
 
-        List<Requests.GetAvailablePosition> GetAvailablePositions(string playerName, int x, int y);
+        List<Requests.GetAvailablePosition.Coordinates> GetAvailablePositions(string playerName, int x, int y);
         void Move(string matchName, int fromX, int fromY, int toX, int toY);
         
     }

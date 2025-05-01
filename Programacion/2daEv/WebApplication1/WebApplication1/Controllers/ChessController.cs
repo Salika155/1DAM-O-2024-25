@@ -17,25 +17,23 @@ namespace ChessApp.Controllers
         [HttpPost("avpos")]
         public IActionResult GetAvailablePositions(Requests.GetAvailablePosition.Request request)
         {
-            List<Requests.GetAvailablePosition.Coordinates> list = new();
             try
             {
                 var response = new Requests.GetAvailablePosition.Response();
-                var position = _database.GetAvailablePositions(request.playerName, request.x, request.y);
 
-                    
-                foreach(var coords in position.Coords)
-                {
-                    list.Add(new Requests.GetAvailablePosition.Coordinates(coords, ));
-                }
-                response.Coords = list.ToArray();
+                // Obtiene lista de coordenadas disponibles desde la base de datos
+                var positions = _database.GetAvailablePositions(request.playerName, request.x, request.y);
+
+                // Directamente asignamos la lista como array
+                response.Coords = positions.ToArray();
+
+                return Ok(response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error " + ex.Message);
                 return BadRequest(new Requests.GetAvailablePosition.Response());
             }
-            
         }
 
         [HttpPost("move")]

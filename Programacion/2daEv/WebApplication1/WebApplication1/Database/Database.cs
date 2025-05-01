@@ -122,8 +122,6 @@ namespace ChessApp
             return result;
         }
 
-       
-
         public MatchStatus GetMatchInfo(string matchName)
         {
             //comprobar
@@ -138,6 +136,16 @@ namespace ChessApp
                 result.IsCompleted = false;
             };
             return result;
+        }
+
+        public List<GetAvailablePosition> GetAvailablePositions(string playerName, int x, int y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Move(string matchName, int fromX, int fromY, int toX, int toY)
+        {
+            throw new NotImplementedException();
         }
 
         #region codigostudentcontroller

@@ -10,9 +10,12 @@ namespace ChessLib.Tablero
 
     public class Casilla
     {
+        //para pintar
         private readonly Coord _coord;
         private readonly CasillaColor _casillaColor;
+        //puedo no pasarle ifugure o figure
         private IFigure? _figure;
+        //esto no sirve
         private Coord coord;
 
         public Coord Coords => _coord;
@@ -39,3 +42,7 @@ namespace ChessLib.Tablero
         }
     }
 }
+
+//variables de stack: no necesitan de new: enteros, etc.
+//variables de celda al crear clase celda de tipo heap
+

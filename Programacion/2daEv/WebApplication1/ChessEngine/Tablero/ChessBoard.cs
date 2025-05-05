@@ -5,6 +5,7 @@ namespace ChessLib.Tablero
 {
     public class ChessBoard : IChessBoard
     {
+        //deberia quitar la casilla array bidimensional
         private readonly Casilla[ , ] _casillas;
         private readonly int _width;
         private readonly int _height;
@@ -248,6 +249,15 @@ namespace ChessLib.Tablero
 
             return true;
         }
+
+        //public Casilla GetCellByIndex(int index)
+        //{
+        //    int x = index % 8;
+        //    int y = index / 8;
+        //    Color c = new Color(hallarelcolor)
+
+        //}
+        //si puedo lograr que una funcion funcione sin meter variables en la clase, hacerlo.
 
         //posible inciso
 

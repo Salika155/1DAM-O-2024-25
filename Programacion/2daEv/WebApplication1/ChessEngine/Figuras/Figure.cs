@@ -25,6 +25,7 @@ namespace ChessLib.Figuras
         private readonly FigureType _typeFigure;
         private Coord _coords;
         private int _movementCount;
+        //posible movimientos de figura, si es para si se ha movido la primera vez bool para el enroque, pero seria 0 o 1
 
         public Figure(FigureColor color, FigureType type, Coord coords)
         {
@@ -33,6 +34,7 @@ namespace ChessLib.Figuras
             _coords = coords;
             _movementCount = 0;
         }
+        //figuretype se puede hacer como una abstract
         public FigureColor Color => _colorFigure;
         public FigureType Type => _typeFigure;
         public Coord Coords => _coords;

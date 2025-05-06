@@ -13,5 +13,15 @@ namespace ChessLib.Figuras
         {
             throw new NotImplementedException();
         }
+
+        public override List<Coord> GetAvailablePositions(IChessBoard board)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Figure CreateNewInstance(Coord newCoords)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

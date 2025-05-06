@@ -12,8 +12,8 @@ namespace ChessApp
 
             // Crear el tablero de ajedrez
             ChessBoard board = new ChessBoard(8, 8);
-            board.InitBoard();
-            board.PrintBoard();
+            board.InitializeBoard();
+            ChessBoard.DrawBoard(board);
 
             // Crear figuras (ejemplo)
             //Bishop bishop = new Bishop(FigureColor.WHITE, new Coord(0, 0), FigureType.BISHOP);

@@ -1,6 +1,5 @@
 ﻿using ChessLib.Figuras;
 
-
 namespace ChessLib.Tablero
 {
     public enum CasillaColor
@@ -14,7 +13,7 @@ namespace ChessLib.Tablero
         private readonly Coord _coord;
         private readonly CasillaColor _casillaColor;
         private IFigure? _figure;
-
+        private Coord coord;
 
         public Coord Coords => _coord;
         public IFigure? Figure
@@ -27,16 +26,16 @@ namespace ChessLib.Tablero
         }
 
         public CasillaColor Color => _casillaColor;
-        public Casilla(Coord coord, CasillaColor color)
+        public Casilla(Coord coord, CasillaColor type)
         {
             _coord = coord;
-            _casillaColor = color;
+            _casillaColor = type;
             Figure = null;
         }
 
         public Casilla(Coord coord)
         {
-            this._coord = coord;
+            this.coord = coord;
         }
     }
 }

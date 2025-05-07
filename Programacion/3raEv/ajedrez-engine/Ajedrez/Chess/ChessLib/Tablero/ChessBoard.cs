@@ -7,9 +7,9 @@ namespace ChessLib.Tablero
     public class ChessBoard : IChessBoard
     {
         private readonly Casilla[ , ] _casillas;
+        private readonly Figure[] _figures;
         private readonly int _width;
         private readonly int _height;
-        private readonly Figure[] _figures;
         private int _figureCount = 0;
 
         public int Width => _width;
@@ -26,10 +26,8 @@ namespace ChessLib.Tablero
             //metodo para iniciar fichas
         }
 
-        public ChessBoard() : this (8, 8)
-        {
-
-        }
+        //posiblemente lo borre
+        public ChessBoard() : this (8, 8){}
 
         public void InitializeBoard()
         {
@@ -92,24 +90,37 @@ namespace ChessLib.Tablero
         {
             Console.WriteLine($"Añadiendo figura {type} en ({coord.X}, {coord.Y}). Contador: {_figureCount}");
 
-            Figure figura = type switch
+            Figure figura;
+                switch (type)
             {
-                FigureType.TOWER => new Tower(color, type, coord),
-                FigureType.KNIGHT => new Knight(color, type, coord),
-                FigureType.BISHOP => new Bishop(color, type, coord),
-                FigureType.QUEEN => new Queen(color, type, coord),
-                FigureType.KING => new King(color, type, coord),
-                FigureType.PAWN => new Pawn(color, type, coord),
-                _ => throw new ArgumentException("Tipo de figura inválido")
-            };
+                case FigureType.TOWER:
+                    figura = new Tower(color, type, coord);
+                    break;
+                case FigureType.KNIGHT:
+                    figura = new Knight(color, type, coord);
+                    break;
+                case FigureType.BISHOP:
+                    figura = new Bishop(color, type, coord);
+                    break;
+                case FigureType.QUEEN:
+                    figura = new Queen(color, type, coord);
+                    break;
+                case FigureType.KING:
+                    figura = new King(color, type, coord);
+                    break;
+                case FigureType.PAWN:
+                    figura = new Pawn(color, type, coord);
+                    break;
+                default:
+                    throw new ArgumentException("Tipo de figura inválido");
+            }
 
-            if (_figureCount > _figures.Length)
-                throw new InvalidOperationException("");
+            if (_figureCount >= _figures.Length)
+                throw new InvalidOperationException("No se pueden añadir más figuras");
 
-            //LAS FIGURAS NO LAS CREA BIEN
-            _figures[_figureCount++] = figura;
+            _figures[_figureCount] = figura;
             _casillas[coord.X, coord.Y].Figure = figura;
-
+            _figureCount++;
         }
 
         public bool MoveFigure(int x, int y)

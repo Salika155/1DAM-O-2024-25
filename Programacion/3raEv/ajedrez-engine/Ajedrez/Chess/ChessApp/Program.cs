@@ -10,10 +10,12 @@ namespace ChessApp
         {
             Console.WriteLine("Hello, World!");
 
-            // Crear el tablero de ajedrez
-            ChessBoard board = new ChessBoard(8, 8);
-            board.InitializeBoard();
-            ChessBoard.DrawBoard(board);
+            //// Crear el tablero de ajedrez
+            //ChessBoard board = new ChessBoard(8, 8);
+            ////board.InitializeBoard();
+            //ChessBoard.DrawBoard(board);
+            var game = new ChessBoard(8, 8);
+            ChessBoard.DrawBoard(game);
 
             // Crear figuras (ejemplo)
             //Bishop bishop = new Bishop(FigureColor.WHITE, new Coord(0, 0), FigureType.BISHOP);

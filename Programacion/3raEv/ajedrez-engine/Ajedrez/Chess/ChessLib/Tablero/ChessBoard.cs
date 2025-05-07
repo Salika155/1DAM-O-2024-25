@@ -1,4 +1,5 @@
 ﻿using ChessLib.Figuras;
+using System;
 using System.Drawing;
 
 namespace ChessLib.Tablero
@@ -102,9 +103,13 @@ namespace ChessLib.Tablero
                 _ => throw new ArgumentException("Tipo de figura inválido")
             };
 
-            _figures[_figureCount++ - 1] = figura;
+            if (_figureCount > _figures.Length)
+                throw new InvalidOperationException("");
+
+            //LAS FIGURAS NO LAS CREA BIEN
+            _figures[_figureCount++] = figura;
             _casillas[coord.X, coord.Y].Figure = figura;
-            
+
         }
 
         public bool MoveFigure(int x, int y)
@@ -158,10 +163,17 @@ namespace ChessLib.Tablero
             }
             return _figures[index];
         }
+        private Casilla? GetCasillaAt(int x, int y)
+        {
+            if (!Utils.IsValidCoordinates(x, y, _width, _height))
+                return null;
+
+            return _casillas[x, y];
+        }
 
         public int GetFigureCount()
         {
-            return _figures.Length;
+            return _figures.Length + 1;
         }
 
         public int GetHeight()
@@ -262,11 +274,14 @@ namespace ChessLib.Tablero
                 for (int x = 0; x < board.GetWidth(); x++)
                 {
                     IFigure? figura = board.GetFigureAt(x, y);
+                    Casilla? casilla = board.GetCasillaAt(x, y);
                     Console.Write(figura != null ? GetSymbol(figura) : "· ");
                 }
                 Console.WriteLine();
             }
         }
+
+       
 
         static string GetSymbol(IFigure figura)
         {

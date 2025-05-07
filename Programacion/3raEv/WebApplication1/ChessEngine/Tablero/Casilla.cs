@@ -8,7 +8,7 @@ namespace ChessLib.Tablero
         WHITE
     }
 
-    public class Casilla
+    public struct Casilla
     {
         private readonly Coord _coord;
         private readonly CasillaColor _casillaColor;

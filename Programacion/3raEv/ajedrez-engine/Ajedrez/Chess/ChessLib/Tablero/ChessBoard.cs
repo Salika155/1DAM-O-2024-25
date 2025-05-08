@@ -62,7 +62,6 @@ namespace ChessLib.Tablero
                 CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
                 CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
             //}
-            
 
             for (int x = 0; x < 8; x++)
             {
@@ -125,7 +124,6 @@ namespace ChessLib.Tablero
         //NO ME FIO
         public virtual bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
         {
-
             // Verificar si las coordenadas están dentro del tablero
             if (!Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
                 return false;

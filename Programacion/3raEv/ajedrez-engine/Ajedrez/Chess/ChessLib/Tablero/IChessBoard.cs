@@ -7,7 +7,7 @@ namespace ChessLib.Tablero
     {
         void CreateFigures();
         void Clear();
-        bool MoveFigure(int x, int y);
+        bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY);
         bool IsPositionEmpty(Coord movAdelante);
         bool HasEnemyPiece(Coord target, FigureColor color);
 

@@ -42,9 +42,8 @@ namespace ChessLib.Tablero
             {
                 for (int x = 0; x < _width; x++)
                 {
-                    var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.BLACK;
-                    var coord = new Coord(x, y);
-                    _casillas[x, y] = new Casilla(coord);
+                    var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.RED;
+                    _casillas[x, y] = new Casilla(new Coord(x, y), color);
                 }
             }
         }
@@ -123,15 +122,16 @@ namespace ChessLib.Tablero
             _figureCount++;
         }
 
-        public bool MoveFigure(int x, int y)
+        //NO ME FIO
+        public virtual bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
         {
-            
+
             // Verificar si las coordenadas están dentro del tablero
-            if (x < 0 || x >= _width || y < 0 || y >= _height)
+            if (!Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
                 return false;
 
-            // Obtener la figura en la posición actual
-            var figure = _casillas[x, y].Figure;
+                // Obtener la figura en la posición actual
+                var figure = _casillas[origenX, origenY].Figure;
 
             // Verificar si hay una figura en la posición actual
             if (figure == null)
@@ -143,10 +143,10 @@ namespace ChessLib.Tablero
             // Verificar si la nueva posición está en las posiciones disponibles
             foreach (var pos in availablePositions)
             {
-                if (pos.X == x && pos.Y == y)
+                if (pos.X == origenX && pos.Y == origenY)
                 {
                     // Mover la figura a la nueva posición
-                    _casillas[x, y].Figure = figure;
+                    _casillas[origenX, origenY].Figure = figure;
                     return true;
                 }
             }
@@ -161,7 +161,7 @@ namespace ChessLib.Tablero
 
         public IFigure? GetFigureAt(int x, int y)
         {
-            if (x < 0 || x >= _width || y < 0 || y >= _height)
+            if (!Utils.IsValidCoordinates(x, y, _width, _height))
                 return null; // Fuera del tablero.
             return _casillas[x, y].Figure;
         }
@@ -209,6 +209,7 @@ namespace ChessLib.Tablero
             _figureCount = 0;
         }
 
+        //NO ME FIO
         public bool IsPositionEmpty(Coord coord)
         {
             if (coord.X < 0 || coord.X >= _width || coord.Y < 0 || coord.Y >= _height)
@@ -217,6 +218,7 @@ namespace ChessLib.Tablero
             return _casillas[coord.X, coord.Y].Figure == null;
         }
 
+        //NO ME FIO
         public bool HasEnemyPiece(Coord coord, FigureColor color)
         {
             if (coord.X < 0 || coord.X >= _width || coord.Y < 0 || coord.Y >= _height)
@@ -226,7 +228,7 @@ namespace ChessLib.Tablero
             return figura != null && figura.GetColor() != color;
         }
 
-
+        //NO ME FIO
         public bool IsKingInCheck(FigureColor color)
         {
             Coord kingPosition = FindKingPosition(color);
@@ -245,6 +247,7 @@ namespace ChessLib.Tablero
             return false;
         }
 
+        //NO ME FIO
         private Coord FindKingPosition(FigureColor color)
         {
             foreach (var figura in _figures)
@@ -255,6 +258,7 @@ namespace ChessLib.Tablero
             throw new Exception("Rey no encontrado");
         }
 
+        //NO ME FIO
         public bool IsCheckmate(FigureColor color)
         {
             if (!IsKingInCheck(color)) return false;
@@ -279,6 +283,7 @@ namespace ChessLib.Tablero
         public static void DrawBoard(ChessBoard board)
         {
             Console.WriteLine("  a b c d e f g h");
+            Console.WriteLine(" ");
             for (int y = 0; y < board.GetHeight(); y++)
             {
                 Console.Write(8 - y + " ");
@@ -286,23 +291,54 @@ namespace ChessLib.Tablero
                 {
                     IFigure? figura = board.GetFigureAt(x, y);
                     Casilla? casilla = board.GetCasillaAt(x, y);
-                    Console.Write(figura != null ? GetSymbol(figura) : "· ");
+                    if (figura != null)
+                    {
+                        DrawFigure(figura);
+                    }
+                    else if (casilla != null)
+                    {
+                        DrawCasilla(casilla);
+                    }
+                    //Console.Write(figura != null ? GetSymbol(figura) : "· ");
+
                 }
+                Console.ResetColor();
                 Console.WriteLine();
             }
+            Console.WriteLine(" ");
+            Console.WriteLine("  a b c d e f g h");
         }
 
-       
+        private static void DrawCasilla(Casilla? casilla)
+        {
+            var fondo = casilla?.Color == CasillaColor.WHITE ? ConsoleColor.White : ConsoleColor.Red;
+            var texto = casilla?.Color == CasillaColor.WHITE ? ConsoleColor.Black : ConsoleColor.White;
+
+            Console.BackgroundColor = fondo;
+            Console.ForegroundColor = texto;
+            Console.Write("   "); // <-- 3 espacios en blanco
+            Console.ResetColor();
+        }
+
+        private static void DrawFigure(IFigure figure)
+        {
+            var background = ((figure.GetCoord().X + figure.GetCoord().Y) % 2 == 0) ? ConsoleColor.White : ConsoleColor.Red;
+            Console.BackgroundColor = background;
+            Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE ? ConsoleColor.Black : ConsoleColor.DarkYellow;
+            Console.Write(GetSymbol(figure));
+            Console.ResetColor();
+        }
 
         static string GetSymbol(IFigure figura)
         {
-            if (figura is Pawn) return figura.GetColor() == FigureColor.WHITE ? "P " : "p ";
-            if (figura is Tower) return figura.GetColor() == FigureColor.WHITE ? "T " : "t ";
-            if (figura is Knight) return figura.GetColor() == FigureColor.WHITE ? "N " : "n ";
-            if (figura is Bishop) return figura.GetColor() == FigureColor.WHITE ? "B " : "b ";
-            if (figura is Queen) return figura.GetColor() == FigureColor.WHITE ? "Q " : "q ";
-            if (figura is King) return figura.GetColor() == FigureColor.WHITE ? "K " : "k ";
-            return "· ";
+            if (figura is Pawn) return " P ";
+            if (figura is Tower) return " T ";
+            if (figura is Knight) return " N ";
+            if (figura is Bishop) return " B ";
+            if (figura is Queen) return " Q ";
+            if (figura is King) return " K ";
+            else 
+                return "  ";
         }
 
         public List<IFigure> GetAllFigures()
@@ -316,7 +352,6 @@ namespace ChessLib.Tablero
                     figures.Add(figura);
                 }
             }
-
             return figures;
         }
     }

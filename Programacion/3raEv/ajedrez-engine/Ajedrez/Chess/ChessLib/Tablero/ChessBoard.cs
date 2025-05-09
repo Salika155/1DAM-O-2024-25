@@ -48,6 +48,7 @@ namespace ChessLib.Tablero
             }
         }
 
+        //crear un metodo que le paso el color de la figura y la i, asi no tengo que hacer duplicacion de codigo.
         public void CreateFigures()
         {
             //for (int x = 0; x < 8; x++)
@@ -122,7 +123,7 @@ namespace ChessLib.Tablero
         }
 
         //NO ME FIO
-        public virtual bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
+        public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
         {
             // Verificar si las coordenadas están dentro del tablero
             if (!Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))

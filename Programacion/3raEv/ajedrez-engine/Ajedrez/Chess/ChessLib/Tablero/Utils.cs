@@ -13,7 +13,8 @@ namespace ChessLib.Tablero
         //esto creo que deberia ir aqui de alguna manera
         public static void DrawBoard(ChessBoard board)
         {
-            Console.WriteLine("  a b c d e f g h");
+            //esto lo imprime junto, quiero separarlo
+            Console.Write("a" + "   " + "b" + "   " + "c" + "   " + "d" + "   " + "e" + "   " + "f" + "   " + "g" + "   " + "h");
             for (int y = 0; y < board.GetHeight(); y++)
             {
                 Console.Write(8 - y + " ");

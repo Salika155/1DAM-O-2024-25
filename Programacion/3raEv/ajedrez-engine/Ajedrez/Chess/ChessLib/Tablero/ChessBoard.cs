@@ -49,11 +49,28 @@ namespace ChessLib.Tablero
         }
 
         //crear un metodo que le paso el color de la figura y la i, asi no tengo que hacer duplicacion de codigo.
-        public void CreateFigures()
+
+        public void CreateFiguresWithColor(FigureColor color)
         {
-            //for (int x = 0; x < 8; x++)
-            //{
-                // Colocar las piezas blancas
+            if (color == FigureColor.BLACK)
+            {
+                // Colocar las piezas negras
+                CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(0, 7));
+                CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(1, 7));
+                CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(2, 7));
+                CreateFigure(FigureType.QUEEN, FigureColor.BLACK, new Coord(3, 7));
+                CreateFigure(FigureType.KING, FigureColor.BLACK, new Coord(4, 7));
+                CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(5, 7));
+                CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(6, 7));
+                CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(7, 7));
+
+                for (int x = 0; x < 8; x++)
+                {
+                    CreateFigure(FigureType.PAWN, FigureColor.BLACK, new Coord(x, 6));
+                }
+            }
+            else if (color == FigureColor.WHITE)
+            {
                 CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(0, 0));
                 CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(1, 0));
                 CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(2, 0));
@@ -62,27 +79,53 @@ namespace ChessLib.Tablero
                 CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 0));
                 CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
                 CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
+                //}
+
+                for (int x = 0; x < 8; x++)
+                {
+                    CreateFigure(FigureType.PAWN, FigureColor.WHITE, new Coord(x, 1));
+                }
+            }
+        }
+        public void CreateFigures()
+        {
+            CreateFiguresWithColor(FigureColor.WHITE);
+            CreateFiguresWithColor(FigureColor.BLACK);
+            #region comentado
+            //for (int x = 0; x < 8; x++)
+            //{
+            // Colocar las piezas blancas
+
+            //    CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(0, 0));
+            //    CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(1, 0));
+            //    CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(2, 0));
+            //    CreateFigure(FigureType.QUEEN, FigureColor.WHITE, new Coord(3, 0));
+            //    CreateFigure(FigureType.KING, FigureColor.WHITE, new Coord(4, 0));
+            //    CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 0));
+            //    CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
+            //    CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
+            ////}
+
+            //for (int x = 0; x < 8; x++)
+            //{
+            //    CreateFigure(FigureType.PAWN, FigureColor.WHITE, new Coord(x, 1));
             //}
 
-            for (int x = 0; x < 8; x++)
-            {
-                CreateFigure(FigureType.PAWN, FigureColor.WHITE, new Coord(x, 1));
-            }
+            //// Colocar las piezas negras
+            //CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(0, 7));
+            //CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(1, 7));
+            //CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(2, 7));
+            //CreateFigure(FigureType.QUEEN, FigureColor.BLACK, new Coord(3, 7));
+            //CreateFigure(FigureType.KING, FigureColor.BLACK, new Coord(4, 7));
+            //CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(5, 7));
+            //CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(6, 7));
+            //CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(7, 7));
 
-            // Colocar las piezas negras
-            CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(0, 7));
-            CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(1, 7));
-            CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(2, 7));
-            CreateFigure(FigureType.QUEEN, FigureColor.BLACK, new Coord(3, 7));
-            CreateFigure(FigureType.KING, FigureColor.BLACK, new Coord(4, 7));
-            CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(5, 7));
-            CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(6, 7));
-            CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(7, 7));
-
-            for (int x = 0; x < 8; x++)
-            {
-                CreateFigure(FigureType.PAWN, FigureColor.BLACK, new Coord(x, 6));
-            }
+            //for (int x = 0; x < 8; x++)
+            //{
+            //    CreateFigure(FigureType.PAWN, FigureColor.BLACK, new Coord(x, 6));
+            //}
+            #endregion
         }
 
         public void CreateFigure(FigureType type, FigureColor color, Coord coord)

@@ -27,20 +27,21 @@ namespace ChessLib.Figuras
                     if (x - i >= 0 && y + i < 8) moves.Add(new Coord(x - i, y + i));
                 }
             }
+            #region comentado
             // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
-            List<Coord> validMoves = new List<Coord>();
-            foreach (var move in moves)
-            {
-                if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
-                {
-                    validMoves.Add(move);
-                }
-            }
+            //List<Coord> validMoves = new List<Coord>();
+            //foreach (var move in moves)
+            //{
+            //    if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
+            //    {
+            //        validMoves.Add(move);
+            //    }
+            //}
 
             //// Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
             //moves = moves.Where(m => board.IsPositionEmpty(m) || board.HasEnemyPiece(m, Color)).ToList();
-
-            return validMoves.ToArray();
+            #endregion
+            return ValidMovesLIst(moves, board);
         }
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
@@ -51,6 +52,21 @@ namespace ChessLib.Figuras
         public override FigureType? GetFigureType()
         {
             return FigureType.QUEEN;
+        }
+
+        public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
+        {
+            // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
+            List<Coord> validMoves = new List<Coord>();
+            foreach (var move in listMoves)
+            {
+                if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
+                {
+                    validMoves.Add(move);
+                }
+            }
+
+            return validMoves.ToArray();
         }
 
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)

@@ -32,7 +32,24 @@ namespace ChessLib.Figuras
                 }
             }
 
-            return moves.ToArray();
+            //tiene que checkear si hay enroque y hacerlo en el caso que si
+
+            return ValidMovesLIst(moves, board);
+        }
+
+        public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
+        {
+            // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
+            List<Coord> validMoves = new List<Coord>();
+            foreach (var move in listMoves)
+            {
+                if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
+                {
+                    validMoves.Add(move);
+                }
+            }
+
+            return validMoves.ToArray();
         }
 
         public override FigureType? GetFigureType()

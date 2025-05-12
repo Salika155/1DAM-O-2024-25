@@ -14,6 +14,7 @@ namespace ChessLib.Figuras
             return GetAvailablePosition(board).ToList();
         }
 
+        #region comentado
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{
         //    var position = new List<Coord>();
@@ -135,6 +136,7 @@ namespace ChessLib.Figuras
         //        y++;
         //    }
         //    return availablePositions.ToArray();
+        #endregion
 
         public override Coord[] GetAvailablePosition(IChessBoard board)
         {
@@ -150,13 +152,16 @@ namespace ChessLib.Figuras
                 if (x + i < 8 && y - i >= 0) moves.Add(new Coord(x + i, y - i));
                 if (x - i >= 0 && y + i < 8) moves.Add(new Coord(x - i, y + i));
             }
-
-            //// Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
+            // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
             //moves = moves.Where(m => board.IsPositionEmpty(m) || board.HasEnemyPiece(m, Color)).ToList();
+            return ValidMovesLIst(moves, board);
+        }
 
+        public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
+        {
             // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
             List<Coord> validMoves = new List<Coord>();
-            foreach (var move in moves)
+            foreach (var move in listMoves)
             {
                 if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
                 {

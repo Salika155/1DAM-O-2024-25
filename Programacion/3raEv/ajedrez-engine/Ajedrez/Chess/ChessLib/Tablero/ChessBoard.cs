@@ -254,7 +254,7 @@ namespace ChessLib.Tablero
         //NO ME FIO
         public bool IsPositionEmpty(Coord coord)
         {
-            if (coord.X < 0 || coord.X >= _width || coord.Y < 0 || coord.Y >= _height)
+            if (!Utils.IsValidCoordinates(coord.X, coord.Y, _width, _height))
                 return false; // Fuera del tablero.
 
             return _casillas[coord.X, coord.Y].Figure == null;
@@ -263,7 +263,7 @@ namespace ChessLib.Tablero
         //NO ME FIO
         public bool HasEnemyPiece(Coord coord, FigureColor color)
         {
-            if (coord.X < 0 || coord.X >= _width || coord.Y < 0 || coord.Y >= _height)
+            if (!Utils.IsValidCoordinates(coord.X, coord.Y, _width, _height))
                 return false; // Fuera del tablero.
 
             IFigure? figura = _casillas[coord.X, coord.Y].Figure;

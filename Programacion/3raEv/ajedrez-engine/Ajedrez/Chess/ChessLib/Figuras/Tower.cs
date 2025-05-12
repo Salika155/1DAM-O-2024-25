@@ -40,6 +40,10 @@ namespace ChessLib.Figuras
             return validMoves.ToArray();
         }
 
+        public override FigureType? GetFigureType()
+        {
+            return FigureType.TOWER;
+        }
     }
 
     //public override List<Coord> GetAllAvailablePosition(IChessBoard board)

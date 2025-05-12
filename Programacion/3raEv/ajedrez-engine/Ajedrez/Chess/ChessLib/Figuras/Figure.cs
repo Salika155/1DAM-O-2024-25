@@ -40,7 +40,7 @@ namespace ChessLib.Figuras
 
 
         public FigureColor? GetColor() => _colorFigure;
-        public FigureType? GetFigureType() => _typeFigure;
+        public abstract FigureType? GetFigureType();
         public Coord GetCoord() => _coords;
         public int GetFigureMovements() => _movementCount;
 

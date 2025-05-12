@@ -166,6 +166,11 @@ namespace ChessLib.Figuras
 
             return validMoves.ToArray();
         }
+
+        public override FigureType? GetFigureType()
+        {
+            return FigureType.BISHOP;
+        }
     }
 }
 

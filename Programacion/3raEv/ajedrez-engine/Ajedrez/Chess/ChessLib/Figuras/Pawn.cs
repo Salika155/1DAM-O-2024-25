@@ -35,9 +35,9 @@ namespace ChessLib.Figuras
             return true;
         }
 
-        public FigureType? GetFigureType()
+        public override FigureType? GetFigureType()
         {
-            return Type;
+            return FigureType.PAWN;
         }
 
         //public override bool ValidateMove(Coord newCoords)

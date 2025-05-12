@@ -33,6 +33,11 @@ namespace ChessLib.Figuras
             return moves.ToArray();
         }
 
+        public override FigureType? GetFigureType()
+        {
+            return FigureType.KNIGHT;
+        }
+
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{
         //    throw new NotImplementedException();

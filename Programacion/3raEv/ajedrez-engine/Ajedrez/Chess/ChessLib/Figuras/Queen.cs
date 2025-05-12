@@ -48,6 +48,11 @@ namespace ChessLib.Figuras
             return GetAvailablePosition(board).ToList();
         }
 
+        public override FigureType? GetFigureType()
+        {
+            return FigureType.QUEEN;
+        }
+
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{
         //    throw new NotImplementedException();

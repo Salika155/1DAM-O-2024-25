@@ -15,7 +15,7 @@ namespace ChessApp
             ////board.InitializeBoard();
             //ChessBoard.DrawBoard(board);
             var game = new ChessBoard(8, 8);
-            ChessBoard.DrawBoard(game);
+            Utils.DrawBoard(game);
 
             // Crear figuras (ejemplo)
             //Bishop bishop = new Bishop(FigureColor.WHITE, new Coord(0, 0), FigureType.BISHOP);

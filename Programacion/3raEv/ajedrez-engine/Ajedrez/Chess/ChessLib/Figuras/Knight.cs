@@ -35,9 +35,14 @@ namespace ChessLib.Figuras
                         validMoves.Add(destino);
                 }
             }
-
             return validMoves.ToArray();
         }
+
+        public override FigureType? GetFigureType()
+        {
+            return FigureType.KNIGHT;
+        }
+
 
         //public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
         //{
@@ -54,10 +59,6 @@ namespace ChessLib.Figuras
         //    return validMoves.ToArray();
         //}
 
-        public override FigureType? GetFigureType()
-        {
-            return FigureType.KNIGHT;
-        }
 
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{

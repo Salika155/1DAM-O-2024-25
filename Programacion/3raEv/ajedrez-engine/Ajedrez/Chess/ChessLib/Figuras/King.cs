@@ -13,28 +13,57 @@ namespace ChessLib.Figuras
             return GetAvailablePosition(board).ToList();
         }
 
+        //public override Coord[] GetAvailablePosition(IChessBoard board)
+        //{
+        //    List<Coord> moves = new List<Coord>();
+        //    int x = Coords.X;
+        //    int y = Coords.Y;
+
+        //    // Movimiento en todas las direcciones (1 casilla)
+        //    for (int i = -1; i <= 1; i++)
+        //    {
+        //        for (int j = -1; j <= 1; j++)
+        //        {
+        //            if (i == 0 && j == 0) 
+        //                continue;
+        //            Coord newPos = new Coord(x + i, y + j);
+        //            if (board.IsPositionEmpty(newPos) || board.HasEnemyPiece(newPos, Color))
+        //                moves.Add(newPos);
+        //        }
+        //    }
+
+        //    //tiene que checkear si hay enroque y hacerlo en el caso que si
+
+        //    return ValidMovesLIst(moves, board);
+        //}
+
         public override Coord[] GetAvailablePosition(IChessBoard board)
         {
             List<Coord> moves = new List<Coord>();
             int x = Coords.X;
             int y = Coords.Y;
 
-            // Movimiento en todas las direcciones (1 casilla)
-            for (int i = -1; i <= 1; i++)
+            while (Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
             {
-                for (int j = -1; j <= 1; j++)
+                Coord destino = new(x, y);
+                var figura = board.GetFigureAt(x, y);
+
+                if (figura == null)
                 {
-                    if (i == 0 && j == 0) 
-                        continue;
-                    Coord newPos = new Coord(x + i, y + j);
-                    if (board.IsPositionEmpty(newPos) || board.HasEnemyPiece(newPos, Color))
-                        moves.Add(newPos);
+                    moves.Add(destino);
                 }
+                else
+                {
+                    if (figura.GetColor() != Color)
+                        moves.Add(destino);
+                    break;
+                }
+
+                x += destino.X;
+                y += destino.Y;
             }
 
-            //tiene que checkear si hay enroque y hacerlo en el caso que si
-
-            return ValidMovesLIst(moves, board);
+            return moves.ToArray();
         }
 
         public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
@@ -71,5 +100,11 @@ namespace ChessLib.Figuras
         //{
         //    throw new NotImplementedException();
         //}
+
+        //para eliminar figuras cuando atacan otras.
+        //list = list.Where(figure => figure.Coords != coords);
+
+        //funcion en utils para sumar movimientos, pasandole figura, y x e y, le sumo o resto en funcion del movimiento
+        //asi tengo todos los movimientos juntos en una misma (para la torre, reina y alfil
     }
 }

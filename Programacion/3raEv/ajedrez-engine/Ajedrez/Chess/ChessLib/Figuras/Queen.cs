@@ -11,6 +11,7 @@ namespace ChessLib.Figuras
         public override Coord[] GetAvailablePosition(IChessBoard board)
         {
             List<Coord> moves = new();
+
             // Movimiento como torre
             AgregarMovimientosLineales(board, moves, 1, 0);   // Derecha
             AgregarMovimientosLineales(board, moves, -1, 0);  // Izquierda
@@ -31,7 +32,7 @@ namespace ChessLib.Figuras
             int x = Coords.X + dx;
             int y = Coords.Y + dy;
 
-            while (x >= 0 && x < board.GetWidth() && y >= 0 && y < board.GetHeight())
+            while (Utils.IsValidCoordinates(dx, dy, board.GetWidth(), board.GetHeight()))
             {
                 Coord destino = new(x, y);
                 var figura = board.GetFigureAt(x, y);

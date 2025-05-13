@@ -36,6 +36,19 @@ namespace ChessLib.Tablero
             CreateFigures();
         }
 
+        public void ExecuteTurns()
+        {
+            while(true)
+            {
+                //que compruebe que se puede seguir jugando
+                //que compruebe que no hay ningun jugador con 0 fichas
+                //que compruebe el turno del jugador que le toca
+                //que compruebe si puede mover la ficha
+                //si puede, que la mueva.
+                
+            }
+        }
+
         public void CrearCasillas()
         {
             for (int y = 0; y < _height; y++)
@@ -49,7 +62,6 @@ namespace ChessLib.Tablero
         }
 
         //crear un metodo que le paso el color de la figura y la i, asi no tengo que hacer duplicacion de codigo.
-
         public void CreateFiguresWithColor(FigureColor color)
         {
             if (color == FigureColor.BLACK)
@@ -79,8 +91,7 @@ namespace ChessLib.Tablero
                 CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 0));
                 CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
                 CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
-                //}
-
+                
                 for (int x = 0; x < 8; x++)
                 {
                     CreateFigure(FigureType.PAWN, FigureColor.WHITE, new Coord(x, 1));
@@ -166,7 +177,7 @@ namespace ChessLib.Tablero
         }
 
         //NO ME FIO
-        public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
+        public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY, int figureCount)
         {
             // Verificar si las coordenadas están dentro del tablero
             if (!Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
@@ -189,6 +200,7 @@ namespace ChessLib.Tablero
                 {
                     // Mover la figura a la nueva posición
                     _casillas[origenX, origenY].Figure = figure;
+                    _figureCount++;
                     return true;
                 }
             }
@@ -216,7 +228,7 @@ namespace ChessLib.Tablero
             }
             return _figures[index];
         }
-        private Casilla? GetCasillaAt(int x, int y)
+        public Casilla? GetCasillaAt(int x, int y)
         {
             if (!Utils.IsValidCoordinates(x, y, _width, _height))
                 return null;
@@ -301,6 +313,7 @@ namespace ChessLib.Tablero
         }
 
         //NO ME FIO
+        //esto puede ir en utils
         public bool IsCheckmate(FigureColor color)
         {
             if (!IsKingInCheck(color)) return false;
@@ -320,68 +333,67 @@ namespace ChessLib.Tablero
 
         //posible inciso
 
-
+        //esto deberia ir en utils
         //comprobar el width y height, porque no puedo pasarle un chessboard en la clase chessboard
-        public static void DrawBoard(ChessBoard board)
-        {
-            Console.WriteLine("  a b c d e f g h");
-            Console.WriteLine(" ");
-            for (int y = 0; y < board.GetHeight(); y++)
-            {
-                Console.Write(8 - y + " ");
-                for (int x = 0; x < board.GetWidth(); x++)
-                {
-                    IFigure? figura = board.GetFigureAt(x, y);
-                    Casilla? casilla = board.GetCasillaAt(x, y);
-                    if (figura != null)
-                    {
-                        DrawFigure(figura);
-                    }
-                    else if (casilla != null)
-                    {
-                        DrawCasilla(casilla);
-                    }
-                    //Console.Write(figura != null ? GetSymbol(figura) : "· ");
+        //public static void DrawBoard(ChessBoard board)
+        //{
+        //    Console.WriteLine("  a b c d e f g h");
+        //    Console.WriteLine(" ");
+        //    for (int y = 0; y < board.GetHeight(); y++)
+        //    {
+        //        Console.Write(8 - y + " ");
+        //        for (int x = 0; x < board.GetWidth(); x++)
+        //        {
+        //            IFigure? figura = board.GetFigureAt(x, y);
+        //            Casilla? casilla = board.GetCasillaAt(x, y);
+        //            if (figura != null)
+        //            {
+        //                DrawFigure(figura);
+        //            }
+        //            else if (casilla != null)
+        //            {
+        //                DrawCasilla(casilla);
+        //            }
+        //            //Console.Write(figura != null ? GetSymbol(figura) : "· ");
+        //        }
+        //        Console.ResetColor();
+        //        Console.WriteLine();
+        //    }
+        //    Console.WriteLine(" ");
+        //    Console.WriteLine("  a b c d e f g h");
+        //}
 
-                }
-                Console.ResetColor();
-                Console.WriteLine();
-            }
-            Console.WriteLine(" ");
-            Console.WriteLine("  a b c d e f g h");
-        }
+        //private static void DrawCasilla(Casilla? casilla)
+        //{
+        //    var fondo = casilla?.Color == CasillaColor.WHITE ? ConsoleColor.White : ConsoleColor.Red;
+        //    var texto = casilla?.Color == CasillaColor.WHITE ? ConsoleColor.Black : ConsoleColor.White;
 
-        private static void DrawCasilla(Casilla? casilla)
-        {
-            var fondo = casilla?.Color == CasillaColor.WHITE ? ConsoleColor.White : ConsoleColor.Red;
-            var texto = casilla?.Color == CasillaColor.WHITE ? ConsoleColor.Black : ConsoleColor.White;
+        //    Console.BackgroundColor = fondo;
+        //    Console.ForegroundColor = texto;
+        //    Console.Write("   "); // <-- 3 espacios en blanco
+        //    Console.ResetColor();
+        //}
 
-            Console.BackgroundColor = fondo;
-            Console.ForegroundColor = texto;
-            Console.Write("   "); // <-- 3 espacios en blanco
-            Console.ResetColor();
-        }
+        //private static void DrawFigure(IFigure figure)
+        //{
+        //    var background = ((figure.GetCoord().X + figure.GetCoord().Y) % 2 == 0) ? ConsoleColor.White : ConsoleColor.Red;
+        //    Console.BackgroundColor = background;
+        //    Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE ? ConsoleColor.Black : ConsoleColor.DarkYellow;
+        //    Console.Write(Utils.GetSymbol(figure));
+        //    Console.ResetColor();
+        //}
 
-        private static void DrawFigure(IFigure figure)
-        {
-            var background = ((figure.GetCoord().X + figure.GetCoord().Y) % 2 == 0) ? ConsoleColor.White : ConsoleColor.Red;
-            Console.BackgroundColor = background;
-            Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE ? ConsoleColor.Black : ConsoleColor.DarkYellow;
-            Console.Write(GetSymbol(figure));
-            Console.ResetColor();
-        }
-
-        static string GetSymbol(IFigure figura)
-        {
-            if (figura is Pawn) return " P ";
-            if (figura is Tower) return " T ";
-            if (figura is Knight) return " N ";
-            if (figura is Bishop) return " B ";
-            if (figura is Queen) return " Q ";
-            if (figura is King) return " K ";
-            else 
-                return "  ";
-        }
+        //static string GetSymbol(IFigure figura)
+        //{
+        //    if (figura is Pawn) return " P ";
+        //    if (figura is Tower) return " T ";
+        //    if (figura is Knight) return " N ";
+        //    if (figura is Bishop) return " B ";
+        //    if (figura is Queen) return " Q ";
+        //    if (figura is King) return " K ";
+        //    else 
+        //        return "  ";
+        //}
 
         public List<IFigure> GetAllFigures()
         {
@@ -395,6 +407,12 @@ namespace ChessLib.Tablero
                 }
             }
             return figures;
+        }
+
+        //HA TERMINADO LA PARTIDA??
+        public bool IsEndedTheMatch()
+        {
+            return true;
         }
     }
 }

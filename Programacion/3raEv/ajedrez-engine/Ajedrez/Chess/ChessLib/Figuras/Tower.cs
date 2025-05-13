@@ -7,7 +7,6 @@ namespace ChessLib.Figuras
     {
         public Tower(FigureColor color, FigureType type, Coord coords) : base(color, FigureType.TOWER, coords)
         {
-            
         }
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
@@ -18,7 +17,7 @@ namespace ChessLib.Figuras
         public override Coord[] GetAvailablePosition(IChessBoard board)
         {
             List<Coord> moves = new();
-
+            
             AgregarMovimientosLineales(board, moves, 1, 0);   // Derecha
             AgregarMovimientosLineales(board, moves, -1, 0);  // Izquierda
             AgregarMovimientosLineales(board, moves, 0, 1);   // Abajo
@@ -32,7 +31,7 @@ namespace ChessLib.Figuras
             int x = Coords.X + dx;
             int y = Coords.Y + dy;
 
-            while (x >= 0 && x < board.GetWidth() && y >= 0 && y < board.GetHeight())
+            while (Utils.IsValidCoordinates(dx, dy, board.GetWidth(), board.GetHeight()))
             {
                 var destino = new Coord(x, y);
                 var figura = board.GetFigureAt(x, y);
@@ -47,7 +46,6 @@ namespace ChessLib.Figuras
                         moves.Add(destino); // puede capturar
                     break; // no puede seguir más allá
                 }
-
                 x += dx;
                 y += dy;
             }

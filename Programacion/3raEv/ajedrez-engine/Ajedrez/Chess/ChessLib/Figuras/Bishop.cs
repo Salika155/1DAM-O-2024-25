@@ -6,7 +6,6 @@ namespace ChessLib.Figuras
     {
         public Bishop(FigureColor color, FigureType type, Coord coords) : base(color, FigureType.BISHOP, coords)
         {
-
         }
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
@@ -155,12 +154,12 @@ namespace ChessLib.Figuras
             MoveInDiagonal(board, moves, dx, dy);
         }
 
-        public void MoveInDiagonal(IChessBoard board, List<Coord> lista, int dx, int dy)
+        public void MoveInDiagonal(IChessBoard board, List<Coord> lista, int dx, int dy)//es posible que necesite meterle un ifigure
         {
             int x = Coords.X + dx;
             int y = Coords.Y + dy;
 
-            while (x >= 0 && x < board.GetWidth() && y >= 0 && y < board.GetHeight())
+            while (Utils.IsValidCoordinates(dx, dy, board.GetWidth(), board.GetHeight()))
             {
                 Coord destino = new(x, y);
                 IFigure? figura = board.GetFigureAt(x, y);
@@ -180,6 +179,12 @@ namespace ChessLib.Figuras
                 y += dy;
             }
         }
+
+        public override FigureType? GetFigureType()
+        {
+            return FigureType.BISHOP;
+        }
+
         //public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
         //{
         //    // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
@@ -194,10 +199,7 @@ namespace ChessLib.Figuras
         //    return validMoves.ToArray();
         //}
 
-        public override FigureType? GetFigureType()
-        {
-            return FigureType.BISHOP;
-        }
+
     }
 }
 

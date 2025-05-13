@@ -131,7 +131,7 @@ namespace ChessLib.Tablero
                     continue;
                 }
 
-                MoveFigure(origen.X, origen.Y, destino.X, destino.Y, _figureCount);
+                MoveFigure(origen.X, origen.Y, destino.X, destino.Y, _figureCount++);
 
                 turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
             }

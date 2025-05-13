@@ -132,5 +132,22 @@ namespace ChessLib.Tablero
                 y += dy;
             }
         }
+
+        public static Coord ParsearCoordenada(string texto)
+        {
+            if (texto.Length != 2)
+                throw new ArgumentException("Coordenada inválida");
+
+            char col = char.ToLower(texto[0]);
+            char fila = texto[1];
+
+            int x = col - 'a';
+            int y = 8 - (fila - '0'); // Porque la fila 8 es Y=0
+
+            if (x < 0 || x >= 8 || y < 0 || y >= 8)
+                throw new ArgumentException("Coordenada fuera de rango");
+
+            return new Coord(x, y);
+        }
     }
 }

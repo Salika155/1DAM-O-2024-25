@@ -45,8 +45,9 @@ namespace ChessLib.Tablero
                 //que compruebe el turno del jugador que le toca
                 //que compruebe si puede mover la ficha
                 //si puede, que la mueva.
-                
             }
+
+
         }
 
         public void CrearCasillas()
@@ -58,6 +59,81 @@ namespace ChessLib.Tablero
                     var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.RED;
                     _casillas[x, y] = new Casilla(new Coord(x, y), color);
                 }
+            }
+        }
+
+        public void Execute()
+        {
+            bool juegoEnCurso = true;
+            FigureColor turnoActual = FigureColor.WHITE;
+
+            while (juegoEnCurso)
+            {
+                Console.Clear();
+                Utils.DrawBoard(this);
+
+                Console.WriteLine($"Turno de las {turnoActual}");
+                Console.Write("Introduce el movimiento (ej: e2 e4): ");
+                string? input = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(input) || input.ToLower() == "salir")
+                    break;
+
+                if (input.Length != 5 || input[2] != ' ')
+                {
+                    Console.WriteLine("Formato inválido. Usa el formato 'e2 e4'.");
+                    continue;
+                }
+
+                string origenTexto = input.Substring(0, 2);
+                string destinoTexto = input.Substring(3, 2);
+
+                Coord origen, destino;
+                try
+                {
+                    origen = Utils.ParsearCoordenada(origenTexto);
+                    destino = Utils.ParsearCoordenada(destinoTexto);
+                }
+                catch
+                {
+                    Console.WriteLine("Coordenadas inválidas.");
+                    continue;
+                }
+
+                IFigure? figura = GetFigureAt(origen.X, origen.Y);
+                if (figura == null)
+                {
+                    Console.WriteLine("No hay ninguna figura en esa posición.");
+                    continue;
+                }
+
+                if (figura.GetColor() != turnoActual)
+                {
+                    Console.WriteLine("No puedes mover las piezas del oponente.");
+                    continue;
+                }
+
+                var movimientosValidos = figura.GetAvailablePosition(this);
+
+                bool esMovimientoValido = false;
+                foreach (var mv in movimientosValidos)
+                {
+                    if (mv.X == destino.X && mv.Y == destino.Y)
+                    {
+                        esMovimientoValido = true;
+                        break;
+                    }
+                }
+
+                if (!esMovimientoValido)
+                {
+                    Console.WriteLine("Movimiento inválido.");
+                    continue;
+                }
+
+                MoveFigure(origen.X, origen.Y, destino.X, destino.Y, _figureCount);
+
+                turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
             }
         }
 
@@ -408,6 +484,8 @@ namespace ChessLib.Tablero
             }
             return figures;
         }
+
+       
 
         //HA TERMINADO LA PARTIDA??
         public bool IsEndedTheMatch()

@@ -15,37 +15,44 @@ namespace ChessLib.Figuras
 
         public override Coord[] GetAvailablePosition(IChessBoard board)
         {
-            List<Coord> moves = new List<Coord>();
-            int x = Coords.X;
-            int y = Coords.Y;
-
-            // Movimientos en L
-            int[] dx = { 2, 1, -1, -2, -2, -1, 1, 2 };
-            int[] dy = { 1, 2, 2, 1, -1, -2, -2, -1 };
-
-            for (int i = 0; i < 8; i++)
+            List<Coord> validMoves = new();
+            int[,] movimientos = new int[,]
             {
-                Coord newPos = new Coord(x + dx[i], y + dy[i]);
-                if (board.IsPositionEmpty(newPos) || board.HasEnemyPiece(newPos, Color))
-                    moves.Add(newPos);
-            }
+            { 2, 1 }, { 1, 2 }, { -1, 2 }, { -2, 1 },
+            { -2, -1 }, { -1, -2 }, { 1, -2 }, { 2, -1 }
+            };
 
-            return ValidMovesLIst(moves, board);
-        }
-        public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
-        {
-            // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
-            List<Coord> validMoves = new List<Coord>();
-            foreach (var move in listMoves)
+            for (int i = 0; i < movimientos.GetLength(0); i++)
             {
-                if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
+                int newX = Coords.X + movimientos[i, 0];
+                int newY = Coords.Y + movimientos[i, 1];
+                Coord destino = new(newX, newY);
+
+                if (Utils.IsValidCoordinates(destino.X, destino.Y, board.GetWidth(), board.GetHeight()))
                 {
-                    validMoves.Add(move);
+                    var figura = board.GetFigureAt(newX, newY);
+                    if (figura == null || figura.GetColor() != Color)
+                        validMoves.Add(destino);
                 }
             }
 
             return validMoves.ToArray();
         }
+
+        //public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
+        //{
+        //    // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
+        //    List<Coord> validMoves = new List<Coord>();
+        //    foreach (var move in listMoves)
+        //    {
+        //        if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
+        //        {
+        //            validMoves.Add(move);
+        //        }
+        //    }
+
+        //    return validMoves.ToArray();
+        //}
 
         public override FigureType? GetFigureType()
         {

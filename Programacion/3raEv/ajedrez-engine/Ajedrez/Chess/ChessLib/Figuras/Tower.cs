@@ -17,30 +17,40 @@ namespace ChessLib.Figuras
 
         public override Coord[] GetAvailablePosition(IChessBoard board)
         {
-            List<Coord> moves = new List<Coord>();
-            int x = Coords.X;
-            int y = Coords.Y;
+            List<Coord> moves = new();
 
-            // Movimiento horizontal y vertical
-            for (int i = 0; i < 8; i++)
+            AgregarMovimientosLineales(board, moves, 1, 0);   // Derecha
+            AgregarMovimientosLineales(board, moves, -1, 0);  // Izquierda
+            AgregarMovimientosLineales(board, moves, 0, 1);   // Abajo
+            AgregarMovimientosLineales(board, moves, 0, -1);  // Arriba
+
+            return moves.ToArray();
+        }
+
+        private void AgregarMovimientosLineales(IChessBoard board, List<Coord> moves, int dx, int dy)
+        {
+            int x = Coords.X + dx;
+            int y = Coords.Y + dy;
+
+            while (x >= 0 && x < board.GetWidth() && y >= 0 && y < board.GetHeight())
             {
-                if (i != x) moves.Add(new Coord(i, y));
-                if (i != y) moves.Add(new Coord(x, i));
+                var destino = new Coord(x, y);
+                var figura = board.GetFigureAt(x, y);
+
+                if (figura == null)
+                {
+                    moves.Add(destino);
+                }
+                else
+                {
+                    if (figura.GetColor() != Color)
+                        moves.Add(destino); // puede capturar
+                    break; // no puede seguir más allá
+                }
+
+                x += dx;
+                y += dy;
             }
-            #region comentado
-            //// Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
-            //moves = moves.Where(m => board.IsPositionEmpty(m) || board.HasEnemyPiece(m, Color)).ToList();
-            //List<Coord> validMoves = new List<Coord>();
-            //foreach (var move in moves)
-            //{
-            //    if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
-            //    {
-            //        validMoves.Add(move);
-            //    }
-            //}
-            //return validMoves.ToArray();
-            #endregion
-            return ValidMovesLIst(moves, board);
         }
 
         public override FigureType? GetFigureType()
@@ -48,20 +58,20 @@ namespace ChessLib.Figuras
             return FigureType.TOWER;
         }
 
-        public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
-        {
-            // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
-            List<Coord> validMoves = new List<Coord>();
-            foreach (var move in listMoves)
-            {
-                if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
-                {
-                    validMoves.Add(move);
-                }
-            }
+        //public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
+        //{
+        //    // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
+        //    List<Coord> validMoves = new List<Coord>();
+        //    foreach (var move in listMoves)
+        //    {
+        //        if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
+        //        {
+        //            validMoves.Add(move);
+        //        }
+        //    }
 
-            return validMoves.ToArray();
-        }
+        //    return validMoves.ToArray();
+        //}
     }
 
     //public override List<Coord> GetAllAvailablePosition(IChessBoard board)

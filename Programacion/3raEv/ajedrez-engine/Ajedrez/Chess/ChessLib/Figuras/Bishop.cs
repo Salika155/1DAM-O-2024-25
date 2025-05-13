@@ -140,37 +140,59 @@ namespace ChessLib.Figuras
 
         public override Coord[] GetAvailablePosition(IChessBoard board)
         {
-            List<Coord> moves = new List<Coord>();
-            int x = Coords.X;
-            int y = Coords.Y;
+            List<Coord> moves = new();
 
-            // Movimiento diagonal
-            for (int i = 1; i < 8; i++)
-            {
-                if (x + i < 8 && y + i < 8) moves.Add(new Coord(x + i, y + i));
-                if (x - i >= 0 && y - i >= 0) moves.Add(new Coord(x - i, y - i));
-                if (x + i < 8 && y - i >= 0) moves.Add(new Coord(x + i, y - i));
-                if (x - i >= 0 && y + i < 8) moves.Add(new Coord(x - i, y + i));
-            }
-            // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
-            //moves = moves.Where(m => board.IsPositionEmpty(m) || board.HasEnemyPiece(m, Color)).ToList();
-            return ValidMovesLIst(moves, board);
+            AgregarMovimientosDiagonalValidados(board, moves, 1, 1);
+            AgregarMovimientosDiagonalValidados(board, moves, 1, -1);
+            AgregarMovimientosDiagonalValidados(board, moves, -1, 1);
+            AgregarMovimientosDiagonalValidados(board, moves, -1, -1);
+
+            return moves.ToArray();
         }
 
-        public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
+        private void AgregarMovimientosDiagonalValidados(IChessBoard board, List<Coord> moves, int dx, int dy)
         {
-            // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
-            List<Coord> validMoves = new List<Coord>();
-            foreach (var move in listMoves)
-            {
-                if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
-                {
-                    validMoves.Add(move);
-                }
-            }
-
-            return validMoves.ToArray();
+            MoveInDiagonal(board, moves, dx, dy);
         }
+
+        public void MoveInDiagonal(IChessBoard board, List<Coord> lista, int dx, int dy)
+        {
+            int x = Coords.X + dx;
+            int y = Coords.Y + dy;
+
+            while (x >= 0 && x < board.GetWidth() && y >= 0 && y < board.GetHeight())
+            {
+                Coord destino = new(x, y);
+                IFigure? figura = board.GetFigureAt(x, y);
+
+                if (figura == null)
+                {
+                    lista.Add(destino);
+                }
+                else
+                {
+                    if (figura.GetColor() != Color)
+                        lista.Add(destino);
+                    break;
+                }
+
+                x += dx;
+                y += dy;
+            }
+        }
+        //public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
+        //{
+        //    // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
+        //    List<Coord> validMoves = new List<Coord>();
+        //    foreach (var move in listMoves)
+        //    {
+        //        if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))
+        //        {
+        //            validMoves.Add(move);
+        //        }
+        //    }
+        //    return validMoves.ToArray();
+        //}
 
         public override FigureType? GetFigureType()
         {

@@ -1,5 +1,6 @@
 ﻿
 
+
 namespace ChessLib
 {
     public readonly struct Coord
@@ -25,5 +26,7 @@ namespace ChessLib
         {
             return X.ToString() + " , " + Y.ToString();
         }
+
+        
     }
 }

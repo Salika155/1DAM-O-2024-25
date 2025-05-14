@@ -34,17 +34,71 @@ namespace ChessLib.Tablero
             //DrawBoard();
             CrearCasillas();
             CreateFigures();
+            Execute();
         }
 
         public void ExecuteTurns()
         {
-            while(true)
+            //while (true)
+            //{
+            //    //que compruebe que se puede seguir jugando
+            //    //que compruebe que no hay ningun jugador con 0 fichas
+            //    //que compruebe el turno del jugador que le toca
+            //    //que compruebe si puede mover la ficha
+            //    //si puede, que la mueva.
+            //}
+            FigureColor turnoActual = FigureColor.WHITE;
+
+            while (true)
             {
-                //que compruebe que se puede seguir jugando
-                //que compruebe que no hay ningun jugador con 0 fichas
-                //que compruebe el turno del jugador que le toca
-                //que compruebe si puede mover la ficha
-                //si puede, que la mueva.
+                Console.Clear();
+                Utils.DrawBoard(this);
+                Console.WriteLine($"Turno de las piezas: {turnoActual}");
+
+                // 1. Pedir ORIGEN
+                Console.Write("\nIntroduce coordenadas de la pieza (ej. a2): ");
+                string inputOrigen = Console.ReadLine().ToLower().Trim();
+
+                if (inputOrigen.Length != 2)
+                {
+                    Console.WriteLine("¡Formato incorrecto! Debe ser letra+número (ej. a2)");
+                    Console.ReadKey();
+                    continue;
+                }
+
+                // 2. Pedir DESTINO
+                Console.Write("Introduce coordenadas de destino (ej. a4): ");
+                string inputDestino = Console.ReadLine().ToLower().Trim();
+
+                if (inputDestino.Length != 2)
+                {
+                    Console.WriteLine("¡Formato incorrecto! Debe ser letra+número (ej. a4)");
+                    Console.ReadKey();
+                    continue;
+                }
+
+                try
+                {
+                    // Convertir coordenadas
+                    Coord origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '1');
+                    Coord destino = new Coord(inputDestino[0] - 'a', inputDestino[1] - '1');
+
+                    // Mover pieza
+                    if (MoveFigure(origen.X, origen.Y, destino.X, destino.Y, _figureCount))
+                    {
+                        turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
+                    }
+                    else
+                    {
+                        Console.WriteLine("¡Movimiento no válido! Presiona cualquier tecla...");
+                        Console.ReadKey();
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("¡Coordenadas inválidas! Usa rango a1-h8");
+                    Console.ReadKey();
+                }
             }
 
 
@@ -62,79 +116,141 @@ namespace ChessLib.Tablero
             }
         }
 
+        //public void Execute()
+        //{
+        //    bool juegoEnCurso = true;
+        //    FigureColor turnoActual = FigureColor.WHITE;
+
+        //    while (juegoEnCurso)
+        //    {
+        //        Console.Clear();
+        //        Utils.DrawBoard(this);
+
+        //        Console.WriteLine($"Turno de las {turnoActual}");
+        //        Console.Write("Introduce el movimiento (ej: e2 e4): ");
+        //        string? input = Console.ReadLine();
+
+        //        if (string.IsNullOrWhiteSpace(input) || input.ToLower() == "salir")
+        //            break;
+
+        //        if (input.Length != 5 || input[2] != ' ')
+        //        {
+        //            Console.WriteLine("Formato inválido. Usa el formato 'e2 e4'.");
+        //            continue;
+        //        }
+
+        //        string origenTexto = input.Substring(0, 2);
+        //        string destinoTexto = input.Substring(3, 2);
+
+        //        Coord origen, destino;
+        //        try
+        //        {
+        //            origen = Utils.ParsearCoordenada(origenTexto);
+        //            destino = Utils.ParsearCoordenada(destinoTexto);
+        //        }
+        //        catch
+        //        {
+        //            Console.WriteLine("Coordenadas inválidas.");
+        //            continue;
+        //        }
+
+        //        IFigure? figura = GetFigureAt(origen.X, origen.Y);
+        //        if (figura == null)
+        //        {
+        //            Console.WriteLine("No hay ninguna figura en esa posición.");
+        //            continue;
+        //        }
+
+        //        if (figura.GetColor() != turnoActual)
+        //        {
+        //            Console.WriteLine("No puedes mover las piezas del oponente.");
+        //            continue;
+        //        }
+
+        //        var movimientosValidos = figura.GetAvailablePosition(this);
+
+        //        bool esMovimientoValido = false;
+        //        foreach (var mv in movimientosValidos)
+        //        {
+        //            if (mv.X == destino.X && mv.Y == destino.Y)
+        //            {
+        //                esMovimientoValido = true;
+        //                break;
+        //            }
+        //        }
+
+        //        if (!esMovimientoValido)
+        //        {
+        //            Console.WriteLine("Movimiento inválido.");
+        //            continue;
+        //        }
+
+        //        MoveFigure(origen.X, origen.Y, destino.X, destino.Y, _figureCount);
+
+        //        turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
+        //    }
+        //}
+        // Método Execute simplificado y funcional
         public void Execute()
         {
-            bool juegoEnCurso = true;
-            FigureColor turnoActual = FigureColor.WHITE;
-
-            while (juegoEnCurso)
+            while(true)
             {
-                Console.Clear();
-                Utils.DrawBoard(this);
-
-                Console.WriteLine($"Turno de las {turnoActual}");
-                Console.Write("Introduce el movimiento (ej: e2 e4): ");
-                string? input = Console.ReadLine();
-
-                if (string.IsNullOrWhiteSpace(input) || input.ToLower() == "salir")
-                    break;
-
-                if (input.Length != 5 || input[2] != ' ')
-                {
-                    Console.WriteLine("Formato inválido. Usa el formato 'e2 e4'.");
-                    continue;
-                }
-
-                string origenTexto = input.Substring(0, 2);
-                string destinoTexto = input.Substring(3, 2);
-
-                Coord origen, destino;
-                try
-                {
-                    origen = Utils.ParsearCoordenada(origenTexto);
-                    destino = Utils.ParsearCoordenada(destinoTexto);
-                }
-                catch
-                {
-                    Console.WriteLine("Coordenadas inválidas.");
-                    continue;
-                }
-
-                IFigure? figura = GetFigureAt(origen.X, origen.Y);
-                if (figura == null)
-                {
-                    Console.WriteLine("No hay ninguna figura en esa posición.");
-                    continue;
-                }
-
-                if (figura.GetColor() != turnoActual)
-                {
-                    Console.WriteLine("No puedes mover las piezas del oponente.");
-                    continue;
-                }
-
-                var movimientosValidos = figura.GetAvailablePosition(this);
-
-                bool esMovimientoValido = false;
-                foreach (var mv in movimientosValidos)
-                {
-                    if (mv.X == destino.X && mv.Y == destino.Y)
-                    {
-                        esMovimientoValido = true;
-                        break;
-                    }
-                }
-
-                if (!esMovimientoValido)
-                {
-                    Console.WriteLine("Movimiento inválido.");
-                    continue;
-                }
-
-                MoveFigure(origen.X, origen.Y, destino.X, destino.Y, _figureCount++);
-
-                turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
+                ExecuteTurns();
             }
+            
+            //FigureColor turnoActual = FigureColor.WHITE;
+
+            //while (true)
+            //{
+            //    Console.Clear();
+            //    Utils.DrawBoard(this);
+            //    Console.WriteLine($"Turno de las piezas: {turnoActual}");
+
+            //    // 1. Pedir ORIGEN
+            //    Console.Write("\nIntroduce coordenadas de la pieza (ej. a2): ");
+            //    string inputOrigen = Console.ReadLine().ToLower().Trim();
+
+            //    if (inputOrigen.Length != 2)
+            //    {
+            //        Console.WriteLine("¡Formato incorrecto! Debe ser letra+número (ej. a2)");
+            //        Console.ReadKey();
+            //        continue;
+            //    }
+
+            //    // 2. Pedir DESTINO
+            //    Console.Write("Introduce coordenadas de destino (ej. a4): ");
+            //    string inputDestino = Console.ReadLine().ToLower().Trim();
+
+            //    if (inputDestino.Length != 2)
+            //    {
+            //        Console.WriteLine("¡Formato incorrecto! Debe ser letra+número (ej. a4)");
+            //        Console.ReadKey();
+            //        continue;
+            //    }
+
+            //    try
+            //    {
+            //        // Convertir coordenadas
+            //        Coord origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '1');
+            //        Coord destino = new Coord(inputDestino[0] - 'a', inputDestino[1] - '1');
+
+            //        // Mover pieza
+            //        if (MoveFigure(origen.X, origen.Y, destino.X, destino.Y, _figureCount))
+            //        {
+            //            turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
+            //        }
+            //        else
+            //        {
+            //            Console.WriteLine("¡Movimiento no válido! Presiona cualquier tecla...");
+            //            Console.ReadKey();
+            //        }
+            //    }
+            //    catch
+            //    {
+            //        Console.WriteLine("¡Coordenadas inválidas! Usa rango a1-h8");
+            //        Console.ReadKey();
+            //    }
+            //}
         }
 
         //crear un metodo que le paso el color de la figura y la i, asi no tengo que hacer duplicacion de codigo.
@@ -253,34 +369,63 @@ namespace ChessLib.Tablero
         }
 
         //NO ME FIO
+        //public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY, int figureCount)
+        //{
+        //    // Verificar si las coordenadas están dentro del tablero
+        //    if (!Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
+        //        return false;
+
+        //        // Obtener la figura en la posición actual
+        //        var figure = _casillas[origenX, origenY].Figure;
+
+        //    // Verificar si hay una figura en la posición actual
+        //    if (figure == null)
+        //        return false;
+
+        //    // Obtener las posiciones disponibles para la figura
+        //    var availablePositions = figure.GetAvailablePosition(this);
+
+        //    // Verificar si la nueva posición está en las posiciones disponibles
+        //    foreach (var pos in availablePositions)
+        //    {
+        //        if (pos.X == origenX && pos.Y == origenY)
+        //        {
+        //            // Mover la figura a la nueva posición
+        //            _casillas[origenX, origenY].Figure = figure;
+        //            _figureCount++;
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
+
         public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY, int figureCount)
         {
-            // Verificar si las coordenadas están dentro del tablero
-            if (!Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
+            // 1. Validar coordenadas
+            if (!Utils.IsValidCoordinates(origenX, origenY, Width, Height) ||
+                !Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
                 return false;
 
-                // Obtener la figura en la posición actual
-                var figure = _casillas[origenX, origenY].Figure;
-
-            // Verificar si hay una figura en la posición actual
-            if (figure == null)
+            // 2. Obtener figura en origen
+            IFigure? figura = _casillas[origenX, origenY].Figure;
+            if (figura == null)
                 return false;
 
-            // Obtener las posiciones disponibles para la figura
-            var availablePositions = figure.GetAvailablePosition(this);
+            // 3. Verificar movimientos válidos (según reglas de la pieza)
+            var movimientosValidos = figura.GetAllAvailablePosition(this);
+            bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
 
-            // Verificar si la nueva posición está en las posiciones disponibles
-            foreach (var pos in availablePositions)
-            {
-                if (pos.X == origenX && pos.Y == origenY)
-                {
-                    // Mover la figura a la nueva posición
-                    _casillas[origenX, origenY].Figure = figure;
-                    _figureCount++;
-                    return true;
-                }
-            }
-            return false;
+            if (!esMovimientoValido)
+                return false;
+
+            // 4. Realizar movimiento (solo el tablero maneja las posiciones)
+            _casillas[destinoX, destinoY].Figure = figura;
+            _casillas[origenX, origenY].Figure = null;
+
+            // 5. Actualizar contador de movimientos (si es necesario)
+            _figureCount++;
+
+            return true;
         }
 
         public void RemoveFigureAt(int x, int y)
@@ -485,7 +630,6 @@ namespace ChessLib.Tablero
             return figures;
         }
 
-       
 
         //HA TERMINADO LA PARTIDA??
         public bool IsEndedTheMatch()

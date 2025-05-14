@@ -14,12 +14,27 @@ namespace ChessLib.Figuras
             List<Coord> moves = new List<Coord>();
             int direction = Color == FigureColor.WHITE ? 1 : -1;
 
+            // Movimiento hacia adelante (1 casilla)
             Coord movAdelante = new Coord(Coords.X, Coords.Y + direction);
             if (board.IsPositionEmpty(movAdelante))
+            {
                 moves.Add(movAdelante);
 
+                // Movimiento inicial de 2 casillas (solo si no se ha movido antes)
+                if (MovementCount == 0)
+                {
+                    Coord movDoble = new Coord(Coords.X, Coords.Y + 2 * direction);
+                    if (board.IsPositionEmpty(movDoble))
+                    {
+                        moves.Add(movDoble);
+                    }
+                }
+            }
+
+            // Capturas diagonales
             CheckDiagonalCapture(board, direction, -1, moves); // Izquierda
             CheckDiagonalCapture(board, direction, 1, moves);  // Derecha
+
             return moves.ToArray();
         }
 
@@ -46,13 +61,27 @@ namespace ChessLib.Figuras
                     validMoves.Add(move);
                 }
             }
-
             return validMoves.ToArray();
         }
 
         public override FigureType? GetFigureType()
         {
             return FigureType.PAWN;
+        }
+
+        public void Promote(FigureType newType, FigureType? type)
+        {
+            if (newType == FigureType.PAWN || newType == FigureType.KING)
+            {
+                throw new InvalidOperationException("Un peón no puede promocionar a peón o rey.");
+            }
+
+            type = newType;
+        }
+
+        public override List<Coord> GetAllAvailablePosition(IChessBoard board)
+        {
+            return GetAvailablePosition(board).ToList();
         }
 
         //public override bool ValidateMove(Coord newCoords)
@@ -70,22 +99,21 @@ namespace ChessLib.Figuras
         //    return false;
         //}
 
-        public void Promote(FigureType newType, FigureType? type)
-        {
-            if (newType == FigureType.PAWN || newType == FigureType.KING)
-            {
-                throw new InvalidOperationException("Un peón no puede promocionar a peón o rey.");
-            }
 
-            type = newType;
-        }
 
-        public override List<Coord> GetAllAvailablePosition(IChessBoard board)
-        {
-            throw new NotImplementedException();
-        }
+        //public override Coord[] GetAvailablePosition(IChessBoard board)
+        //{
+        //    List<Coord> moves = new List<Coord>();
+        //    int direction = Color == FigureColor.WHITE ? 1 : -1;
 
-        
+        //    Coord movAdelante = new Coord(Coords.X, Coords.Y + direction);
+        //    if (board.IsPositionEmpty(movAdelante))
+        //        moves.Add(movAdelante);
+
+        //    CheckDiagonalCapture(board, direction, -1, moves); // Izquierda
+        //    CheckDiagonalCapture(board, direction, 1, moves);  // Derecha
+        //    return moves.ToArray();
+        //}
 
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{

@@ -34,6 +34,38 @@
             ExList<int> result3 = lista1.ReverseArray();
             int result2 = lista1[5];
             int count = lista1.Count;
+
+            //prueba nueva
+            ExList1<int> list = new();
+            list.Add(4);
+            list.Add(87);
+            list.Add(48);
+            list.Add(85);
+            list.Add(3);
+            int first1 = list.First;
+            int last1 = list.Last;
+            ExList1<int> reversed = list.Reverse;
+            list.IndexOf((n1) => n1 == 4);
+            list.IndexOf((n2) => n2 == 25);
+            list.Contains((n1) => n1 == 4);
+            list.Visit((n1) => Console.Write(n1));
+            list.Sort((n3, n2) => n3 > n2);
+            ExList1<int> listaFiltrada = list.Filter((n1) => n1 % 2 == 0);
+            list.Insert(2, 7);
+            list.IndexOf(35);
+            list.Contains(34);
+            list.RemoveAt(5);
+            list.Reversed();
+            ExList1<int> resultlist = list.ReversedArray();
+            list.Clear();
+            list.Add(56);
+            int capacity1 = list.Capacity;
+            list.Clone();
+
+
+           
+
+
         }
     }
 }

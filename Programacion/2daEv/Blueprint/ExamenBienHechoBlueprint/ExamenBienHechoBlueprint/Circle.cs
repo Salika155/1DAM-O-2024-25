@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 public class Circle : Shape
 {
-    public Point2D CenterPoint { get; private set; }
+    public Point2D CenterPoint { get; set; }
     public double Radius { get; set; }
     private IBlueprint _owner;
 

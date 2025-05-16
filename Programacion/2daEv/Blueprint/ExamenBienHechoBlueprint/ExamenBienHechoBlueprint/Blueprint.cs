@@ -6,27 +6,83 @@ using System.Threading.Tasks;
 
 namespace Blueprint
 {
-    class Blueprint : IBlueprint
-    {
-        private string? _name;
-        private List<Shape> _shapes;
+    public delegate bool ShapeFilter(IShape shape);
 
-        public string? Name { get => _name; }
-
-        public Blueprint(string? name)
+        public class Blueprint : IBlueprint
         {
-            _name = name;
+            private readonly List<IShape> _shapes = new();
+            private readonly string _name;
 
+            public string Name => _name;
+
+            public Blueprint(string name)
+            {
+                _name = name;
+            }
+
+            public int GetShapeCount() => _shapes.Count;
+
+            public IShape GetShapeAt(int index)
+            {
+                if (index < 0 || index >= _shapes.Count)
+                    throw new IndexOutOfRangeException();
+
+                return _shapes[index];
+            }
+
+            public void AddShape(IShape shape)
+            {
+                if (shape == null)
+                    throw new ArgumentNullException();
+
+                _shapes.Add(shape);
+            }
+
+            public void RemoveShape(ShapeFilter filter)
+            {
+                if (filter == null)
+                    throw new ArgumentNullException();
+
+                _shapes.RemoveAll(shape => filter(shape));
+            }
+
+        //public IShape GetShape(ShapeFilter filter)
+        //{
+        //    if (filter == null)
+        //        throw new ArgumentNullException(nameof(filter));
+
+        //    return _shapes.FirstOrDefault(shape => filter(shape));
+        //}
+
+        public IShape GetShape(ShapeFilter filter)
+        {
+            if (filter == null)
+                throw new ArgumentNullException();
+
+            foreach (var shape in _shapes)
+            {
+                if (filter(shape))
+                {
+                    return shape;
+                }
+            }
+            return null;
         }
 
-        public void Displace(Vector2D direction)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void Draw(ICanvas canvas)
-        {
-            Console.WriteLine(""+ canvas);
+        public List<IShape> FilterShapes(ShapeFilter filter)
+            {
+                if (filter == null)
+                    throw new ArgumentNullException();
+
+                return _shapes.Where(shape => filter(shape)).ToList();
+            }
+
+            public void Draw(ICanvas canvas)
+            {
+                foreach (var shape in _shapes)
+                    shape.Draw(canvas);
+            }
         }
-    }
+    
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blueprint
 {
-    interface IShape
+    public interface IShape
     {
         string Name { get; set; }
         Color Color { get; }
@@ -17,5 +17,7 @@ namespace Blueprint
         Rect2D Rect { get; set; }
         IBlueprint Owner { get; }
 
+        void Draw(ICanvas canvas); // <- Este faltaba
+        void Displace(Vector2D direction);
     }
 }

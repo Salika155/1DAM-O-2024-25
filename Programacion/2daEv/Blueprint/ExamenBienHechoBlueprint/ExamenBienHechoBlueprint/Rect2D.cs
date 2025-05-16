@@ -8,23 +8,20 @@ namespace Blueprint
 {
     public class Rect2D
     {
-        private double _minX;
-        private double _minY;
-        private double _maxX;
-        private double _maxY;
+        public Point2D Origin { get; }
+        public double Width { get; }
+        public double Height { get; }
 
-        public double MinX => _minX;
-        public double MinY => _minY;
-        public double MaxX => _maxX;
-        public double MaxY => _maxY;
-
-        public Rect2D(double minx, double miny, double maxx, double maxy)
+        public Rect2D(Point2D origin, double width, double height)
         {
-            _minX = minx;
-            _minY = miny;
-            _maxX = maxx;
-            _maxY = maxy;
+            if (width < 0 || height < 0)
+                throw new ArgumentException("Width and height must be non-negative");
+
+            Origin = origin;
+            Width = width;
+            Height = height;
         }
 
+        public override string ToString() => $"({Origin}, {Width}), {Height}";
     }
 }

@@ -9,7 +9,7 @@ namespace Blueprint
     public abstract class Shape : IShape
     {
         private string? _name = string.Empty;
-        private Color? _color;
+        private Color _color;
         private bool _hasArea;
         private double _area;
         private double _perimeter;
@@ -17,7 +17,7 @@ namespace Blueprint
         private Rect2D _rect;
         private Blueprint _blueprint;
 
-        public string? Name
+        public string Name
         {
             get
             {
@@ -28,21 +28,29 @@ namespace Blueprint
             set => _name = value;
         }
 
-        public Color? Color { get => _color; }
+        public Color Color { get => _color; set => _color = value; }
 
-        public bool HasArea { get => _hasArea; }
+        public abstract bool HasArea { get; }
 
-        public double Area { get => _area; }
+        public abstract double Area { get; }
 
-        public double Perimeter { get => _perimeter; }
+        public abstract double Perimeter { get; }
 
-        public Point2D Center { get => _center; }
+        public abstract Point2D Center { get; }
 
-        public Rect2D Rect { get => _rect; set => _rect = value; }
+        public abstract Rect2D Rect { get; set; }
 
-        public IBlueprint Owner { get => _blueprint; }
+        public abstract IBlueprint Owner { get; }
 
-        public abstract double GetArea();
-        public abstract IBlueprint GetOwner();
+        public Shape(string name, Color color)
+        {
+            Name = name;
+            Color = color;
+        }
+
+        public abstract void Draw(ICanvas canvas);
+        public abstract void Displace(Vector2D direction);
+        //public abstract double GetArea();
+        //public abstract IBlueprint GetOwner();
     }
 }

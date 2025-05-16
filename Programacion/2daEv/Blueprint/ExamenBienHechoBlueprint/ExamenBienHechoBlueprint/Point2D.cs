@@ -8,16 +8,21 @@ namespace Blueprint
 {
     public class Point2D
     {
-        private int _x;
-        private int _y;
+        private double _x;
+        private double _y;
 
-        public int X => _x;
-        public int Y => _y;
+        public double X => _x;
+        public double Y => _y;
 
-        public Point2D(int x, int y)
+        public Point2D(double x, double y)
         {
             _x = x;
             _y = y;
+        }
+
+        public override string ToString()
+        {
+            return ("valor x: " + _x + " valor y: " + _y);
         }
     }
 }

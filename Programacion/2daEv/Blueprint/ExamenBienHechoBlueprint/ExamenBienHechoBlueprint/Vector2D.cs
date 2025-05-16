@@ -8,21 +8,19 @@ namespace Blueprint
 {
     public class Vector2D
     {
-        private List<Point2D> _points;
-        private Point2D? _min;
-        private Point2D? _max;
+        public double DX { get; }
+        public double DY { get; }
 
-        public Point2D? Min => _min;
-        public Point2D? Max => _max;
-
-        public Vector2D(Point2D? point1, Point2D? point2)
+        public Vector2D(double dx, double dy)
         {
-            if (point1 == null || point2 == null)
-                throw new Exception();
-            _min = point1;
-            _max = point2;
+            DX = dx;
+            DY = dy;
         }
 
+        public Point2D Displace(Point2D point) =>
+            new Point2D(point.X + DX, point.Y + DY);
+
+        public override string ToString() => $"({DX}, {DY})";
 
     }
 }

@@ -7,15 +7,15 @@ using System.Xml.Linq;
 
 namespace NodosYArbol
 {
-    class Nodo<T>
+    class NodoArbol<T>
     {
-        public delegate bool FilterDelegate<T>(Nodo<T> filtro);
+        public delegate bool FilterDelegate<T>(NodoArbol<T> filtro);
 
-        private readonly List<Nodo<T>> _listaNodos = new List<Nodo<T>>();
+        private readonly List<NodoArbol<T>> _listaNodos = new List<NodoArbol<T>>();
         private T _contenidoNodo;
-        private WeakReference<Nodo<T>>? _weakNodoPadre;
+        private WeakReference<NodoArbol<T>>? _weakNodoPadre;
 
-        public Nodo(T contenidoNodo)
+        public NodoArbol(T contenidoNodo)
         {
             if (contenidoNodo == null)
                 throw new ArgumentNullException(nameof(contenidoNodo), "El contenido no puede ser nulo.");
@@ -29,13 +29,13 @@ namespace NodosYArbol
             set => _contenidoNodo = value ?? throw new ArgumentNullException(nameof(value), "El contenido no puede ser nulo.");
         }
 
-        public Nodo<T>? Parent
+        public NodoArbol<T>? Parent
         {
             get => _weakNodoPadre?.TryGetTarget(out var parent) == true ? parent : null;
             set => SetParent(value);
         }
 
-        private int GetLevel()
+        public int GetLevel()
         {
             //// Accede directamente al campo _weakNodoPadre en lugar de la propiedad Parent
             //if (_weakNodoPadre == null || !_weakNodoPadre.TryGetTarget(out var parent))
@@ -43,7 +43,7 @@ namespace NodosYArbol
             //return parent.GetLevel() + 1;
              
             int level = 0;
-            Nodo<T>? current = this;
+            NodoArbol<T>? current = this;
             while (current != null)
             {
                 if (current._weakNodoPadre?.TryGetTarget(out var parent) ?? false)
@@ -62,19 +62,20 @@ namespace NodosYArbol
         //node GetParent()
         
 
-        private Nodo<T> GetRoot()
+        public NodoArbol<T> GetRoot()
         {
-            //// Accede directamente al campo _weakNodoPadre
-            //if (_weakNodoPadre == null || !_weakNodoPadre.TryGetTarget(out var parent))
-            //    return this;
+            //Accede directamente al campo _weakNodoPadre
+            if (_weakNodoPadre == null || !_weakNodoPadre.TryGetTarget(out var parent))
+                return this;
             //return parent.GetRoot();
-            Nodo<T> current = this;
+            NodoArbol<T> current = this;
             while (true)
             {
-                var parent
+                
                 if (current._weakNodoPadre?.TryGetTarget(out parent) ?? false)
                 {
                     current = parent;
+                    parent = this.Parent;
                 }
                 else
                 {
@@ -82,40 +83,40 @@ namespace NodosYArbol
                 }
             }
         }
-        //private Nodo<T> GetParent()
-        //{
-        //    Nodo<T>? parent == null;
-        //    if (_parent != null)
-        //        _parent.TryGetValue(out parent);
-        //    return _parent;
-
-        //}
-
-        public void SetParent(Nodo<T>? nuevoPadre)
+        public NodoArbol<T> GetParent()
         {
-            //// Obtener el padre actual directamente del campo, sin usar la propiedad Parent
-            //Nodo<T>? currentParent = null;
-            //bool tienePadreActual = _weakNodoPadre?.TryGetTarget(out currentParent) ?? false;
+            NodoArbol<T>? parent = null;
+            if (parent != null)
+                _weakNodoPadre.TryGetTarget(out parent);
+            return parent;
 
-            //// Si el nuevo padre es el mismo que el actual, no hacer nada
-            //if (tienePadreActual && currentParent == nuevoPadre)
-            //    return;
+        }
 
-            //// Eliminar de la lista del padre actual (si existe)
-            //if (tienePadreActual)
-            //{
-            //    // Aquí evitamos llamar a RemoveChild si el nuevo padre es null
-            //    currentParent!._listaNodos.Remove(this);
-            //}
+        public void SetParent(NodoArbol<T>? nuevoPadre)
+        {
+            // Obtener el padre actual directamente del campo, sin usar la propiedad Parent
+            NodoArbol<T>? currentParent = null;
+            bool tienePadreActual = _weakNodoPadre?.TryGetTarget(out currentParent) ?? false;
 
-            //// Actualizar la referencia débil al nuevo padre
-            //_weakNodoPadre = nuevoPadre != null ? new WeakReference<Nodo<T>>(nuevoPadre) : null;
+            // Si el nuevo padre es el mismo que el actual, no hacer nada
+            if (tienePadreActual && currentParent == nuevoPadre)
+                return;
 
-            //// Agregar al nuevo padre (si no es null)
-            //if (nuevoPadre != null)
-            //{
-            //    nuevoPadre._listaNodos.Add(this);
-            //}
+            // Eliminar de la lista del padre actual (si existe)
+            if (tienePadreActual)
+            {
+                // Aquí evitamos llamar a RemoveChild si el nuevo padre es null
+                currentParent!._listaNodos.Remove(this);
+            }
+
+            // Actualizar la referencia débil al nuevo padre
+            _weakNodoPadre = nuevoPadre != null ? new WeakReference<NodoArbol<T>>(nuevoPadre) : null;
+
+            // Agregar al nuevo padre (si no es null)
+            if (nuevoPadre != null)
+            {
+                nuevoPadre._listaNodos.Add(this);
+            }
             if (nuevoPadre == null)
                 Detach();
             else
@@ -131,7 +132,7 @@ namespace NodosYArbol
         public int ChildCount => _listaNodos.Count;
 
 
-        public Nodo<T>? GetChildAt(int index)
+        public NodoArbol<T>? GetChildAt(int index)
         {
             if (index < 0 || index >= _listaNodos.Count)
                 return null;
@@ -148,29 +149,29 @@ namespace NodosYArbol
             _listaNodos.RemoveAt(index);
         }
 
-        public void AddChild(Nodo<T> hijo)
+        public void AddChild(NodoArbol<T> hijo)
         {
-            //if (hijo == null)
-            //    throw new ArgumentNullException(nameof(hijo), "El hijo no puede ser nulo.");
+            if (hijo == null)
+                throw new ArgumentNullException(nameof(hijo), "El hijo no puede ser nulo.");
 
-            //// Evitar que un nodo sea hijo de sí mismo
-            //if (hijo == this)
-            //    throw new InvalidOperationException("Un nodo no puede ser hijo de sí mismo.");
+            // Evitar que un nodo sea hijo de sí mismo
+            if (hijo == this)
+                throw new InvalidOperationException("Un nodo no puede ser hijo de sí mismo.");
 
-            //// Evitar ciclos (verificar si el hijo ya es un ancestro)
-            //var ancestro = this;
-            //while (ancestro != null)
-            //{
-            //    if (ancestro == hijo)
-            //        throw new InvalidOperationException("Un nodo no puede ser hijo de sus descendientes.");
-            //    ancestro = ancestro.Parent;
-            //}
+            // Evitar ciclos (verificar si el hijo ya es un ancestro)
+            var ancestro = this;
+            while (ancestro != null)
+            {
+                if (ancestro == hijo)
+                    throw new InvalidOperationException("Un nodo no puede ser hijo de sus descendientes.");
+                ancestro = ancestro.Parent;
+            }
 
-            //if (hijo.Parent != null)
-            //    hijo.Parent.RemoveChild(hijo);
+            if (hijo.Parent != null)
+                hijo.Parent.RemoveChild(hijo);
 
-            //_listaNodos.Add(hijo);
-            //hijo.SetParent(this);
+            _listaNodos.Add(hijo);
+            hijo.SetParent(this);
 
             //que el nodo no sea this y que no tenga ya
 
@@ -199,17 +200,22 @@ namespace NodosYArbol
             throw new NotImplementedException();
         }
 
-        public void RemoveChild(Nodo<T> hijo)
+        public void RemoveChild(NodoArbol<T> hijo)
         {
             if (hijo == null)
                 throw new ArgumentNullException(nameof(hijo), "El hijo no puede ser nulo.");
+                //return;
 
             // Eliminar el hijo de la lista
             //indexofChild RemoveAt
-            _listaNodos.RemoveAt(hijo);
+            if (_listaNodos.Remove(hijo))
+            {
+                hijo._weakNodoPadre = null;
+            }
+                
 
             // Verificar si el hijo ya tiene un padre antes de llamar a SetParent
-            Nodo<T>? currentParent = null;
+            NodoArbol<T>? currentParent = null;
             bool tienePadre = hijo._weakNodoPadre?.TryGetTarget(out currentParent) ?? false;
 
             if (tienePadre && currentParent == this)
@@ -218,7 +224,7 @@ namespace NodosYArbol
             }
         }
 
-        public int IndexOf(Nodo<T> nodo)
+        public int IndexOf(NodoArbol<T> nodo)
         {
             if (nodo == null)
                 return -1;
@@ -234,7 +240,7 @@ namespace NodosYArbol
         }
 
 
-        public bool Contains(Nodo<T> nodo)
+        public bool Contains(NodoArbol<T> nodo)
         {
             if (nodo == null)
                 return false;
@@ -252,9 +258,9 @@ namespace NodosYArbol
             }
         }
 
-        public List<Nodo<T>> Filtrar(FilterDelegate<T> filtro)
+        public List<NodoArbol<T>> Filtrar(FilterDelegate<T> filtro)
         {
-            var result = new List<Nodo<T>>();
+            var result = new List<NodoArbol<T>>();
 
             if (filtro == null)
                 return result;
@@ -272,7 +278,7 @@ namespace NodosYArbol
             return result;
         }
 
-        public bool ContainsAncestor(Nodo<T> n)
+        public bool ContainsAncestor(NodoArbol<T> n)
         {
             //var parent = Parent;
             //if (parent == n)
@@ -291,20 +297,22 @@ namespace NodosYArbol
         }
 
         //devolver una lista de todos los ancestros;
-        public List<Nodo<T>> GetListaNodosAncestros()
+        public List<NodoArbol<T>> GetListaNodosAncestros()
         {
-            List<Nodo<T>> result = new();
+            List<NodoArbol<T>> result = new();
             GetAncestors(result);
             return result;
         }
 
-        private void GetAncestors(List<Nodo<T>> l)
+        private void GetAncestors(List<NodoArbol<T>> l)
         {
-            //var l = node.Ancestors;
+            var current = this.Parent;
             //hacer var parent strong
-            if (parent != null)
-                l.Add(parent);
-            parent.GetAncestors(l);
+           while(current != null)
+            {
+                l.Add(current);
+                current = current.Parent;
+            }
 
         }
         //la forma facil es como el containsancestor

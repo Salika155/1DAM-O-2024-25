@@ -41,33 +41,38 @@ namespace Blueprint
             Color = color;
         }
 
-        public abstract void Draw(ICanvas canvas);
-        public abstract void Displace(Vector2D direction);
-        //public abstract double GetArea();
-        //public abstract IBlueprint GetOwner();
-
-        
+        // Método privado que obtiene el propietario actual de la forma.
         private IBlueprint? GetOwner()
         {
+            // Si la referencia débil es nula, no hay propietario.
             if (_blueprint == null)
                 return null;
+
+            // Intenta obtener el objeto referenciado.
             if (_blueprint.TryGetTarget(out var result))
                 return result;
+
+            // Si no se pudo obtener, significa que el objeto fue recolectado por el GC.
             return null;
         }
 
+        // Método privado que establece un nuevo propietario para la forma.
         private void SetOwner(IBlueprint? newOwner)
         {
-            var currentOwner = GetOwner();
+            // Obtiene el propietario actual.
+            var oldOwner = GetOwner();
 
-            if (currentOwner == newOwner)
+            // Si el nuevo propietario es el mismo que el actual, no se realiza ninguna acción.
+            if (newOwner == oldOwner)
                 return;
 
-            if (currentOwner != null)
+            // Si hay un propietario actual, elimina la forma de su lista.
+            if (oldOwner != null)
             {
-                currentOwner.RemoveShape(this);
+                oldOwner.RemoveShape(this);
             }
 
+            // Si el nuevo propietario no es nulo, agrega la forma a su lista y actualiza la referencia débil.
             if (newOwner != null)
             {
                 newOwner.AddShape(this);
@@ -75,9 +80,41 @@ namespace Blueprint
             }
             else
             {
+                // Si el nuevo propietario es nulo, elimina la referencia débil.
                 _blueprint = null;
             }
         }
 
+        // Método abstracto para dibujar la forma en un lienzo.
+        public abstract void Draw(ICanvas canvas);
+        // Método abstracto para desplazar la forma en una dirección específica.
+        public abstract void Displace(Vector2D direction);
+
     }
 }
+
+//private void SetOwner(IBlueprint? newOwner)
+//{
+//    var currentOwner = GetOwner();
+
+//    if (currentOwner == newOwner)
+//        return;
+
+//    if (currentOwner != null)
+//    {
+//        currentOwner.RemoveShape(this);
+//    }
+
+//    if (newOwner != null)
+//    {
+//        newOwner.AddShape(this);
+//        _blueprint = new WeakReference<IBlueprint>(newOwner);
+//    }
+//    else
+//    {
+//        _blueprint = null;
+//    }
+//}
+
+//public abstract double GetArea();
+//public abstract IBlueprint GetOwner();

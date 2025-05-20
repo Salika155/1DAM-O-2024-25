@@ -32,19 +32,36 @@ namespace Blueprint
 
             public void AddShape(IShape shape)
             {
-                if (shape == null)
-                    throw new ArgumentNullException();
-
-                _shapes.Add(shape);
-            }
-
-            public void RemoveShape(ShapeFilter filter)
+            if (!ContainsChild(shape))
             {
+                _shapes.Add(shape);
+                shape.Owner = this;
+            }
+        }
+
+        private bool ContainsChild(IShape shape)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveShape(ShapeFilter filter)
+        {
                 if (filter == null)
                     throw new ArgumentNullException();
 
                 _shapes.RemoveAll(shape => filter(shape));
+        }
+
+        public void RemoveShape(IShape shape)
+        {
+            if (shape == null)
+                throw new ArgumentNullException(nameof(shape));
+
+            if (_shapes.Remove(shape))
+            {
+                shape.Owner = null;
             }
+        }
 
         //public IShape GetShape(ShapeFilter filter)
         //{

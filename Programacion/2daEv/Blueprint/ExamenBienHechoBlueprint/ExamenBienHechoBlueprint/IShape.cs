@@ -15,7 +15,7 @@ namespace Blueprint
         double Perimeter { get; }
         Point2D Center { get; }
         Rect2D Rect { get; set; }
-        IBlueprint Owner { get; }
+        IBlueprint Owner { get; set; }
 
         void Draw(ICanvas canvas); // <- Este faltaba
         void Displace(Vector2D direction);

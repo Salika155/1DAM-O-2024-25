@@ -22,7 +22,7 @@ public class Circle : Shape
     public override bool HasArea => true;
     public override double Area => Math.PI * Radius * Radius;
     public override double Perimeter => 2 * Math.PI * Radius;
-    public override Point2D Center => CenterPoint;
+    public override Point2D Point => CenterPoint;
     public override Rect2D Rect
     {
         get => new Rect2D(

@@ -34,7 +34,7 @@ namespace BlueprintCorregidoClase
 
         public override string ToString()
         {
-            return $"X: {Position.X} Y, {Position.Y}
+            return $"X: {Position.X} Y, {Position.Y}";
 
         }
     }

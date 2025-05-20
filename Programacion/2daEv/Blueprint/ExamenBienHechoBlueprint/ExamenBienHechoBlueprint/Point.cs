@@ -20,7 +20,7 @@ public class Point : Shape
     public override bool HasArea => false;
     public override double Area => 0;
     public override double Perimeter => 0;
-    public override Point2D Center => _position;
+    public override Point2D Point => _position;
 
     public override Rect2D Rect
     {

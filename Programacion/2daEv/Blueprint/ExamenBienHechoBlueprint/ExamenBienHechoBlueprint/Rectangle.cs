@@ -24,7 +24,7 @@ public class Rectangle : Shape
     public override bool HasArea => true;
     public override double Area => Width * Height;
     public override double Perimeter => 2 * (Width + Height);
-    public override Point2D Center => new Point2D(_origin.X + Width / 2, _origin.Y + Height / 2);
+    public override Point2D Point => new Point2D(_origin.X + Width / 2, _origin.Y + Height / 2);
     public override Rect2D Rect
     {
         get => new Rect2D(_origin, Width, Height);

@@ -17,20 +17,19 @@ namespace BlueprintCorregidoClase
         public string _name;
         private readonly Color _color;
         //la tengo que hacer debil
-        private WeakReference<IBluePrint>? _blueprint = new WeakReference<IBluePrint>();
+        private WeakReference<IBluePrint>? _blueprint;
 
         
 
         public IBluePrint? Owner
         { get => GetOwner(); 
-            set => SetOwner(); }
+            set => SetOwner(value); }
         public string Name { get => _name; set => _name = value; }
-        public Color => _color;
-        public abstract bool HasArea { get; }
-        public abstract double Area { get; }
-        public abstract double Perimeter { get; }
-        public abstract Point2D Point { 
-        }
+        public Color Color => _color;
+        public bool HasArea { get; }
+        public double Area { get; }
+        public double Perimeter { get; }
+        public Point2D Point { get; set;}
 
         private static IBluePrint GetOwner()
         {
@@ -67,7 +66,7 @@ namespace BlueprintCorregidoClase
                     if (newparent != null)
                     {
                         oldparent.AddShape(this);
-                        _blueprint = new WeakReference<IBluePrint>();
+                        _blueprint = new WeakReference<IBluePrint>(newparent);
                     }
                 }
 
@@ -81,19 +80,19 @@ namespace BlueprintCorregidoClase
             _color = color;
         }
 
-        public void RemoveShape(IShape shape)
-        {
-            for( int i = 0; i < _shapes.Count; i++)
-            {
-                if (_shapes[i] == shape)
-                {
-                    shape.Owner = null;
-                    _shapes.RemoveAt(i);
-                    return;
+        //public void RemoveShape(IShape shape)
+        //{
+        //    for( int i = 0; i < _shapes.Count; i++)
+        //    {
+        //        if (_shapes[i] == shape)
+        //        {
+        //            shape.Owner = null;
+        //            _shapes.RemoveAt(i);
+        //            return;
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
     }
 }

@@ -22,7 +22,7 @@ public class Segment : Shape
     public override bool HasArea => false;
     public override double Area => 0;
     public override double Perimeter => Utils.GetDistance(A, B);
-    public override Point2D Center => new Point2D((A.X + B.X) / 2, (A.Y + B.Y) / 2);
+    public override Point2D Point => new Point2D((A.X + B.X) / 2, (A.Y + B.Y) / 2);
 
     public override Rect2D Rect
     {

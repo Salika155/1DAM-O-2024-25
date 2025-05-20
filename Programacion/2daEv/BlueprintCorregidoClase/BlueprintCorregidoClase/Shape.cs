@@ -31,6 +31,67 @@ namespace BlueprintCorregidoClase
         public double Perimeter { get; }
         public Point2D Point { get; set;}
 
+        public void AddShape(IShape shape)
+        {
+            if (shape == null)
+                return;
+            if(!ContainsChild(shape))
+            {
+                _shapes.Add(shape);
+                shape.Owner = this;
+            }
+        }
+
+        public void RemoveShape(FilterDelegate del)
+        {
+            if (del == null)
+                return;
+            for (int i = 0; i < _shapes.Count; i >= 0; i--)
+        }
+
+        private int IndexOf(IShape shape)
+        {
+
+        }
+        private bool ContainsChild(IShape shape)
+        {
+            return IndexOf(shape) >= 0;
+        }
+
+        public void Draw(ICanvas canvas)
+        {
+            if (canvas == null)
+                return;
+            for (int i = 0; i < _shapes.Count; i++)
+                _shapes[i].Draw(canvas);
+        }
+
+        public List<IShape> FilterShapes(FilterDelegate del)
+        {
+            List<IShape> result = new();
+            if (del == null)
+                return result;
+            for(int i = 0; i < _shapes.Count; i++)
+            {
+                if (del(_shapes[i]))
+                    result.Add(_shapes[i]);
+
+            }
+            return result;
+        }
+
+        public IShape GetShape(FilterDelegate del)
+        {
+            if (del == null)
+                return null;
+            for (int i = 0; i < _shapes.Count; i++)
+            {
+                if (del(_shapes[i]))
+                    result _shapes[i]);
+
+            }
+            return null;
+        }
         private static IBluePrint GetOwner()
         {
             if (_blueprint == null)

@@ -10,6 +10,8 @@
 
             blueprint.AddShape(shape2);
             blueprint.AddShape(shape1);
+
+            var filteredList = blueprint.FilterShapes(f => f.Rect.Position.X < 0.0);
         }
     }
 }

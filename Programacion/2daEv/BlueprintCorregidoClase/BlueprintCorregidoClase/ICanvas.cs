@@ -8,6 +8,7 @@ namespace BlueprintCorregidoClase
 {
     interface ICanvas
     {
+        void DrawCircle(ICanvas canvas);
     }
 
     public struct Point2D

@@ -1,0 +1,196 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ExamenDiccionario
+{
+    class ExDictionary<TKey, TValue>
+    {
+        public delegate void VisitDelegate(TKey key, TValue value);
+        public delegate bool FilterDelegate(TKey key, TValue value);
+        private class Entry
+        {
+            public TKey Key { get; }
+            public TValue Value { get; set; }
+
+            public Entry(TKey key, TValue value)
+            {
+                Key = key;
+                Value = value;
+            }
+        }
+
+        private Entry[] _items;
+        private int _count;
+
+        public ExDictionary()
+        {
+            _items = new Entry[0];
+            _count = 0;
+        }
+
+        public int Count => _count;
+
+        public void Add(TKey key, TValue value)
+        {
+            if (key == null)
+                return;
+            if (Contains(key))
+                throw new Exception();
+            if (!Contains(key))
+                return;
+            ResizeArray();
+            _items[_count++] = new Entry(key, value);
+            //me falta añadirlo
+            //_items.[_count++] = new Entry[key, value];
+        }
+
+        private void ResizeArray()
+        {
+            if (_items.Length == _count)
+            {
+                int nuevoTamaño = _items.Length * 2;
+                Entry[] newArray = new Entry[nuevoTamaño];
+                for(int i = 0; i < _count; i++)
+                {
+                    newArray[i] = _items[i];
+                }
+                _items = newArray;
+            }
+        }
+
+        public bool Remove(TKey key)
+        {
+            int index = IndexOf(key);
+            if (index == -1)
+                return false;
+
+            for (int i = index; i < _count -1; i++)
+            {
+                _items[i] = _items[i + 1];
+            }
+            _count--;
+            _items[_count] = null;
+            return true;
+            
+        }
+
+        public bool Contains(TKey key)
+        {
+            return IndexOf(key) >= 0;
+        }
+
+        public int IndexOf(TKey key)
+        {
+            for(int i = 0; i < _count; i++)
+            {
+                if (EqualityComparer<TKey>.Default.Equals(_items[i].Key, key))
+                    return i;
+            }
+            return -1;
+        }
+
+        public TValue GetValue(TKey key)
+        {
+            for(int i = 0; i < _count; i++)
+            {
+                if (EqualityComparer<TKey>.Default.Equals(_items[i].Key, key))
+                    return _items[i].Value;
+            }
+            return default;
+        }
+
+        public void Clear()
+        {
+            //for(int i = 0; i < _count; i++)
+            //{
+            //     _items[i] = null;
+            //}
+            // _count = 0;
+            _items = new Entry[0];
+            _count = 0;
+        }
+
+        public void Visit(VisitDelegate del)
+        {
+            for(int i = 0; i < _count; i++)
+            {
+                del(_items[i].Key, _items[i].Value);
+            }
+        }
+
+        public ExDictionary<TKey, TValue> Filter(FilterDelegate del)
+        {
+            var result = new ExDictionary<TKey, TValue>();
+
+            for(int i = 0; i < _count; i++)
+            {
+                var entry = _items[i];
+                if(del(entry.Key, entry.Value))
+                {
+                    result.Add(entry.Key, entry.Value);
+                }  
+            }
+            return result;
+        }
+
+        public ExDictionary<TValue, TKey> Reversed
+        {
+            get
+            {
+                var result = new ExDictionary<TValue, TKey>();
+
+                for (int i = 0; i < _count; i++)
+                {
+                    var entry = _items[i];
+
+                    if (!result.Contains(entry.Value))
+                    {
+                        result.Add(entry.Value, entry.Key);
+                    }
+                }
+
+                return result;
+            }
+        }
+
+        public ExDictionary<TKey, TValue> Clone()
+        {
+            var result = new ExDictionary<TKey, TValue>();
+
+            for(int i = 0; i < _count; i++)
+            {
+                var entradaKey = _items[i].Key;
+                var entradaValue = _items[i].Value;
+                var entrada = _items[i];
+
+                if(!result.Contains(entradaKey))
+                {
+                    result.Add(entradaKey, entradaValue);
+                }
+            }
+            return result;
+        }
+
+        //public ExDictionary<TKey, TValue> ReverseDictionary(ExDictionary<TKey, TValue> dictionary)
+        //{
+        //    var result = new ExDictionary<TKey, TValue>();
+            
+        //    for(int i = 0; i < _count; i++)
+        //    {
+
+        //    }
+        //}
+        
+    }
+}
+
+
+
+//// Aumentar el tamaño del array si es necesario
+//ResizeIfNeeded();
+
+//// Insertar la nueva entrada
+//_items[_count++] = new Entry(key, value);

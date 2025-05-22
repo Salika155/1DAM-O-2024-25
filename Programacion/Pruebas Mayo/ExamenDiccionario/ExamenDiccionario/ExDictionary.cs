@@ -31,6 +31,20 @@ namespace ExamenDiccionario
             _count = 0;
         }
 
+        public ExDictionary(TKey[] key, TValue[] value)
+        {
+            if (key == null || value == null)
+                throw new Exception();
+            if (key.Length != value.Length)
+                throw new Exception();
+            _items = new Item[key.Length];
+            _count = 0;
+            for(int i = 0; i < key.Length; i++)
+            {
+                Add(_items[i].Key, _items[i].Value);
+            }
+        }
+
         public int Count => _count;
 
         public void Add(TKey key, TValue value)
@@ -38,20 +52,16 @@ namespace ExamenDiccionario
             if (key == null)
                 return;
             if (Contains(key))
-                throw new Exception();
-            if (!Contains(key))
-                return;
+                throw new InvalidOperationException("La clave ya existe.");
             ResizeArray();
             _items[_count++] = new Item(key, value);
-            //me falta añadirlo
-            //_items.[_count++] = new Entry[key, value];
         }
 
         private void ResizeArray()
         {
             if (_items.Length == _count)
             {
-                int nuevoTamaño = _items.Length * 2;
+                int nuevoTamaño = _items.Length == 0 ? 4 : _items.Length * 2;
                 Item[] newArray = new Item[nuevoTamaño];
                 for(int i = 0; i < _count; i++)
                 {
@@ -74,7 +84,6 @@ namespace ExamenDiccionario
             _count--;
             _items[_count] = null;
             return true;
-            
         }
 
         public bool Contains(TKey key)
@@ -92,7 +101,7 @@ namespace ExamenDiccionario
             return -1;
         }
 
-        public TValue GetValue(TKey key)
+        public TValue? GetValue(TKey key)
         {
             for(int i = 0; i < _count; i++)
             {
@@ -178,7 +187,8 @@ namespace ExamenDiccionario
         //se creará con esa información donde la key que está en la posición 0 se relaciona
         //con el value que está en la posición 0 y así sucesivamente
 
-        public bool TryGetValue(TKey key, out TValue value)
+        //"Este método promete que va a asignar un valor a value antes de salir, por eso el default."
+        public bool TryGetValue(TKey key, out TValue? value)
         {
             for(int i = 0; i < _count; i++)
             {

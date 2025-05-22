@@ -399,6 +399,7 @@ namespace ChessLib.Tablero
         //    return false;
         //}
 
+        //ME FALLAN LOS MOVIMIENTOS DE LAS FIGURAS
         public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY, int figureCount)
         {
             // 1. Validar coordenadas
@@ -413,6 +414,7 @@ namespace ChessLib.Tablero
 
             // 3. Verificar movimientos válidos (según reglas de la pieza)
             var movimientosValidos = figura.GetAllAvailablePosition(this);
+            //PINTAR POSIBLES MOVIMIENTOS
             bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
 
             if (!esMovimientoValido)
@@ -551,6 +553,12 @@ namespace ChessLib.Tablero
 
             return true;
         }
+
+        //tengo que hacer metodos para: enroque del rey y las torres, ahogar al rey, jaque, jaque mate
+        //estos metodos deberian de ir en el rey, y en los movimientos hay que ver como se mueven y marcar a donde pueda mover la casilla
+        //objetivo a mover, es decir la que le he pasado al programa
+
+
 
         //posible inciso
 

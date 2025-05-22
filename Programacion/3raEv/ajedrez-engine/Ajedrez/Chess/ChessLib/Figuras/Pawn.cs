@@ -29,6 +29,14 @@ namespace ChessLib.Figuras
                         moves.Add(movDoble);
                     }
                 }
+                else
+                {
+                    Coord movSimple = new Coord(Coords.X, Coords.Y + 1 * direction);
+                    if (board.IsPositionEmpty(movSimple))
+                    {
+                        moves.Add(movSimple);
+                    }
+                }
             }
 
             // Capturas diagonales

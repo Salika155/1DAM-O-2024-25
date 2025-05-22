@@ -10,24 +10,24 @@ namespace ExamenDiccionario
     {
         public delegate void VisitDelegate(TKey key, TValue value);
         public delegate bool FilterDelegate(TKey key, TValue value);
-        private class Entry
+        private class Item
         {
             public TKey Key { get; }
             public TValue Value { get; set; }
 
-            public Entry(TKey key, TValue value)
+            public Item(TKey key, TValue value)
             {
                 Key = key;
                 Value = value;
             }
         }
 
-        private Entry[] _items;
+        private Item[] _items;
         private int _count;
 
         public ExDictionary()
         {
-            _items = new Entry[0];
+            _items = new Item[0];
             _count = 0;
         }
 
@@ -42,7 +42,7 @@ namespace ExamenDiccionario
             if (!Contains(key))
                 return;
             ResizeArray();
-            _items[_count++] = new Entry(key, value);
+            _items[_count++] = new Item(key, value);
             //me falta añadirlo
             //_items.[_count++] = new Entry[key, value];
         }
@@ -52,7 +52,7 @@ namespace ExamenDiccionario
             if (_items.Length == _count)
             {
                 int nuevoTamaño = _items.Length * 2;
-                Entry[] newArray = new Entry[nuevoTamaño];
+                Item[] newArray = new Item[nuevoTamaño];
                 for(int i = 0; i < _count; i++)
                 {
                     newArray[i] = _items[i];
@@ -109,7 +109,7 @@ namespace ExamenDiccionario
             //     _items[i] = null;
             //}
             // _count = 0;
-            _items = new Entry[0];
+            _items = new Item[0];
             _count = 0;
         }
 
@@ -151,7 +151,6 @@ namespace ExamenDiccionario
                         result.Add(entry.Value, entry.Key);
                     }
                 }
-
                 return result;
             }
         }
@@ -174,23 +173,36 @@ namespace ExamenDiccionario
             return result;
         }
 
-        //public ExDictionary<TKey, TValue> ReverseDictionary(ExDictionary<TKey, TValue> dictionary)
-        //{
-        //    var result = new ExDictionary<TKey, TValue>();
-            
-        //    for(int i = 0; i < _count; i++)
-        //    {
+        //(E) Aparte de los que quieras,
+        //un constructor que acepte dos arrays, uno de keys y otro de values. El diccionario
+        //se creará con esa información donde la key que está en la posición 0 se relaciona
+        //con el value que está en la posición 0 y así sucesivamente
 
-        //    }
-        //}
-        
+        public bool TryGetValue(TKey key, out TValue value)
+        {
+            for(int i = 0; i < _count; i++)
+            {
+                var entrada = _items[i];
+                if (EqualityComparer<TKey>.Default.Equals(entrada.Key, key))
+                {
+                    value = entrada.Value;
+                    return true;
+                }
+            }
+            value = default;
+            return false;
+        }
+
+        public (TKey, TValue)[] ToArray()
+        {
+            var result = new (TKey, TValue)[_count];
+
+            for(int i = 0; i < _count; i++)
+            {
+                var entrada = _items[i];
+                result[i] = (entrada.Key, entrada.Value);
+            }
+            return result;
+        }
     }
 }
-
-
-
-//// Aumentar el tamaño del array si es necesario
-//ResizeIfNeeded();
-
-//// Insertar la nueva entrada
-//_items[_count++] = new Entry(key, value);

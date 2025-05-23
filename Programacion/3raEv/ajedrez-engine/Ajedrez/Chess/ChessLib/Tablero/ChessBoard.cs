@@ -49,9 +49,10 @@ namespace ChessLib.Tablero
             //    //si puede, que la mueva.
             //}
             FigureColor turnoActual = FigureColor.WHITE;
-
+            //posiblemente necesite aqui elegir el turno, aunque no me ha hecho falta para cambiarlo varias veces
             while (true)
             {
+                
                 Console.Clear();
                 Utils.DrawBoard(this);
                 Console.WriteLine($"Turno de las piezas: {turnoActual}");
@@ -587,7 +588,6 @@ namespace ChessLib.Tablero
                         return false;
                 }
             }
-
             return true;
         }
 
@@ -604,7 +604,6 @@ namespace ChessLib.Tablero
             }
             return figures;
         }
-
 
         //HA TERMINADO LA PARTIDA??
         public bool IsEndedTheMatch()

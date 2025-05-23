@@ -5,8 +5,8 @@ namespace ChessLib.Figuras
 {
     public enum FigureColor
     {
-        BLACK,
-        WHITE
+        WHITE,
+        BLACK
     }
 
     public enum FigureType

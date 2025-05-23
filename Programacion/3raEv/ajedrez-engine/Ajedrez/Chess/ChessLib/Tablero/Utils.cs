@@ -37,7 +37,7 @@ namespace ChessLib.Tablero
 
         public static void DrawBoard(ChessBoard board)
         {
-            Console.WriteLine("  a b c d e f g h");
+            Console.WriteLine("   a  b  c  d  e  f  g  h ");
             Console.WriteLine(" ");
             for (int y = 0; y < board.GetHeight(); y++)
             {
@@ -60,11 +60,11 @@ namespace ChessLib.Tablero
                 Console.WriteLine();
             }
             Console.WriteLine(" ");
-            Console.WriteLine("  a b c d e f g h");
+            Console.WriteLine("   a  b  c  d  e  f  g  h ");
         }
 
         private static void DrawFigure(IFigure figure)
-        {
+        {//esto es, al dibujar de nuevo hace que el background sea como la figura
             var background = ((figure.GetCoord().X + figure.GetCoord().Y) % 2 == 0) ? ConsoleColor.White : ConsoleColor.Red;
             Console.BackgroundColor = background;
             Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE ? ConsoleColor.Black : ConsoleColor.DarkYellow;

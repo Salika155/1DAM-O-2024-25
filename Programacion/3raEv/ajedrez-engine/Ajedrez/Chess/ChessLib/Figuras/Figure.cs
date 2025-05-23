@@ -36,8 +36,8 @@ namespace ChessLib.Figuras
         public FigureColor Color => _colorFigure;
         public FigureType Type => _typeFigure;
         public Coord Coords => _coords;
-        public int MovementCount => _movementCount;
-
+        public int MovementCount { get; set; }
+        
 
         public FigureColor? GetColor() => _colorFigure;
         public abstract FigureType? GetFigureType();
@@ -64,7 +64,12 @@ namespace ChessLib.Figuras
             return availablePositions.Contains(targetCoord);
         }
 
-        
+        public void IncrementCount()
+        {
+            MovementCount++;
+        }
+
+
 
         //-------------------------------------
 

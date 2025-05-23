@@ -66,6 +66,8 @@ namespace ChessLib.Tablero
                     continue;
                 }
 
+                //AQUI EN MEDIO METER LA SELECCION
+
                 // 2. Pedir DESTINO
                 Console.Write("Introduce coordenadas de destino (ej. a4): ");
                 string inputDestino = Console.ReadLine().ToLower().Trim();
@@ -83,8 +85,23 @@ namespace ChessLib.Tablero
                     Coord origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '1');
                     Coord destino = new Coord(inputDestino[0] - 'a', inputDestino[1] - '1');
 
+                    //VALIDACION PIEZA
+                    IFigure figura = GetFigureAt(origen.X, origen.Y);
+                    if (figura == null)
+                    {
+                        Console.WriteLine("");
+                        Console.ReadKey();
+                        continue;
+                    }
+                    if(figura.GetColor() != turnoActual)
+                    {
+                        Console.WriteLine();
+                        Console.ReadKey();
+                        continue;
+                    }
+                    
                     // Mover pieza
-                    if (MoveFigure(origen.X, origen.Y, destino.X, destino.Y, _figureCount))
+                    if (MoveFigure(origen.X, origen.Y, destino.X, destino.Y))
                     {
                         turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
                     }
@@ -116,6 +133,7 @@ namespace ChessLib.Tablero
             }
         }
 
+        #region comentado
         //public void Execute()
         //{
         //    bool juegoEnCurso = true;
@@ -190,6 +208,8 @@ namespace ChessLib.Tablero
         //        turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
         //    }
         //}
+        #endregion
+
         // Método Execute simplificado y funcional
         public void Execute()
         {
@@ -197,7 +217,8 @@ namespace ChessLib.Tablero
             {
                 ExecuteTurns();
             }
-            
+
+            #region comentado
             //FigureColor turnoActual = FigureColor.WHITE;
 
             //while (true)
@@ -251,6 +272,7 @@ namespace ChessLib.Tablero
             //        Console.ReadKey();
             //    }
             //}
+            #endregion
         }
 
         //crear un metodo que le paso el color de la figura y la i, asi no tengo que hacer duplicacion de codigo.
@@ -368,6 +390,7 @@ namespace ChessLib.Tablero
             _figureCount++;
         }
 
+        #region comentado
         //NO ME FIO
         //public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY, int figureCount)
         //{
@@ -398,9 +421,10 @@ namespace ChessLib.Tablero
         //    }
         //    return false;
         //}
+        #endregion
 
         //ME FALLAN LOS MOVIMIENTOS DE LAS FIGURAS
-        public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY, int figureCount)
+        public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
         {
             // 1. Validar coordenadas
             if (!Utils.IsValidCoordinates(origenX, origenY, Width, Height) ||
@@ -425,8 +449,8 @@ namespace ChessLib.Tablero
             _casillas[origenX, origenY].Figure = null;
 
             // 5. Actualizar contador de movimientos (si es necesario)
+            figura.IncrementCount();
             _figureCount++;
-
             return true;
         }
 

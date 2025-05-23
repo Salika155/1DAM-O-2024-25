@@ -33,6 +33,7 @@ namespace ChessLib.Tablero
             _coord = coord;
             _casillaColor = type;
             Figure = null;
+            //ForeGroundColor = ConsoleColor.White;
         }
 
         public Casilla(char character, ConsoleColor backgroundColor, ConsoleColor foregroundColor = ConsoleColor.White)

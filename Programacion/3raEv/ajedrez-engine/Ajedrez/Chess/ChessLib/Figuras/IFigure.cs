@@ -16,9 +16,7 @@ namespace ChessLib.Figuras
         //esto va aparte de momento
         bool ValidateMove(Coord targetCoord, ChessBoard chessBoard);
         List<Coord> GetAllAvailablePosition(IChessBoard board);
-        
-        
-        
+        void IncrementCount();
     }
 }
 

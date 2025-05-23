@@ -1,4 +1,5 @@
-﻿using ChessLib.Figuras;
+﻿using ChessLib;
+using ChessLib.Figuras;
 using System;
 using System.Drawing;
 
@@ -95,7 +96,7 @@ namespace ChessLib.Tablero
                     }
                     if(figura.GetColor() != turnoActual)
                     {
-                        Console.WriteLine();
+                        Console.WriteLine("No es tu turno");
                         Console.ReadKey();
                         continue;
                     }
@@ -121,9 +122,20 @@ namespace ChessLib.Tablero
 
         }
 
+        //public void CrearCasillas()
+        //{
+        //    for (int y = 0; y < _height; y++)
+        //    {
+        //        for (int x = 0; x < _width; x++)
+        //        {
+        //            var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.RED;
+        //            _casillas[x, y] = new Casilla(new Coord(x, y), color);
+        //        }
+        //    }
+        //}
         public void CrearCasillas()
         {
-            for (int y = 0; y < _height; y++)
+            for (int y = _height - 1; y >= 0; y--)  // Ahora empieza desde arriba (y=7)
             {
                 for (int x = 0; x < _width; x++)
                 {
@@ -451,6 +463,7 @@ namespace ChessLib.Tablero
             // 5. Actualizar contador de movimientos (si es necesario)
             figura.IncrementCount();
             _figureCount++;
+            Console.WriteLine($"Moviendo de ({origenX},{origenY}) a ({destinoX},{destinoY})");
             return true;
         }
 
@@ -578,6 +591,27 @@ namespace ChessLib.Tablero
             return true;
         }
 
+        public List<IFigure> GetAllFigures()
+        {
+            List<IFigure> figures = new List<IFigure>();
+
+            foreach (var figura in _figures)
+            {
+                if (figura != null)
+                {
+                    figures.Add(figura);
+                }
+            }
+            return figures;
+        }
+
+
+        //HA TERMINADO LA PARTIDA??
+        public bool IsEndedTheMatch()
+        {
+            return true;
+        }
+
         //tengo que hacer metodos para: enroque del rey y las torres, ahogar al rey, jaque, jaque mate
         //estos metodos deberian de ir en el rey, y en los movimientos hay que ver como se mueven y marcar a donde pueda mover la casilla
         //objetivo a mover, es decir la que le he pasado al programa
@@ -648,26 +682,7 @@ namespace ChessLib.Tablero
         //        return "  ";
         //}
 
-        public List<IFigure> GetAllFigures()
-        {
-            List<IFigure> figures = new List<IFigure>();
 
-            foreach (var figura in _figures)
-            {
-                if (figura != null)
-                {
-                    figures.Add(figura);
-                }
-            }
-            return figures;
-        }
-
-
-        //HA TERMINADO LA PARTIDA??
-        public bool IsEndedTheMatch()
-        {
-            return true;
-        }
     }
 }
 
@@ -715,3 +730,44 @@ namespace ChessLib.Tablero
 //{
 //         *      IChessBoard b = new ChessBoard();
 //         * }
+
+
+
+
+//TODO: EL CREATEFIGURESWITHCOLOR DE ANTES
+//public void CreateFiguresWithColor(FigureColor color)
+//{
+//    if (color == FigureColor.BLACK)
+//    {
+//        // Colocar las piezas negras
+//        CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(0, 7));
+//        CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(1, 7));
+//        CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(2, 7));
+//        CreateFigure(FigureType.QUEEN, FigureColor.BLACK, new Coord(3, 7));
+//        CreateFigure(FigureType.KING, FigureColor.BLACK, new Coord(4, 7));
+//        CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(5, 7));
+//        CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(6, 7));
+//        CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(7, 7));
+
+//        for (int x = 0; x < 8; x++)
+//        {
+//            CreateFigure(FigureType.PAWN, FigureColor.BLACK, new Coord(x, 6));
+//        }
+//    }
+//    else if (color == FigureColor.WHITE)
+//    {
+//        CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(0, 0));
+//        CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(1, 0));
+//        CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(2, 0));
+//        CreateFigure(FigureType.QUEEN, FigureColor.WHITE, new Coord(3, 0));
+//        CreateFigure(FigureType.KING, FigureColor.WHITE, new Coord(4, 0));
+//        CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 0));
+//        CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
+//        CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
+
+//        for (int x = 0; x < 8; x++)
+//        {
+//            CreateFigure(FigureType.PAWN, FigureColor.WHITE, new Coord(x, 1));
+//        }
+//    }
+//}

@@ -46,10 +46,10 @@ namespace ChessLib.Figuras
                 moves.Add(target);
         }
 
-        public virtual bool ValidateMove(Coord newCoords)
-        {
-            return true;
-        }
+        //public virtual bool ValidateMove(Coord newCoords)
+        //{
+        //    return true;
+        //}
 
         public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
         {

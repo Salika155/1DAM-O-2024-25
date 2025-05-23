@@ -39,16 +39,16 @@ namespace ChessLib.Tablero
         {
             Console.WriteLine("   a  b  c  d  e  f  g  h ");
             Console.WriteLine(" ");
-            for (int y = 0; y < board.GetHeight(); y++)
+            for (int y = board.GetHeight() - 1; y >= 0; y--)
             {
-                Console.Write(8 - y + " ");
+                Console.Write(1 + y + " ");
                 for (int x = 0; x < board.GetWidth(); x++)
                 {
                     IFigure? figura = board.GetFigureAt(x, y);
                     Casilla? casilla = board.GetCasillaAt(x, y);
                     if (figura != null)
                     {
-                        DrawFigure(figura);
+                        DrawFigure(figura, x, y);
                     }
                     else if (casilla != null)
                     {
@@ -63,10 +63,10 @@ namespace ChessLib.Tablero
             Console.WriteLine("   a  b  c  d  e  f  g  h ");
         }
 
-        private static void DrawFigure(IFigure figure)
+        private static void DrawFigure(IFigure figure, int x, int y)
         {//esto es, al dibujar de nuevo hace que el background sea como la figura
-            var background = ((figure.GetCoord().X + figure.GetCoord().Y) % 2 == 0) ? ConsoleColor.White : ConsoleColor.Red;
-            Console.BackgroundColor = background;
+            
+            Console.BackgroundColor = (x + y) % 2 == 0 ? ConsoleColor.White : ConsoleColor.Red;
             Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE ? ConsoleColor.Black : ConsoleColor.DarkYellow;
             Console.Write(Utils.GetSymbol(figure));
             Console.ResetColor();

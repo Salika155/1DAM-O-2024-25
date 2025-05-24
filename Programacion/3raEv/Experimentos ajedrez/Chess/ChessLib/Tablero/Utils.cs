@@ -65,10 +65,23 @@ namespace ChessLib.Tablero
 
         private static void DrawFigure(IFigure figure, int x, int y)
         {//esto es, al dibujar de nuevo hace que el background sea como la figura
-            
-            Console.BackgroundColor = (x + y) % 2 == 0 ? ConsoleColor.White : ConsoleColor.Red;
-            //Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE ? ConsoleColor.Black : ConsoleColor.DarkYellow;
-            Console.Write(Utils.GetSymbol(figure));
+
+            //Console.BackgroundColor = (x + y) % 2 == 0 ? ConsoleColor.White : ConsoleColor.Red;
+            ////Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE ? ConsoleColor.Black : ConsoleColor.DarkYellow;
+            //Console.Write(Utils.GetSymbol(figure));
+            //Console.ResetColor();
+            // Color de fondo basado en coordenadas (no cambiar)
+            var background = (figure.GetCoord().X + figure.GetCoord().Y) % 2 == 0
+                ? ConsoleColor.White
+                : ConsoleColor.Red;
+
+            // ¡CORRECCIÓN CLAVE AQUÍ! (Colores invertidos)
+            Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE
+                ? ConsoleColor.DarkYellow  // Amarillo para blancas
+                : ConsoleColor.Black;      // Negro para negras
+
+            Console.BackgroundColor = background;
+            Console.Write(GetSymbol(figure));
             Console.ResetColor();
         }
 

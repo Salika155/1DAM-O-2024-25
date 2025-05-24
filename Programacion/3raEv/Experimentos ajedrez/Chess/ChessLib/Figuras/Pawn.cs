@@ -19,7 +19,6 @@ namespace ChessLib.Figuras
             if (board.IsPositionEmpty(movAdelante))
             {
                 moves.Add(movAdelante);
-
                 // Movimiento inicial de 2 casillas (solo si no se ha movido antes)
                 if (MovementCount == 0)
                 {
@@ -29,13 +28,10 @@ namespace ChessLib.Figuras
                         moves.Add(movDoble);
                     }
                 }
-               
             }
-
             // Capturas diagonales
-            CheckDiagonalCapture(board, direction, -1, moves); // Izquierda
-            CheckDiagonalCapture(board, direction, 1, moves);  // Derecha
-
+            //CheckDiagonalCapture(board, direction, -1, moves); // Izquierda
+            //CheckDiagonalCapture(board, direction, 1, moves);  // Derecha
             return moves.ToArray();
         }
 

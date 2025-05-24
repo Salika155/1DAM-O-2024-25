@@ -39,16 +39,16 @@ namespace ChessLib.Tablero
         {
             Console.WriteLine("   a  b  c  d  e  f  g  h ");
             Console.WriteLine(" ");
-            for (int y = 0; y < board.GetHeight(); y++)
+            for (int row = 0; row < board.GetHeight(); row++)
             {
-                Console.Write(1 + y + " ");
-                for (int x = 0; x < board.GetWidth(); x++)
+                Console.Write(row + " ");
+                for (int col = 0; col < board.GetWidth(); col++)
                 {
-                    IFigure? figura = board.GetFigureAt(x, y);
-                    Casilla? casilla = board.GetCasillaAt(x, y);
+                    IFigure? figura = board.GetFigureAt(col, row);
+                    Casilla? casilla = board.GetCasillaAt(col, row);
                     if (figura != null)
                     {
-                        DrawFigure(figura, x, y);
+                        DrawFigure(figura, col, row);
                     }
                     else if (casilla != null)
                     {
@@ -148,19 +148,88 @@ namespace ChessLib.Tablero
 
         public static Coord ParsearCoordenada(string texto)
         {
-            if (texto.Length != 2)
-                throw new ArgumentException("Coordenada inválida");
+            //if (texto.Length != 2)
+            //    throw new ArgumentException("Coordenada inválida");
 
-            char col = char.ToLower(texto[0]);
-            char fila = texto[1];
+            //char col = char.ToLower(texto[0]);
+            //char fila = texto[1];
 
-            int x = col - 'a';
-            int y = 8 - (fila - '0'); // Porque la fila 8 es Y=0
+            //int x = col - 'a';
+            //int y = 8 - (fila - '0'); // Porque la fila 8 es Y=0
 
-            if (x < 0 || x >= 8 || y < 0 || y >= 8)
-                throw new ArgumentException("Coordenada fuera de rango");
+            //if (x < 0 || x >= 8 || y < 0 || y >= 8)
+            //    throw new ArgumentException("Coordenada fuera de rango");
 
-            return new Coord(x, y);
+            //return new Coord(x, y);
+            texto = texto.ToLower();
+            int col = texto[0] - 'a';  // 'a' -> 0, 'b' -> 1, etc.
+            int row = texto[1] - '0';  // '0' -> 0, '1' -> 1, etc.
+            return new Coord(row, col);
+        }
+
+        //public static void DrawBoardWithHighlights(ChessBoard board, Coord origen, List<Coord> movimientosValidos)
+        //{
+        //    Console.WriteLine("  a   b   c   d   e   f   g   h");
+        //    Console.WriteLine("---------------------------------");
+        //    for (int y = 0; y < 8; y++)
+        //    {
+        //        Console.Write(y + "|");
+        //        for (int x = 0; x < 8; x++)
+        //        {
+        //            // Resaltar origen (amarillo) y destinos válidos (verde)
+        //            if (x == origen.X && y == origen.Y)
+        //                Console.BackgroundColor = ConsoleColor.DarkYellow;
+        //            else if (movimientosValidos.Any(m => m.X == x && m.Y == y))
+        //                Console.BackgroundColor = ConsoleColor.DarkGreen;
+
+        //            IFigure figura = board.GetFigureAt(x, y);
+        //            Console.Write($" {(figura != null ? Utils.GetSymbol(figura) : " ")} |");
+        //            Console.ResetColor();
+        //        }
+        //        Console.WriteLine(y + "\n---------------------------------");
+        //    }
+        //    Console.WriteLine("  a   b   c   d   e   f   g   h");
+        //}
+
+        public static void DrawBoardWithHighlight(ChessBoard board, Coord origen, List<Coord> movimientosValidos)
+        {
+            Console.WriteLine("   a  b  c  d  e  f  g  h ");
+            Console.WriteLine(" ");
+            for (int row = 0; row < board.GetHeight(); row++)
+            {
+                Console.Write(row + " ");
+                for (int col = 0; col < board.GetWidth(); col++)
+                {
+                    IFigure? figura = board.GetFigureAt(col, row);
+                    Casilla? casilla = board.GetCasillaAt(col, row);
+
+                    // 1. Resaltar ORIGEN (amarillo)
+                    if (col == origen.X && row == origen.Y)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                    }
+                    // 2. Resaltar MOVIMIENTOS VÁLIDOS (verde)
+                    else if (movimientosValidos.Any(m => m.X == col && m.Y == row))
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                    }
+
+                    // 3. Dibujar contenido de la casilla
+                    if (figura != null)
+                    {
+                        Console.Write($" {GetSymbol(figura)} ");
+                    }
+                    else
+                    {
+                        Console.Write(" · "); // Casilla vacía
+                    }
+
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine(" ");
+            Console.WriteLine("   a  b  c  d  e  f  g  h ");
         }
     }
 }

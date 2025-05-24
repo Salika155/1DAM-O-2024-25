@@ -5,6 +5,8 @@ using System.Drawing;
 
 namespace ChessLib.Tablero
 {
+    public delegate void Visit(Coord coord);
+
     public class ChessBoard : IChessBoard
     {
         private readonly Casilla[ , ] _casillas;
@@ -52,7 +54,6 @@ namespace ChessLib.Tablero
             //posiblemente necesite aqui elegir el turno, aunque no me ha hecho falta para cambiarlo varias veces
             while (true)
             {
-                
                 Console.Clear();
                 Utils.DrawBoard(this);
                 Console.WriteLine($"Turno de las piezas: {turnoActual}");
@@ -64,6 +65,21 @@ namespace ChessLib.Tablero
                 if (inputOrigen.Length != 2)
                 {
                     Console.WriteLine("¡Formato incorrecto! Debe ser letra+número (ej. a2)");
+                    Console.ReadKey();
+                    continue;
+                }
+
+                // Convertir ORIGEN y validar pieza
+                Coord origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '0');
+                IFigure figura = GetFigureAt(origen.X, origen.Y);
+
+                // Obtener movimientos válidos y mostrarlos
+                var movimientosValidos = figura.GetAllAvailablePosition(this);
+                Utils.DrawBoardWithHighlight(this, origen, movimientosValidos); // Nueva función
+
+                if (figura == null || figura.GetColor() != turnoActual)
+                {
+                    Console.WriteLine("¡No hay pieza o no es tu turno!");
                     Console.ReadKey();
                     continue;
                 }
@@ -84,11 +100,11 @@ namespace ChessLib.Tablero
                 try
                 {
                     // Convertir coordenadas
-                    Coord origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '1');
+                    origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '1');
                     Coord destino = new Coord(inputDestino[0] - 'a', inputDestino[1] - '1');
 
                     //VALIDACION PIEZA
-                    IFigure figura = GetFigureAt(origen.X, origen.Y);
+                    
                     if (figura == null)
                     {
                         Console.WriteLine("");

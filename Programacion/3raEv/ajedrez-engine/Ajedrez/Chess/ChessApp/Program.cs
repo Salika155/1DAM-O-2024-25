@@ -15,6 +15,7 @@ namespace ChessApp
             ////board.InitializeBoard();
             //ChessBoard.DrawBoard(board);
             var game = new ChessBoard(8, 8);
+            game.DebugPositions(); // Antes de empezar
             Utils.DrawBoard(game);
 
             // Crear figuras (ejemplo)

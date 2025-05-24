@@ -490,9 +490,7 @@ namespace ChessLib.Tablero
             if (!esMovimientoValido)
                 return false;
 
-            //// 4. Obtener el color de la casilla destino ANTES de mover (usando BackgroundColor)
-            //ConsoleColor colorOriginalDestino = _casillas[destinoX, destinoY].BackgroundColor;
-
+            
             // Mover la figura SIN modificar colores
             _casillas[destinoX, destinoY].Figure = figura;  // Pieza a nueva posición
             _casillas[origenX, origenY].Figure = null; // Limpiar posición original
@@ -501,6 +499,7 @@ namespace ChessLib.Tablero
 
             // 7. Actualizar contador de movimientos (si es necesario)
             var cooordfig = figura.GetCoord();
+
             cooordfig = new Coord(destinoX, destinoY);
             figura.IncrementCount();
             Console.WriteLine($"Moviendo de ({origenX},{origenY}) a ({destinoX},{destinoY})");

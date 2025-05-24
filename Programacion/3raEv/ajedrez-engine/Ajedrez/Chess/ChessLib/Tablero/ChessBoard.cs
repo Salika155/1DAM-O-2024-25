@@ -84,8 +84,8 @@ namespace ChessLib.Tablero
                 try
                 {
                     // Convertir coordenadas
-                    Coord origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '1');
-                    Coord destino = new Coord(inputDestino[0] - 'a', inputDestino[1] - '1');
+                    Coord origen = Utils.ParsearCoordenada(inputOrigen);
+                    Coord destino = Utils.ParsearCoordenada(inputDestino);
 
                     //VALIDACION PIEZA
                     IFigure figura = GetFigureAt(origen.X, origen.Y);
@@ -95,23 +95,23 @@ namespace ChessLib.Tablero
                         Console.ReadKey();
                         continue;
                     }
-                    if(figura.GetColor() != turnoActual)
-                    {
-                        Console.WriteLine("No es tu turno");
-                        Console.ReadKey();
-                        continue;
-                    }
+                    //if(figura.GetColor() != turnoActual)
+                    //{
+                    //    Console.WriteLine("No es tu turno");
+                    //    Console.ReadKey();
+                    //    continue;
+                    //}
                     
                     // Mover pieza
                     if (MoveFigure(origen.X, origen.Y, destino.X, destino.Y))
                     {
                         turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
                     }
-                    else
-                    {
-                        Console.WriteLine("¡Movimiento no válido! Presiona cualquier tecla...");
-                        Console.ReadKey();
-                    }
+                    //else
+                    //{
+                    //    Console.WriteLine("¡Movimiento no válido! Presiona cualquier tecla...");
+                    //    Console.ReadKey();
+                    //}
                 }
                 catch
                 {

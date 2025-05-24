@@ -731,6 +731,19 @@ namespace ChessLib.Tablero
             return true;
         }
 
+        public void DebugPositions()
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    var fig = GetFigureAt(x, y);
+                    if (fig != null)
+                        Console.WriteLine($"{x},{y}: {fig.GetType().Name} {fig.GetColor()}");
+                }
+            }
+        }
+
         //tengo que hacer metodos para: enroque del rey y las torres, ahogar al rey, jaque, jaque mate
         //estos metodos deberian de ir en el rey, y en los movimientos hay que ver como se mueven y marcar a donde pueda mover la casilla
         //objetivo a mover, es decir la que le he pasado al programa

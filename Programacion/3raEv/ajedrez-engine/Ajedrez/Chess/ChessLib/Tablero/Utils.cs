@@ -35,41 +35,75 @@ namespace ChessLib.Tablero
             return x >= 0 && x < width && y >= 0 && y < height;
         }
 
+        //public static void DrawBoard(ChessBoard board)
+        //{
+        //    Console.WriteLine("   a  b  c  d  e  f  g  h ");
+        //    Console.WriteLine(" ");
+        //    for (int y = board.GetHeight() - 1; y >= 0; y--)
+        //    {
+        //        Console.Write(1 + y + " ");
+        //        for (int x = 0; x < board.GetWidth(); x++)
+        //        {
+        //            IFigure? figura = board.GetFigureAt(x, y);
+        //            Casilla? casilla = board.GetCasillaAt(x, y);
+        //            if (figura != null)
+        //            {
+        //                DrawFigure(figura, x, y);
+        //            }
+        //            else if (casilla != null)
+        //            {
+        //                DrawCasilla(casilla);
+        //            }
+        //            Console.Write(figura != null ? GetSymbol(figura) : "· ");
+        //        }
+        //        Console.ResetColor();
+        //        Console.WriteLine();
+        //    }
+        //    Console.WriteLine(" ");
+        //    Console.WriteLine("   a  b  c  d  e  f  g  h ");
+        //}
+
         public static void DrawBoard(ChessBoard board)
         {
             Console.WriteLine("   a  b  c  d  e  f  g  h ");
             Console.WriteLine(" ");
-            for (int y = board.GetHeight() - 1; y >= 0; y--)
+            for (int y = 0; y < board.GetHeight(); y++)
             {
-                Console.Write(1 + y + " ");
+                Console.Write(8 - y + " ");
                 for (int x = 0; x < board.GetWidth(); x++)
                 {
+                    var background = ((x + y) % 2 == 0) ? ConsoleColor.White : ConsoleColor.Red;
+                    Console.BackgroundColor = background;
+
                     IFigure? figura = board.GetFigureAt(x, y);
-                    Casilla? casilla = board.GetCasillaAt(x, y);
                     if (figura != null)
                     {
-                        DrawFigure(figura, x, y);
+                        DrawFigure(figura);
                     }
-                    else if (casilla != null)
+                    else
                     {
-                        DrawCasilla(casilla);
+                        Console.Write("   "); // Casilla vacía
                     }
-                    //Console.Write(figura != null ? GetSymbol(figura) : "· ");
+                    Console.ResetColor();
                 }
-                Console.ResetColor();
                 Console.WriteLine();
             }
             Console.WriteLine(" ");
             Console.WriteLine("   a  b  c  d  e  f  g  h ");
         }
 
-        private static void DrawFigure(IFigure figure, int x, int y)
-        {//esto es, al dibujar de nuevo hace que el background sea como la figura
-            
-            Console.BackgroundColor = (x + y) % 2 == 0 ? ConsoleColor.White : ConsoleColor.Red;
+        //private static void DrawFigure(IFigure figure, int x, int y)
+        //{//esto es, al dibujar de nuevo hace que el background sea como la figura
+
+        //    Console.BackgroundColor = (x + y) % 2 == 0 ? ConsoleColor.White : ConsoleColor.Red;
+        //    Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE ? ConsoleColor.Black : ConsoleColor.DarkYellow;
+        //    Console.Write(Utils.GetSymbol(figure));
+        //    Console.ResetColor();
+        //}
+        private static void DrawFigure(IFigure figure)
+        {
             Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE ? ConsoleColor.Black : ConsoleColor.DarkYellow;
             Console.Write(Utils.GetSymbol(figure));
-            Console.ResetColor();
         }
 
         private static void DrawCasilla(Casilla? casilla)

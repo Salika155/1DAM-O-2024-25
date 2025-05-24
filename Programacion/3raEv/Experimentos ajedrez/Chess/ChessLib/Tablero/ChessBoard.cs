@@ -105,7 +105,7 @@ namespace ChessLib.Tablero
                     // Mover pieza
                     if (MoveFigure(origen.X, origen.Y, destino.X, destino.Y))
                     {
-                        turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
+                        turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.WHITE : FigureColor.BLACK;
                     }
                     else
                     {
@@ -123,17 +123,6 @@ namespace ChessLib.Tablero
 
         }
 
-        //public void CrearCasillas()
-        //{
-        //    for (int y = 0; y < _height; y++)
-        //    {
-        //        for (int x = 0; x < _width; x++)
-        //        {
-        //            var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.RED;
-        //            _casillas[x, y] = new Casilla(new Coord(x, y), color);
-        //        }
-        //    }
-        //}
         public void CrearCasillas()
         {
             for (int y = 0; y < _height; y++)  // Ahora empieza desde arriba (y=7)
@@ -145,10 +134,22 @@ namespace ChessLib.Tablero
                         var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.RED;
                         _casillas[x, y] = new Casilla(new Coord(x, y), color);
                     }
-                    
+
                 }
             }
         }
+
+        //public void CrearCasillas()
+        //{
+        //    for (int y = _height - 1; y >= 0; y--)  // Ahora empieza desde arriba (y=7)
+        //    {
+        //        for (int x = 0; x < _width; x++)
+        //        {
+        //            var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.RED;
+        //            _casillas[x, y] = new Casilla(new Coord(x, y), color);
+        //        }
+        //    }
+        //}
 
         #region comentado
         //public void Execute()
@@ -322,7 +323,7 @@ namespace ChessLib.Tablero
         //        CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 0));
         //        CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
         //        CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
-                
+
         //        for (int x = 0; x < 8; x++)
         //        {
         //            CreateFigure(FigureType.PAWN, FigureColor.WHITE, new Coord(x, 1));
@@ -369,8 +370,8 @@ namespace ChessLib.Tablero
         }
         public void CreateFigures()
         {
-            CreateFiguresWithColor(FigureColor.WHITE);
             CreateFiguresWithColor(FigureColor.BLACK);
+            CreateFiguresWithColor(FigureColor.WHITE);
             #region comentado
             //for (int x = 0; x < 8; x++)
             //{

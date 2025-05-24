@@ -67,7 +67,7 @@ namespace ChessLib.Tablero
         {
             Console.WriteLine("   a  b  c  d  e  f  g  h ");
             Console.WriteLine(" ");
-            for (int y = 0; y < board.GetHeight(); y++)
+            for (int y = 7; y >= 0; y--)
             {
                 Console.Write(8 - y + " ");
                 for (int x = 0; x < board.GetWidth(); x++)
@@ -176,7 +176,7 @@ namespace ChessLib.Tablero
             char fila = texto[1];
 
             int x = col - 'a';
-            int y = 8 - (fila - '0'); // Porque la fila 8 es Y=0
+            int y = (fila - '0') - 1; // Porque la fila 8 es Y=0
 
             if (x < 0 || x >= 8 || y < 0 || y >= 8)
                 throw new ArgumentException("Coordenada fuera de rango");

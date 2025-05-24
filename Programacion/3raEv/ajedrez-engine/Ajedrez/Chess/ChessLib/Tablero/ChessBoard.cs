@@ -84,8 +84,14 @@ namespace ChessLib.Tablero
                 try
                 {
                     // Convertir coordenadas
-                    Coord origen = Utils.ParsearCoordenada(inputOrigen);
-                    Coord destino = Utils.ParsearCoordenada(inputDestino);
+                    //Coord origen = Utils.ParsearCoordenada(inputOrigen);
+                    //Coord destino = Utils.ParsearCoordenada(inputDestino);
+                    //Coord origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '1');
+                    Coord origen = new Coord(
+                    inputOrigen[0] - 'a',       // Columna (a=0, b=1, ..., h=7)
+                    8 - (inputOrigen[1] - '0')  // Fila: '1'→7, '2'→6, ..., '8'→0
+                    );
+                    Coord destino = new Coord(inputDestino[0] - 'a', 8 - (inputOrigen[1] - '0'));
 
                     //VALIDACION PIEZA
                     IFigure figura = GetFigureAt(origen.X, origen.Y);
@@ -95,13 +101,13 @@ namespace ChessLib.Tablero
                         Console.ReadKey();
                         continue;
                     }
-                    //if(figura.GetColor() != turnoActual)
-                    //{
-                    //    Console.WriteLine("No es tu turno");
-                    //    Console.ReadKey();
-                    //    continue;
-                    //}
-                    
+                    if (figura.GetColor() != turnoActual)
+                    {
+                        Console.WriteLine("No es tu turno");
+                        Console.ReadKey();
+                        continue;
+                    }
+
                     // Mover pieza
                     if (MoveFigure(origen.X, origen.Y, destino.X, destino.Y))
                     {
@@ -293,38 +299,76 @@ namespace ChessLib.Tablero
         {
             if (color == FigureColor.BLACK)
             {
-                // Colocar las piezas negras
-                CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(0, 7));
-                CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(1, 7));
-                CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(2, 7));
-                CreateFigure(FigureType.QUEEN, FigureColor.BLACK, new Coord(3, 7));
-                CreateFigure(FigureType.KING, FigureColor.BLACK, new Coord(4, 7));
-                CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(5, 7));
-                CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(6, 7));
-                CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(7, 7));
+                // Piezas NEGRAS en la parte SUPERIOR (y=0 y y=1)
+                CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(0, 0)); // a8
+                CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(1, 0)); // b8
+                CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(2, 0)); // c8
+                CreateFigure(FigureType.QUEEN, FigureColor.BLACK, new Coord(3, 0)); // d8
+                CreateFigure(FigureType.KING, FigureColor.BLACK, new Coord(4, 0)); // e8
+                CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(5, 0)); // f8
+                CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(6, 0)); // g8
+                CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(7, 0)); // h8
 
                 for (int x = 0; x < 8; x++)
                 {
-                    CreateFigure(FigureType.PAWN, FigureColor.BLACK, new Coord(x, 6));
+                    CreateFigure(FigureType.PAWN, FigureColor.BLACK, new Coord(x, 1)); // a7-h7
                 }
             }
             else if (color == FigureColor.WHITE)
             {
-                CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(0, 0));
-                CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(1, 0));
-                CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(2, 0));
-                CreateFigure(FigureType.QUEEN, FigureColor.WHITE, new Coord(3, 0));
-                CreateFigure(FigureType.KING, FigureColor.WHITE, new Coord(4, 0));
-                CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 0));
-                CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
-                CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
+                // Piezas BLANCAS en la parte INFERIOR (y=6 y y=7)
+                CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(0, 7)); // a1
+                CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(1, 7)); // b1
+                CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(2, 7)); // c1
+                CreateFigure(FigureType.QUEEN, FigureColor.WHITE, new Coord(3, 7)); // d1
+                CreateFigure(FigureType.KING, FigureColor.WHITE, new Coord(4, 7)); // e1
+                CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 7)); // f1
+                CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 7)); // g1
+                CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 7)); // h1
 
                 for (int x = 0; x < 8; x++)
                 {
-                    CreateFigure(FigureType.PAWN, FigureColor.WHITE, new Coord(x, 1));
+                    CreateFigure(FigureType.PAWN, FigureColor.WHITE, new Coord(x, 6)); // a2-h2
                 }
             }
         }
+
+        //public void CreateFiguresWithColor(FigureColor color)
+        //{
+        //    if (color == FigureColor.BLACK)
+        //    {
+        //        // Colocar las piezas negras
+        //        CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(0, 7));
+        //        CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(1, 7));
+        //        CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(2, 7));
+        //        CreateFigure(FigureType.QUEEN, FigureColor.BLACK, new Coord(3, 7));
+        //        CreateFigure(FigureType.KING, FigureColor.BLACK, new Coord(4, 7));
+        //        CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(5, 7));
+        //        CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(6, 7));
+        //        CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(7, 7));
+
+        //        for (int x = 0; x < 8; x++)
+        //        {
+        //            CreateFigure(FigureType.PAWN, FigureColor.BLACK, new Coord(x, 6));
+        //        }
+        //    }
+        //    else if (color == FigureColor.WHITE)
+        //    {
+        //        CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(0, 0));
+        //        CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(1, 0));
+        //        CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(2, 0));
+        //        CreateFigure(FigureType.QUEEN, FigureColor.WHITE, new Coord(3, 0));
+        //        CreateFigure(FigureType.KING, FigureColor.WHITE, new Coord(4, 0));
+        //        CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 0));
+        //        CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
+        //        CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
+
+        //        for (int x = 0; x < 8; x++)
+        //        {
+        //            CreateFigure(FigureType.PAWN, FigureColor.WHITE, new Coord(x, 1));
+        //        }
+        //    }
+        //}
 
         //public void CreateFiguresWithColor(FigureColor color)
         //{
@@ -502,6 +546,47 @@ namespace ChessLib.Tablero
             Console.WriteLine($"Moviendo de ({origenX},{origenY}) a ({destinoX},{destinoY})");
             return true;
         }
+
+        //public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
+        //{
+        //    Console.WriteLine($"DEBUG: Intentando mover de ({origenX},{origenY}) a ({destinoX},{destinoY})");
+
+        //    // 1. Validar coordenadas
+        //    if (!Utils.IsValidCoordinates(origenX, origenY, Width, Height) ||
+        //        !Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
+        //    {
+        //        Console.WriteLine("Coordenadas inválidas");
+        //        return false;
+        //    }
+
+        //    // 2. Obtener figura en origen
+        //    IFigure? figura = _casillas[origenX, origenY].Figure;
+        //    if (figura == null)
+        //    {
+        //        Console.WriteLine("No hay figura en origen");
+        //        return false;
+        //    }
+
+        //    // 3. Verificar movimientos válidos
+        //    var movimientosValidos = figura.GetAllAvailablePosition(this);
+        //    bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
+
+        //    if (!esMovimientoValido)
+        //    {
+        //        Console.WriteLine("Movimiento no válido para esta pieza");
+        //        return false;
+        //    }
+
+        //    // 4. Realizar movimiento
+        //    _casillas[destinoX, destinoY].Figure = figura;
+        //    _casillas[origenX, origenY].Figure = null;
+        //    figura.MoveTo(new Coord(destinoX, destinoY)); // Actualiza coordenadas internas
+
+        //    Console.WriteLine($"Movimiento exitoso: {figura.GetType().Name} a {(char)('a' + destinoX)}{8 - destinoY}");
+        //    return true;
+        //}
+
+
 
         public void RemoveFigureAt(int x, int y)
         {

@@ -47,7 +47,7 @@ namespace ChessLib.Figuras
 
         public void MoveTo(Coord newCoords)
         {
-            _coords = newCoords;
+            _coords = newCoords; // Actualiza las coordenadas internas
             _movementCount++;
         }
 

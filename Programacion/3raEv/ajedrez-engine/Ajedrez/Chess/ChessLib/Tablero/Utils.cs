@@ -69,7 +69,8 @@ namespace ChessLib.Tablero
             Console.WriteLine(" ");
             for (int y = 7; y >= 0; y--)
             {
-                Console.Write(8 - y + " ");
+                //Console.Write(8 - y + " ");
+                Console.Write(1 + y + " ");
                 for (int x = 0; x < board.GetWidth(); x++)
                 {
                     var background = ((x + y) % 2 == 0) ? ConsoleColor.White : ConsoleColor.Red;
@@ -167,6 +168,42 @@ namespace ChessLib.Tablero
             }
         }
 
+        //public static Coord ParsearCoordenada(string texto)
+        //{
+        //    if (texto.Length != 2)
+        //        throw new ArgumentException("Coordenada inválida");
+
+        //    char col = char.ToLower(texto[0]);
+        //    char fila = texto[1];
+
+        //    int x = col - 'a';
+        //    int y = (fila - '0') - 1; // Porque la fila 8 es Y=0
+
+        //    if (x < 0 || x >= 8 || y < 0 || y >= 8)
+        //        throw new ArgumentException("Coordenada fuera de rango");
+
+        //    return new Coord(x, y);
+        //}
+        //public static Coord ParsearCoordenada(string texto)
+        //{
+        //    if (texto.Length != 2)
+        //        throw new ArgumentException("Coordenada inválida");
+
+        //    char col = char.ToLower(texto[0]);
+        //    char fila = texto[1];
+
+        //    int x = col - 'a';
+        //    int y = 7 - (fila - '1'); // '1' → 6, '2' → 5, ..., '8' → -1 (¡error!)
+
+        //    // Corrección definitiva:
+        //    y = 8 - (fila - '0'); // '1' → 7, '2' → 6, ..., '8' → 0
+
+        //    if (x < 0 || x >= 8 || y < 0 || y >= 8)
+        //        throw new ArgumentException("Coordenada fuera de rango");
+
+        //    return new Coord(x, y);
+        //}
+
         public static Coord ParsearCoordenada(string texto)
         {
             if (texto.Length != 2)
@@ -175,12 +212,13 @@ namespace ChessLib.Tablero
             char col = char.ToLower(texto[0]);
             char fila = texto[1];
 
-            int x = col - 'a';
-            int y = (fila - '0') - 1; // Porque la fila 8 es Y=0
+            int x = col - 'a';  // a=0, b=1, ..., h=7
+            int y = 8 - (fila - '0');  // '1'→7, '2'→6, ..., '8'→0
 
             if (x < 0 || x >= 8 || y < 0 || y >= 8)
                 throw new ArgumentException("Coordenada fuera de rango");
 
+            Console.WriteLine($"DEBUG: Input '{texto}' → Coord ({x},{y})"); // Debug
             return new Coord(x, y);
         }
     }

@@ -136,12 +136,16 @@ namespace ChessLib.Tablero
         //}
         public void CrearCasillas()
         {
-            for (int y = _height - 1; y >= 0; y--)  // Ahora empieza desde arriba (y=7)
+            for (int y = 0; y < _height; y++)  // Ahora empieza desde arriba (y=7)
             {
                 for (int x = 0; x < _width; x++)
                 {
-                    var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.RED;
-                    _casillas[x, y] = new Casilla(new Coord(x, y), color);
+                    if (Utils.IsValidCoordinates(x, y, _width, _height))
+                    {
+                        var color = (x + y) % 2 == 0 ? CasillaColor.WHITE : CasillaColor.RED;
+                        _casillas[x, y] = new Casilla(new Coord(x, y), color);
+                    }
+                    
                 }
             }
         }

@@ -71,7 +71,7 @@ namespace ChessLib.Tablero
                 //AQUI EN MEDIO METER LA SELECCION
 
                 // 2. Pedir DESTINO
-                Console.Write("Introduce coordenadas de destino (ej. a4): ");
+                Console.Write("Introduce coordenadas de destino (ej. a3): ");
                 string inputDestino = Console.ReadLine().ToLower().Trim();
 
                 if (inputDestino.Length != 2)

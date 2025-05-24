@@ -38,16 +38,16 @@ namespace ChessLib.Tablero
             Execute();
         }
 
+        //while (true)
+        //{
+        //    //que compruebe que se puede seguir jugando
+        //    //que compruebe que no hay ningun jugador con 0 fichas
+        //    //que compruebe el turno del jugador que le toca
+        //    //que compruebe si puede mover la ficha
+        //    //si puede, que la mueva.
+        //}
         public void ExecuteTurns()
         {
-            //while (true)
-            //{
-            //    //que compruebe que se puede seguir jugando
-            //    //que compruebe que no hay ningun jugador con 0 fichas
-            //    //que compruebe el turno del jugador que le toca
-            //    //que compruebe si puede mover la ficha
-            //    //si puede, que la mueva.
-            //}
             FigureColor turnoActual = FigureColor.WHITE;
             //posiblemente necesite aqui elegir el turno, aunque no me ha hecho falta para cambiarlo varias veces
             while (true)
@@ -84,14 +84,14 @@ namespace ChessLib.Tablero
                 try
                 {
                     // Convertir coordenadas
-                    //Coord origen = Utils.ParsearCoordenada(inputOrigen);
-                    //Coord destino = Utils.ParsearCoordenada(inputDestino);
+                    Coord origen = Utils.ParsearCoordenada(inputOrigen);
+                    Coord destino = Utils.ParsearCoordenada(inputDestino);
                     //Coord origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '1');
-                    Coord origen = new Coord(
-                    inputOrigen[0] - 'a',       // Columna (a=0, b=1, ..., h=7)
-                    8 - (inputOrigen[1] - '0')  // Fila: '1'→7, '2'→6, ..., '8'→0
-                    );
-                    Coord destino = new Coord(inputDestino[0] - 'a', 8 - (inputOrigen[1] - '0'));
+                    //Coord origen = new Coord(
+                    //inputOrigen[0] - 'a',       // Columna (a=0, b=1, ..., h=7)
+                    //8 - (inputOrigen[1] - '0')  // Fila: '1'→7, '2'→6, ..., '8'→0
+                    //);
+                    //Coord destino = new Coord(inputDestino[0] - 'a', 8 - (inputOrigen[1] - '0'));
 
                     //VALIDACION PIEZA
                     IFigure figura = GetFigureAt(origen.X, origen.Y);

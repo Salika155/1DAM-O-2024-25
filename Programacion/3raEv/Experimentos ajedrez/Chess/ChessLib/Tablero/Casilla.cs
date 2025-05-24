@@ -28,10 +28,10 @@ namespace ChessLib.Tablero
         }
 
         public readonly CasillaColor? Color => _casillaColor;
-        public Casilla(Coord coord, CasillaColor type)
+        public Casilla(Coord coord, CasillaColor color)
         {
             _coord = coord;
-            _casillaColor = type;
+            _casillaColor = color;
             Figure = null;
             //ForeGroundColor = ConsoleColor.White;
         }
@@ -46,6 +46,18 @@ namespace ChessLib.Tablero
         public Casilla(Coord coord)
         {
             this._coord = coord;
+        }
+
+        // Métodos para obtener colores (sin modificar estado)
+        public ConsoleColor GetBackgroundColor(bool isHighlighted)
+        {
+            return isHighlighted ? ConsoleColor.DarkGreen :
+                   (_casillaColor == CasillaColor.WHITE ? ConsoleColor.White : ConsoleColor.DarkRed);
+        }
+
+        public ConsoleColor GetTextColor(bool isHighlighted)
+        {
+            return isHighlighted ? ConsoleColor.White : ConsoleColor.Black;
         }
     }
 

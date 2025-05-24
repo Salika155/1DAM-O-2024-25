@@ -2,6 +2,7 @@
 using ChessLib.Figuras;
 using System;
 using System.Drawing;
+using static ChessLib.Tablero.IChessBoard;
 
 namespace ChessLib.Tablero
 {
@@ -72,11 +73,6 @@ namespace ChessLib.Tablero
                 // Convertir ORIGEN y validar pieza
                 Coord origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '0');
                 IFigure figura = GetFigureAt(origen.X, origen.Y);
-
-                // Obtener movimientos válidos y mostrarlos
-                var movimientosValidos = figura.GetAllAvailablePosition(this);
-                Utils.DrawBoardWithHighlight(this, origen, movimientosValidos); // Nueva función
-
                 if (figura == null || figura.GetColor() != turnoActual)
                 {
                     Console.WriteLine("¡No hay pieza o no es tu turno!");
@@ -85,6 +81,9 @@ namespace ChessLib.Tablero
                 }
 
                 //AQUI EN MEDIO METER LA SELECCION
+                // Obtener movimientos válidos y mostrarlos
+                var movimientosValidos = figura.GetAllAvailablePosition(this);
+                Utils.DrawBoardWithHighlight(this, origen, movimientosValidos); // Nueva función
 
                 // 2. Pedir DESTINO
                 Console.Write("Introduce coordenadas de destino (ej. a4): ");
@@ -97,47 +96,23 @@ namespace ChessLib.Tablero
                     continue;
                 }
 
-                try
-                {
-                    // Convertir coordenadas
-                    origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '1');
-                    Coord destino = new Coord(inputDestino[0] - 'a', inputDestino[1] - '1');
+                // Convertir DESTINO (sin restar '1' o '0')
+                Coord destino = new Coord(inputDestino[0] - 'a', inputDestino[1] - '0');
 
-                    //VALIDACION PIEZA
-                    
-                    if (figura == null)
-                    {
-                        Console.WriteLine("");
-                        Console.ReadKey();
-                        continue;
-                    }
-                    if(figura.GetColor() != turnoActual)
-                    {
-                        Console.WriteLine("No es tu turno");
-                        Console.ReadKey();
-                        continue;
-                    }
-                    
-                    // Mover pieza
-                    if (MoveFigure(origen.X, origen.Y, destino.X, destino.Y))
-                    {
-                        turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.WHITE : FigureColor.BLACK;
-                    }
-                    else
-                    {
-                        Console.WriteLine("¡Movimiento no válido! Presiona cualquier tecla...");
-                        Console.ReadKey();
-                    }
-                }
-                catch
+                // Mover pieza
+                if (MoveFigure(origen.X, origen.Y, destino.X, destino.Y))
                 {
-                    Console.WriteLine("¡Coordenadas inválidas! Usa rango a1-h8");
+                    turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
+                }
+                else
+                {
+                    Console.WriteLine("¡Movimiento no válido! Presiona cualquier tecla...");
                     Console.ReadKey();
                 }
             }
 
-
         }
+        
 
         public void CrearCasillas()
         {
@@ -508,21 +483,26 @@ namespace ChessLib.Tablero
             if (figura == null)
                 return false;
 
-            // 3. Verificar movimientos válidos (según reglas de la pieza)
+            // 3. Verificar movimientos válidos
             var movimientosValidos = figura.GetAllAvailablePosition(this);
-            //PINTAR POSIBLES MOVIMIENTOS
             bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
 
             if (!esMovimientoValido)
                 return false;
 
-            // 4. Realizar movimiento (solo el tablero maneja las posiciones)
-            _casillas[destinoX, destinoY].Figure = figura;
-            _casillas[origenX, origenY].Figure = null;
+            //// 4. Obtener el color de la casilla destino ANTES de mover (usando BackgroundColor)
+            //ConsoleColor colorOriginalDestino = _casillas[destinoX, destinoY].BackgroundColor;
 
-            // 5. Actualizar contador de movimientos (si es necesario)
+            // Mover la figura SIN modificar colores
+            _casillas[destinoX, destinoY].Figure = figura;  // Pieza a nueva posición
+            _casillas[origenX, origenY].Figure = null; // Limpiar posición original
+            
+
+
+            // 7. Actualizar contador de movimientos (si es necesario)
+            var cooordfig = figura.GetCoord();
+            cooordfig = new Coord(destinoX, destinoY);
             figura.IncrementCount();
-            _figureCount++;
             Console.WriteLine($"Moviendo de ({origenX},{origenY}) a ({destinoX},{destinoY})");
             return true;
         }
@@ -586,10 +566,15 @@ namespace ChessLib.Tablero
         //NO ME FIO
         public bool IsPositionEmpty(Coord coord)
         {
-            if (!Utils.IsValidCoordinates(coord.X, coord.Y, _width, _height))
-                return false; // Fuera del tablero.
+            if (!IsValidPosition(coord)) return false;
 
-            return _casillas[coord.X, coord.Y].Figure == null;
+            bool isEmpty = true;
+            VisitFigures(figure =>
+            {
+                if (figure.GetCoord().X == coord.X && figure.GetCoord().Y == coord.Y)
+                    isEmpty = false;
+            });
+            return isEmpty;
         }
 
         //NO ME FIO
@@ -668,6 +653,20 @@ namespace ChessLib.Tablero
         public bool IsEndedTheMatch()
         {
             return true;
+        }
+
+        public bool IsValidPosition(Coord target)
+        {
+            return (Utils.IsValidCoordinates(target.X, target.Y, _width, _height)) ? true : false;
+        }
+
+        public void VisitFigures(VisitFigureDelegate visitor)
+        {
+            for (int i = 0; i < _figures.Length; i++)
+            {
+                if (_figures[i] != null)
+                    visitor(_figures[i]);
+            }
         }
 
         //tengo que hacer metodos para: enroque del rey y las torres, ahogar al rey, jaque, jaque mate

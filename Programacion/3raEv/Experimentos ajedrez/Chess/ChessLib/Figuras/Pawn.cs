@@ -12,7 +12,7 @@ namespace ChessLib.Figuras
         public override Coord[] GetAvailablePosition(IChessBoard board)
         {
             List<Coord> moves = new List<Coord>();
-            int direction = Color == FigureColor.WHITE ? 1 : -1;
+            int direction = (Color == FigureColor.WHITE) ? -1 : 1;  // ¡Cambiado!
 
             // Movimiento hacia adelante (1 casilla)
             Coord movAdelante = new Coord(Coords.X, Coords.Y + direction);
@@ -23,23 +23,25 @@ namespace ChessLib.Figuras
                 if (MovementCount == 0)
                 {
                     Coord movDoble = new Coord(Coords.X, Coords.Y + 2 * direction);
-                    if (board.IsPositionEmpty(movDoble))
+                    if (board.IsPositionEmpty(movDoble) && board.IsPositionEmpty(movAdelante))
                     {
                         moves.Add(movDoble);
                     }
                 }
             }
             // Capturas diagonales
-            //CheckDiagonalCapture(board, direction, -1, moves); // Izquierda
-            //CheckDiagonalCapture(board, direction, 1, moves);  // Derecha
+            CheckDiagonalCapture(board, direction, -1, moves); // Izquierda
+            CheckDiagonalCapture(board, direction, 1, moves);  // Derecha
             return moves.ToArray();
         }
 
         private void CheckDiagonalCapture(IChessBoard board, int directionY, int directionX, List<Coord> moves)
         {
             Coord target = new Coord(Coords.X + directionX, Coords.Y + directionY);
-            if (board.HasEnemyPiece(target, Color))
+            if (board.IsValidPosition(target) && board.HasEnemyPiece(target, Color) && !board.IsPositionEmpty(target))
+            {
                 moves.Add(target);
+            }
         }
 
         //public virtual bool ValidateMove(Coord newCoords)
@@ -51,6 +53,7 @@ namespace ChessLib.Figuras
         {
             // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
             List<Coord> validMoves = new List<Coord>();
+            int direction = (Color == FigureColor.WHITE) ? -1 : 1;  // ¡Cambiado!
             foreach (var move in listMoves)
             {
                 if (board.IsPositionEmpty(move) || board.HasEnemyPiece(move, Color))

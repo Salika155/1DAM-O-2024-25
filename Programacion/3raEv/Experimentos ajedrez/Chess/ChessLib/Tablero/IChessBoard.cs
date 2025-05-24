@@ -5,11 +5,16 @@ namespace ChessLib.Tablero
 {
     public interface IChessBoard : IChessBoardImmutable
     {
+        public delegate void VisitFigureDelegate(IFigure figure);
         void CreateFigures();
         void Clear();
         bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY);
-        bool IsPositionEmpty(Coord movAdelante);
+        
         bool HasEnemyPiece(Coord target, FigureColor color);
+        //estos creo que sobran
+        bool IsPositionEmpty(Coord movAdelante);
+        bool IsValidPosition(Coord target);
+        void VisitFigures(VisitFigureDelegate visitor);
 
         //Interface IChessBoard : IChessBoardImmutable
         //*  {

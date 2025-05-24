@@ -75,6 +75,7 @@ namespace ChessLib.Tablero
                 ? ConsoleColor.White
                 : ConsoleColor.Red;
 
+            //puede estar aqui el fallo
             // ¡CORRECCIÓN CLAVE AQUÍ! (Colores invertidos)
             Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE
                 ? ConsoleColor.DarkYellow  // Amarillo para blancas
@@ -82,7 +83,8 @@ namespace ChessLib.Tablero
 
             Console.BackgroundColor = background;
             Console.Write(GetSymbol(figure));
-            Console.ResetColor();
+            //o aqui, ya que la casilla no tiene que resetear su color
+            //Console.ResetColor();
         }
 
         private static void DrawCasilla(Casilla? casilla)
@@ -93,7 +95,7 @@ namespace ChessLib.Tablero
             Console.BackgroundColor = fondo;
             Console.ForegroundColor = texto;
             Console.Write("   "); // <-- 3 espacios en blanco
-            Console.ResetColor();
+            //Console.ResetColor();
         }
 
         public static string GetSymbol(IFigure figura)

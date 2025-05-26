@@ -6,8 +6,7 @@ using static ChessLib.Tablero.IChessBoard;
 
 namespace ChessLib.Tablero
 {
-    public delegate void Visit(Coord coord);
-
+    
     public class ChessBoard : IChessBoard
     {
         private readonly Casilla[ , ] _casillas;
@@ -494,8 +493,12 @@ namespace ChessLib.Tablero
             // Mover la figura SIN modificar colores
             _casillas[destinoX, destinoY].Figure = figura;  // Pieza a nueva posición
             _casillas[origenX, origenY].Figure = null; // Limpiar posición original
-            
 
+            // Redibujar la casilla de origen
+            DibujarCasillas(obtenerCasilla(origen));
+
+            // Redibujar la casilla de destino
+            DibujarCasilla(obtenerCasilla(destino));
 
             // 7. Actualizar contador de movimientos (si es necesario)
             var cooordfig = figura.GetCoord();
@@ -659,7 +662,7 @@ namespace ChessLib.Tablero
             return (Utils.IsValidCoordinates(target.X, target.Y, _width, _height)) ? true : false;
         }
 
-        public void VisitFigures(VisitFigureDelegate visitor)
+        public void VisitFigures(FigureVisitor visitor)
         {
             for (int i = 0; i < _figures.Length; i++)
             {
@@ -667,6 +670,48 @@ namespace ChessLib.Tablero
                     visitor(_figures[i]);
             }
         }
+
+        public void VisitCoords(CoordVisitor visitor)
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    visitor(new Coord(x, y));
+                }
+            }
+        }
+
+        public void VisitCasillas(CasillaVisitor visitor)
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    Casilla? casilla = _casillas[x, y];
+                    if (casilla != null)
+                    {
+                        visitor(casilla);
+                    }
+                }
+            }
+        }
+        public List<IFigure> FilterFigures(FigureFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Casilla> FilterCasillas(CasillaFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Coord> FilterCoords(CoordFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
+
 
         //tengo que hacer metodos para: enroque del rey y las torres, ahogar al rey, jaque, jaque mate
         //estos metodos deberian de ir en el rey, y en los movimientos hay que ver como se mueven y marcar a donde pueda mover la casilla

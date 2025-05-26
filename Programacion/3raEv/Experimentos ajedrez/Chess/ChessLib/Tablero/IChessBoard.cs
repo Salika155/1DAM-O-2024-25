@@ -3,9 +3,16 @@ using ChessLib.Figuras;
 
 namespace ChessLib.Tablero
 {
+    
     public interface IChessBoard : IChessBoardImmutable
     {
-        public delegate void VisitFigureDelegate(IFigure figure);
+        public delegate void FigureVisitor(IFigure? figure);
+        public delegate void CasillaVisitor(Casilla? casilla);
+        public delegate void CoordVisitor(Coord? coord);
+
+        public delegate bool FigureFilter(IFigure? figure);
+        public delegate bool CasillaFilter(Casilla? casilla);
+        public delegate bool CoordFilter(Coord? coord);
         void CreateFigures();
         void Clear();
         bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY);
@@ -14,7 +21,13 @@ namespace ChessLib.Tablero
         //estos creo que sobran
         bool IsPositionEmpty(Coord movAdelante);
         bool IsValidPosition(Coord target);
-        void VisitFigures(VisitFigureDelegate visitor);
+        void VisitFigures(FigureVisitor visitor);
+        void VisitCoords(CoordVisitor visitor);
+        void VisitCasillas(CasillaVisitor visitor);
+        List<IFigure> FilterFigures(FigureFilter filter);
+        List<Casilla> FilterCasillas(CasillaFilter filter);
+        List<Coord> FilterCoords(CoordFilter filter);
+
 
         //Interface IChessBoard : IChessBoardImmutable
         //*  {

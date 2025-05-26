@@ -31,7 +31,7 @@ namespace ChessLib.Figuras
             int x = Coords.X + dx;
             int y = Coords.Y + dy;
 
-            while (Utils.IsValidCoordinates(dx, dy, board.GetWidth(), board.GetHeight()))
+            while (Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
             {
                 var destino = new Coord(x, y);
                 var figura = board.GetFigureAt(x, y);

@@ -27,6 +27,7 @@ namespace ChessLib.Tablero
         List<IFigure> FilterFigures(FigureFilter filter);
         List<Casilla> FilterCasillas(CasillaFilter filter);
         List<Coord> FilterCoords(CoordFilter filter);
+        Casilla? GetCasillaAt(int x, int y);
 
 
         //Interface IChessBoard : IChessBoardImmutable

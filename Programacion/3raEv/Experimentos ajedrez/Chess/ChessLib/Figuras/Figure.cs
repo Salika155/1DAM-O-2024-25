@@ -69,6 +69,11 @@ namespace ChessLib.Figuras
             MovementCount++;
         }
 
+        public void SetCoord(Coord coord)
+        {
+            _coords = coord;
+        }
+
 
 
         //-------------------------------------

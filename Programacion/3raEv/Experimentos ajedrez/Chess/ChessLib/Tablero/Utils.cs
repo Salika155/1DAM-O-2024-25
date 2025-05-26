@@ -28,7 +28,31 @@ namespace ChessLib.Tablero
         //    }
         //}
 
-        
+        public static void RedibujarCasilla(IChessBoard board, int x, int y)
+        {
+            if (!Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
+                return;
+
+            var casilla = board.GetCasillaAt(x, y);
+            var figura = board.GetFigureAt(x, y);
+
+            if (casilla == null)
+                return;
+
+            // Opcional: Mover el cursor a la posición correspondiente en consola
+            // Console.SetCursorPosition(x * 3 + offsetX, board.GetHeight() - y + offsetY);
+            Console.SetCursorPosition(x * 3 + 2, (board.GetHeight() - y) + 1);
+            if (figura != null)
+            {
+                DrawFigure(figura, x, y);
+            }
+            else
+            {
+                DrawCasilla(casilla);
+            }
+            Console.ResetColor();
+        }
+
 
         public static bool IsValidCoordinates(int x, int y, int width, int height)
         {

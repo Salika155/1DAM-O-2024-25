@@ -484,7 +484,15 @@ namespace ChessLib.Tablero
 
             // 3. Verificar movimientos válidos
             var movimientosValidos = figura.GetAllAvailablePosition(this);
-            bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
+            bool esMovimientoValido = false;
+            foreach (var movimiento in movimientosValidos)
+            {
+                if (movimiento.X == destinoX && movimiento.Y == destinoY)
+                {
+                    esMovimientoValido = true;
+                    break;
+                }
+            }
 
             if (!esMovimientoValido)
                 return false;
@@ -494,20 +502,70 @@ namespace ChessLib.Tablero
             _casillas[destinoX, destinoY].Figure = figura;  // Pieza a nueva posición
             _casillas[origenX, origenY].Figure = null; // Limpiar posición original
 
+            // 5. Actualizar la coordenada de la figura
+
+            //figura.SetCoord(new Coord(destinoX, destinoY));
+            //var cooordfig = figura.GetCoord();
+            figura.SetCoord(new Coord(destinoX, destinoY));
+
             // Redibujar la casilla de origen
-            DibujarCasillas(obtenerCasilla(origen));
+            //DibujarCasillas(obtenerCasilla(origen));
 
             // Redibujar la casilla de destino
-            DibujarCasilla(obtenerCasilla(destino));
+            //DibujarCasilla(obtenerCasilla(destino));
 
             // 7. Actualizar contador de movimientos (si es necesario)
-            var cooordfig = figura.GetCoord();
 
-            cooordfig = new Coord(destinoX, destinoY);
             figura.IncrementCount();
+            Utils.RedibujarCasilla(this, origenX, origenY);
+            Utils.RedibujarCasilla(this, destinoX, destinoY);
             Console.WriteLine($"Moviendo de ({origenX},{origenY}) a ({destinoX},{destinoY})");
             return true;
         }
+
+        //private void RedibujarCasilla(int destinoX, int destinoY)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
+        //{
+        //    // 1. Validar coordenadas
+        //    if (!Utils.IsValidCoordinates(origenX, origenY, Width, Height) ||
+        //        !Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
+        //        return false;
+
+        //    // 2. Obtener figura en origen
+        //    IFigure? figura = _casillas[origenX, origenY].Figure;
+        //    if (figura == null)
+        //        return false;
+
+        //    // 3. Verificar movimientos válidos
+        //    var movimientosValidos = figura.GetAllAvailablePosition(this);
+        //    bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
+
+        //    if (!esMovimientoValido)
+        //        return false;
+
+
+        //    // Mover la figura SIN modificar colores
+        //    _casillas[destinoX, destinoY].Figure = figura;  // Pieza a nueva posición
+        //    _casillas[origenX, origenY].Figure = null; // Limpiar posición original
+
+        //    // Redibujar la casilla de origen
+        //    DibujarCasillas(obtenerCasilla(origen));
+
+        //    // Redibujar la casilla de destino
+        //    DibujarCasilla(obtenerCasilla(destino));
+
+        //    // 7. Actualizar contador de movimientos (si es necesario)
+        //    var cooordfig = figura.GetCoord();
+
+        //    cooordfig = new Coord(destinoX, destinoY);
+        //    figura.IncrementCount();
+        //    Console.WriteLine($"Moviendo de ({origenX},{origenY}) a ({destinoX},{destinoY})");
+        //    return true;
+        //}
 
         public void RemoveFigureAt(int x, int y)
         {

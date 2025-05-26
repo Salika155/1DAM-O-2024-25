@@ -159,9 +159,9 @@ namespace ChessLib.Figuras
             int x = Coords.X + dx;
             int y = Coords.Y + dy;
 
-            while (Utils.IsValidCoordinates(dx, dy, board.GetWidth(), board.GetHeight()))
+            while (Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
             {
-                Coord destino = new(x, y);
+                Coord destino = new Coord(x, y);
                 IFigure? figura = board.GetFigureAt(x, y);
 
                 if (figura == null)

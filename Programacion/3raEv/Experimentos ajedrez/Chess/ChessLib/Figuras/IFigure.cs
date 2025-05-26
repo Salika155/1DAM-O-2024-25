@@ -18,6 +18,7 @@ namespace ChessLib.Figuras
         List<Coord> GetAllAvailablePosition(IChessBoard board);
         //List<Coord> GetAllAvailablePosition(IChessBoard board, Visit visit);
         void IncrementCount();
+        void SetCoord(Coord coord);
     }
 }
 

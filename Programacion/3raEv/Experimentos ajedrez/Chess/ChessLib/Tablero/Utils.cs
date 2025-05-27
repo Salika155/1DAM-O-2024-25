@@ -131,7 +131,7 @@ namespace ChessLib.Tablero
             if (figura is Queen) return " Q ";
             if (figura is King) return " K ";
             else
-                return "  ";
+                return "   ";
         }
 
         //static string GetSymbol(IFigure figura)
@@ -247,7 +247,7 @@ namespace ChessLib.Tablero
                     }
                     else
                     {
-                        Console.Write(" · "); // Casilla vacía
+                        Console.Write("  ·  "); // Casilla vacía
                     }
 
                     Console.ResetColor();

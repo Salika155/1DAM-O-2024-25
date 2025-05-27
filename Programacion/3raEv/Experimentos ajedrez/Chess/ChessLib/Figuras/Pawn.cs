@@ -69,6 +69,7 @@ namespace ChessLib.Figuras
             return FigureType.PAWN;
         }
 
+        //PROMOCIONAR FIGURA PARA DAMA
         public void Promote(FigureType newType, FigureType? type)
         {
             if (newType == FigureType.PAWN || newType == FigureType.KING)

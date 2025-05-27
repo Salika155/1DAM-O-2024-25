@@ -36,6 +36,7 @@ namespace ChessLib.Tablero
         public void InitializeBoard()
         {
             //DrawBoard();
+            //limpia
             CrearCasillas();
             CreateFigures();
             Execute();
@@ -56,6 +57,7 @@ namespace ChessLib.Tablero
             while (true)
             {
                 Console.Clear();
+                
                 Utils.DrawBoard(this);
 
                 // 🔽 Añade esta parte justo después de dibujar el tablero
@@ -656,6 +658,20 @@ namespace ChessLib.Tablero
             }
             return _figures[index];
         }
+
+        //TODO: EXPERIMENTO 
+        public void RemoveFigure(IFigure figure)
+        {
+            for (int i = 0; i < _figures.Length; i++)
+                if (_figures[i].Color == FigureColor.BLACK && _figures[i].Color != figure.GetColor())
+                {
+                    _capturedWhiteFigures.Add(figure);
+                }
+                else if (_figures[i].Color == FigureColor.WHITE && _figures[i].Color != figure.GetColor())
+                {
+                    _capturedBlackFigures.Add(figure);
+                }
+        }
         public Casilla? GetCasillaAt(int x, int y)
         {
             if (!Utils.IsValidCoordinates(x, y, _width, _height))
@@ -780,8 +796,21 @@ namespace ChessLib.Tablero
         //HA TERMINADO LA PARTIDA??
         public bool IsEndedTheMatch()
         {
+            //chequear que el numero de fichas de color son iguales a la mitad de fichas de una lista (asi comprobaria que todas las blancas estan muertas)
+            int numlistafigures = 0;
+            int numlistablancas = 0;
+            for (int i = 0; i < _figures.Length; i++)
+            {
+                for (int j = 0; j < _capturedWhiteFigures.Count; i++)
+                {
+                    //numlistafigures += _figures.GetColor(i) = FigureColor.WHITE)
+                }
+                return false;
+            }
             return true;
         }
+
+
 
         public bool IsValidPosition(Coord target)
         {
@@ -844,14 +873,34 @@ namespace ChessLib.Tablero
             return result;
         }
 
+        //esto es probable que sea asi
         public List<Casilla> FilterCasillas(CasillaFilter filter)
         {
-            throw new NotImplementedException();
+            var result = new List<Casilla>();
+
+            for(int i = 0; i < _casillas.Length; i++)
+            {
+                for(int j = 0; j < _casillas.Length; j++)
+                {
+                    var casilla = _casillas[i, j];
+                    if((!Equals(casilla, _casillas[i,j])) && filter(casilla))
+                    {
+                        result.Add(casilla);
+                    }
+                }
+            }
+            return result;
         }
 
+        //a lo mejor este no va aqui
         public List<Coord> FilterCoords(CoordFilter filter)
         {
-            throw new NotImplementedException();
+            var result = new List<Coord>();
+            for (int i = 0; i < _casillas.Length; i++)//como filtro la coordenada
+            {
+
+            }
+                    return result;
         }
 
 

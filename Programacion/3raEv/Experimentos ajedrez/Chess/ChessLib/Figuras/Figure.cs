@@ -36,10 +36,10 @@ namespace ChessLib.Figuras
         }
         public FigureColor Color => _colorFigure;
         public FigureType Type => _typeFigure;
-        public Coord Coords { get; set; }
+        public Coord Coords => _coords;
         //public Coord Coords { get; set; }
         public int MovementCount { get; set; }
-        
+        Coord IFigure.Coords { get => Coords; set => _coords = value; }
 
         public FigureColor? GetColor() => _colorFigure;
         public abstract FigureType? GetFigureType();

@@ -491,43 +491,26 @@ namespace ChessLib.Tablero
         //}
         #endregion
 
-        //ME FALLAN LOS MOVIMIENTOS DE LAS FIGURAS
-
-        public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
+        #region CAMBIOS INCORPORADOS
+        public void CapturarFigura(IFigure figura)
         {
-            // 1. Validar que las coordenadas están dentro del tablero
-            if (!Utils.IsValidCoordinates(origenX, origenY, Width, Height) ||
-                !Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
-                return false;
-
-            // 2. Obtener la figura que se quiere mover
-            IFigure? figura = _casillas[origenX, origenY].Figure;
             if (figura == null)
-                return false;
+                return;
 
-            // 3. Obtener los movimientos válidos para la figura y verificar si el destino está permitido
-            var movimientosValidos = figura.GetAllAvailablePosition(this);
-            bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
-            if (!esMovimientoValido)
-                return false;
+            var listaCapturadas = figura.GetColor() == FigureColor.WHITE ? _capturedWhiteFigures : _capturedBlackFigures;
+            listaCapturadas.Add(figura);
+            RemoveFigureAt(figura.GetCoord().X, figura.GetCoord().Y);
+        }
 
-            // 4. Gestionar captura si hay una figura enemiga en la casilla de destino
-            IFigure? figuraEnDestino = _casillas[destinoX, destinoY].Figure;
-            if (figuraEnDestino != null && figuraEnDestino.GetColor() != figura.GetColor())
-            {
-                if (figuraEnDestino.GetColor() == FigureColor.WHITE)
-                    _capturedWhiteFigures.Add(figuraEnDestino);
-                else
-                    _capturedBlackFigures.Add(figuraEnDestino);
-            }
 
+        private void EjecutaMovimiento(IFigure figura, int origenX, int origenY, int destinoX, int destinoY)
+        {
             // 5. Realizar el movimiento: mover figura y vaciar la casilla de origen
             _casillas[destinoX, destinoY].Figure = figura;
             _casillas[origenX, origenY].Figure = null;
 
             // 6. Actualizar coordenadas internas de la figura
             figura.SetCoord(new Coord(destinoX, destinoY));
-
             // 7. Incrementar el contador de movimientos (relevante para peones, enroques, etc.)
             figura.IncrementCount();
 
@@ -537,7 +520,107 @@ namespace ChessLib.Tablero
 
             // 9. Confirmar éxito
             Console.WriteLine($"Moviendo de ({origenX},{origenY}) a ({destinoX},{destinoY})");
+        }
+
+        private void ManejarCaptura(int destinoX, int destinoY, IFigure figure)
+        {
+            IFigure? figuraEnDestino = _casillas[destinoX, destinoY].Figure;
+            if (figuraEnDestino != null && figuraEnDestino.GetColor() != figure.GetColor())
+            {
+                if (figuraEnDestino.GetColor() == FigureColor.WHITE)
+                    _capturedWhiteFigures.Add(figuraEnDestino);
+                else
+                    _capturedBlackFigures.Add(figuraEnDestino);
+            }
+        }
+
+        private bool IsValidDestination(IFigure figura, int destinoX, int destinoY)
+        {
+            var movimientosValidos = figura.GetAllAvailablePosition(this);
+            bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
+            if (!esMovimientoValido)
+                return false;
             return true;
+        }
+
+        private bool AreCoordinatesValid(int x1, int x2, int y1, int y2)
+        {
+            return Utils.IsValidCoordinates(x1, y1, _width, _height)
+                && Utils.IsValidCoordinates(x2, y2, _width, _height);
+        }
+        #endregion
+
+        //ME FALLAN LOS MOVIMIENTOS DE LAS FIGURAS
+
+        //public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
+        //{
+        //    // 1. Validar que las coordenadas están dentro del tablero
+        //    if (!Utils.IsValidCoordinates(origenX, origenY, Width, Height) ||
+        //        !Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
+        //        return false;
+
+        //    // 2. Obtener la figura que se quiere mover
+        //    IFigure? figura = _casillas[origenX, origenY].Figure;
+        //    if (figura == null)
+        //        return false;
+
+        //    // 3. Obtener los movimientos válidos para la figura y verificar si el destino está permitido
+        //    var movimientosValidos = figura.GetAllAvailablePosition(this);
+        //    bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
+        //    if (!esMovimientoValido)
+        //        return false;
+
+        //    // 4. Gestionar captura si hay una figura enemiga en la casilla de destino
+        //    IFigure? figuraEnDestino = _casillas[destinoX, destinoY].Figure;
+        //    if (figuraEnDestino != null && figuraEnDestino.GetColor() != figura.GetColor())
+        //    {
+        //        if (figuraEnDestino.GetColor() == FigureColor.WHITE)
+        //            _capturedWhiteFigures.Add(figuraEnDestino);
+        //        else
+        //            _capturedBlackFigures.Add(figuraEnDestino);
+        //    }
+
+        //    // 5. Realizar el movimiento: mover figura y vaciar la casilla de origen
+        //    _casillas[destinoX, destinoY].Figure = figura;
+        //    _casillas[origenX, origenY].Figure = null;
+
+        //    // 6. Actualizar coordenadas internas de la figura
+        //    figura.SetCoord(new Coord(destinoX, destinoY));
+
+        //    // 7. Incrementar el contador de movimientos (relevante para peones, enroques, etc.)
+        //    figura.IncrementCount();
+
+        //    // 8. Redibujar visualmente las casillas afectadas
+        //    Utils.RedibujarCasilla(this, origenX, origenY);
+        //    Utils.RedibujarCasilla(this, destinoX, destinoY);
+
+        //    // 9. Confirmar éxito
+        //    Console.WriteLine($"Moviendo de ({origenX},{origenY}) a ({destinoX},{destinoY})");
+        //    return true;
+        //}
+
+        public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
+        {
+            // 1. Validar que las coordenadas están dentro del tablero
+            if (!AreCoordinatesValid(origenX, destinoX, origenY, destinoY))
+                return false; // Si las coordenadas no son válidas, se cancela el movimiento.
+
+            // 2. Obtener la figura que se quiere mover desde la casilla de origen
+            IFigure? figura = GetFigureAt(origenX, origenY);
+            if (figura == null)
+                return false; // Si no hay figura en la casilla de origen, se cancela el movimiento.
+
+            // 3. Obtener los movimientos válidos para la figura y verificar si el destino está permitido
+            if (!IsValidDestination(figura, destinoX, destinoY))
+                return false; // Si el destino no es válido, se cancela el movimiento.
+
+            // 4. Gestionar captura si hay una figura enemiga en la casilla de destino
+            ManejarCaptura(destinoX, destinoY, figura);
+
+            // 5. Ejecutar el movimiento: mover la figura y vaciar la casilla de origen
+            EjecutaMovimiento(figura, origenX, origenY, destinoX, destinoY);
+
+            return true; // Movimiento exitoso
         }
 
         //public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
@@ -662,16 +745,20 @@ namespace ChessLib.Tablero
         //TODO: EXPERIMENTO 
         public void RemoveFigure(IFigure figure)
         {
-            for (int i = 0; i < _figures.Length; i++)
-                if (_figures[i].Color == FigureColor.BLACK && _figures[i].Color != figure.GetColor())
-                {
-                    _capturedWhiteFigures.Add(figure);
-                }
-                else if (_figures[i].Color == FigureColor.WHITE && _figures[i].Color != figure.GetColor())
-                {
-                    _capturedBlackFigures.Add(figure);
-                }
+            if (figure == null)
+                return;
+
+            // Eliminar del tablero
+            var coord = figure.GetCoord();
+            RemoveFigureAt(coord.X, coord.Y);
+
+            // Añadir a lista de capturados según color
+            if (figure.GetColor() == FigureColor.WHITE)
+                _capturedWhiteFigures.Add(figure);
+            else
+                _capturedBlackFigures.Add(figure);
         }
+
         public Casilla? GetCasillaAt(int x, int y)
         {
             if (!Utils.IsValidCoordinates(x, y, _width, _height))
@@ -869,6 +956,19 @@ namespace ChessLib.Tablero
                 {
                     result.Add(figura);
                 }
+            }
+            return result;
+        }
+
+        public List<IFigure> FilterCapturedFigures(FigureColor color, FigureFilter filter)
+        {
+            var source = color == FigureColor.WHITE ? _capturedWhiteFigures : _capturedBlackFigures;
+            var result = new List<IFigure>();
+
+            foreach (var fig in source)
+            {
+                if (filter(fig))
+                    result.Add(fig);
             }
             return result;
         }

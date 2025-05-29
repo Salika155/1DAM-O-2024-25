@@ -219,7 +219,7 @@ namespace ChessLib.Tablero
 
         public static void DrawBoardWithHighlight(ChessBoard board, Coord origen, List<Coord> movimientosValidos)
         {
-            Console.WriteLine("   a  b  c  d  e  f  g  h  ");
+            Console.WriteLine("    a    b    c    d    e    f    g    h  ");
             Console.WriteLine(" ");
             for (int row = 0; row < board.GetHeight(); row++)
             {
@@ -255,7 +255,7 @@ namespace ChessLib.Tablero
                 Console.WriteLine();
             }
             Console.WriteLine(" ");
-            Console.WriteLine("   a  b  c  d  e  f  g  h  ");
+            Console.WriteLine("    a    b    c    d    e    f    g    h  ");
         }
     }
 }

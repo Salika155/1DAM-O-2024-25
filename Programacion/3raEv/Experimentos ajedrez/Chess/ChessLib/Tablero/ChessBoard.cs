@@ -6,7 +6,6 @@ using static ChessLib.Tablero.IChessBoard;
 
 namespace ChessLib.Tablero
 {
-    
     public class ChessBoard : IChessBoard
     {
         private readonly Casilla[ , ] _casillas;
@@ -14,8 +13,15 @@ namespace ChessLib.Tablero
         private readonly int _width;
         private readonly int _height;
         private int _figureCount = 0;
+        private FigureColor _turnoActual = FigureColor.WHITE; // Empieza por defecto en blanco
+
         public int Width => _width;
         public int Height => _height;
+        public FigureColor TurnoActual
+        {
+            get => _turnoActual;
+            set => _turnoActual = value;
+        }
 
         private readonly List<IFigure> _capturedWhiteFigures = new();
         private readonly List<IFigure> _capturedBlackFigures = new();
@@ -52,7 +58,7 @@ namespace ChessLib.Tablero
             //    //que compruebe si puede mover la ficha
             //    //si puede, que la mueva.
             //}
-            FigureColor turnoActual = FigureColor.WHITE;
+            //FigureColor turnoActual = FigureColor.WHITE;
             //posiblemente necesite aqui elegir el turno, aunque no me ha hecho falta para cambiarlo varias veces
             while (true)
             {
@@ -78,7 +84,7 @@ namespace ChessLib.Tablero
                 });
 
                 Console.WriteLine();
-                Console.WriteLine($"Turno de las piezas: {turnoActual}");
+                Console.WriteLine($"Turno de las piezas: {_turnoActual}");
 
                 // 1. Pedir ORIGEN
                 Console.Write("\nIntroduce coordenadas de la pieza (ej. a2): ");
@@ -94,7 +100,7 @@ namespace ChessLib.Tablero
                 // Convertir ORIGEN y validar pieza
                 Coord origen = new Coord(inputOrigen[0] - 'a', inputOrigen[1] - '0');
                 IFigure figura = GetFigureAt(origen.X, origen.Y);
-                if (figura == null || figura.GetColor() != turnoActual)
+                if (figura == null || figura.GetColor() != _turnoActual)
                 {
                     Console.WriteLine("¡No hay pieza o no es tu turno!");
                     Console.ReadKey();
@@ -123,7 +129,7 @@ namespace ChessLib.Tablero
                 // Mover pieza
                 if (MoveFigure(origen.X, origen.Y, destino.X, destino.Y))
                 {
-                    turnoActual = (turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
+                    _turnoActual = (_turnoActual == FigureColor.WHITE) ? FigureColor.BLACK : FigureColor.WHITE;
                 }
                 else
                 {
@@ -364,50 +370,69 @@ namespace ChessLib.Tablero
         #endregion
 
         //METODOS QUE FORMAN PARTE DEL MOVEFIGURE
+        //public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
+        //{
+        //    // 1. Validar que las coordenadas están dentro del tablero
+        //    if (!Utils.IsValidCoordinates(origenX, origenY, Width, Height) ||
+        //        !Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
+        //        return false;
+
+        //    // 2. Obtener la figura que se quiere mover
+        //    IFigure? figura = _casillas[origenX, origenY].Figure;
+        //    if (figura == null)
+        //        return false;
+
+        //    // 3. Obtener los movimientos válidos para la figura y verificar si el destino está permitido
+        //    var movimientosValidos = figura.GetAllAvailablePosition(this);
+        //    bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
+        //    if (!esMovimientoValido)
+        //        return false;
+
+        //    // 4. Gestionar captura si hay una figura enemiga en la casilla de destino
+        //    IFigure? figuraEnDestino = _casillas[destinoX, destinoY].Figure;
+        //    if (figuraEnDestino != null && figuraEnDestino.GetColor() != figura.GetColor())
+        //    {
+        //        if (figuraEnDestino.GetColor() == FigureColor.WHITE)
+        //            _capturedWhiteFigures.Add(figuraEnDestino);
+        //        else
+        //            _capturedBlackFigures.Add(figuraEnDestino);
+        //    }
+
+        //    // 5. Realizar el movimiento: mover figura y vaciar la casilla de origen
+        //    _casillas[destinoX, destinoY].Figure = figura;
+        //    _casillas[origenX, origenY].Figure = null;
+
+        //    // 6. Actualizar coordenadas internas de la figura
+        //    figura.SetCoord(new Coord(destinoX, destinoY));
+
+        //    // 7. Incrementar el contador de movimientos (relevante para peones, enroques, etc.)
+        //    figura.IncrementCount();
+
+        //    // 8. Redibujar visualmente las casillas afectadas
+        //    Utils.RedibujarCasilla(this, origenX, origenY);
+        //    Utils.RedibujarCasilla(this, destinoX, destinoY);
+
+        //    // 9. Confirmar éxito
+        //    Console.WriteLine($"Moviendo de ({origenX},{origenY}) a ({destinoX},{destinoY})");
+        //    return true;
+        //}
+
         public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
         {
-            // 1. Validar que las coordenadas están dentro del tablero
-            if (!Utils.IsValidCoordinates(origenX, origenY, Width, Height) ||
-                !Utils.IsValidCoordinates(destinoX, destinoY, Width, Height))
+            if (!AreCoordinatesValid(origenX, origenY, destinoX, destinoY))
                 return false;
 
-            // 2. Obtener la figura que se quiere mover
-            IFigure? figura = _casillas[origenX, origenY].Figure;
+            var figura = GetFigureAt(origenX, origenY);
             if (figura == null)
                 return false;
 
-            // 3. Obtener los movimientos válidos para la figura y verificar si el destino está permitido
-            var movimientosValidos = figura.GetAllAvailablePosition(this);
-            bool esMovimientoValido = movimientosValidos.Any(m => m.X == destinoX && m.Y == destinoY);
-            if (!esMovimientoValido)
+            if (!IsValidDestination(figura, destinoX, destinoY))
                 return false;
 
-            // 4. Gestionar captura si hay una figura enemiga en la casilla de destino
-            IFigure? figuraEnDestino = _casillas[destinoX, destinoY].Figure;
-            if (figuraEnDestino != null && figuraEnDestino.GetColor() != figura.GetColor())
-            {
-                if (figuraEnDestino.GetColor() == FigureColor.WHITE)
-                    _capturedWhiteFigures.Add(figuraEnDestino);
-                else
-                    _capturedBlackFigures.Add(figuraEnDestino);
-            }
+            ManejarCaptura(destinoX, destinoY, figura);
 
-            // 5. Realizar el movimiento: mover figura y vaciar la casilla de origen
-            _casillas[destinoX, destinoY].Figure = figura;
-            _casillas[origenX, origenY].Figure = null;
+            EjecutaMovimiento(figura, origenX, origenY, destinoX, destinoY);
 
-            // 6. Actualizar coordenadas internas de la figura
-            figura.SetCoord(new Coord(destinoX, destinoY));
-
-            // 7. Incrementar el contador de movimientos (relevante para peones, enroques, etc.)
-            figura.IncrementCount();
-
-            // 8. Redibujar visualmente las casillas afectadas
-            Utils.RedibujarCasilla(this, origenX, origenY);
-            Utils.RedibujarCasilla(this, destinoX, destinoY);
-
-            // 9. Confirmar éxito
-            Console.WriteLine($"Moviendo de ({origenX},{origenY}) a ({destinoX},{destinoY})");
             return true;
         }
 
@@ -676,6 +701,37 @@ namespace ChessLib.Tablero
             }
             return true;
         }
+        //public bool IsEndedTheMatch(FigureColor currentPlayerColor)
+        //{
+        //    // 1. Obtener todas las piezas del jugador actual
+        //    var playerFigures = GetFiguresByColor(currentPlayerColor);
+
+        //    // 2. Verificar si el rey del jugador actual está en jaque
+        //    bool isInCheck = IsKingInCheck(currentPlayerColor);
+
+        //    // 3. Evaluar si el jugador tiene movimientos legales disponibles
+        //    foreach (var figure in playerFigures)
+        //    {
+        //        var legalMoves = figure.GetLegalMoves(this);
+        //        if (legalMoves.Any())
+        //        {
+        //            // Si hay al menos un movimiento legal, la partida continúa
+        //            return false;
+        //        }
+        //    }
+
+        //    // 4. Determinar el estado de la partida
+        //    if (isInCheck)
+        //    {
+        //        Console.WriteLine("Jaque mate.");
+        //        return true; // Jaque mate
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Ahogado.");
+        //        return true; // Ahogado
+        //    }
+        //}
 
 
 
@@ -728,14 +784,10 @@ namespace ChessLib.Tablero
         public List<IFigure> FilterFigures(FigureFilter filter)
         {
             var result = new List<IFigure>();
-
-            for(int i = 0; i < _figures.Length; i++)
+            foreach (var fig in _figures)
             {
-                var figura = _figures[i];
-                if (figura != null && filter(figura))
-                {
-                    result.Add(figura);
-                }
+                if (fig != null && filter(fig))
+                    result.Add(fig);
             }
             return result;
         }

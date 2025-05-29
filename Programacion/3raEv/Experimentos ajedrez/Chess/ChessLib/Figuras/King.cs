@@ -64,6 +64,36 @@ namespace ChessLib.Figuras
             return FigureType.KING;
         }
 
+        public bool EstaEnCheck(IChessBoard board)
+        {
+            var reyCoord = this.Coords;
+
+            var figuraEnemiga = board.FilterFigures(f => f.GetColor() != this.GetColor());
+
+            foreach(var enemigo in figuraEnemiga)
+            {
+                if (enemigo.GetAllAvailablePosition(board).Any(c => Equals(reyCoord)))
+                    return true;
+            }
+            return false;
+        }
+
+        public bool EstaEnCheckMate(IChessBoard board)
+        {
+            if (!EstaEnCheck(board))
+                return false;
+
+            var movValidos = this.GetAllAvailablePosition(board);
+
+            return movValidos.All(move =>
+            {
+                //esto tengo que hacerlo de otra manera, no tengo un clone
+                var simulatedBoard = board/*.Clone()*/;
+                simulatedBoard.MoveFigure(this.Coords.X, this.Coords.Y, move.X, move.Y);
+                return simulatedBoard.GetFigureAt(move.X, move.Y) is King king && king.EstaEnCheck(simulatedBoard);
+            });
+        }
+
 
 
         //para eliminar figuras cuando atacan otras.

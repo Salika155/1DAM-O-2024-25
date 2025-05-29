@@ -528,7 +528,7 @@ namespace ChessLib.Tablero
             _figureCount = 0;
         }
 
-        //NO ME FIO
+        //TODO:NO ME FIO A PARTIR DE AQUI HAY QUE REVISAR
         public bool IsPositionEmpty(Coord coord)
         {
             if (!IsValidPosition(coord)) return false;
@@ -553,6 +553,7 @@ namespace ChessLib.Tablero
         }
 
         //NO ME FIO
+        //ESTO DEBERIA ESTAR EN EL KING
         public bool IsKingInCheck(FigureColor color)
         {
             Coord kingPosition = FindKingPosition(color);
@@ -690,6 +691,18 @@ namespace ChessLib.Tablero
                 {
                     result.Add(figura);
                 }
+            }
+            return result;
+        }
+        public List<IFigure> FilterCapturedFigures(FigureColor color, FigureFilter filter)
+        {
+            var source = color == FigureColor.WHITE ? _capturedWhiteFigures : _capturedBlackFigures;
+            var result = new List<IFigure>();
+
+            foreach (var fig in source)
+            {
+                if (filter(fig))
+                    result.Add(fig);
             }
             return result;
         }

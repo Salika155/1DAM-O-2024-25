@@ -24,6 +24,7 @@ namespace ChessLib.Figuras
         private readonly FigureColor _colorFigure;
         private readonly FigureType _typeFigure;
         private Coord _coords;
+        
         private int _movementCount;
 
         public Figure(FigureColor color, FigureType type, Coord coords)
@@ -36,6 +37,7 @@ namespace ChessLib.Figuras
         public FigureColor Color => _colorFigure;
         public FigureType Type => _typeFigure;
         public Coord Coords { get; set; }
+        //public Coord Coords { get; set; }
         public int MovementCount { get; set; }
         
 

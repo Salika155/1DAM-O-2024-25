@@ -4,6 +4,7 @@ namespace ChessLib.Figuras
 {
     public interface IFigure
     {
+        Coord Coords { get; set; }
         FigureColor? GetColor();
         //este es posible que si tenga que hacerlo propiedad para un get/set
         FigureType? GetFigureType();

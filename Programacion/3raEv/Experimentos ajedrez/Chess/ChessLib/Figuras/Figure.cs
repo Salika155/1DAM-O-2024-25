@@ -35,7 +35,7 @@ namespace ChessLib.Figuras
         }
         public FigureColor Color => _colorFigure;
         public FigureType Type => _typeFigure;
-        public Coord Coords => _coords;
+        public Coord Coords { get; set; }
         public int MovementCount { get; set; }
         
 

@@ -6,9 +6,11 @@ namespace ChessLib.Tablero
     
     public interface IChessBoard : IChessBoardImmutable
     {
+        //creo que tengo que hacer algun delegado mas si eso
         public delegate void FigureVisitor(IFigure? figure);
         public delegate void CasillaVisitor(Casilla? casilla);
         public delegate void CoordVisitor(Coord? coord);
+
 
         public delegate bool FigureFilter(IFigure? figure);
         public delegate bool CasillaFilter(Casilla? casilla);

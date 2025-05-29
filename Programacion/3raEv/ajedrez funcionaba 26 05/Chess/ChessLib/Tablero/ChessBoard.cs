@@ -896,13 +896,17 @@ namespace ChessLib.Tablero
         public List<Coord> FilterCoords(CoordFilter filter)
         {
             var result = new List<Coord>();
-            for (int i = 0; i < _casillas.Length; i++)//como filtro la coordenada
+            for (int x = 0; x < _width; x++)
             {
-
+                for (int y = 0; y < _height; y++)
+                {
+                    Coord coord = new(x, y);
+                    if (filter(coord))
+                        result.Add(coord);
+                }
             }
-                    return result;
+            return result;
         }
-
 
 
         //tengo que hacer metodos para: enroque del rey y las torres, ahogar al rey, jaque, jaque mate

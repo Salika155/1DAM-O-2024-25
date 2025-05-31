@@ -18,43 +18,44 @@ namespace ChessLib.Figuras
         {
             List<Coord> moves = new();
             
-            AgregarMovimientosLineales(board, moves, 1, 0);   // Derecha
-            AgregarMovimientosLineales(board, moves, -1, 0);  // Izquierda
-            AgregarMovimientosLineales(board, moves, 0, 1);   // Abajo
-            AgregarMovimientosLineales(board, moves, 0, -1);  // Arriba
+            Utils.AgregarMovimientosLineales(this, board, moves, 1, 0);   // Derecha
+            Utils.AgregarMovimientosLineales(this, board, moves, -1, 0);  // Izquierda
+            Utils.AgregarMovimientosLineales(this, board, moves, 0, 1);   // Abajo
+            Utils.AgregarMovimientosLineales(this, board, moves, 0, -1);  // Arriba
 
             return moves.ToArray();
         }
 
-        private void AgregarMovimientosLineales(IChessBoard board, List<Coord> moves, int dx, int dy)
-        {
-            int x = Coords.X + dx;
-            int y = Coords.Y + dy;
-
-            while (Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
-            {
-                var destino = new Coord(x, y);
-                var figura = board.GetFigureAt(x, y);
-
-                if (figura == null)
-                {
-                    moves.Add(destino);
-                }
-                else
-                {
-                    if (figura.GetColor() != Color)
-                        moves.Add(destino); // puede capturar
-                    break; // no puede seguir más allá
-                }
-                x += dx;
-                y += dy;
-            }
-        }
 
         public override FigureType? GetFigureType()
         {
             return FigureType.TOWER;
         }
+
+        //private void AgregarMovimientosLineales(IChessBoard board, List<Coord> moves, int dx, int dy)
+        //{
+        //    int x = Coords.X + dx;
+        //    int y = Coords.Y + dy;
+
+        //    while (Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
+        //    {
+        //        var destino = new Coord(x, y);
+        //        var figura = board.GetFigureAt(x, y);
+
+        //        if (figura == null)
+        //        {
+        //            moves.Add(destino);
+        //        }
+        //        else
+        //        {
+        //            if (figura.GetColor() != Color)
+        //                moves.Add(destino); // puede capturar
+        //            break; // no puede seguir más allá
+        //        }
+        //        x += dx;
+        //        y += dy;
+        //    }
+        //}
 
         //public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
         //{

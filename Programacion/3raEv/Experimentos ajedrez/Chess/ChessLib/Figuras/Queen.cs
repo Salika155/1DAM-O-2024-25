@@ -13,44 +13,18 @@ namespace ChessLib.Figuras
             List<Coord> moves = new();
 
             // Movimiento como torre
-            AgregarMovimientosLineales(board, moves, 1, 0);   // Derecha
-            AgregarMovimientosLineales(board, moves, -1, 0);  // Izquierda
-            AgregarMovimientosLineales(board, moves, 0, 1);   // Abajo
-            AgregarMovimientosLineales(board, moves, 0, -1);  // Arriba
+            Utils.AgregarMovimientosLineales(this, board, moves, 1, 0);   // Derecha
+            Utils.AgregarMovimientosLineales(this, board, moves, -1, 0);  // Izquierda
+            Utils.AgregarMovimientosLineales(this, board, moves, 0, 1);   // Abajo
+            Utils.AgregarMovimientosLineales(this, board, moves, 0, -1);  // Arriba
 
             // Movimiento como alfil
-            AgregarMovimientosLineales(board, moves, 1, 1);    // Abajo derecha
-            AgregarMovimientosLineales(board, moves, -1, -1);  // Arriba izquierda
-            AgregarMovimientosLineales(board, moves, 1, -1);   // Arriba derecha
-            AgregarMovimientosLineales(board, moves, -1, 1);   // Abajo izquierda
+            Utils.AgregarMovimientosLineales(this, board, moves, 1, 1);    // Abajo derecha
+            Utils.AgregarMovimientosLineales(this, board, moves, -1, -1);  // Arriba izquierda
+            Utils.AgregarMovimientosLineales(this, board, moves, 1, -1);   // Arriba derecha
+            Utils.AgregarMovimientosLineales(this, board, moves, -1, 1);   // Abajo izquierda
 
             return moves.ToArray();
-        }
-
-        private void AgregarMovimientosLineales(IChessBoard board, List<Coord> moves, int dx, int dy)
-        {
-            int x = Coords.X + dx;
-            int y = Coords.Y + dy;
-
-            while (Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
-            {
-                Coord destino = new(x, y);
-                var figura = board.GetFigureAt(x, y);
-
-                if (figura == null)
-                {
-                    moves.Add(destino);
-                }
-                else
-                {
-                    if (figura.GetColor() != Color)
-                        moves.Add(destino);
-                    break;
-                }
-
-                x += dx;
-                y += dy;
-            }
         }
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)
@@ -62,6 +36,32 @@ namespace ChessLib.Figuras
         {
             return FigureType.QUEEN;
         }
+
+        //private void AgregarMovimientosLineales(IChessBoard board, List<Coord> moves, int dx, int dy)
+        //{
+        //    int x = Coords.X + dx;
+        //    int y = Coords.Y + dy;
+
+        //    while (Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
+        //    {
+        //        Coord destino = new(x, y);
+        //        var figura = board.GetFigureAt(x, y);
+
+        //        if (figura == null)
+        //        {
+        //            moves.Add(destino);
+        //        }
+        //        else
+        //        {
+        //            if (figura.GetColor() != Color)
+        //                moves.Add(destino);
+        //            break;
+        //        }
+
+        //        x += dx;
+        //        y += dy;
+        //    }
+        //}
 
         //public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
         //{

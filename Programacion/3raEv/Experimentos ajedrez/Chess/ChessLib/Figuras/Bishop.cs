@@ -13,6 +13,23 @@ namespace ChessLib.Figuras
             return GetAvailablePosition(board).ToList();
         }
 
+        public override Coord[] GetAvailablePosition(IChessBoard board)
+        {
+            List<Coord> moves = new();
+
+            Utils.AgregarMovimientosLineales(this, board, moves, 1, 1);
+            Utils.AgregarMovimientosLineales(this, board, moves, 1, -1);
+            Utils.AgregarMovimientosLineales(this, board, moves, -1, 1);
+            Utils.AgregarMovimientosLineales(this, board, moves, -1, -1);
+
+            return moves.ToArray();
+        }
+
+        public override FigureType? GetFigureType()
+        {
+            return FigureType.BISHOP;
+        }
+
         #region comentado
         //public override List<Coord> GetAllAvailablePosition(IChessBoard board)
         //{
@@ -137,54 +154,6 @@ namespace ChessLib.Figuras
         //    return availablePositions.ToArray();
         #endregion
 
-        public override Coord[] GetAvailablePosition(IChessBoard board)
-        {
-            List<Coord> moves = new();
-
-            AgregarMovimientosDiagonalValidados(board, moves, 1, 1);
-            AgregarMovimientosDiagonalValidados(board, moves, 1, -1);
-            AgregarMovimientosDiagonalValidados(board, moves, -1, 1);
-            AgregarMovimientosDiagonalValidados(board, moves, -1, -1);
-
-            return moves.ToArray();
-        }
-
-        private void AgregarMovimientosDiagonalValidados(IChessBoard board, List<Coord> moves, int dx, int dy)
-        {
-            MoveInDiagonal(board, moves, dx, dy);
-        }
-
-        public void MoveInDiagonal(IChessBoard board, List<Coord> lista, int dx, int dy)//es posible que necesite meterle un ifigure
-        {
-            int x = Coords.X + dx;
-            int y = Coords.Y + dy;
-
-            while (Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
-            {
-                Coord destino = new Coord(x, y);
-                IFigure? figura = board.GetFigureAt(x, y);
-
-                if (figura == null)
-                {
-                    lista.Add(destino);
-                }
-                else
-                {
-                    if (figura.GetColor() != Color)
-                        lista.Add(destino);
-                    break;
-                }
-
-                x += dx;
-                y += dy;
-            }
-        }
-
-        public override FigureType? GetFigureType()
-        {
-            return FigureType.BISHOP;
-        }
-
         //public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
         //{
         //    // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
@@ -203,17 +172,48 @@ namespace ChessLib.Figuras
     }
 }
 
+//private void AgregarMovimientosDiagonalValidados(IChessBoard board, List<Coord> moves, int dx, int dy)
+//{
+//    MoveInDiagonal(board, moves, dx, dy);
+//}
 
-        //protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
-        //{
-        //    var availablePositions = GetAllAvailablePosition(board);
-        //    foreach (var pos in availablePositions)
-        //    {
-        //        if (pos.X == target.X && pos.Y == target.Y)
-        //            return true;
-        //    }
-        //    return false;
-        //}
+//public void MoveInDiagonal(IChessBoard board, List<Coord> lista, int dx, int dy)//es posible que necesite meterle un ifigure
+//{
+//    int x = Coords.X + dx;
+//    int y = Coords.Y + dy;
+
+//    while (Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
+//    {
+//        Coord destino = new Coord(x, y);
+//        IFigure? figura = board.GetFigureAt(x, y);
+
+//        if (figura == null)
+//        {
+//            lista.Add(destino);
+//        }
+//        else
+//        {
+//            if (figura.GetColor() != Color)
+//                lista.Add(destino);
+//            break;
+//        }
+
+//        x += dx;
+//        y += dy;
+//    }
+//}
+
+
+//protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
+//{
+//    var availablePositions = GetAllAvailablePosition(board);
+//    foreach (var pos in availablePositions)
+//    {
+//        if (pos.X == target.X && pos.Y == target.Y)
+//            return true;
+//    }
+//    return false;
+//}
 
 //        protected override bool IsMoveValidForPiece(Coord target, IChessBoard board)
 //{

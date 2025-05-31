@@ -44,11 +44,6 @@ namespace ChessLib.Figuras
             }
         }
 
-        //public virtual bool ValidateMove(Coord newCoords)
-        //{
-        //    return true;
-        //}
-
         public Coord[] ValidMovesLIst(List<Coord> listMoves, IChessBoard board)
         {
             // Filtramos los movimientos que están fuera del tablero o bloqueados por otras piezas
@@ -64,20 +59,31 @@ namespace ChessLib.Figuras
             return validMoves.ToArray();
         }
 
+        
         public override FigureType? GetFigureType()
         {
             return FigureType.PAWN;
         }
 
         //PROMOCIONAR FIGURA PARA DAMA
-        public void Promote(FigureType newType, FigureType? type)
+        public void Promote(ChessBoard board, FigureType? newType)
         {
             if (newType == FigureType.PAWN || newType == FigureType.KING)
             {
-                throw new InvalidOperationException("Un peón no puede promocionar a peón o rey.");
+                throw new Exception("Un peón no puede promocionar a peón o rey.");
             }
 
-            type = newType;
+            board.RemoveFigure(this);
+            board.CreateFigure(FigureType.QUEEN, this.Color, this.Coords);
+        }
+
+        public void TryToPromote(ChessBoard board)
+        {
+            bool puedePromocionar = (this.Color == FigureColor.WHITE && this.Coords.Y == 0)
+                                    || (this.Color == FigureColor.BLACK && this.Coords.Y == 7);
+
+            if (puedePromocionar)
+                Promote(board, FigureType.QUEEN);                  
         }
 
         public override List<Coord> GetAllAvailablePosition(IChessBoard board)

@@ -72,7 +72,7 @@ namespace ChessLib.Figuras
 
             foreach(var enemigo in figuraEnemiga)
             {
-                if (enemigo.GetAllAvailablePosition(board).Any(c => Equals(reyCoord)))
+                if (enemigo.GetAllAvailablePosition(board).Any(c => c.Equals(reyCoord)))
                     return true;
             }
             return false;

@@ -30,7 +30,7 @@ namespace ChessLib.Tablero
 
         public static void RedibujarCasilla(IChessBoard board, int x, int y)
         {
-            if (!Utils.IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
+            if (!IsValidCoordinates(x, y, board.GetWidth(), board.GetHeight()))
                 return;
 
             var casilla = board.GetCasillaAt(x, y);
@@ -99,7 +99,6 @@ namespace ChessLib.Tablero
                 ? ConsoleColor.White
                 : ConsoleColor.Red;
 
-            //puede estar aqui el fallo
             // ¡CORRECCIÓN CLAVE AQUÍ! (Colores invertidos)
             Console.ForegroundColor = figure.GetColor() == FigureColor.WHITE
                 ? ConsoleColor.DarkYellow  // Amarillo para blancas
@@ -107,7 +106,6 @@ namespace ChessLib.Tablero
 
             Console.BackgroundColor = background;
             Console.Write(GetSymbol(figure));
-            //o aqui, ya que la casilla no tiene que resetear su color
             //Console.ResetColor();
         }
 

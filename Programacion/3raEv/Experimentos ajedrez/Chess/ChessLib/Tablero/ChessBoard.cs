@@ -262,41 +262,7 @@ namespace ChessLib.Tablero
         {
             CreateFiguresWithColor(FigureColor.BLACK);
             CreateFiguresWithColor(FigureColor.WHITE);
-            #region comentado
-            //for (int x = 0; x < 8; x++)
-            //{
-            // Colocar las piezas blancas
-
-            //    CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(0, 0));
-            //    CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(1, 0));
-            //    CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(2, 0));
-            //    CreateFigure(FigureType.QUEEN, FigureColor.WHITE, new Coord(3, 0));
-            //    CreateFigure(FigureType.KING, FigureColor.WHITE, new Coord(4, 0));
-            //    CreateFigure(FigureType.BISHOP, FigureColor.WHITE, new Coord(5, 0));
-            //    CreateFigure(FigureType.KNIGHT, FigureColor.WHITE, new Coord(6, 0));
-            //    CreateFigure(FigureType.TOWER, FigureColor.WHITE, new Coord(7, 0));
-            ////}
-
-            //for (int x = 0; x < 8; x++)
-            //{
-            //    CreateFigure(FigureType.PAWN, FigureColor.WHITE, new Coord(x, 1));
-            //}
-
-            //// Colocar las piezas negras
-            //CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(0, 7));
-            //CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(1, 7));
-            //CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(2, 7));
-            //CreateFigure(FigureType.QUEEN, FigureColor.BLACK, new Coord(3, 7));
-            //CreateFigure(FigureType.KING, FigureColor.BLACK, new Coord(4, 7));
-            //CreateFigure(FigureType.BISHOP, FigureColor.BLACK, new Coord(5, 7));
-            //CreateFigure(FigureType.KNIGHT, FigureColor.BLACK, new Coord(6, 7));
-            //CreateFigure(FigureType.TOWER, FigureColor.BLACK, new Coord(7, 7));
-
-            //for (int x = 0; x < 8; x++)
-            //{
-            //    CreateFigure(FigureType.PAWN, FigureColor.BLACK, new Coord(x, 6));
-            //}
-            #endregion
+           
         }
 
         public void CreateFigure(FigureType type, FigureColor color, Coord coord)
@@ -304,7 +270,7 @@ namespace ChessLib.Tablero
             Console.WriteLine($"Añadiendo figura {type} en ({coord.X}, {coord.Y}). Contador: {_figureCount}");
 
             Figure figura;
-                switch (type)
+            switch (type)
             {
                 case FigureType.TOWER:
                     figura = new Tower(color, type, coord);
@@ -417,54 +383,54 @@ namespace ChessLib.Tablero
         //    return true;
         //}
 
-        public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
-        {
-            if (!AreCoordinatesValid(origenX, origenY, destinoX, destinoY))
-                return false;
-
-            var figura = GetFigureAt(origenX, origenY);
-            if (figura == null)
-                return false;
-
-            if (!IsValidDestination(figura, destinoX, destinoY))
-                return false;
-
-            ManejarCaptura(destinoX, destinoY, figura);
-
-            EjecutaMovimiento(figura, origenX, origenY, destinoX, destinoY);
-
-            return true;
-        }
-
-
         //public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
         //{
-        //    // 1. Validar que las coordenadas están dentro del tablero
-        //    if (!AreCoordinatesValid(origenX, destinoX, origenY, destinoY))
+        //    if (!AreCoordinatesValid(origenX, origenY, destinoX, destinoY))
         //        return false;
 
-        //    // 2. Obtener la figura que se quiere mover
-        //    IFigure? figura = GetFigureAt(origenX, origenY);
+        //    var figura = GetFigureAt(origenX, origenY);
         //    if (figura == null)
         //        return false;
 
-        //    // 3. Obtener los movimientos válidos para la figura y verificar si el destino está permitido
         //    if (!IsValidDestination(figura, destinoX, destinoY))
         //        return false;
 
-        //    // 4. Gestionar captura si hay una figura enemiga en la casilla de destino
         //    ManejarCaptura(destinoX, destinoY, figura);
 
         //    EjecutaMovimiento(figura, origenX, origenY, destinoX, destinoY);
 
-        //    // 5. Realizar el movimiento: mover figura y vaciar la casilla de origen
-        //    // 6. Actualizar coordenadas internas de la figura
-        //    // 7. Incrementar el contador de movimientos (relevante para peones, enroques, etc.)
-        //    // 8. Redibujar visualmente las casillas afectadas
-        //    // 9. Confirmar éxito
-
         //    return true;
         //}
+
+
+        public bool MoveFigure(int origenX, int origenY, int destinoX, int destinoY)
+        {
+            // 1. Validar que las coordenadas están dentro del tablero
+            if (!AreCoordinatesValid(origenX, destinoX, origenY, destinoY))
+                return false;
+
+            // 2. Obtener la figura que se quiere mover
+            IFigure? figura = GetFigureAt(origenX, origenY);
+            if (figura == null)
+                return false;
+
+            // 3. Obtener los movimientos válidos para la figura y verificar si el destino está permitido
+            if (!IsValidDestination(figura, destinoX, destinoY))
+                return false;
+
+            // 4. Gestionar captura si hay una figura enemiga en la casilla de destino
+            ManejarCaptura(destinoX, destinoY, figura);
+
+            EjecutaMovimiento(figura, origenX, origenY, destinoX, destinoY);
+
+            // 5. Realizar el movimiento: mover figura y vaciar la casilla de origen
+            // 6. Actualizar coordenadas internas de la figura
+            // 7. Incrementar el contador de movimientos (relevante para peones, enroques, etc.)
+            // 8. Redibujar visualmente las casillas afectadas
+            // 9. Confirmar éxito
+
+            return true;
+        }
 
         public void CapturarFigura(IFigure figura)
         {
